@@ -46,11 +46,15 @@ function install_dotfiles {
     install_oh_my_zsh
     link_files
     link_config
+
+    mkdir -p "$HOME/scripts/redshift"
+    symlink ./redshift/redshift.sh "$HOME/scripts/redshift"
 }
 
 function uninstall_dotfiles {
     link_files "unlink"
     link_config "unlink"
+    delete_symlink "$HOME/scripts/redshift/redshift.sh"
 }
 
 if [ "$1" == "--uninstall" ]; then
