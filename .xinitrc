@@ -12,6 +12,8 @@ export $(dbus-launch)
 xrdb -m ~/.Xresources
 xmodmap ~/.Xmodmap
 
+# set default mouse cursor
+xsetroot -cursor_name left_ptr
 # mouse sensitivity
 xset m 5 1
 # keyboard repeat rate
