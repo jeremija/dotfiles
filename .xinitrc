@@ -40,6 +40,8 @@ xfce4-volumed-pulse
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)
 export SSH_AUTH_SOCK
 
+~/scripts/redshift/redshift.sh reread
+
 # run xbindkeys
 xbindkeys
 
