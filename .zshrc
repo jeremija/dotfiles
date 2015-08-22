@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/home/jere/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -53,7 +53,7 @@ plugins=(git)
 
 # User configuration
 
-export PATH="/home/jere/bin:/home/jere/opt/jdk1.8.0_05/bin:/home/jere/opt/node_modules/.bin:/home/jere/android/sdk/platform-tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/jere/android/sdk/tools:/home/jere/opt/groovy-2.3.0/bin:/home/jere/opt/grails-2.4.0/bin:/home/jere/src/linux/fzf/bin"
+export PATH="$HOME/bin:$HOME/opt/jdk1.8.0_05/bin:$HOME/opt/node_modules/.bin:$HOME/opt/android-sdk-linux/platform-tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/android-sdk-linux/tools:$HOME/opt/groovy-2.3.0/bin:$HOME/opt/grails-2.4.0/bin:$HOME/.vim/plugged/fzf/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -134,5 +134,5 @@ fzf-history-widget() {
 zle     -N   fzf-history-widget
 bindkey '^R' fzf-history-widget
 
-. ~/.local/bin/bashmarks.sh
+. $HOME/.local/bin/bashmarks.sh
 unsetopt cdablevars
