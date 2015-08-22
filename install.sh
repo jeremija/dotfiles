@@ -14,10 +14,19 @@ function symlink {
     ln -sr "$1" "$2"
 }
 
+function delete_symlink {
+    echo unlinking "$1"
+    unlink "$1"
+}
+
 function link_files {
     echo "processing home folder dotfiles..."
     for file in $(cat ./home_symlinks); do
-        symlink "$file" "$HOME"
+        if [ "$1" == "unlink" ]; then
+            delete_symlink "$HOME/$file"
+        else
+            symlink "$file" "$HOME"
+        fi
     done
 }
 
@@ -25,10 +34,27 @@ function link_config {
     echo "processing .config directories..."
     mkdir -p ~/.config
     for dir in $(ls .config); do
-        symlink ".config/$dir" "$HOME/.config"
+        if [ "$1" == "unlink" ]; then
+            delete_symlink "$HOME/.config/$dir"
+        else
+            symlink ".config/$dir" "$HOME/.config"
+        fi
     done
 }
 
-install_oh_my_zsh
-link_files
-link_config
+function install_dotfiles {
+    install_oh_my_zsh
+    link_files
+    link_config
+}
+
+function uninstall_dotfiles {
+    link_files "unlink"
+    link_config "unlink"
+}
+
+if [ "$1" == "--uninstall" ]; then
+    uninstall_dotfiles
+else
+    install_dotfiles
+fi
