@@ -1,0 +1,84 @@
+"xbacklight -inc 5 -time 0"
+    XF86MonBrightnessUp
+
+"xbacklight -dec 5 -time 0"
+    XF86MonBrightnessDown
+
+"termite"
+    Mod4 + Return
+
+"~/.i3/lock.sh"
+    Alt + Shift + l
+
+"~/.i3/lock.sh & systemctl suspend"
+    Mod4 + Alt + F4
+
+"thunar"
+    Mod4 + t
+
+"rofi -show run"
+    Mod4 + d
+
+"rofi -show window"
+    Mod4 + Tab
+
+"sleep 0.2; scrot -s -e 'xclip -selection clipboard -target image/png $f' /tmp/shot.png && rm /tmp/shot.png"
+    Print
+
+"/bin/false"
+    Control + Shift + Q
+
+
+#
+# keyboard
+#
+
+"setxkbmap en_US"
+    Mod4 + Alt + F1
+
+"setxkbmap hr"
+    Mod4 + Alt + F2
+
+
+#
+# redshift
+#
+
+"~/scripts/redshift/redshift.sh -100"
+    Control+Mod4 + 8
+
+"~/scripts/redshift/redshift.sh +100"
+    Control+Mod4 + 9
+
+"~/scripts/redshift/redshift.sh 0"
+    Control+Mod4 + 0
+
+
+#
+# cmus
+#
+
+"cmus-remote --prev"
+    Control + Mod4 + z
+
+"cmus-remote --play"
+    Control + Mod4 + x
+
+"cmus-remote --pause"
+    Control + Mod4 + c
+
+"cmus-remote --stop"
+    Control + Mod4 + v
+
+"cmus-remote --next"
+    Control + Mod4 + b
+
+"cmus-remote --seek -5"
+    Control + Mod4 + 3
+
+"cmus-remote --seek +5"
+    Control + Mod4 + 4
+
+"~/.i3/status.sh --notify"
+    Mod4 + q
+
