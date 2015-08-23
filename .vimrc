@@ -18,6 +18,7 @@ Plug 'phildawes/racer'
 Plug 'elzr/vim-json'
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 Plug 'dyng/ctrlsf.vim'
+Plug 'bling/vim-airline'
 
 call plug#end()
 
@@ -91,9 +92,23 @@ let g:syntastic_python_checkers = ['flake8']
 " end syntastic config
 let g:vim_json_syntax_conceal = 0
 
+" airline config
+" let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+    let g:airline_left_sep = '⮀'
+    let g:airline_left_alt_sep = '⮁'
+    let g:airline_right_sep = '⮂'
+    let g:airline_right_alt_sep = '⮃'
+    let g:airline_symbols.branch = '⭠'
+    let g:airline_symbols.readonly = '⭤'
+    let g:airline_symbols.linenr = '⭡'
+endif
+
 " racer
 set hidden
 let g:racer_cmd = $HOME."/.vim/plugged/racer/target/release/racer"
 let $RUST_SRC_PATH=$HOME."/Downloads/rustc-1.0.0/src/"
 
 colorscheme last256
+hi MatchParen cterm=bold ctermbg=none ctermfg=white
