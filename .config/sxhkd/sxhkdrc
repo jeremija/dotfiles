@@ -100,3 +100,6 @@ super + space
 super + Escape
 	pkill -USR1 -x sxhkd
 
+# show desktop switcher
+super + shift + d
+    ~/.config/bspwm/desktop-switch.sh
