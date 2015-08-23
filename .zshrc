@@ -136,3 +136,5 @@ bindkey '^R' fzf-history-widget
 
 . $HOME/.local/bin/bashmarks.sh
 unsetopt cdablevars
+
+alias ssh="TERM=xterm ssh"
