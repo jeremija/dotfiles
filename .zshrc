@@ -138,3 +138,5 @@ bindkey '^R' fzf-history-widget
 unsetopt cdablevars
 
 alias ssh="TERM=xterm ssh"
+# dir colors
+eval `dircolors ~/.dircolors`
