@@ -66,7 +66,7 @@ let g:indentLine_enabled = 0
 let g:indentLine_char = '|'
 let g:indentLine_first_char = '|'
 "let g:indentLine_leadingSpaceEnabled = 1
-"let g:indentLine_leadingSpaceChar = '.'
+"let g:indentLine_leadingSpaceChar = '·'
 "let g:indentLine_showFirstIndentLevel = 1
 "let g:indentLine_color_term = 239
 set hlsearch
@@ -103,7 +103,14 @@ if !exists('g:airline_symbols')
     let g:airline_symbols.branch = '⭠'
     let g:airline_symbols.readonly = '⭤'
     let g:airline_symbols.linenr = '⭡'
+
+    let g:airline#extensions#tabline#left_sep = '⮀'
+    let g:airline#extensions#tabline#left_alt_sep = '⮁'
 endif
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'bubblegum'
+"let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#buffer_min_count = 2
 
 " racer
 set hidden
