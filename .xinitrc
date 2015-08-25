@@ -47,7 +47,7 @@ export SSH_AUTH_SOCK
 # run xbindkeys
 xbindkeys
 
-session=${session-bspwm}
+session=${session-i3}
 
 if [ "$session" == "bspwm" ]; then
     # run sxhkd (hotkeys for bspwm)
