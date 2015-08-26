@@ -1,7 +1,6 @@
 " dependency for https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/fzf'
 Plug 'scrooloose/syntastic'
 Plug 'fatih/vim-go'
 Plug 'terryma/vim-multiple-cursors'
@@ -19,6 +18,7 @@ Plug 'elzr/vim-json'
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 Plug 'dyng/ctrlsf.vim'
 Plug 'bling/vim-airline'
+Plug 'kien/ctrlp.vim'
 
 call plug#end()
 
@@ -45,14 +45,17 @@ function s:getFzfPath()
     return 'ag -l -g "" ' . location
 endfunction
 
-function CustomFZF()
-    let source = s:getFzfPath()
-    call fzf#run({"source": source, "sink": "e", "down": "20"})
-endfunction
+"function CustomFZF()
+"    let source = s:getFzfPath()
+"    call fzf#run({"source": source, "sink": "e", "down": "20"})
+"endfunction
 
-map <C-P> :call CustomFZF()<CR>
+"map <C-P> :call CustomFZF()<CR>
 map LL :call SyntasticCheck()<CR>
-map <C-F> :CtrlSF 
+map <C-F> :CtrlSF<Space>
+
+map <C-PageUp> :bprev<CR>
+map <C-PageDown> :bnext<CR>
 
 " highlight current line
 "set cursorline cursorcolumn
@@ -91,6 +94,8 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_python_checkers = ['flake8']
 " end syntastic config
 let g:vim_json_syntax_conceal = 0
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
 " airline config
 " let g:airline_powerline_fonts = 1
