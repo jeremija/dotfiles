@@ -53,7 +53,7 @@ plugins=(git)
 
 # User configuration
 
-export PATH="$HOME/bin:$HOME/opt/jdk1.8.0_05/bin:$HOME/opt/node_modules/.bin:$HOME/opt/android-sdk-linux/platform-tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/android-sdk-linux/tools:$HOME/opt/groovy-2.3.0/bin:$HOME/opt/grails-2.4.0/bin:$HOME/.vim/plugged/fzf/bin"
+export PATH="$HOME/bin:$HOME/opt/jdk1.8.0_05/bin:$HOME/opt/node_modules/.bin:$HOME/opt/android-sdk-linux/platform-tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/android-sdk-linux/tools:$HOME/opt/groovy-2.3.0/bin:$HOME/opt/grails-2.4.0/bin:$HOME/src/linux/fzf/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -155,3 +155,4 @@ export LC_MEASUREMENT="en_US.UTF-8"
 export LC_IDENTIFICATION="en_US.UTF-8"
 # make monday first day of the week
 export LC_TIME="en_GB.UTF-8"
+
