@@ -133,7 +133,7 @@ bindsym $mod+Shift+F10 move container to workspace 20
 bindsym $mod+Shift+F11 move container to workspace 21
 bindsym $mod+Shift+F12 move container to workspace 22
 
-workspace F1 output HDMI1
+workspace 11 output HDMI1
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
