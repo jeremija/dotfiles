@@ -5,7 +5,6 @@ Plug 'scrooloose/syntastic'
 Plug 'fatih/vim-go'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'flazz/vim-colorschemes'
-Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-sensible'
 Plug 'nvie/vim-flake8'
 Plug 'ntpeters/vim-better-whitespace'
@@ -19,6 +18,8 @@ Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 Plug 'dyng/ctrlsf.vim'
 Plug 'bling/vim-airline'
 Plug 'kien/ctrlp.vim'
+Plug 'tfnico/vim-gradle'
+Plug 'tpope/vim-commentary'
 
 call plug#end()
 
@@ -33,24 +34,6 @@ set wildmenu
 " sane menu config
 set completeopt=longest,menuone
 
-function s:getFzfPath()
-    " use git repository's root instead of current path
-    let location = system('git rev-parse --show-cdup')
-    " remove \0 character from the end of the string
-    let location = substitute(location, '\%x00', '', 'g')
-    if v:shell_error
-        " if not a git repository, use git current path
-        return "ag -l -g '' ."
-    endif
-    return 'ag -l -g "" ' . location
-endfunction
-
-"function CustomFZF()
-"    let source = s:getFzfPath()
-"    call fzf#run({"source": source, "sink": "e", "down": "20"})
-"endfunction
-
-"map <C-P> :call CustomFZF()<CR>
 map LL :call SyntasticCheck()<CR>
 map <C-F> :CtrlSF<Space>
 
@@ -63,18 +46,7 @@ set cursorline
 hi CursorLine cterm=NONE ctermbg=black
 hi CursorColumn cterm=NONE ctermbg=black
 
-set lazyredraw
-
-let g:indentLine_enabled = 0
-let g:indentLine_char = '|'
-let g:indentLine_first_char = '|'
-"let g:indentLine_leadingSpaceEnabled = 1
-"let g:indentLine_leadingSpaceChar = '·'
-"let g:indentLine_showFirstIndentLevel = 1
-"let g:indentLine_color_term = 239
 set hlsearch
-
-let g:indentLine_color_term = 'black'
 set lazyredraw
 
 set backspace=2
@@ -114,7 +86,6 @@ if !exists('g:airline_symbols')
 endif
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme = 'bubblegum'
-"let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#buffer_min_count = 2
 
 " racer
