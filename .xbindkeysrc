@@ -4,6 +4,9 @@
 "xbacklight -dec 5 -time 0"
     XF86MonBrightnessDown
 
+"pactl set-source-mute  $(pacmd list-sources | grep '\* index' | sed -r 's/  \* index: ([0-9])/\1/g') toggle"
+    XF86AudioMicMute
+
 "termite"
     Mod4 + Return
 
