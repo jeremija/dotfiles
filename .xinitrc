@@ -5,7 +5,7 @@ export SUDO_EDITOR=$EDITOR
 export TERMINAL=termite
 export BROWSER=google-chrome-unstable
 export QT_STYLE_OVERRIDE=GTK+
-export $XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CONFIG_HOME="$HOME/.config"
 export $(dbus-launch)
 
 # read .Xresources file
