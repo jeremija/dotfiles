@@ -10,8 +10,8 @@ function install_oh_my_zsh {
 }
 
 function symlink {
-    echo linking "$1" to "$2"
-    ln -sr "$1" "$2"
+    # echo linking "$1" to "$2"
+    ln -srv "$1" "$2"
 }
 
 function delete_symlink {
