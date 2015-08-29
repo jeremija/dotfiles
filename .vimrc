@@ -20,6 +20,9 @@ Plug 'bling/vim-airline'
 Plug 'kien/ctrlp.vim'
 Plug 'tfnico/vim-gradle'
 Plug 'tpope/vim-commentary'
+Plug 'vim-scripts/Rename'
+Plug 'haya14busa/incsearch.vim'
+Plug 'hdima/python-syntax'
 
 call plug#end()
 
@@ -27,6 +30,7 @@ syntax on
 autocmd BufNewFile,BufRead *.md set syntax=markdown
 filetype plugin indent on
 set tabstop=4 shiftwidth=4 expandtab
+autocmd FileType *.go set noexpandtab
 set clipboard=unnamedplus
 set colorcolumn=80
 set wildmenu
@@ -87,6 +91,12 @@ endif
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme = 'bubblegum'
 let g:airline#extensions#tabline#buffer_min_count = 2
+
+let python_highlight_all = 1
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 
 " racer
 set hidden
