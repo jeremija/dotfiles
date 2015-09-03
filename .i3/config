@@ -228,6 +228,8 @@ hide_edge_borders both
 bindsym $alt+$mod+h exec i3-msg move window to output left
 bindsym $alt+$mod+l exec i3-msg move window to output right
 bindsym Shift+$alt+$mod+h exec i3-msg move workspace to output left
+bindsym Shift+$alt+$mod+j exec i3-msg move workspace to output down
+bindsym Shift+$alt+$mod+k exec i3-msg move workspace to output up
 bindsym Shift+$alt+$mod+l exec i3-msg move workspace to output right
 ### END OF MULTI MONITOR SETUP ###
 
