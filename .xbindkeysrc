@@ -25,7 +25,7 @@
 "rofi -show window"
     Mod4 + Tab
 
-"sleep 0.2; scrot -s -e 'xclip -selection clipboard -target image/png $f' /tmp/shot.png && rm /tmp/shot.png"
+"maim -l -c 1,0,0,0.4 -s --format png /dev/stdout | xclip -selection clipboard -target image/png"
     Print
 
 "/bin/false"
