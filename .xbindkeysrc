@@ -48,13 +48,13 @@
 #
 
 "~/scripts/redshift/redshift.sh -100"
-    Control+Mod4 + 8
+    Control + Mod4 + minus
 
 "~/scripts/redshift/redshift.sh +100"
-    Control+Mod4 + 9
+    Control + Mod4 + plus
 
 "~/scripts/redshift/redshift.sh 0"
-    Control+Mod4 + 0
+    Control + Mod4 + 0
 
 
 #
