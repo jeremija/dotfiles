@@ -19,7 +19,7 @@ xset m 5 1
 # keyboard repeat rate
 xset r rate 200 100
 # disable touchpad
-xinput set-int-prop 11 "Device Enabled" 8 0
+xinput set-int-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 8 0
 # set scroll with right mouse button, instead of the first
 xinput set-prop "TPPS/2 IBM TrackPoint" "libinput Button Scrolling Button" 3
 # enable network manager and bluetooth applets
