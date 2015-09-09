@@ -8,10 +8,15 @@ if [ $# -ne 1 ]; then
   exit 1;
 fi;
 
+function save_for_i3_bar {
+  echo -n "$1°K" > "$XDG_RUNTIME_DIR/j4status-plugins/inotify/RED"
+}
+
 last_val=$(cat "$DIR/.redshift.last" || echo 6500)
 
 if [ "$1" == "reread" ]; then
     redshift -O $last_val;
+    save_for_i3_bar $last_val;
     exit 0;
 fi
 
@@ -22,7 +27,7 @@ if [ $last_val -eq $new_val ]; then
   echo "No change -- resetting! Calling 'redshift -x'"
   redshift -x
   echo 6500 > "$DIR/.redshift.last"
-  echo -n "6500°K" > "$XDG_RUNTIME_DIR/j4status/file-monitor/RED"
+  save_for_i3_bar 6500
   exit 0;
 fi;
 
@@ -31,5 +36,5 @@ redshift -O $new_val
 if [ $? -eq 0 ]; then
   echo "Saving $new_val to file..."
   echo $new_val > "$DIR/.redshift.last"
-  echo -n "$new_val°K" > "$XDG_RUNTIME_DIR/j4status/file-monitor/RED"
+  save_for_i3_bar $new_val
 fi
