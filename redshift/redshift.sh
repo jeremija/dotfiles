@@ -9,6 +9,7 @@ if [ $# -ne 1 ]; then
 fi;
 
 function save_for_i3_bar {
+  mkdir -p "$XDG_RUNTIME_DIR/j4status-plugins/inotify"
   echo -n "$1°K" > "$XDG_RUNTIME_DIR/j4status-plugins/inotify/RED"
 }
 
