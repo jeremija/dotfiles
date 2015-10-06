@@ -38,7 +38,7 @@ autocmd BufNewFile,BufRead *.jsx set tabstop=2 shiftwidth=2
 autocmd FileType *.go set noexpandtab
 autocmd BufNewFile,BufRead *.jade set shiftwidth=2 tabstop=2
 autocmd FileType *.js set shiftwidth=2 ts=2
-set clipboard=unnamedplus
+set clipboard=unnamed
 set colorcolumn=80
 set wildmenu
 silent !mkdir -p ~/.vim/.backup ~/.vim/.undo ~/.vim/.swp
@@ -88,13 +88,14 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-stand
 " let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
-    let g:airline_left_sep = '⮀'
-    let g:airline_left_alt_sep = '⮁'
-    let g:airline_right_sep = '⮂'
-    let g:airline_right_alt_sep = '⮃'
-    let g:airline_symbols.branch = '⭠'
-    let g:airline_symbols.readonly = '⭤'
-    let g:airline_symbols.linenr = '⭡'
+
+    let g:airline_left_sep = ''
+    let g:airline_left_alt_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_right_alt_sep = ''
+    let g:airline_symbols.branch = ''
+    let g:airline_symbols.readonly = ''
+    let g:airline_symbols.linenr = ''
 
     let g:airline#extensions#tabline#left_sep = '⮀'
     let g:airline#extensions#tabline#left_alt_sep = '⮁'
