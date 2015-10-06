@@ -97,8 +97,8 @@ if !exists('g:airline_symbols')
     let g:airline_symbols.readonly = ''
     let g:airline_symbols.linenr = ''
 
-    let g:airline#extensions#tabline#left_sep = '⮀'
-    let g:airline#extensions#tabline#left_alt_sep = '⮁'
+    let g:airline#extensions#tabline#left_sep = ''
+    let g:airline#extensions#tabline#left_alt_sep = ''
 endif
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme = 'bubblegum'
@@ -115,5 +115,6 @@ set hidden
 let g:racer_cmd = $HOME."/.vim/plugged/racer/target/release/racer"
 let $RUST_SRC_PATH=$HOME."/Downloads/rustc-1.0.0/src/"
 
+set t_Co=256
 colorscheme last256
 hi MatchParen cterm=bold ctermbg=none ctermfg=white

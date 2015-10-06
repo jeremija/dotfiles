@@ -52,8 +52,8 @@ ZSH_THEME="gentoo"
 plugins=(git)
 
 # User configuration
-
-export PATH="$HOME/bin:$HOME/opt/jdk1.8.0_05/bin:$HOME/opt/node_modules/.bin:$HOME/opt/android-sdk-linux/platform-tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/android-sdk-linux/tools:$HOME/opt/groovy-2.3.0/bin:$HOME/opt/grails-2.4.0/bin:$HOME/src/linux/fzf/bin"
+# export PATH="$HOME/bin:$HOME/opt/jdk1.8.0_05/bin:$HOME/opt/node_modules/.bin:$HOME/opt/android-sdk-linux/platform-tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/android-sdk-linux/tools:$HOME/opt/groovy-2.3.0/bin:$HOME/opt/grails-2.4.0/bin:$HOME/src/linux/fzf/bin:$HOME/bin"
+export PATH="$HOME/bin:$HOME/opt/node_modules/.bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -63,7 +63,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
+# export EDITOR='vim'
 # else
 #   export EDITOR='mvim'
 # fi
@@ -82,6 +82,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias tig="tig --all"
 
 
 __fsel() {
@@ -134,27 +135,34 @@ fzf-history-widget() {
 zle     -N   fzf-history-widget
 bindkey '^R' fzf-history-widget
 
-. $HOME/.local/bin/bashmarks.sh
 unsetopt cdablevars
 setopt HIST_IGNORE_DUPS
 
 alias ssh="TERM=xterm ssh"
 alias tig="tig --all"
-# dir colors
-eval `dircolors ~/.dircolors`
 
-export LANG="en_US.UTF-8"
-export LC_CTYPE="en_US.UTF-8"
-export LC_NUMERIC="en_US.UTF-8"
-export LC_COLLATE="en_US.UTF-8"
-export LC_MONETARY="en_US.UTF-8"
-export LC_MESSAGES="en_US.UTF-8"
-export LC_PAPER="en_US.UTF-8"
-export LC_NAME="en_US.UTF-8"
-export LC_ADDRESS="en_US.UTF-8"
-export LC_TELEPHONE="en_US.UTF-8"
-export LC_MEASUREMENT="en_US.UTF-8"
-export LC_IDENTIFICATION="en_US.UTF-8"
-# make monday first day of the week
-export LC_TIME="en_GB.UTF-8"
+source $HOME/.profile
+source ~/.local/bin/bashmarks.sh
+unset SSH_AUTH_SOCK
 
+
+### fix autocomplete for ssh
+autoload bashcompinit
+bashcompinit
+
+_complete_ssh_hosts ()
+{
+        COMPREPLY=()
+        cur="${COMP_WORDS[COMP_CWORD]}"
+
+        comp_ssh_hosts=$(cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | \
+                grep -v ^# | sed -e 's/,.*//g' | sed -e 's/^\[//g' | \
+                sed -e 's/\].*//g' | \
+            cat ~/.ssh/config | 
+                grep "^Host " | \sed -e 's/^Host //g ' | grep -v '\*' | uniq)
+
+        COMPREPLY=( $(compgen -W "${comp_ssh_hosts}" -- $cur))
+        return 0
+}
+complete -F _complete_ssh_hosts ssh
+###
