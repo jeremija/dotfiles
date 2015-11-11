@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="gentoo"
+ZSH_THEME="amuse-jerko"
 
 # Uncomment the following line to use case-sensitive completion.
  CASE_SENSITIVE="true"
@@ -88,7 +88,7 @@ alias tig="tig --all"
 __fsel() {
     set -o nonomatch
     command git rev-parse --show-cdup > /dev/null || exit
-    command ag -l $(git rev-parse --show-cdup) | fzf
+    command ag -l "^" $(git rev-parse --show-cdup) | fzf
 }
 
 __gdsel() {
@@ -143,8 +143,6 @@ alias tig="tig --all"
 
 source $HOME/.profile
 source ~/.local/bin/bashmarks.sh
-unset SSH_AUTH_SOCK
-
 
 ### fix autocomplete for ssh
 autoload bashcompinit
