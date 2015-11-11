@@ -52,8 +52,8 @@ set completeopt=longest,menuone
 map LL :call SyntasticCheck()<CR>
 map <C-F> :CtrlSF<Space>
 
-map <C-PageUp> :bprev<CR>
-map <C-PageDown> :bnext<CR>
+map [[ :bprev<CR>
+map ]] :bnext<CR>
 
 " highlight current line
 "set cursorline cursorcolumn
