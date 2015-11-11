@@ -192,8 +192,9 @@ bindsym $mod+n exec i3-msg "workspace 11 output HDMI1"
 bar {
         status_command ~/.i3/py3status.sh -c ~/.i3/i3status.conf -n 1
         status_command J4STATUS_PLUGINS_DIR=/home/jere/src/linux/j4status_plugins_dir j4status -c ~/.i3/j4status.conf
+        position top
 #        status_command i3status -c ~/.i3/i3status.conf
-        tray_output LVDS1
+        # tray_output LVDS1
 }
 
 #client.placeholder      #000000 #000000 #ffffff #2e9ef4
