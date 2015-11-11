@@ -23,6 +23,7 @@ Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/Rename'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hdima/python-syntax'
+Plug 'digitaltoad/vim-jade'
 
 call plug#end()
 
@@ -31,6 +32,8 @@ autocmd BufNewFile,BufRead *.md set syntax=markdown
 filetype plugin indent on
 set tabstop=4 shiftwidth=4 expandtab
 autocmd FileType *.go set noexpandtab
+autocmd BufNewFile,BufRead *.jade set shiftwidth=2 tabstop=2
+autocmd FileType *.js set shiftwidth=2 ts=2
 set clipboard=unnamedplus
 set colorcolumn=80
 set wildmenu
