@@ -1,5 +1,6 @@
 [global]
-    font = Dina 6
+    # font = Dina 6
+    font = Avenir Lt Medium 8
 
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -73,7 +74,7 @@
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing windowmanager is
     # present (e.g. xcompmgr, compiz, etc.).
-    transparency = 0
+    transparency = 20
 
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
@@ -175,12 +176,12 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#000000"
+    background = "#333333"
     foreground = "#dddddd"
     timeout = 4
 
 [urgency_normal]
-    background = "#000"
+    background = "#333333"
     foreground = "#ffffff"
     timeout = 4
 
