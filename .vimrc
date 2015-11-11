@@ -24,6 +24,9 @@ Plug 'vim-scripts/Rename'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hdima/python-syntax'
 Plug 'digitaltoad/vim-jade'
+Plug 'ciaranm/detectindent'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 
 call plug#end()
 
@@ -31,12 +34,17 @@ syntax on
 autocmd BufNewFile,BufRead *.md set syntax=markdown
 filetype plugin indent on
 set tabstop=4 shiftwidth=4 expandtab
+autocmd BufNewFile,BufRead *.jsx set tabstop=2 shiftwidth=2
 autocmd FileType *.go set noexpandtab
 autocmd BufNewFile,BufRead *.jade set shiftwidth=2 tabstop=2
 autocmd FileType *.js set shiftwidth=2 ts=2
 set clipboard=unnamedplus
 set colorcolumn=80
 set wildmenu
+silent !mkdir -p ~/.vim/.backup ~/.vim/.undo ~/.vim/.swp
+set backupdir=~/.vim/.backup//
+set undodir=~/.vim/.undo//
+set directory=~/.vim/.swp//
 
 " sane menu config
 set completeopt=longest,menuone
