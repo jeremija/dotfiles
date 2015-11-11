@@ -29,7 +29,7 @@
     Mod4 + Alt + F4
 
 "thunar"
-    Mod4 + t
+    Shift + Mod4 + t
 
 "rofi -show run"
     Mod4 + d
