@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# make * process both hidden and regular files
+shopt -s dotglob
+
 function install_oh_my_zsh {
     echo "installing oh-my-zsh..."
     if [ ! -d ~/.oh-my-zsh ]; then
@@ -21,25 +24,29 @@ function delete_symlink {
 
 function link_files {
     echo "processing home folder dotfiles..."
-    for file in $(cat ./home_symlinks); do
+    cd home
+    for file in *; do
         if [ "$1" == "unlink" ]; then
             delete_symlink "$HOME/$file"
         else
             symlink "$file" "$HOME"
         fi
     done
+    cd ..
 }
 
 function link_config {
     echo "processing .config directories..."
-    mkdir -p ~/.config
-    for dir in $(ls .config); do
+    mkdir -p ~/config
+    cd config
+    for dir in *; do
         if [ "$1" == "unlink" ]; then
             delete_symlink "$HOME/.config/$dir"
         else
-            symlink ".config/$dir" "$HOME/.config"
+            symlink "$dir" "$HOME/.config"
         fi
     done
+    cd ..
 }
 
 function install_dotfiles {
