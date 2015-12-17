@@ -25,7 +25,7 @@ font pango: Dina 6
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-new_window 1pixel
+new_window pixel 2
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -133,6 +133,16 @@ bindsym $mod+Shift+F10 move container to workspace 20
 bindsym $mod+Shift+F11 move container to workspace 21
 bindsym $mod+Shift+F12 move container to workspace 22
 
+workspace 1 output LVDS1
+workspace 2 output LVDS1
+workspace 3 output LVDS1
+workspace 4 output LVDS1
+workspace 5 output LVDS1
+workspace 6 output LVDS1
+workspace 7 output LVDS1
+workspace 8 output LVDS1
+workspace 9 output LVDS1
+workspace 10 output LVDS1
 workspace 11 output HDMI1
 workspace 12 output HDMI1
 workspace 13 output HDMI1
@@ -203,8 +213,8 @@ bar {
 # colors
 #client.focused #285577 #285577 #dedede
 #client.focused #1d1d1d #1d1d1d #dedede
-client.focused #2d2d2d #2d2d2d #dedede
-client.unfocused #1d1d1d #1d1d1d #dedede
+#client.focused #2d2d2d #2d2d2d #dedede
+#client.unfocused #1d1d1d #1d1d1d #dedede
 client.focused_inactive #1d1d1d #1d1d1d #dedede
 client.urgent #383a3b #383a3b #ee0000
 
@@ -232,8 +242,8 @@ bindsym $mod+Shift+e exec ~/.i3/exit_menu.sh
 # bindsym Mod1+Print exec xfce4-screenshooter --window
 # bindsym $mod+Print exec xfce4-screenshooter --region
 
-hide_edge_borders both
-#hide_edge_borders none
+#hide_edge_borders both
+hide_edge_borders none
 
 ### MULTI MONITOR SETUP ###
 # exec xrandr --output HDMI3 --auto --right-of HDMI1
