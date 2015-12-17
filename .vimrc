@@ -34,10 +34,11 @@ syntax on
 autocmd BufNewFile,BufRead *.md set syntax=markdown
 filetype plugin indent on
 set tabstop=4 shiftwidth=4 expandtab
-autocmd BufNewFile,BufRead *.jsx set tabstop=2 shiftwidth=2
 autocmd FileType *.go set noexpandtab
 autocmd BufNewFile,BufRead *.jade set shiftwidth=2 tabstop=2
-autocmd FileType *.js set shiftwidth=2 ts=2
+autocmd BufNewFile,BufRead *.jsx set tabstop=2 shiftwidth=2
+autocmd BufNewFile,BufRead *.js set shiftwidth=2 ts=2
+let g:jsx_ext_required = 0
 set clipboard=unnamedplus
 set colorcolumn=80
 set wildmenu
