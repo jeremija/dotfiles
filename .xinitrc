@@ -39,7 +39,7 @@ nitrogen --restore
 xfce4-volumed-pulse
 
 # gnome-keyring-daemon
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg)
+eval $(ssh-agent)
 export SSH_AUTH_SOCK
 
 ~/scripts/redshift/redshift.sh reread
