@@ -5,7 +5,7 @@ Plug 'scrooloose/syntastic'
 Plug 'fatih/vim-go'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'flazz/vim-colorschemes'
-Plug 'tpope/vim-sensible'
+"Plug 'tpope/vim-sensible'
 Plug 'nvie/vim-flake8'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'Valloric/YouCompleteMe'
@@ -24,7 +24,8 @@ Plug 'vim-scripts/Rename'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hdima/python-syntax'
 Plug 'digitaltoad/vim-jade'
-Plug 'ciaranm/detectindent'
+"Plug 'ciaranm/detectindent'
+Plug 'tpope/vim-sleuth'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
@@ -35,6 +36,7 @@ autocmd BufNewFile,BufRead *.md set syntax=markdown
 filetype plugin indent on
 set tabstop=4 shiftwidth=4 expandtab
 autocmd BufNewFile,BufRead *.jsx set tabstop=2 shiftwidth=2
+let g:jsx_ext_required = 0
 autocmd FileType *.go set noexpandtab
 autocmd BufNewFile,BufRead *.jade set shiftwidth=2 tabstop=2
 autocmd FileType *.js set shiftwidth=2 ts=2
@@ -51,6 +53,7 @@ set completeopt=longest,menuone
 
 map LL :call SyntasticCheck()<CR>
 map <C-F> :CtrlSF<Space>
+map LC :Commentary<CR>
 
 map [[ :bprev<CR>
 map ]] :bnext<CR>
@@ -79,6 +82,7 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_java_javac_config_file_enabled = 1
 " end syntastic config
 let g:vim_json_syntax_conceal = 0
 let g:ctrlp_working_path_mode = 'ra'
@@ -118,3 +122,15 @@ let $RUST_SRC_PATH=$HOME."/Downloads/rustc-1.0.0/src/"
 set t_Co=256
 colorscheme last256
 hi MatchParen cterm=bold ctermbg=none ctermfg=white
+
+set timeout
+set timeoutlen=750
+set ttimeoutlen=250
+
+"NeoVim handles ESC keys as alt+key, set this to solve the problem
+if has('nvim')
+ set ttimeout
+ set ttimeoutlen=0
+endif
+
+let g:syntastic_html_checkers=['']

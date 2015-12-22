@@ -86,9 +86,9 @@ alias tig="tig --all"
 
 
 __fsel() {
-    set -o nonomatch
-    command git rev-parse --show-cdup > /dev/null || exit
-    command ag -l "^" $(git rev-parse --show-cdup) | fzf
+    #set -o nonomatch
+    #command git rev-parse --show-cdup > /dev/null || exit
+    command ag '^' -l $(git rev-parse --show-cdup) | fzf
 }
 
 __gdsel() {
@@ -99,7 +99,12 @@ __gdsel() {
 }
 
 file-widget() {
-    LBUFFER="vim $(__fsel)"
+    if [ "$LBUFFER" != "" ]; then
+        LBUFFER="$LBUFFER $(__fsel)"
+    else
+        LBUFFER="vim $(__fsel)"
+    fi
+
     zle redisplay
 }
 
@@ -156,7 +161,7 @@ _complete_ssh_hosts ()
         comp_ssh_hosts=$(cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | \
                 grep -v ^# | sed -e 's/,.*//g' | sed -e 's/^\[//g' | \
                 sed -e 's/\].*//g' | \
-            cat ~/.ssh/config | 
+            cat ~/.ssh/config |
                 grep "^Host " | \sed -e 's/^Host //g ' | grep -v '\*' | uniq)
 
         COMPREPLY=( $(compgen -W "${comp_ssh_hosts}" -- $cur))
