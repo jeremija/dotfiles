@@ -143,10 +143,10 @@
     browser = xdg-open
 
     # Align icons left/right/off
-    icon_position = off
+    icon_position = left
 
     # Paths to default icons.
-    icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    icon_folders = /usr/share/icons/Faenza/status/32/:/usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/
 
 [frame]
     width = 0
@@ -176,12 +176,12 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#333333"
+    background = "#000000"
     foreground = "#dddddd"
     timeout = 4
 
 [urgency_normal]
-    background = "#333333"
+    background = "#000000"
     foreground = "#ffffff"
     timeout = 4
 

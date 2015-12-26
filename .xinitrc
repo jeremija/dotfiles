@@ -27,6 +27,8 @@ nm-applet &
 blueman-applet &
 # compositing manager
 compton --backend glx &
+# lock the screen when going to suspend
+xss-lock ~/.i3/lock.sh &
 
 # disable screen blanking
 xset dpms 0 0 0
