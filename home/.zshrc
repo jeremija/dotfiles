@@ -1,3 +1,12 @@
+UNAME=$(uname -s)
+IS_MAC=""
+IS_LINUX=""
+if [[ "$UNAME" == 'Linux' ]]; then
+  IS_LINUX=1
+elif [[ "$UNAME" == 'Darwin' ]]; then
+  IS_MAC=1
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -5,7 +14,8 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="gentoo"
+# ZSH_THEME="gentoo"
+ZSH_THEME="amuse-jerko"
 
 # Uncomment the following line to use case-sensitive completion.
  CASE_SENSITIVE="true"
@@ -53,7 +63,11 @@ plugins=(git)
 
 # User configuration
 
-export PATH="$HOME/bin:$HOME/opt/jdk1.8.0_05/bin:$HOME/opt/node_modules/.bin:$HOME/opt/android-sdk-linux/platform-tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/android-sdk-linux/tools:$HOME/opt/groovy-2.3.0/bin:$HOME/opt/grails-2.4.0/bin:$HOME/src/linux/fzf/bin"
+if [[ -n $IS_LINUX ]]; then
+  export PATH="$HOME/bin:$HOME/opt/jdk1.8.0_05/bin:$HOME/opt/node_modules/.bin:$HOME/opt/android-sdk-linux/platform-tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/android-sdk-linux/tools:$HOME/opt/groovy-2.3.0/bin:$HOME/opt/grails-2.4.0/bin:$HOME/src/linux/fzf/bin"
+elif [[ -n $IS_MAC ]]; then
+  export PATH="$HOME/bin:$HOME/opt/node_modules/.bin:$PATH"
+fi
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -85,26 +99,31 @@ source $ZSH/oh-my-zsh.sh
 
 
 __fsel() {
-    set -o nonomatch
-    command git rev-parse --show-cdup > /dev/null || exit
-    command ag -l $(git rev-parse --show-cdup) | fzf
+  # set -o nonomatch
+  # command git rev-parse --show-cdup > /dev/null || exit
+  command ag '^' -l $(git rev-parse --show-cdup) | fzf
 }
 
 __gdsel() {
-    set -e
-    set -o nonomatch
-    command git rev-parse --show-cdup > /dev/null || exit
-    command git diff --name-only | fzf
+  set -e
+  set -o nonomatch
+  command git rev-parse --show-cdup > /dev/null || exit
+  command git diff --name-only | fzf
 }
 
 file-widget() {
-    LBUFFER="vim $(__fsel)"
-    zle redisplay
+  if [[ "$LBUFFER" != "" ]]; then
+      LBUFFER="$LBUFFER $(__fsel)"
+  else
+      LBUFFER="vim $(__fsel)"
+  fi
+
+  zle redisplay
 }
 
 changed-file-widget() {
-    LBUFFER="${LBUFFER}$(__gdsel)"
-    zle redisplay
+  LBUFFER="${LBUFFER}$(__gdsel)"
+  zle redisplay
 }
 
 zle -N file-widget
@@ -134,27 +153,54 @@ fzf-history-widget() {
 zle     -N   fzf-history-widget
 bindkey '^R' fzf-history-widget
 
-. $HOME/.local/bin/bashmarks.sh
+source $HOME/.local/bin/bashmarks.sh
 unsetopt cdablevars
 setopt HIST_IGNORE_DUPS
 
 alias ssh="TERM=xterm ssh"
 alias tig="tig --all"
-# dir colors
-eval `dircolors ~/.dircolors`
 
-export LANG="en_US.UTF-8"
-export LC_CTYPE="en_US.UTF-8"
-export LC_NUMERIC="en_US.UTF-8"
-export LC_COLLATE="en_US.UTF-8"
-export LC_MONETARY="en_US.UTF-8"
-export LC_MESSAGES="en_US.UTF-8"
-export LC_PAPER="en_US.UTF-8"
-export LC_NAME="en_US.UTF-8"
-export LC_ADDRESS="en_US.UTF-8"
-export LC_TELEPHONE="en_US.UTF-8"
-export LC_MEASUREMENT="en_US.UTF-8"
-export LC_IDENTIFICATION="en_US.UTF-8"
-# make monday first day of the week
-export LC_TIME="en_GB.UTF-8"
+source $HOME/.profile
+source ~/.local/bin/bashmarks.sh
 
+if [[ -n $IS_LINUX ]]; then
+  # dir colors
+  eval `dircolors ~/.dircolors`
+
+  export LANG="en_US.UTF-8"
+  export LC_CTYPE="en_US.UTF-8"
+  export LC_NUMERIC="en_US.UTF-8"
+  export LC_COLLATE="en_US.UTF-8"
+  export LC_MONETARY="en_US.UTF-8"
+  export LC_MESSAGES="en_US.UTF-8"
+  export LC_PAPER="en_US.UTF-8"
+  export LC_NAME="en_US.UTF-8"
+  export LC_ADDRESS="en_US.UTF-8"
+  export LC_TELEPHONE="en_US.UTF-8"
+  export LC_MEASUREMENT="en_US.UTF-8"
+  export LC_IDENTIFICATION="en_US.UTF-8"
+  # make monday first day of the week
+  export LC_TIME="en_GB.UTF-8"
+fi
+
+if [[ -n $IS_MAC ]]; then
+
+  ### fix autocomplete for ssh
+  autoload bashcompinit
+  bashcompinit
+
+  _complete_ssh_hosts() {
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    comp_ssh_hosts=$(cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | \
+      grep -v ^# | sed -e 's/,.*//g' | sed -e 's/^\[//g' | \
+      sed -e 's/\].*//g' | \
+      cat ~/.ssh/config | grep "^Host " | \
+      sed -e 's/^Host //g ' | grep -v '\*' | uniq)
+
+    COMPREPLY=( $(compgen -W "${comp_ssh_hosts}" -- $cur))
+    return 0
+  }
+  complete -F _complete_ssh_hosts ssh
+fi
