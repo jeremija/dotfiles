@@ -242,8 +242,11 @@ bindsym $mod+Shift+e exec ~/.i3/exit_menu.sh
 # bindsym Mod1+Print exec xfce4-screenshooter --window
 # bindsym $mod+Print exec xfce4-screenshooter --region
 
-#hide_edge_borders both
-hide_edge_borders none
+# prevent fullscreen deadlock
+popup_during_fullscreen smart
+
+hide_edge_borders both
+#hide_edge_borders none
 
 ### MULTI MONITOR SETUP ###
 # exec xrandr --output HDMI3 --auto --right-of HDMI1
