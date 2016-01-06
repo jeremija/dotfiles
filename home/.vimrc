@@ -30,6 +30,7 @@ Plug 'digitaltoad/vim-jade'
 Plug 'tpope/vim-sleuth'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'maksimr/vim-jsbeautify'
 
 call plug#end()
 
@@ -57,9 +58,24 @@ set directory=~/.vim/.swp//
 " sane menu config
 set completeopt=longest,menuone
 
-map LL :call SyntasticCheck()<CR>
+let mapleader = ","
+map <Leader>l :call SyntasticCheck()<CR>
 map <C-F> :CtrlSF<Space>
-map LC :Commentary<CR>
+map <Leader>c :Commentary<CR>
+map <Leader>b :bnext<CR>
+map <Leader>B :bprev<CR>
+
+autocmd FileType javascript vnoremap <buffer> <Leader>f :call RangeJsBeautify()<CR>
+autocmd FileType json vnoremap <buffer> <Leader>f :call RangeJsonBeautify()<CR>
+autocmd FileType jsx vnoremap <buffer> <Leader>f :call RangeJsxBeautify()<CR>
+autocmd FileType html vnoremap <buffer> <Leader>f :call RangeHtmlBeautify()<CR>
+autocmd FileType css vnoremap <buffer> <Leader>f :call RangeCSSBeautify()<CR>
+
+autocmd FileType javascript noremap <buffer> <Leader>F :call JsBeautify()<CR>
+autocmd FileType json noremap <buffer> <Leader>F :call JsonBeautify()<CR>
+autocmd FileType jsx noremap <buffer> <Leader>F :call JsxBeautify()<CR>
+autocmd FileType html noremap <buffer> <Leader>F :call HtmlBeautify()<CR>
+autocmd FileType css noremap <buffer> <Leader>F :call CSSBeautify()<CR>
 
 map <C-PageUp> :bprev<CR>
 map <C-PageDown> :bnext<CR>
