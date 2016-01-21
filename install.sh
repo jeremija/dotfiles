@@ -37,7 +37,7 @@ function link_files {
 
 function link_config {
     echo "processing .config directories..."
-    mkdir -p ~/config
+    mkdir -p ~/.config
     cd config
     for dir in *; do
         if [ "$1" == "unlink" ]; then
