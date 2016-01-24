@@ -68,6 +68,11 @@
 "~/scripts/redshift/redshift.sh 0"
     Control + Mod4 + 0
 
+"~/scripts/redshift/redshift.sh 0 0.02"
+    Control + Shift + Mod4 + plus
+
+"~/scripts/redshift/redshift.sh 0 -0.02"
+    Control + Shift + Mod4 + minus
 
 #
 # cmus
