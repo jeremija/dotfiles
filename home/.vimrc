@@ -62,8 +62,8 @@ let mapleader = ","
 map <Leader>l :call SyntasticCheck()<CR>
 map <C-F> :CtrlSF<Space>
 map <Leader>c :Commentary<CR>
-map <Leader>b :bnext<CR>
-map <Leader>B :bprev<CR>
+map <Leader>. :bnext<CR>
+map <Leader>m :bprev<CR>
 
 autocmd FileType javascript vnoremap <buffer> <Leader>f :call RangeJsBeautify()<CR>
 autocmd FileType json vnoremap <buffer> <Leader>f :call RangeJsonBeautify()<CR>
