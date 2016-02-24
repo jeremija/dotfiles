@@ -155,7 +155,7 @@ bindkey '^R' fzf-history-widget
 
 source $HOME/.local/bin/bashmarks.sh
 unsetopt cdablevars
-setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
 
 alias ssh="TERM=xterm ssh"
 alias tig="tig --all"
