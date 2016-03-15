@@ -31,6 +31,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'maksimr/vim-jsbeautify'
+Plug 'tpope/vim-surround'
 
 call plug#end()
 
