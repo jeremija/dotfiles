@@ -1,3 +1,6 @@
 [submodule "tmux-themepack"]
 	path = tmux-themepack
 	url = https://github.com/jimeh/tmux-themepack
+[submodule "home/.zprezto"]
+	path = home/.zprezto
+	url = https://github.com/jeremija/prezto

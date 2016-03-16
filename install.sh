@@ -1,20 +1,13 @@
 #!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR
 
 # make * process both hidden and regular files
 shopt -s dotglob
 
-function install_oh_my_zsh {
-    echo "installing oh-my-zsh..."
-    if [ ! -d ~/.oh-my-zsh ]; then
-        sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    else
-        echo "zsh already installed"
-    fi
-}
-
 function symlink {
     # echo linking "$1" to "$2"
-    ln -srv "$1" "$2"
+    ln -sv "$PWD/$1" "$2"
 }
 
 function delete_symlink {
@@ -49,18 +42,30 @@ function link_config {
     cd ..
 }
 
+function link_zprezto {
+    echo "processing zprezto..."
+    for rcfile in "${HOME}"/.zprezto/runcoms/z*; do
+        if [ "$1" == "unlink" ]; then
+	    delete_symlink "${HOME}/.$(basename ${rcfile})"
+        else
+            ln -sv "${rcfile}" "${HOME}/.$(basename ${rcfile})"
+        fi
+    done
+}
+
 function install_dotfiles {
-    install_oh_my_zsh
     link_files
     link_config
+    link_zprezto
 
     mkdir -p "$HOME/scripts/redshift"
     symlink ./redshift/redshift.sh "$HOME/scripts/redshift"
 }
 
 function uninstall_dotfiles {
-    link_files "unlink"
-    link_config "unlink"
+    link_zprezto unlink
+    link_files unlink
+    link_config unlink
     delete_symlink "$HOME/scripts/redshift/redshift.sh"
 }
 
