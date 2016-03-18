@@ -5,7 +5,7 @@ Xft.hintstyle: hintslight
 
 Xft.autohint:  false
 Xft.lcdfilter: lcddefault
-# Xft.dpi:       96
+! Xft.dpi:       96
 
 xterm*faceName: Dina
 xterm*faceSize: 8
