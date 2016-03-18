@@ -245,8 +245,8 @@ bindsym $mod+Shift+e exec ~/.i3/exit_menu.sh
 # prevent fullscreen deadlock
 popup_during_fullscreen smart
 
-hide_edge_borders both
-#hide_edge_borders none
+#hide_edge_borders both
+hide_edge_borders none
 
 ### MULTI MONITOR SETUP ###
 # exec xrandr --output HDMI3 --auto --right-of HDMI1
