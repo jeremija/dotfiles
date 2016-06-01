@@ -11,7 +11,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'flazz/vim-colorschemes'
 Plug 'nvie/vim-flake8'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', {'do': 'python2 ./install.py --clang-completer --gocode-completer'}
 Plug 'marijnh/tern_for_vim'
 Plug 'rust-lang/rust.vim'
 Plug 'airblade/vim-gitgutter'
