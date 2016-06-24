@@ -59,6 +59,8 @@ function install_dotfiles {
     link_zprezto
 
     mkdir -p "$HOME/scripts/redshift"
+    mkdir -p "$HOME/.vim/autoload"
+    symlink ./vim-plug/plug.vim "$HOME/.vim/autoload/plug.vim"
     symlink ./redshift/redshift.sh "$HOME/scripts/redshift"
 }
 
@@ -66,6 +68,7 @@ function uninstall_dotfiles {
     link_zprezto unlink
     link_files unlink
     link_config unlink
+    delete_symlink "$HOME/.vim/autoload/plug.vim"
     delete_symlink "$HOME/scripts/redshift/redshift.sh"
 }
 

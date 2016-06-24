@@ -4,3 +4,6 @@
 [submodule "home/.zprezto"]
 	path = home/.zprezto
 	url = https://github.com/jeremija/prezto
+[submodule "vim-plug"]
+	path = vim-plug
+	url = https://github.com/junegunn/vim-plug
