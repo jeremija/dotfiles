@@ -20,6 +20,7 @@ Plug 'elzr/vim-json'
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 Plug 'dyng/ctrlsf.vim'
 Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'kien/ctrlp.vim'
 Plug 'tfnico/vim-gradle'
 Plug 'tpope/vim-commentary'
