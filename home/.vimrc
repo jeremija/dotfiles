@@ -33,6 +33,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'tpope/vim-surround'
+Plug 'jalvesaq/Nvim-R'
 
 call plug#end()
 
@@ -44,6 +45,7 @@ autocmd FileType *.go set noexpandtab
 autocmd BufNewFile,BufRead *.jade set shiftwidth=2 tabstop=2
 autocmd BufNewFile,BufRead *.jsx set tabstop=2 shiftwidth=2
 autocmd BufNewFile,BufRead *.js set shiftwidth=2 ts=2
+autocmd BufNewFile,BufRead *.R set shiftwidth=2 ts=2
 let g:jsx_ext_required = 0
 if s:is_linux
   set clipboard=unnamedplus
@@ -172,3 +174,5 @@ if has('nvim')
   set ttimeoutlen=0
 endif
 
+let R_tmux_split = 1
+let R_assign = 0
