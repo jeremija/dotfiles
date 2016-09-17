@@ -5,3 +5,4 @@ config/cmus/*.pl
 config/cmus/*-history
 config/cmus/resume
 config/cmus/cache
+config/cmus/cmusfm.conf
