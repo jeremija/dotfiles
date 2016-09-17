@@ -1,10 +1,13 @@
-set aaa_mode=album
+set aaa_mode=artist
 set altformat_current= %F 
 set altformat_playlist= %f%= %d 
 set altformat_title=%f
 set altformat_trackwin= %f%= %d 
+set auto_expand_albums_follow=true
+set auto_expand_albums_search=true
+set auto_expand_albums_selcur=true
 set auto_reshuffle=true
-set buffer_seconds=10
+set buffer_seconds=60
 set color_cmdline_attr=default
 set color_cmdline_bg=default
 set color_cmdline_fg=default
@@ -47,23 +50,32 @@ set dsp.ao.buffer_size=16384
 set dsp.ao.driver=
 set dsp.ao.wav_counter=1
 set dsp.ao.wav_dir=/home/jere
+set dsp.oss.device=
+set follow=false
 set format_current= %a :: %y. %l :: %n. %t
 set format_playlist= %-25%a %y. %-18%l %2%D%3n. %t%= %d 
 set format_playlist_va= %-25%A %y. %-18%l %2%D%3n. %t (%a)%= %d
+set format_statusline= %{status} %{?show_playback_position?%{position} %{?duration?/ %{duration} }?%{?duration?%{duration} }}- %{total} %{?volume>=0?vol: %{?lvolume!=rvolume?%{lvolume},%{rvolume} ?%{volume} }}%{?stream?buf: %{buffer} }%{?show_current_bitrate & bitrate>=0? %{bitrate} kbps }%=%{?repeat_current?repeat current?%{?play_library?%{playlist_mode} from %{?play_sorted?sorted }library?playlist}} | %1{continue}%1{follow}%1{repeat}%1{shuffle} 
 set format_title=%n. %t (%a :: %y. %l)
 set format_trackwin=%2%D%3n. %t%= %y %d 
+set format_trackwin_album= %l 
 set format_trackwin_va=%2%D%3n. %t (%a)%= %y %d 
+set format_treewin=  %l
+set format_treewin_artist=%a
 set icecast_default_charset=ISO-8859-1
 set id3_default_charset=ISO-8859-1
 set input.cdio.cddb_url=freedb.freedb.org:8880
 set lib_sort=albumartist date album discnumber tracknumber title filename
 set mixer.alsa.channel=
 set mixer.alsa.device=
+set mixer.oss.channel=PCM
+set mixer.oss.device=
 set mixer.pulse.restore_volume=1
+set mouse=false
 set output_plugin=pulse
 set passwd=
 set pl_sort=
-set play_library=true
+set play_library=false
 set play_sorted=true
 set repeat=false
 set repeat_current=false
@@ -71,17 +83,20 @@ set replaygain=disabled
 set replaygain_limit=true
 set replaygain_preamp=6.000000
 set resume=true
+set rewind_offset=5
 set scroll_offset=2
 set set_term_title=true
+set show_all_tracks=true
 set show_current_bitrate=false
 set show_hidden=false
-set show_remaining_time=true
+set show_playback_position=true
+set show_remaining_time=false
 set shuffle=false
 set skip_track_info=false
 set smart_artist_sort=false
 set softvol=false
 set softvol_state=0 0
-set status_display_program=/home/jere/.config/cmus/cmuscrobbler.sh
+set status_display_program=cmusfm
 set wrap_search=true
 bind browser backspace browser-up
 bind browser i toggle show_hidden
