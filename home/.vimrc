@@ -15,7 +15,7 @@ Plug 'Valloric/YouCompleteMe', {'do': 'python2 ./install.py --clang-completer --
 Plug 'marijnh/tern_for_vim'
 Plug 'rust-lang/rust.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'phildawes/racer'
+" Plug 'phildawes/racer'
 Plug 'elzr/vim-json'
 Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 Plug 'dyng/ctrlsf.vim'
@@ -43,6 +43,7 @@ filetype plugin indent on
 set tabstop=4 shiftwidth=4 expandtab
 autocmd FileType *.go set noexpandtab
 autocmd BufNewFile,BufRead *.jade set shiftwidth=2 tabstop=2
+autocmd BufNewFile,BufRead *.pug set shiftwidth=2 tabstop=2 syntax=jade
 autocmd BufNewFile,BufRead *.jsx set tabstop=2 shiftwidth=2
 autocmd BufNewFile,BufRead *.js set shiftwidth=2 ts=2
 autocmd BufNewFile,BufRead *.R set shiftwidth=2 ts=2
