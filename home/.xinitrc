@@ -40,6 +40,9 @@ nitrogen --restore
 # start daemons for monitor and volume keys
 xfce4-volumed-pulse
 
+# fix default X cursor
+xsetroot -cursor_name left_ptr
+
 # gnome-keyring-daemon
 eval $(ssh-agent)
 export SSH_AUTH_SOCK
