@@ -177,3 +177,6 @@ endif
 
 let R_tmux_split = 1
 let R_assign = 0
+
+" Keep chained functions at the same indent
+let g:javascript_opfirst = 1
