@@ -35,6 +35,8 @@ Plug 'maksimr/vim-jsbeautify'
 Plug 'tpope/vim-surround'
 Plug 'jalvesaq/Nvim-R'
 Plug 'hynek/vim-python-pep8-indent'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 call plug#end()
 
@@ -181,3 +183,9 @@ let R_assign = 0
 
 " Keep chained functions at the same indent
 let g:javascript_opfirst = 1
+
+let g:UltiSnipsExpandTrigger = "<c-a>"
+let g:UltiSnipsListSnippets = "<c-l>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+let g:UltiSnipsSnippetsDir="~/.vim/plugged/vim-snippets/UltiSnips"
