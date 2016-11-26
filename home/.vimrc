@@ -34,6 +34,7 @@ Plug 'mxw/vim-jsx'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'tpope/vim-surround'
 Plug 'jalvesaq/Nvim-R'
+Plug 'hynek/vim-python-pep8-indent'
 
 call plug#end()
 
