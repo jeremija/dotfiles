@@ -36,7 +36,7 @@ Plug 'tpope/vim-surround'
 Plug 'jalvesaq/Nvim-R'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'jeremija/vim-snippets', {'branch': 'private'}
 
 call plug#end()
 
