@@ -53,7 +53,11 @@ let g:jsx_ext_required = 0
 if s:is_linux
   set clipboard=unnamedplus
 elseif s:is_mac
-  set clipboard=unnamed
+  if has('nvim')
+    set clipboard+=unnamedplus
+  else
+    set clipboard=unnamed
+  endif
 endif
 set colorcolumn=80
 set wildmenu
