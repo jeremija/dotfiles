@@ -91,12 +91,6 @@ autocmd FileType css noremap <buffer> <Leader>F :call CSSBeautify()<CR>
 map <C-PageUp> :bprev<CR>
 map <C-PageDown> :bnext<CR>
 
-" highlight current line
-"set cursorline cursorcolumn
-set cursorline
-hi CursorLine cterm=NONE ctermbg=black
-hi CursorColumn cterm=NONE ctermbg=black
-
 set hlsearch
 set lazyredraw
 
@@ -104,10 +98,20 @@ set backspace=2
 
 let g:ycm_extra_conf_globlist = ['~/src/private/*', '~/src/linux/*', '~/src/mnlth/*', '!~/*']
 
-" configure syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+set laststatus=2
+set statusline=
+set statusline +=%1*\ %n\ %*       "buffer number
+set statusline +=\ %<%F            "full path
+set statusline +=%m                "modified flag
+set statusline +=%1*%=%{&ff}%*     "file format
+set statusline +=%y                "file type
+set statusline +=%1*%5l%*          "current line
+set statusline +=%2*/%L%*          "total lines
+set statusline +=%1*%4v\ %*        "virtual column number
+set statusline +=%2*0x%04B\ %*     "character under cursor
+set statusline+=%#warningmsg#                 "syntastic
+set statusline+=%{SyntasticStatuslineFlag()}  "syntastic
+set statusline+=%*                            "switch to default color
 
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
@@ -117,44 +121,12 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_html_checkers=['']
-" end syntastic config
+let g:syntastic_mode_map = { "mode": "passive" }
 let g:vim_json_syntax_conceal = 0
 let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
-" airline config
-" let g:airline_powerline_fonts = 1
-if !exists('g:airline_symbols')
-  if s:is_linux
-    let g:airline_symbols = {}
-    let g:airline_left_sep = '⮀'
-    let g:airline_left_alt_sep = '⮁'
-    let g:airline_right_sep = '⮂'
-    let g:airline_right_alt_sep = '⮃'
-    let g:airline_symbols.branch = '⭠'
-    let g:airline_symbols.readonly = '⭤'
-    let g:airline_symbols.linenr = '⭡'
-
-    let g:airline#extensions#tabline#left_sep = '⮀'
-    let g:airline#extensions#tabline#left_alt_sep = '⮁'
-  elseif s:is_mac
-    let g:airline_symbols = {}
-    let g:airline_left_sep = ' '
-    let g:airline_left_alt_sep = ' '
-    let g:airline_right_sep = ' '
-    let g:airline_right_alt_sep = ' '
-    let g:airline_symbols.branch = '⎇'
-    let g:airline_symbols.readonly = '🔒'
-    let g:airline_symbols.linenr = '␊'
-
-    let g:airline#extensions#tabline#left_sep = ' '
-    let g:airline#extensions#tabline#left_alt_sep = ' '
-  endif
-endif
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme = 'bubblegum'
-let g:airline#extensions#tabline#buffer_min_count = 2
-set laststatus=2
 
 let python_highlight_all = 1
 
@@ -170,6 +142,9 @@ let $RUST_SRC_PATH=$HOME."/Downloads/rustc-1.0.0/src/"
 set t_Co=256
 colorscheme last256
 hi MatchParen cterm=bold ctermbg=none ctermfg=white
+hi StatusLine  ctermfg=172 ctermbg=none
+" hi User1 ctermbg=none ctermfg=172
+hi StatusLineNC  ctermfg=none ctermbg=none cterm=none
 
 set timeout
 set timeoutlen=750
