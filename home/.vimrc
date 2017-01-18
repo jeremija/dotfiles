@@ -7,35 +7,35 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/syntastic'
 Plug 'fatih/vim-go'
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
 Plug 'flazz/vim-colorschemes'
 Plug 'nvie/vim-flake8'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'Valloric/YouCompleteMe', {'do': 'python2 ./install.py --clang-completer --gocode-completer --tern-completer'}
-Plug 'rust-lang/rust.vim'
+" Plug 'rust-lang/rust.vim'
 Plug 'airblade/vim-gitgutter'
 " Plug 'phildawes/racer'
 Plug 'elzr/vim-json'
-Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
-Plug 'dyng/ctrlsf.vim'
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
+" Plug 'dyng/ctrlsf.vim'
 Plug 'kien/ctrlp.vim'
-Plug 'tfnico/vim-gradle'
+"Plug 'tfnico/vim-gradle'
 Plug 'tpope/vim-commentary'
-Plug 'vim-scripts/Rename'
+"Plug 'vim-scripts/Rename'
 Plug 'haya14busa/incsearch.vim'
 Plug 'hdima/python-syntax'
 Plug 'digitaltoad/vim-jade'
 Plug 'tpope/vim-sleuth'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'maksimr/vim-jsbeautify'
-Plug 'tpope/vim-surround'
+"Plug 'maksimr/vim-jsbeautify'
+"Plug 'tpope/vim-surround'
 Plug 'jalvesaq/Nvim-R'
 Plug 'hynek/vim-python-pep8-indent'
-Plug 'SirVer/ultisnips'
-Plug 'jeremija/vim-snippets', {'branch': 'private'}
+"Plug 'SirVer/ultisnips'
+"Plug 'jeremija/vim-snippets', {'branch': 'private'}
+"Plug 'vim-scripts/SQLUtilities'
+"Plug 'vim-scripts/Align'
 
 call plug#end()
 
