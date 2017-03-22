@@ -90,6 +90,10 @@ autocmd FileType css noremap <buffer> <Leader>F :call CSSBeautify()<CR>
 
 map <C-PageUp> :bprev<CR>
 map <C-PageDown> :bnext<CR>
+map <C-H> <C-W>h
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-L> <C-W>l
 
 set hlsearch
 set lazyredraw
@@ -119,6 +123,7 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_go_checkers = ['golint']
 let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_html_checkers=['']
 let g:syntastic_mode_map = { "mode": "passive" }
@@ -145,6 +150,7 @@ hi MatchParen cterm=bold ctermbg=none ctermfg=white
 hi StatusLine  ctermfg=172 ctermbg=none
 " hi User1 ctermbg=none ctermfg=172
 hi StatusLineNC  ctermfg=none ctermbg=none cterm=none
+hi VertSplit ctermbg=none cterm=none
 
 set timeout
 set timeoutlen=750
