@@ -151,6 +151,7 @@ hi StatusLine  ctermfg=172 ctermbg=none
 " hi User1 ctermbg=none ctermfg=172
 hi StatusLineNC  ctermfg=none ctermbg=none cterm=none
 hi VertSplit ctermbg=none cterm=none
+hi Normal ctermfg=248
 
 set timeout
 set timeoutlen=750
