@@ -36,6 +36,7 @@ Plug 'hynek/vim-python-pep8-indent'
 "Plug 'jeremija/vim-snippets', {'branch': 'private'}
 "Plug 'vim-scripts/SQLUtilities'
 "Plug 'vim-scripts/Align'
+Plug 'mtscout6/syntastic-local-eslint.vim'
 
 call plug#end()
 
@@ -168,6 +169,7 @@ let R_assign = 0
 
 " Keep chained functions at the same indent
 let g:javascript_opfirst = 1
+let g:javascript_plugin_jsdoc = 1
 
 let g:UltiSnipsExpandTrigger = "<c-a>"
 let g:UltiSnipsListSnippets = "<c-l>"
