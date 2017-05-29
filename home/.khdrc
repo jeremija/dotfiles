@@ -139,7 +139,7 @@ khd mode tree color 0xddfabd2f
 khd mode space color 0xddb16286
 khd mode info color 0xddcd950c
 
-
+ctrl + cmd - t : open -a iTerm
 
 # toggle between modes
 ctrl - f                :   khd -e "mode activate switcher"
@@ -148,6 +148,11 @@ ytd + ctrl - f          :   khd -e "mode activate default"
 swap + ctrl - f         :   khd -e "mode activate default"
 space + ctrl - f        :   khd -e "mode activate default"
 tree + ctrl - f         :   khd -e "mode activate default"
+switcher - return       :   khd -e "mode activate default"
+ytd - return            :   khd -e "mode activate default"
+swap - return           :   khd -e "mode activate default"
+space - return          :   khd -e "mode activate default"
+tree - return           :   khd -e "mode activate default"
 
 switcher - w            :   khd -e "mode activate ytd"
 switcher - a            :   khd -e "mode activate swap"
@@ -159,9 +164,6 @@ switcher - q            :   khd -e "mode activate info"
 
 # switcher mode
 switcher - r            :   khd -e "reload" # reload config
-
-switcher - return       :   open -na /Applications/HyperTerm.app;\
-                            khd -e "mode activate default"
 
 switcher - h            :   kwmc window -f west
 switcher - l            :   kwmc window -f east
@@ -277,14 +279,14 @@ tree - s                :   kwmc window -c split - mode toggle;\
 tree - c                :   kwmc window -c type toggle;\
                             khd -e "mode activate default"
 
-tree - h                :   kwmc window -c expand 0.05 west
-tree - j                :   kwmc window -c expand 0.05 south
-tree - k                :   kwmc window -c expand 0.05 north
-tree - l                :   kwmc window -c expand 0.05 east
-tree + shift - h        :   kwmc window -c reduce 0.05 west
-tree + shift - j        :   kwmc window -c reduce 0.05 south
-tree + shift - k        :   kwmc window -c reduce 0.05 north
-tree + shift - l        :   kwmc window -c reduce 0.05 east
+tree - h                :   kwmc window -c expand 0.02 west
+tree - j                :   kwmc window -c expand 0.02 south
+tree - k                :   kwmc window -c expand 0.02 north
+tree - l                :   kwmc window -c expand 0.02 east
+tree + shift - h        :   kwmc window -c reduce 0.02 west
+tree + shift - j        :   kwmc window -c reduce 0.02 south
+tree + shift - k        :   kwmc window -c reduce 0.02 north
+tree + shift - l        :   kwmc window -c reduce 0.02 east
 
 tree - p                :   kwmc tree -pseudo create
 tree + shift - p        :   kwmc tree -pseudo destroy
@@ -295,26 +297,44 @@ tree + shift - o        :   kwmc window -s next
 
 
 # default
-cmd + alt + ctrl - m    :   kwmc window -mk focused
-cmd + alt + ctrl - h    :   kwmc window -mk west wrap
-cmd + alt + ctrl - l    :   kwmc window -mk east wrap
-cmd + alt + ctrl - j    :   kwmc window -mk south wrap
-cmd + alt + ctrl - k    :   kwmc window -mk north wrap
+# cmd + alt + ctrl - m    :   kwmc window -mk focused
+# cmd + alt + ctrl - h    :   kwmc window -mk west wrap
+# cmd + alt + ctrl - l    :   kwmc window -mk east wrap
+# cmd + alt + ctrl - j    :   kwmc window -mk south wrap
+# cmd + alt + ctrl - k    :   kwmc window -mk north wrap
 
-cmd - 0x2A              :   khd -w "aasvi93@hotmail.com"
-cmd - 7                 :   khd -w "\\"
-cmd - 8                 :   khd -w "{"
-cmd - 9                 :   khd -w "}"
+# cmd - 0x2A              :   khd -w "aasvi93@hotmail.com"
+# cmd - 7                 :   khd -w "\\"
+# cmd - 8                 :   khd -w "{"
+# cmd - 9                 :   khd -w "}"
 
 
 # global hotkeys
 
-cmd - h            :   kwmc window -f west
-cmd - l            :   kwmc window -f east
-cmd - j            :   kwmc window -f south
-cmd - k            :   kwmc window -f north
+ctrl + cmd - h          :   kwmc window -f west
+ctrl + cmd - l          :   kwmc window -f east
+ctrl + cmd - j          :   kwmc window -f south
+ctrl + cmd - k          :   kwmc window -f north
 
-cmd + shift - h    :   kwmc window -s west
-cmd + shift - l    :   kwmc window -s east
-cmd + shift - j    :   kwmc window -s south
-cmd + shift - k    :   kwmc window -s north
+cmd -h : false
+
+cmd + shift - h     :   kwmc window -s west
+cmd + shift - l     :   kwmc window -s east
+cmd + shift - j     :   kwmc window -s south
+cmd + shift - k     :   kwmc window -s north
+
+cmd + shift - 1     :   kwmc window -m space 1
+cmd + shift - 2     :   kwmc window -m space 2
+cmd + shift - 3     :   kwmc window -m space 3
+cmd + shift - 4     :   kwmc window -m space 4
+cmd + shift - 5     :   kwmc window -m space 5
+cmd + shift - 6     :   kwmc window -m space 6
+
+ctrl - 1            :   kwmc space -fExperimental 1
+ctrl - 2            :   kwmc space -fExperimental 2
+ctrl - 3            :   kwmc space -fExperimental 3
+ctrl - 4            :   kwmc space -fExperimental 4
+ctrl - 5            :   kwmc space -fExperimental 5
+ctrl - 6            :   kwmc space -fExperimental 6
+ctrl - left         :   kwmc space -fExperimental left
+ctrl - right        :   kwmc space -fExperimental right
