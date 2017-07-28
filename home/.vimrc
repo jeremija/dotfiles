@@ -5,7 +5,9 @@ let s:is_linux = !v:shell_error && s:uname == "Linux"
 " dependency for https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+" Plug 'mtscout6/syntastic-local-eslint.vim'
+Plug 'w0rp/ale'
 Plug 'fatih/vim-go'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'flazz/vim-colorschemes'
@@ -22,7 +24,7 @@ Plug 'kien/ctrlp.vim'
 "Plug 'tfnico/vim-gradle'
 Plug 'tpope/vim-commentary'
 "Plug 'vim-scripts/Rename'
-Plug 'haya14busa/incsearch.vim'
+Plug 'tpope/vim-sensible'
 Plug 'hdima/python-syntax'
 Plug 'digitaltoad/vim-jade'
 Plug 'tpope/vim-sleuth'
@@ -36,7 +38,7 @@ Plug 'hynek/vim-python-pep8-indent'
 "Plug 'jeremija/vim-snippets', {'branch': 'private'}
 "Plug 'vim-scripts/SQLUtilities'
 "Plug 'vim-scripts/Align'
-Plug 'mtscout6/syntastic-local-eslint.vim'
+Plug 'qpkorr/vim-bufkill'
 
 call plug#end()
 
@@ -71,8 +73,9 @@ set directory=~/.vim/.swp//
 set completeopt=longest,menuone
 
 let mapleader = ","
-map <Leader>l :call SyntasticCheck()<CR>
-map <C-F> :CtrlSF<Space>
+" map <Leader>l :call SyntasticCheck()<CR>
+map <Leader>j :ALEPreviousWrap<CR>
+map <Leader>k :ALENextWrap<CR>
 map <Leader>c :Commentary<CR>
 map <Leader>. :bnext<CR>
 map <Leader>m :bprev<CR>
@@ -103,6 +106,20 @@ set backspace=2
 
 let g:ycm_extra_conf_globlist = ['~/src/private/*', '~/src/linux/*', '~/src/mnlth/*', '!~/*']
 
+" status function for ale
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? 'OK' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+endfunction
+
 set laststatus=2
 set statusline=
 set statusline +=%1*\ %n\ %*       "buffer number
@@ -114,8 +131,9 @@ set statusline +=%1*%5l%*          "current line
 set statusline +=%2*/%L%*          "total lines
 set statusline +=%1*%4v\ %*        "virtual column number
 set statusline +=%2*0x%04B\ %*     "character under cursor
-set statusline+=%#warningmsg#                 "syntastic
-set statusline+=%{SyntasticStatuslineFlag()}  "syntastic
+" set statusline+=%#warningmsg#                 "syntastic
+" set statusline+=%{SyntasticStatuslineFlag()}  "syntastic
+set statusline +=%{LinterStatus()}
 set statusline+=%*                            "switch to default color
 
 let g:syntastic_always_populate_loc_list = 0
@@ -135,10 +153,6 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-stand
 
 
 let python_highlight_all = 1
-
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
 
 " racer
 set hidden
@@ -162,6 +176,8 @@ set ttimeoutlen=250
 if has('nvim')
   set ttimeout
   set ttimeoutlen=0
+
+  set guicursor=
 endif
 
 let R_tmux_split = 1
@@ -176,3 +192,4 @@ let g:UltiSnipsListSnippets = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 let g:UltiSnipsSnippetsDir="~/.vim/plugged/vim-snippets/UltiSnips"
+let g:gitgutter_sign_column_always = 1
