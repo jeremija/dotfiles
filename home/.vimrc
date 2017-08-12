@@ -79,6 +79,7 @@ map <Leader>k :ALENextWrap<CR>
 map <Leader>c :Commentary<CR>
 map <Leader>. :bnext<CR>
 map <Leader>m :bprev<CR>
+map <Leader>r :vertical resize 82<CR>
 
 autocmd FileType javascript vnoremap <buffer> <Leader>f :call RangeJsBeautify()<CR>
 autocmd FileType json vnoremap <buffer> <Leader>f :call RangeJsonBeautify()<CR>
@@ -192,4 +193,6 @@ let g:UltiSnipsListSnippets = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 let g:UltiSnipsSnippetsDir="~/.vim/plugged/vim-snippets/UltiSnips"
+
 let g:gitgutter_sign_column_always = 1
+let g:ale_sign_column_always = 1
