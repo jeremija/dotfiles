@@ -106,6 +106,7 @@ set lazyredraw
 set backspace=2
 
 let g:ycm_extra_conf_globlist = ['~/src/private/*', '~/src/linux/*', '~/src/mnlth/*', '!~/*']
+let g:ycm_auto_trigger = 0
 
 " status function for ale
 function! LinterStatus() abort
