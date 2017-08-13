@@ -2,43 +2,28 @@ let s:uname = system("echo -n \"$(uname)\"")
 let s:is_mac = !v:shell_error && s:uname == "Darwin"
 let s:is_linux = !v:shell_error && s:uname == "Linux"
 
-" dependency for https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
 
-" Plug 'scrooloose/syntastic'
-" Plug 'mtscout6/syntastic-local-eslint.vim'
 Plug 'w0rp/ale'
 Plug 'fatih/vim-go'
-" Plug 'terryma/vim-multiple-cursors'
 Plug 'flazz/vim-colorschemes'
 Plug 'nvie/vim-flake8'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'Valloric/YouCompleteMe', {'do': 'python2 ./install.py --clang-completer --gocode-completer --tern-completer'}
-" Plug 'rust-lang/rust.vim'
 Plug 'airblade/vim-gitgutter'
-" Plug 'phildawes/racer'
 Plug 'elzr/vim-json'
-" Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
-" Plug 'dyng/ctrlsf.vim'
-Plug 'kien/ctrlp.vim'
-"Plug 'tfnico/vim-gradle'
 Plug 'tpope/vim-commentary'
-"Plug 'vim-scripts/Rename'
 Plug 'tpope/vim-sensible'
 Plug 'hdima/python-syntax'
 Plug 'digitaltoad/vim-jade'
 Plug 'tpope/vim-sleuth'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-"Plug 'maksimr/vim-jsbeautify'
-"Plug 'tpope/vim-surround'
 Plug 'jalvesaq/Nvim-R'
 Plug 'hynek/vim-python-pep8-indent'
-"Plug 'SirVer/ultisnips'
-"Plug 'jeremija/vim-snippets', {'branch': 'private'}
-"Plug 'vim-scripts/SQLUtilities'
-"Plug 'vim-scripts/Align'
 Plug 'qpkorr/vim-bufkill'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf'
 
 call plug#end()
 
@@ -71,15 +56,18 @@ set directory=~/.vim/.swp//
 
 " sane menu config
 set completeopt=longest,menuone
+set hlsearch
+set lazyredraw
+set backspace=2
 
-let mapleader = ","
-" map <Leader>l :call SyntasticCheck()<CR>
-map <Leader>j :ALEPreviousWrap<CR>
-map <Leader>k :ALENextWrap<CR>
-map <Leader>c :Commentary<CR>
-map <Leader>. :bnext<CR>
-map <Leader>m :bprev<CR>
-map <Leader>r :vertical resize 82<CR>
+set t_Co=256
+colorscheme last256
+hi MatchParen cterm=bold ctermbg=none ctermfg=white
+hi StatusLine  ctermfg=172 ctermbg=none
+" hi User1 ctermbg=none ctermfg=172
+hi StatusLineNC  ctermfg=none ctermbg=none cterm=none
+hi VertSplit ctermbg=none cterm=none
+hi Normal ctermfg=248
 
 autocmd FileType javascript vnoremap <buffer> <Leader>f :call RangeJsBeautify()<CR>
 autocmd FileType json vnoremap <buffer> <Leader>f :call RangeJsonBeautify()<CR>
@@ -93,17 +81,21 @@ autocmd FileType jsx noremap <buffer> <Leader>F :call JsxBeautify()<CR>
 autocmd FileType html noremap <buffer> <Leader>F :call HtmlBeautify()<CR>
 autocmd FileType css noremap <buffer> <Leader>F :call CSSBeautify()<CR>
 
+let mapleader = ","
+map <Leader>j :ALEPreviousWrap<CR>
+map <Leader>k :ALENextWrap<CR>
+map <Leader>c :Commentary<CR>
+map <Leader>. :bnext<CR>
+map <Leader>m :bprev<CR>
+map <Leader>r :vertical resize 82<CR>
+
 map <C-PageUp> :bprev<CR>
 map <C-PageDown> :bnext<CR>
 map <C-H> <C-W>h
 map <C-J> <C-W>j
 map <C-K> <C-W>k
 map <C-L> <C-W>l
-
-set hlsearch
-set lazyredraw
-
-set backspace=2
+map <C-p> :GFiles<CR>
 
 let g:ycm_extra_conf_globlist = ['~/src/private/*', '~/src/linux/*', '~/src/mnlth/*', '!~/*']
 let g:ycm_auto_trigger = 0
@@ -133,8 +125,6 @@ set statusline +=%1*%5l%*          "current line
 set statusline +=%2*/%L%*          "total lines
 set statusline +=%1*%4v\ %*        "virtual column number
 set statusline +=%2*0x%04B\ %*     "character under cursor
-" set statusline+=%#warningmsg#                 "syntastic
-" set statusline+=%{SyntasticStatuslineFlag()}  "syntastic
 set statusline +=%{LinterStatus()}
 set statusline+=%*                            "switch to default color
 
@@ -153,6 +143,18 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
+" Keep chained functions at the same indent
+let g:javascript_opfirst = 1
+let g:javascript_plugin_jsdoc = 1
+
+let g:UltiSnipsExpandTrigger = "<c-a>"
+let g:UltiSnipsListSnippets = "<c-l>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+let g:UltiSnipsSnippetsDir="~/.vim/plugged/vim-snippets/UltiSnips"
+
+let g:gitgutter_sign_column_always = 1
+let g:ale_sign_column_always = 1
 
 let python_highlight_all = 1
 
@@ -160,15 +162,6 @@ let python_highlight_all = 1
 set hidden
 let g:racer_cmd = $HOME."/.vim/plugged/racer/target/release/racer"
 let $RUST_SRC_PATH=$HOME."/Downloads/rustc-1.0.0/src/"
-
-set t_Co=256
-colorscheme last256
-hi MatchParen cterm=bold ctermbg=none ctermfg=white
-hi StatusLine  ctermfg=172 ctermbg=none
-" hi User1 ctermbg=none ctermfg=172
-hi StatusLineNC  ctermfg=none ctermbg=none cterm=none
-hi VertSplit ctermbg=none cterm=none
-hi Normal ctermfg=248
 
 set timeout
 set timeoutlen=750
@@ -184,16 +177,3 @@ endif
 
 let R_tmux_split = 1
 let R_assign = 0
-
-" Keep chained functions at the same indent
-let g:javascript_opfirst = 1
-let g:javascript_plugin_jsdoc = 1
-
-let g:UltiSnipsExpandTrigger = "<c-a>"
-let g:UltiSnipsListSnippets = "<c-l>"
-let g:UltiSnipsJumpForwardTrigger = "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
-let g:UltiSnipsSnippetsDir="~/.vim/plugged/vim-snippets/UltiSnips"
-
-let g:gitgutter_sign_column_always = 1
-let g:ale_sign_column_always = 1
