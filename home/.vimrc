@@ -95,7 +95,7 @@ map <C-H> <C-W>h
 map <C-J> <C-W>j
 map <C-K> <C-W>k
 map <C-L> <C-W>l
-map <C-p> :GFiles<CR>
+map <C-p> :GitFiles --cached --others --exclude-standard<CR>
 
 let g:ycm_extra_conf_globlist = ['~/src/private/*', '~/src/linux/*', '~/src/mnlth/*', '!~/*']
 let g:ycm_auto_trigger = 0
@@ -153,7 +153,7 @@ let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 let g:UltiSnipsSnippetsDir="~/.vim/plugged/vim-snippets/UltiSnips"
 
-let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 let g:ale_sign_column_always = 1
 
 let python_highlight_all = 1
