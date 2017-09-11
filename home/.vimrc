@@ -9,7 +9,7 @@ Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
 Plug 'nvie/vim-flake8'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'Valloric/YouCompleteMe', {'do': 'python3 ./install.py --clang-completer --gocode-completer --tern-completer'}
+Plug 'Valloric/YouCompleteMe', {'do': 'python3 ./install.py --clang-completer --gocode-completer --tern-completer --racer-completer'}
 Plug 'airblade/vim-gitgutter'
 Plug 'elzr/vim-json'
 Plug 'tpope/vim-commentary'
@@ -24,6 +24,7 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'qpkorr/vim-bufkill'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf'
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
@@ -161,8 +162,6 @@ let python_highlight_all = 1
 
 " racer
 set hidden
-let g:racer_cmd = $HOME."/.vim/plugged/racer/target/release/racer"
-let $RUST_SRC_PATH=$HOME."/Downloads/rustc-1.0.0/src/"
 
 set timeout
 set timeoutlen=750
