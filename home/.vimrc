@@ -9,7 +9,7 @@ Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
 Plug 'nvie/vim-flake8'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'Valloric/YouCompleteMe', {'do': 'python2 ./install.py --clang-completer --gocode-completer --tern-completer'}
+Plug 'Valloric/YouCompleteMe', {'do': 'python3 ./install.py --clang-completer --gocode-completer --tern-completer'}
 Plug 'airblade/vim-gitgutter'
 Plug 'elzr/vim-json'
 Plug 'tpope/vim-commentary'
