@@ -89,6 +89,9 @@ map <Leader>c :Commentary<CR>
 map <Leader>. :bnext<CR>
 map <Leader>m :bprev<CR>
 map <Leader>r :vertical resize 82<CR>
+map <Leader>gd :YcmCompleter GoToDefinition<CR>
+map <Leader>gt :YcmCompleter GetType<CR>
+map <Leader>gD :YcmCompleter GetDoc<CR>
 
 map <C-PageUp> :bprev<CR>
 map <C-PageDown> :bnext<CR>
