@@ -14,44 +14,51 @@ export $(dbus-launch)
 xrdb -m ~/.Xresources
 xmodmap ~/.Xmodmap
 
-# set default mouse cursor
-xsetroot -cursor_name left_ptr
 # mouse sensitivity
 xset m 3/2 1
 # keyboard repeat rate
 xset r rate 200 100
+
 # disable touchpad
 xinput set-int-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 8 0
 # set scroll with right mouse button, instead of the first
 xinput set-prop "TPPS/2 IBM TrackPoint" "libinput Button Scrolling Button" 3
-# enable network manager and bluetooth applets
-nm-applet &
-blueman-applet &
-# compositing manager
-compton --backend glx &
-# lock the screen when going to suspend
-xss-lock ~/.i3/lock.sh &
+
+# xrandr --output HDMI-0 --left-of DVI-D-0 --primary
+xrandr --output HDMI-1 --left-of DVI-D-1 --primary
 
 # disable screen blanking
 xset dpms 600 600 600
 xset s off
 
-# xrandr --output HDMI-0 --left-of DVI-D-0 --primary
-xrandr --output HDMI-1 --left-of DVI-D-1 --primary
-# restore wallpaper
-nitrogen --restore
-
-# start daemons for monitor and volume keys
-xfce4-volumed-pulse
-
-# fix default X cursor
-xsetroot -cursor_name left_ptr
-
 # gnome-keyring-daemon
 eval $(ssh-agent)
 export SSH_AUTH_SOCK
 
-~/scripts/redshift/redshift.sh reread
-
 # run xbindkeys
 xbindkeys
+
+case $DESKTOP_SESSION in
+  plasma|xfce)
+  ;;
+  *)
+    # enable network manager and bluetooth applets
+    nm-applet &
+    blueman-applet &
+    # compositing manager
+    compton --backend glx &
+    # lock the screen when going to suspend
+    xss-lock ~/.i3/lock.sh &
+
+    # restore wallpaper
+    nitrogen --restore
+
+    # fix default X cursor
+    xsetroot -cursor_name left_ptr
+
+    ~/scripts/redshift/redshift.sh reread
+
+    # start daemons for monitor and volume keys
+    # xfce4-volumed-pulse
+  ;;
+esac
