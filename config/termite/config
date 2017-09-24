@@ -14,7 +14,7 @@ font = Dina 6
 scrollback_lines = 10000
 search_wrap = true
 #icon_name = terminal
-#geometry = 640x480
+geometry = 640x480
 
 # "system", "on" or "off"
 cursor_blink = system
