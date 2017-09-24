@@ -7,8 +7,10 @@ allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
-#font = Dina 8
-font = Dina Powerline 8
+font = Dina 6
+# font = Dina Powerline 8
+# font = erus erusfont regular 8
+# font = xos4 Terminus Bold
 scrollback_lines = 10000
 search_wrap = true
 #icon_name = terminal
@@ -30,11 +32,11 @@ cursor_shape = block
 #modify_other_keys = false
 
 [colors]
-#cursor = #dcdccc
+cursor = #ffffff
 foreground = #ffffff
 foreground_bold = #ffffff
 #background = #1d1d1d
-background = rgba(29, 29, 29, 0.95)
+background = rgba(0, 0, 0, 0.9)
 
 # 20% background transparency (requires a compositor)
 #background = rgba(63, 63, 63, 0.8)
