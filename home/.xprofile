@@ -38,6 +38,8 @@ export SSH_AUTH_SOCK
 # run xbindkeys
 xbindkeys
 
+~/scripts/redshift/redshift.sh reread
+
 case $DESKTOP_SESSION in
   plasma|xfce)
   ;;
@@ -55,8 +57,6 @@ case $DESKTOP_SESSION in
 
     # fix default X cursor
     xsetroot -cursor_name left_ptr
-
-    ~/scripts/redshift/redshift.sh reread
 
     # start daemons for monitor and volume keys
     # xfce4-volumed-pulse
