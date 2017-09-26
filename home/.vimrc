@@ -15,7 +15,7 @@ Plug 'elzr/vim-json'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sensible'
 Plug 'hdima/python-syntax'
-Plug 'digitaltoad/vim-jade'
+Plug 'digitaltoad/vim-pug'
 Plug 'tpope/vim-sleuth'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -25,19 +25,15 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf'
 Plug 'rust-lang/rust.vim'
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 
 syntax on
 autocmd BufNewFile,BufRead *.md set syntax=markdown
 filetype plugin indent on
-set tabstop=4 shiftwidth=4 expandtab
-autocmd FileType *.go set noexpandtab
-autocmd BufNewFile,BufRead *.jade set shiftwidth=2 tabstop=2
-autocmd BufNewFile,BufRead *.pug set shiftwidth=2 tabstop=2 syntax=jade
-autocmd BufNewFile,BufRead *.jsx set tabstop=2 shiftwidth=2
-autocmd BufNewFile,BufRead *.js set shiftwidth=2 ts=2
-autocmd BufNewFile,BufRead *.R set shiftwidth=2 ts=2
+set tabstop=2 shiftwidth=2 expandtab
+autocmd FileType *.go set noexpandtab tabstop=4 shiftwidth=4
 let g:jsx_ext_required = 0
 if s:is_linux
   set clipboard=unnamedplus
@@ -69,18 +65,6 @@ hi StatusLine  ctermfg=172 ctermbg=none
 hi StatusLineNC  ctermfg=none ctermbg=none cterm=none
 hi VertSplit ctermbg=none cterm=none
 hi Normal ctermfg=248
-
-autocmd FileType javascript vnoremap <buffer> <Leader>f :call RangeJsBeautify()<CR>
-autocmd FileType json vnoremap <buffer> <Leader>f :call RangeJsonBeautify()<CR>
-autocmd FileType jsx vnoremap <buffer> <Leader>f :call RangeJsxBeautify()<CR>
-autocmd FileType html vnoremap <buffer> <Leader>f :call RangeHtmlBeautify()<CR>
-autocmd FileType css vnoremap <buffer> <Leader>f :call RangeCSSBeautify()<CR>
-
-autocmd FileType javascript noremap <buffer> <Leader>F :call JsBeautify()<CR>
-autocmd FileType json noremap <buffer> <Leader>F :call JsonBeautify()<CR>
-autocmd FileType jsx noremap <buffer> <Leader>F :call JsxBeautify()<CR>
-autocmd FileType html noremap <buffer> <Leader>F :call HtmlBeautify()<CR>
-autocmd FileType css noremap <buffer> <Leader>F :call CSSBeautify()<CR>
 
 let mapleader = ","
 map <Leader>j :ALEPreviousWrap<CR>
@@ -160,6 +144,7 @@ let g:UltiSnipsSnippetsDir="~/.vim/plugged/vim-snippets/UltiSnips"
 
 set signcolumn=yes
 let g:ale_sign_column_always = 1
+let g:ale_lint_on_text_changed = 'never'
 
 let python_highlight_all = 1
 
@@ -180,3 +165,7 @@ endif
 
 let R_tmux_split = 1
 let R_assign = 0
+let g:typescript_opfirst='\%([<>=,?^%|*/&]\|\([-:+]\)\1\@!\|!=\|in\%(stanceof\)\=\>\)'
+let g:ale_pattern_options = {
+\  'node_modules': {'ale_enabled': 0},
+\}
