@@ -169,3 +169,6 @@ let g:typescript_opfirst='\%([<>=,?^%|*/&]\|\([-:+]\)\1\@!\|!=\|in\%(stanceof\)\
 let g:ale_pattern_options = {
 \  'node_modules': {'ale_enabled': 0},
 \}
+let g:ale_fixers = {
+\  'javascript': ['eslint'],
+\}
