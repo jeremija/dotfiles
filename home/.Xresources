@@ -65,23 +65,23 @@ URxvt.keysym.C-V: eval:paste_clipboard
 URxvt.transparent:   true
 URxvt.shading:       20
 
-rofi.font: Cantarell Bold 12
-!rofi.fg: #ccc
-!rofi.bg: #222
-!rofi.bgalt: #111
-rofi.width: 20
-rofi.terminal: termite
+rofi.color-window: argb:EE373B47, #373B47
+rofi.color-normal: argb:00373B47, #737783, argb:00373B47, argb:00373B47, #f9f9f9
+rofi.color-urgent: argb:00373B47, #cc6666, argb:e54b5160, argb:00373B47, #f9f9f9
+rofi.color-active: argb:00373B47, #65acff, argb:e44b5160, argb:00373B47, #f9f9f9
+rofi.width: 30
+rofi.lines: 16
+rofi.font: Open Sans Light 25
+rofi.bw: 0
+rofi.padding: 40
+rofi.eh: 1
+rofi.sidebar-mode: true
+rofi.separator-style: none
+rofi.hide-scrollbar: true
+rofi.show-icons: true
+rofi.location: 8
+rofi.modi: window,run,drun
+rofi.terminal: gnome-terminal
 rofi.ssh-client: ssh
 rofi.ssh-command: {terminal} -e "{ssh-client} {host}"
 rofi.run-shell-command: {terminal} -e "{cmd}"
-rofi.color-enabled: true
-!rofi.bordercolor: #252525
-!rofi.highlightbg: #285577
-!rofi.highlightfg: #fff
-
-!! State:           bg       fg       bgalt    hlbg     hlfg
-rofi.color-normal: #222222, #cccccc, #222222, #285577, #ffffff
-rofi.color-urgent: #444444, #cccccc, #222222, #285577, #ffffff
-rofi.color-active: #333333, #cccccc, #222222, #285577, #ffffff
-!!                  bg       fg
-rofi.color-window: #222222,#222222
