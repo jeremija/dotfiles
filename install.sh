@@ -42,6 +42,19 @@ function link_config {
     cd ..
 }
 
+function link_app_support {
+    echo "processing Library/Application Support (mac-only)..."
+    cd Library/Application\ Support
+    for dir in *; do
+        if [ "$1" == "unlink" ]; then
+            delete_symlink "$HOME/Library/Application Support/$dir"
+        else
+            symlink "$dir" "$HOME/Library/Application Support"
+        fi
+    done
+    cd ..
+}
+
 function link_zprezto {
     echo "processing zprezto..."
     for rcfile in "${HOME}"/.zprezto/runcoms/z*; do
@@ -57,6 +70,7 @@ function install_dotfiles {
     link_files
     link_config
     link_zprezto
+    link_app_support
 
     mkdir -p "$HOME/scripts/redshift"
     mkdir -p "$HOME/.vim/autoload"
@@ -68,6 +82,7 @@ function uninstall_dotfiles {
     link_zprezto unlink
     link_files unlink
     link_config unlink
+    link_app_support unlink
     delete_symlink "$HOME/.vim/autoload/plug.vim"
     delete_symlink "$HOME/scripts/redshift/redshift.sh"
 }
