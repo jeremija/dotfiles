@@ -52,7 +52,7 @@ function link_app_support {
             symlink "$dir" "$HOME/Library/Application Support"
         fi
     done
-    cd ..
+    cd ../..
 }
 
 function link_zprezto {
