@@ -1,3 +1,5 @@
+HOMEBREW_NO_AUTO_UPDATE := 1
+
 install: FORCE
 	./install.sh
 
