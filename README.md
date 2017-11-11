@@ -1,11 +1,24 @@
 # dotfiles
 
-Install: `./install.sh`
+## Install
 
-Uninstall: `./install.sh --uninstall`
+```bash
+cd ~
+git clone --recursive https://github.com/jeremija/dotfiles
+cd dotfiles
+./install.sh
+```
 
-**NOTE** Installation should not replace any existing files, but uninstall
-might remove them! Tested on Arch Linux and Mac OS.
+Tested on Arch Linux and Mac OS.
+
+## Uninstall
+
+```bash
+cd ~/dotfiles
+./install.sh --uninstall
+```
+
+**NOTE** Installation should not replace any existing files, but uninstall **WILL** remove them!
 
 # node version manager (nvm)
 

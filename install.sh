@@ -1,94 +1,49 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd $DIR
+cd "$DIR"
 
 # make * process both hidden and regular files
 shopt -s dotglob
 
+mode="$1"
+
 function symlink {
-    # echo linking "$1" to "$2"
-    ln -sv "$PWD/$1" "$2"
+    if [ "$mode" != "--uninstall" ]; then
+        ln -nsv "$PWD/$1" "$2"
+    else
+        rm -v "$2"
+    fi
 }
 
-function delete_symlink {
-    echo unlinking "$1"
-    unlink "$1"
+function title {
+    echo ""
+    echo == $@ ==
 }
 
 function link_files {
-    echo "processing home folder dotfiles..."
-    cd home
-    for file in *; do
-        if [ "$1" == "unlink" ]; then
-            delete_symlink "$HOME/$file"
-        else
-            symlink "$file" "$HOME"
-        fi
+    src="$1"
+    target="$2"
+    glob="${3:-*}"
+    prefix="$4"
+    title "$src"
+    cd "$src"
+    for file in $glob; do
+        symlink "$file" "$target/$prefix$file"
     done
-    cd ..
+    cd "$DIR"
 }
 
-function link_config {
-    echo "processing .config directories..."
-    mkdir -p ~/.config
-    cd config
-    for dir in *; do
-        if [ "$1" == "unlink" ]; then
-            delete_symlink "$HOME/.config/$dir"
-        else
-            symlink "$dir" "$HOME/.config"
-        fi
-    done
-    cd ..
-}
+link_files home "$HOME"
+link_files config "$HOME/.config"
+link_files home/.zprezto/runcoms "$HOME" "z*" "."
+link_files "Library/Application Support" "$HOME/Library/Application Support"
 
-function link_app_support {
-    echo "processing Library/Application Support (mac-only)..."
-    cd Library/Application\ Support
-    for dir in *; do
-        if [ "$1" == "unlink" ]; then
-            delete_symlink "$HOME/Library/Application Support/$dir"
-        else
-            symlink "$dir" "$HOME/Library/Application Support"
-        fi
-    done
-    cd ../..
-}
+title "scripts"
+mkdir -pv "$HOME/scripts/redshift"
+symlink redshift/redshift.sh "$HOME/scripts/redshift/redshift.sh"
 
-function link_zprezto {
-    echo "processing zprezto..."
-    for rcfile in "${HOME}"/.zprezto/runcoms/z*; do
-        if [ "$1" == "unlink" ]; then
-	    delete_symlink "${HOME}/.$(basename ${rcfile})"
-        else
-            ln -sv "${rcfile}" "${HOME}/.$(basename ${rcfile})"
-        fi
-    done
-}
+title ".vim"
+mkdir -pv "$HOME/.vim/autoload"
+symlink vim-plug/plug.vim "$HOME/.vim/autoload/plug.vim"
 
-function install_dotfiles {
-    link_files
-    link_config
-    link_zprezto
-    link_app_support
-
-    mkdir -p "$HOME/scripts/redshift"
-    mkdir -p "$HOME/.vim/autoload"
-    symlink ./vim-plug/plug.vim "$HOME/.vim/autoload/plug.vim"
-    symlink ./redshift/redshift.sh "$HOME/scripts/redshift"
-}
-
-function uninstall_dotfiles {
-    link_zprezto unlink
-    link_files unlink
-    link_config unlink
-    link_app_support unlink
-    delete_symlink "$HOME/.vim/autoload/plug.vim"
-    delete_symlink "$HOME/scripts/redshift/redshift.sh"
-}
-
-if [ "$1" == "--uninstall" ]; then
-    uninstall_dotfiles
-else
-    install_dotfiles
-fi
+title 'done'
