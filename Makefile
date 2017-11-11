@@ -8,8 +8,10 @@ mac-setup: mac-tweaks mac-homebrew mac-brew mac-cask
 
 mac-homebrew: FORCE
 	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	cat brew.tap | xargs brew tap
 
 mac-backup: FORCE
+	brew tap > brew.tap
 	brew cask list > brew.cask.list
 	brew leaves > brew.leaves
 

@@ -1,3 +1,4 @@
+cmus
 coreutils
 figlet
 fzf
@@ -12,4 +13,6 @@ rust
 the_silver_searcher
 tig
 tmux
+watch
+wget
 zsh
