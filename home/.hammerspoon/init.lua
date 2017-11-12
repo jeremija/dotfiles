@@ -73,4 +73,64 @@ end
 
 module.start() -- autostart
 
+function bind (modifiers, char, command)
+  hs.hotkey.bind(modifiers, char, function ()
+    os.execute(command)
+  end)
+end
+
+hs.alert.defaultStyle.radius = 2
+hs.alert.defaultStyle.textSize = 12
+hs.alert.defaultStyle.textFont = 'Monaco'
+hs.alert.defaultStyle.strokeColor = { black = 0, alpha = 0 }
+hs.alert.defaultStyle.strokeWidth = 0
+
+alertId = nil
+function alert (text)
+  hs.alert.closeSpecific(alertId)
+  alertId = hs.alert.show(text)
+end
+
+function displaySong ()
+  local f = io.popen("/usr/local/bin/cmus-remote -Q | head -n 4 | sed \"s|file $HOME/||g\"")
+  local lines = {}
+  local count = 0
+  for line in f:lines() do
+    count = count + 1
+    print(line)
+    table.insert(lines, line)
+  end
+
+  local status = lines[1] or 'status stopped'
+  if status == 'status stopped' then
+    alert('status stopped')
+    return
+  end
+  local file = lines[2] or ''
+  local duration = string.match(lines[3], '%d+') or 1
+  local position = string.match(lines[4], '%d+') or 0
+  local blocks = 30
+  local percent = math.floor(blocks * position / duration + 0.5)
+  local progress = string.rep('=', percent)
+  local left = string.rep(' ', blocks - percent)
+  alert(status .. '\n' .. file .. '\n' .. '[' .. progress .. '>' .. left .. ']')
+end
+
+function cmus (action, callback)
+  return function ()
+    os.execute("/usr/local/bin/cmus-remote " .. action)
+    if callback then
+      callback()
+    end
+  end
+end
+
+hs.hotkey.bind({"shift", "alt"}, "z", cmus("--prev", displaySong))
+hs.hotkey.bind({"shift", "alt"}, "x", cmus("--play", displaySong))
+hs.hotkey.bind({"shift", "alt"}, "c", cmus("--pause", displaySong))
+hs.hotkey.bind({"shift", "alt"}, "v", cmus("--stop", displaySong))
+hs.hotkey.bind({"shift", "alt"}, "b", cmus("--next", displaySong))
+hs.hotkey.bind({"shift", "alt"}, "3", cmus("--seek -5s", displaySong))
+hs.hotkey.bind({"shift", "alt"}, "4", cmus("--seek +5s", displaySong))
+
 return module
