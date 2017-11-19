@@ -3,7 +3,7 @@
 	url = https://github.com/jimeh/tmux-themepack
 [submodule "home/.zprezto"]
 	path = home/.zprezto
-	url = https://github.com/jeremija/prezto
+	url = ../prezto
 [submodule "vim-plug"]
 	path = vim-plug
 	url = https://github.com/junegunn/vim-plug
