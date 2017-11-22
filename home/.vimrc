@@ -1,6 +1,7 @@
 let s:uname = system("echo -n \"$(uname)\"")
 let s:is_mac = !v:shell_error && s:uname == "Darwin"
 let s:is_linux = !v:shell_error && s:uname == "Linux"
+let g:ycm_install_command = 'python3 ./install.py --clang-completer --gocode-completer --tern-completer --racer-completer' . (s:is_linux ? ' --system-libclang' : '')
 
 call plug#begin('~/.vim/plugged')
 
@@ -9,7 +10,7 @@ Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
 Plug 'nvie/vim-flake8'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'Valloric/YouCompleteMe', {'do': 'python3 ./install.py --clang-completer --gocode-completer --tern-completer --racer-completer'}
+Plug 'Valloric/YouCompleteMe', {'do': g:ycm_install_command}
 Plug 'airblade/vim-gitgutter'
 Plug 'elzr/vim-json'
 Plug 'tpope/vim-commentary'
