@@ -27,6 +27,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf'
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
+Plug 'galooshi/vim-import-js'
 
 call plug#end()
 
@@ -68,6 +69,9 @@ hi VertSplit ctermbg=none cterm=none
 hi Normal ctermfg=248
 
 let mapleader = ","
+map <Leader>i :ImportJSWord<CR>
+map <Leader>I :ImportJSFix<CR>
+map <Leader>gi :ImportJSGoto<CR>
 map <Leader>j :ALEPreviousWrap<CR>
 map <Leader>k :ALENextWrap<CR>
 map <Leader>c :Commentary<CR>
