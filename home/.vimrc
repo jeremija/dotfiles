@@ -60,7 +60,7 @@ set lazyredraw
 set backspace=2
 
 set t_Co=256
-colorscheme last256
+silent! colorscheme last256
 hi MatchParen cterm=bold ctermbg=none ctermfg=white
 hi StatusLine  ctermfg=172 ctermbg=none
 " hi User1 ctermbg=none ctermfg=172
