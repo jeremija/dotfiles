@@ -4,6 +4,9 @@ run pacman -Syu
 run pacman -S --noconfirm base base-devel neovim python3 python-neovim git \
 zsh go rust cmake clang tmux nodejs npm fzf ripgrep python-virtualenv && \
 paccache -rk 0
+run echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
+run locale-gen
+
 arg USER=user
 
 run useradd -u 1000 -m ${USER}
