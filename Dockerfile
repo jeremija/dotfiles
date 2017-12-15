@@ -2,7 +2,7 @@ from base/archlinux:latest
 
 run pacman -Syu
 run pacman -S --noconfirm base base-devel neovim python3 python-neovim git \
-zsh go rust cmake clang tmux nodejs npm fzf ripgrep python-virtualenv && \
+zsh go rust cmake clang tmux nodejs npm fzf ripgrep python-virtualenv openssh && \
 paccache -rk 0
 run echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
 run locale-gen
