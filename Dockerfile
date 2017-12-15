@@ -2,7 +2,7 @@ from base/archlinux:latest
 
 run pacman -Syu
 run pacman -S --noconfirm base-devel neovim python3 python-neovim git \
-zsh go rust cmake clang tmux nodejs npm fzf ripgrep virtualenv
+zsh go rust cmake clang tmux nodejs npm fzf ripgrep python-virtualenv
 arg USER=user
 
 run useradd -u 1000 -m ${USER}
