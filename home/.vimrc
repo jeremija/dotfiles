@@ -28,6 +28,8 @@ Plug 'junegunn/fzf'
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'galooshi/vim-import-js'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
 
