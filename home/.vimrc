@@ -83,6 +83,10 @@ map <Leader>r :vertical resize 82<CR>
 map <Leader>gd :YcmCompleter GoToDefinition<CR>
 map <Leader>gt :YcmCompleter GetType<CR>
 map <Leader>gD :YcmCompleter GetDoc<CR>
+map <Leader>n :NERDTree<CR>
+map <Leader>N :NERDTreeClose<CR>
+map <Leader>f :NERDTreeFind<CR>
+map <Leader>F :NERDTreeCWD<CR>
 
 map <C-PageUp> :bprev<CR>
 map <C-PageDown> :bnext<CR>
