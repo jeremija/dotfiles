@@ -51,7 +51,7 @@ set dsp.ao.driver=
 set dsp.ao.wav_counter=1
 set dsp.ao.wav_dir=/home/jere
 set dsp.oss.device=
-set follow=false
+set follow=true
 set format_current= %a :: %y. %l :: %n. %t
 set format_playlist= %-25%a %y. %-18%l %2%D%3n. %t%= %d 
 set format_playlist_va= %-25%A %y. %-18%l %2%D%3n. %t (%a)%= %d
@@ -71,15 +71,15 @@ set mixer.alsa.device=
 set mixer.oss.channel=PCM
 set mixer.oss.device=
 set mixer.pulse.restore_volume=1
-set mouse=false
+set mouse=true
 set output_plugin=pulse
 set passwd=
 set pl_sort=
-set play_library=false
+set play_library=true
 set play_sorted=true
 set repeat=false
 set repeat_current=false
-set replaygain=disabled
+set replaygain=album-preferred
 set replaygain_limit=true
 set replaygain_preamp=6.000000
 set resume=true
@@ -149,6 +149,9 @@ bind common k win-up
 bind common l seek +5
 bind common left seek -5
 bind common m toggle aaa_mode
+bind common mlb_click_selected win-activate
+bind common mouse_scroll_down win-down
+bind common mouse_scroll_up win-up
 bind common n search-next
 bind common o toggle play_sorted
 bind common p win-mv-after
