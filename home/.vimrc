@@ -72,31 +72,31 @@ hi VertSplit ctermbg=none cterm=none
 hi Normal ctermfg=248
 
 let mapleader = ","
-map <Leader>i :ImportJSWord<CR>
-map <Leader>I :ImportJSFix<CR>
-map <Leader>gi :ImportJSGoto<CR>
-map <Leader>j :ALEPreviousWrap<CR>
-map <Leader>k :ALENextWrap<CR>
-map <Leader>c :Commentary<CR>
-map <Leader>. :bnext<CR>
-map <Leader>m :bprev<CR>
-map <Leader>r :vertical resize 82<CR>
-map <Leader>gd :YcmCompleter GoToDefinition<CR>
-map <Leader>gt :YcmCompleter GetType<CR>
-map <Leader>gD :YcmCompleter GetDoc<CR>
-map <Leader>n :NERDTree<CR>
-map <Leader>N :NERDTreeClose<CR>
-map <Leader>f :NERDTreeFind<CR>
-map <Leader>F :NERDTreeCWD<CR>
+noremap <Leader>i :ImportJSWord<CR>
+noremap <Leader>I :ImportJSFix<CR>
+noremap <Leader>gi :ImportJSGoto<CR>
+noremap <Leader>j :ALEPreviousWrap<CR>
+noremap <Leader>k :ALENextWrap<CR>
+noremap <Leader>c :Commentary<CR>
+noremap <Leader>. :bnext<CR>
+noremap <Leader>m :bprev<CR>
+noremap <Leader>r :vertical resize 82<CR>
+noremap <Leader>gd :YcmCompleter GoToDefinition<CR>
+noremap <Leader>gt :YcmCompleter GetType<CR>
+noremap <Leader>gD :YcmCompleter GetDoc<CR>
+noremap <Leader>n :NERDTree<CR>
+noremap <Leader>N :NERDTreeClose<CR>
+noremap <Leader>f :NERDTreeFind<CR>
+noremap <Leader>F :NERDTreeCWD<CR>
 
-map <C-PageUp> :bprev<CR>
-map <C-PageDown> :bnext<CR>
-map <C-H> <C-W>h
-map <C-J> <C-W>j
-map <C-K> <C-W>k
-map <C-L> <C-W>l
-" map <C-p> :GitFiles --cached --others --exclude-standard<CR>
-map <silent> <C-p> :call fzf#run({ 'source': 'rg --hidden --files $(git rev-parse --show-cdup)', 'sink': 'e' })<CR>
+noremap <C-PageUp> :bprev<CR>
+noremap <C-PageDown> :bnext<CR>
+noremap <C-H> <C-W>h
+noremap <C-J> <C-W>j
+noremap <C-K> <C-W>k
+noremap <C-L> <C-W>l
+" noremap <C-p> :GitFiles --cached --others --exclude-standard<CR>
+noremap <silent> <C-p> :call fzf#run({ 'source': 'rg --hidden --files $(git rev-parse --show-cdup)', 'sink': 'e' })<CR>
 
 let g:ycm_extra_conf_globlist = ['~/src/private/*', '~/src/linux/*', '~/src/mnlth/*', '!~/*']
 let g:ycm_auto_trigger = 0
