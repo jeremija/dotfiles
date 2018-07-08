@@ -105,7 +105,7 @@ noremap <C-L> <C-W>l
 " noremap <C-p> :GitFiles --cached --others --exclude-standard<CR>
 noremap <silent> <C-p> :call fzf#run({ 'source': 'rg --hidden --files $(git rev-parse --show-cdup)', 'sink': 'e' })<CR>
 
-let g:ycm_extra_conf_globlist = ['~/src/private/*', '~/src/linux/*', '~/src/mnlth/*', '!~/*']
+"let g:ycm_extra_conf_globlist = ['~/src/private/*', '~/src/linux/*', '~/src/mnlth/*', '!~/*']
 let g:ycm_auto_trigger = 0
 
 " status function for ale
@@ -136,30 +136,11 @@ set statusline +=%2*0x%04B\ %*     "character under cursor
 set statusline +=%{LinterStatus()}
 set statusline+=%*                            "switch to default color
 
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_go_checkers = ['golint']
-let g:syntastic_java_javac_config_file_enabled = 1
-let g:syntastic_html_checkers=['']
-let g:syntastic_mode_map = { "mode": "passive" }
 let g:vim_json_syntax_conceal = 0
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
 " Keep chained functions at the same indent
 let g:javascript_opfirst = 1
 let g:javascript_plugin_jsdoc = 1
-
-let g:UltiSnipsExpandTrigger = "<c-a>"
-let g:UltiSnipsListSnippets = "<c-l>"
-let g:UltiSnipsJumpForwardTrigger = "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
-let g:UltiSnipsSnippetsDir="~/.vim/plugged/vim-snippets/UltiSnips"
 
 set signcolumn=yes
 let g:ale_sign_column_always = 1
