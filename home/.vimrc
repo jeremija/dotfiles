@@ -71,6 +71,7 @@ hi StatusLineNC  ctermfg=none ctermbg=none cterm=none
 hi VertSplit ctermbg=none cterm=none
 hi TabLine ctermfg=none ctermbg=none cterm=none
 hi Normal ctermfg=248
+hi ColorColumn ctermbg=232
 
 let mapleader = ","
 noremap <Leader>i :ImportJSWord<CR>
@@ -85,6 +86,7 @@ noremap <Leader>tn :tabnext<CR>
 noremap <Leader>tp :tabprev<CR>
 noremap <Leader>tc :tabnew<CR>
 noremap <Leader>tx :tabclose<CR>
+noremap <Leader>b :Buffers<CR>
 noremap <Leader>r :vertical resize 82<CR>
 noremap <Leader>gd :YcmCompleter GoToDefinition<CR>
 noremap <Leader>gt :YcmCompleter GetType<CR>
