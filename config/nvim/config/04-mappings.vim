@@ -6,8 +6,6 @@ noremap <Leader>k :ALENextWrap<CR>
 noremap <Leader>c :Commentary<CR>
 noremap <Leader>. :bnext<CR>
 noremap <Leader>m :bprev<CR>
-noremap <Leader>tn :tabnext<CR>
-noremap <Leader>tp :tabprev<CR>
 noremap <Leader>tc :tabnew<CR>
 noremap <Leader>tx :tabclose<CR>
 noremap <Leader>b :Buffers<CR>
