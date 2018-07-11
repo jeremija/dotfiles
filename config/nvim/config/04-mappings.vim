@@ -25,3 +25,10 @@ noremap <C-J> <C-W>j
 noremap <C-K> <C-W>k
 noremap <C-L> <C-W>l
 noremap <silent> <C-p> :call fzf#run({ 'source': 'rg --hidden --files $(git rev-parse --show-cdup)', 'sink': 'e' })<CR>
+
+command! -bang -nargs=* Rg
+	\ call fzf#vim#grep(
+	\   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+	\   <bang>0 ? fzf#vim#with_preview('up:60%')
+	\           : fzf#vim#with_preview('right:50%:hidden', '?'),
+	\   <bang>0)
