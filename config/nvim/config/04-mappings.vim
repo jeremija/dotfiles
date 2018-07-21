@@ -1,6 +1,8 @@
 let mapleader = ","
 noremap <Leader>i :ImportJSWord<CR>
-noremap <Leader>I :ImportJSFix<CR> noremap <Leader>gi :ImportJSGoto<CR>
+noremap <Leader>I :ImportJSFix<CR>
+noremap <Leader>gi :ImportJSGoto<CR>
+inoremap <C-k> <Esc>:ImportJSWord<CR>a
 noremap <Leader>j :ALEPreviousWrap<CR>
 noremap <Leader>k :ALENextWrap<CR>
 noremap <Leader>c :Commentary<CR>
