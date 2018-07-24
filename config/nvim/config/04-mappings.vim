@@ -14,11 +14,16 @@ noremap <Leader>b :Buffers<CR>
 noremap <Leader>r :vertical resize 82<CR>
 noremap <Leader>gd :YcmCompleter GoToDefinition<CR>
 noremap <Leader>gt :YcmCompleter GetType<CR>
+noremap <Leader>gT :YcmCompleter GoTo<CR>
 noremap <Leader>gD :YcmCompleter GetDoc<CR>
-noremap <Leader>n :NERDTree<CR>
-noremap <Leader>N :NERDTreeClose<CR>
-noremap <Leader>f :NERDTreeFind<CR>
-noremap <Leader>F :NERDTreeCWD<CR>
+noremap <Leader>gR :YcmCompleter GetToReferences<CR>
+noremap <Leader>gr :YcmCompleter RefactorRename<Space>
+noremap <Leader>gx :YcmCompleter RestartServer<CR>
+noremap <Leader>nt :NERDTreeToggle<CR>
+noremap <Leader>nx :NERDTreeClose<CR>
+noremap <Leader>nf :NERDTreeFind<CR>
+noremap <Leader>nF :NERDTreeFocus<CR>
+noremap <Leader>nc :NERDTreeCWD<CR>
 
 noremap <C-PageUp> :bprev<CR>
 noremap <C-PageDown> :bnext<CR>
