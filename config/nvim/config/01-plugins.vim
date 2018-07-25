@@ -59,3 +59,5 @@ let g:ale_pattern_options = {
 let g:ale_fixers = {
 \  'javascript': ['eslint'],
 \}
+
+let g:NERDTreeIgnore = ['__pycache__', '\.pyc$']
