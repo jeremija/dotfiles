@@ -10,6 +10,12 @@
 "bright +2"
     XF86MonBrightnessUp
 
+"pactl set-sink-volume 0 +5%"
+    XF86AudioRaiseVolume
+
+"pactl set-sink-volume 0 -5%"
+    XF86AudioLowerVolume
+
 "kbdlight down"
     XF86KbdBrightnessDown
 
@@ -19,7 +25,7 @@
 "pactl set-source-mute  $(pacmd list-sources | grep '\* index' | sed -r 's/  \* index: ([0-9])/\1/g') toggle"
     XF86AudioMicMute
 
-"gnome-terminal"
+"termite"
     Mod4 + Return
 
 "~/.i3/lock.sh"
@@ -99,6 +105,6 @@
 "cmus-remote --seek +5"
     Control + Mod4 + 4
 
-"~/.i3/status.sh --notify"
-    Mod4 + q
+# "~/.i3/status.sh --notify"
+#     Mod4 + q
 

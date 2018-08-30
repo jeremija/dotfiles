@@ -57,8 +57,5 @@ case $DESKTOP_SESSION in
 
     # fix default X cursor
     xsetroot -cursor_name left_ptr
-
-    # start daemons for monitor and volume keys
-    # xfce4-volumed-pulse
   ;;
 esac
