@@ -34,6 +34,7 @@ function link_files {
 }
 
 link_files home "$HOME"
+mkdir -pv "$HOME/.config"
 link_files config "$HOME/.config"
 link_files home/.zprezto/runcoms "$HOME" "z*" "."
 link_files "Library/Application Support" "$HOME/Library/Application Support"
