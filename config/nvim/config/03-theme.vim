@@ -6,7 +6,7 @@ hi StatusLineNC  ctermfg=none ctermbg=none cterm=none
 hi VertSplit ctermbg=none cterm=none
 hi TabLine ctermfg=none ctermbg=none cterm=none
 hi Normal ctermfg=248
-hi ColorColumn ctermbg=232
+hi ColorColumn ctermbg=233
 
 " status function for ale
 function! LinterStatus() abort
