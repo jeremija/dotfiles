@@ -32,6 +32,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'jparise/vim-graphql'
 Plug 'ianks/vim-tsx'
+Plug 'SirVer/ultisnips'
+Plug 'jeremija/vim-snippets', {'branch': 'private'}
 
 call plug#end()
 
@@ -62,3 +64,9 @@ let g:ale_fixers = {
 \}
 
 let g:NERDTreeIgnore = ['__pycache__', '\.pyc$']
+
+let g:UltiSnipsSnippetsDir = "~/.vim/plugged/vim-snippets/UltiSnips"
+let g:UltiSnipsExpandTrigger = "<c-s>"
+let g:UltiSnipsListSnippets = "<c-l>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
