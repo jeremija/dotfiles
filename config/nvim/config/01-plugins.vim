@@ -31,6 +31,7 @@ Plug 'galooshi/vim-import-js'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'jparise/vim-graphql'
+Plug 'ianks/vim-tsx'
 
 call plug#end()
 
