@@ -34,6 +34,7 @@ Plug 'jparise/vim-graphql'
 Plug 'ianks/vim-tsx'
 Plug 'SirVer/ultisnips'
 Plug 'jeremija/vim-snippets', {'branch': 'private'}
+Plug 'editorconfig/editorconfig-vim'
 
 call plug#end()
 
