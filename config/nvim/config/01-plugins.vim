@@ -59,6 +59,10 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_pattern_options = {
 \  'node_modules': {'ale_enabled': 0},
 \}
+let g:ale_linters_ignore = {
+\   'typescript': ['tslint'],
+\   'typescript.tsx': ['tslint'],
+\}
 let g:ale_fixers = {
 \  'javascript': ['eslint'],
 \}
