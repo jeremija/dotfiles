@@ -29,6 +29,9 @@ set backspace=2
 " racer
 set hidden
 
+" make gitgutter update faster (default is 4000)
+set updatetime=100
+
 set timeout
 set timeoutlen=750
 set ttimeoutlen=250

@@ -10,7 +10,7 @@ Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
 Plug 'nvie/vim-flake8'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'Valloric/YouCompleteMe', {'do': g:ycm_install_command}
+" Plug 'Valloric/YouCompleteMe', {'do': g:ycm_install_command}
 Plug 'airblade/vim-gitgutter'
 Plug 'elzr/vim-json'
 Plug 'tpope/vim-commentary'
@@ -67,6 +67,7 @@ let g:ale_linters_ignore = {
 let g:ale_fixers = {
 \  'javascript': ['eslint'],
 \}
+let g:ale_completion_enabled = 1
 
 let g:NERDTreeIgnore = ['__pycache__', '\.pyc$']
 

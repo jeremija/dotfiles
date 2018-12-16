@@ -12,13 +12,12 @@ noremap <Leader>tc :tabnew<CR>
 noremap <Leader>tx :tabclose<CR>
 noremap <Leader>b :Buffers<CR>
 noremap <Leader>r :vertical resize 82<CR>
-noremap <Leader>gd :YcmCompleter GoToDefinition<CR>
-noremap <Leader>gt :YcmCompleter GetType<CR>
-noremap <Leader>gT :YcmCompleter GoTo<CR>
-noremap <Leader>gD :YcmCompleter GetDoc<CR>
-noremap <Leader>gR :YcmCompleter GetToReferences<CR>
-noremap <Leader>gr :YcmCompleter RefactorRename<Space>
-noremap <Leader>gx :YcmCompleter RestartServer<CR>
+noremap <Leader>gd :ALEGoToDefinition<CR>
+noremap <Leader>gt :ALEHover<CR>
+noremap <Leader>gT :ALEGoToDefinitionInTab<CR>
+" noremap <Leader>gD :YcmCompleter GetDoc<CR>
+noremap <Leader>gR :ALEFindReferences<CR>
+" noremap <Leader>gr :YcmCompleter RefactorRename<Space>
 noremap <Leader>nt :NERDTreeToggle<CR>
 noremap <Leader>nx :NERDTreeClose<CR>
 noremap <Leader>nf :NERDTreeFind<CR>
