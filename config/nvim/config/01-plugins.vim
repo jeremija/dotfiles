@@ -1,16 +1,13 @@
 let s:uname = system("echo -n \"$(uname)\"")
 let g:is_mac = !v:shell_error && s:uname == "Darwin"
 let g:is_linux = !v:shell_error && s:uname == "Linux"
-let g:ycm_install_command = 'python3 ./install.py --clang-completer --gocode-completer --tern-completer --racer-completer' . (g:is_linux ? ' --system-libclang' : '')
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'w0rp/ale'
-Plug 'fatih/vim-go'
+Plug 'jeremija/ale', {'branch': 'jeremija/bingo'}
 Plug 'flazz/vim-colorschemes'
 Plug 'nvie/vim-flake8'
 Plug 'ntpeters/vim-better-whitespace'
-" Plug 'Valloric/YouCompleteMe', {'do': g:ycm_install_command}
 Plug 'airblade/vim-gitgutter'
 Plug 'elzr/vim-json'
 Plug 'tpope/vim-commentary'
@@ -35,6 +32,8 @@ Plug 'ianks/vim-tsx'
 Plug 'SirVer/ultisnips'
 Plug 'jeremija/vim-snippets', {'branch': 'private'}
 Plug 'editorconfig/editorconfig-vim'
+Plug 'udalov/kotlin-vim'
+Plug 'junegunn/vader.vim'
 
 call plug#end()
 
@@ -66,8 +65,15 @@ let g:ale_linters_ignore = {
 \}
 let g:ale_fixers = {
 \  'javascript': ['eslint'],
+\  'typescript': ['tslint'],
+\  'go': ['gofmt', 'goimports'],
 \}
 let g:ale_completion_enabled = 1
+let g:ale_kotlin_languageserver_executable = 'kotlin-language-server'
+" let g:ale_go_bingo_options = '--mode stdio --logfile /tmp/lspserver.log --trace'
+let g:ale_linters = {
+\  'go': ['gofmt', 'golint', 'govet', 'bingo']
+\}
 
 let g:NERDTreeIgnore = ['__pycache__', '\.pyc$']
 
