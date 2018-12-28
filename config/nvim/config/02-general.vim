@@ -15,10 +15,15 @@ elseif g:is_mac
 endif
 set colorcolumn=80
 set wildmenu
-silent !mkdir -p g:nvim_dir/.backup g:nvim_dir/.undo g:nvim_dir/.swp
-let &backupdir=g:nvim_dir . '/.backup//'
-let &undodir=g:nvim_dir . '/.undo//'
-let &directory=g:nvim_dir . '/.swp//'
+
+" create temporary files in separate directories
+let s:backupdir = g:nvim_dir . '/tmp/backup/'
+let s:undodir = g:nvim_dir . '/tmp/undo/'
+let s:directory = g:nvim_dir . '/tmp/swp/'
+silent execute '!mkdir -p ' . join([s:backupdir, s:undodir, s:directory], ' ')
+let &backupdir = s:backupdir . '/'
+let &undodir = s:undodir . '/'
+let &directory = s:directory . '/'
 
 " sane menu config
 set completeopt=longest,menuone
