@@ -7,3 +7,91 @@
 [submodule "vim-plug"]
 	path = vim-plug
 	url = https://github.com/junegunn/vim-plug
+[submodule "config/nvim/pack/bundle/start/vim-colorschemes"]
+	path = config/nvim/pack/bundle/start/vim-colorschemes
+	url = https://github.com/flazz/vim-colorschemes
+[submodule "config/nvim/pack/bundle/start/vim-flake8"]
+	path = config/nvim/pack/bundle/start/vim-flake8
+	url = https://github.com/nvie/vim-flake8
+[submodule "config/nvim/pack/bundle/start/vim-better-whitespace"]
+	path = config/nvim/pack/bundle/start/vim-better-whitespace
+	url = https://github.com/ntpeters/vim-better-whitespace
+[submodule "config/nvim/pack/bundle/start/vim-gitgutter"]
+	path = config/nvim/pack/bundle/start/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter
+[submodule "config/nvim/pack/bundle/start/vim-json"]
+	path = config/nvim/pack/bundle/start/vim-json
+	url = https://github.com/elzr/vim-json
+[submodule "config/nvim/pack/bundle/start/vim-commentary"]
+	path = config/nvim/pack/bundle/start/vim-commentary
+	url = https://github.com/tpope/vim-commentary
+[submodule "config/nvim/pack/bundle/start/vim-sensible"]
+	path = config/nvim/pack/bundle/start/vim-sensible
+	url = https://github.com/tpope/vim-sensible
+[submodule "config/nvim/pack/bundle/start/python-syntax"]
+	path = config/nvim/pack/bundle/start/python-syntax
+	url = https://github.com/hdima/python-syntax
+[submodule "config/nvim/pack/bundle/start/vim-pug"]
+	path = config/nvim/pack/bundle/start/vim-pug
+	url = https://github.com/digitaltoad/vim-pug
+[submodule "config/nvim/pack/bundle/start/vim-sleuth"]
+	path = config/nvim/pack/bundle/start/vim-sleuth
+	url = https://github.com/tpope/vim-sleuth
+[submodule "config/nvim/pack/bundle/start/vim-javascript"]
+	path = config/nvim/pack/bundle/start/vim-javascript
+	url = https://github.com/pangloss/vim-javascript
+[submodule "config/nvim/pack/bundle/start/vim-jsx"]
+	path = config/nvim/pack/bundle/start/vim-jsx
+	url = https://github.com/mxw/vim-jsx
+[submodule "config/nvim/pack/bundle/start/Nvim-R"]
+	path = config/nvim/pack/bundle/start/Nvim-R
+	url = https://github.com/jalvesaq/Nvim-R
+[submodule "config/nvim/pack/bundle/start/vim-python-pep8-indent"]
+	path = config/nvim/pack/bundle/start/vim-python-pep8-indent
+	url = https://github.com/hynek/vim-python-pep8-indent
+[submodule "config/nvim/pack/bundle/start/vim-bufkill"]
+	path = config/nvim/pack/bundle/start/vim-bufkill
+	url = https://github.com/qpkorr/vim-bufkill
+[submodule "config/nvim/pack/bundle/start/fzf.vim"]
+	path = config/nvim/pack/bundle/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim
+[submodule "config/nvim/pack/bundle/start/fzf"]
+	path = config/nvim/pack/bundle/start/fzf
+	url = https://github.com/junegunn/fzf
+[submodule "config/nvim/pack/bundle/start/rust.vim"]
+	path = config/nvim/pack/bundle/start/rust.vim
+	url = https://github.com/rust-lang/rust.vim
+[submodule "config/nvim/pack/bundle/start/typescript-vim"]
+	path = config/nvim/pack/bundle/start/typescript-vim
+	url = https://github.com/leafgarland/typescript-vim
+[submodule "config/nvim/pack/bundle/start/vim-import-js"]
+	path = config/nvim/pack/bundle/start/vim-import-js
+	url = https://github.com/galooshi/vim-import-js
+[submodule "config/nvim/pack/bundle/start/nerdtree"]
+	path = config/nvim/pack/bundle/start/nerdtree
+	url = https://github.com/scrooloose/nerdtree
+[submodule "config/nvim/pack/bundle/start/nerdtree-git-plugin"]
+	path = config/nvim/pack/bundle/start/nerdtree-git-plugin
+	url = https://github.com/Xuyuanp/nerdtree-git-plugin
+[submodule "config/nvim/pack/bundle/start/vim-graphql"]
+	path = config/nvim/pack/bundle/start/vim-graphql
+	url = https://github.com/jparise/vim-graphql
+[submodule "config/nvim/pack/bundle/start/vim-tsx"]
+	path = config/nvim/pack/bundle/start/vim-tsx
+	url = https://github.com/ianks/vim-tsx
+[submodule "config/nvim/pack/bundle/start/ultisnips"]
+	path = config/nvim/pack/bundle/start/ultisnips
+	url = https://github.com/SirVer/ultisnips
+[submodule "config/nvim/pack/bundle/start/editorconfig-vim"]
+	path = config/nvim/pack/bundle/start/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim
+[submodule "config/nvim/pack/bundle/start/kotlin-vim"]
+	path = config/nvim/pack/bundle/start/kotlin-vim
+	url = https://github.com/udalov/kotlin-vim
+[submodule "config/nvim/pack/bundle/start/vader.vim"]
+	path = config/nvim/pack/bundle/start/vader.vim
+	url = https://github.com/junegunn/vader.vim
+[submodule "config/nvim/pack/bundle/start/vim-snippets"]
+	path = config/nvim/pack/bundle/start/vim-snippets
+	url = ../vim-snippets
+	branch = private
