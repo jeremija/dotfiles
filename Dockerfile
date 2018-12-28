@@ -26,8 +26,6 @@ run zsh -c 'source .nvm/nvm.sh'
 run mkdir opt && cd opt && zsh -c 'source ../.nvm/nvm.sh && npm install typescript'
 
 workdir /home/${USER}
-run cat .vimrc | sed '/plug#end/q' > .vimrc.install
-run nvim --headless -u .vimrc.install +'PlugInstall --sync' +qa
 
 run mkdir -p src/go src/rust src/js src/python
 run mkdir bin && ln -s /usr/bin/nvim bin/vim

@@ -15,9 +15,7 @@ noremap <Leader>r :vertical resize 82<CR>
 noremap <Leader>gd :ALEGoToDefinition<CR>
 noremap <Leader>gt :ALEHover<CR>
 noremap <Leader>gT :ALEGoToDefinitionInTab<CR>
-" noremap <Leader>gD :YcmCompleter GetDoc<CR>
 noremap <Leader>gR :ALEFindReferences<CR>
-" noremap <Leader>gr :YcmCompleter RefactorRename<Space>
 noremap <Leader>nt :NERDTreeToggle<CR>
 noremap <Leader>nx :NERDTreeClose<CR>
 noremap <Leader>nf :NERDTreeFind<CR>

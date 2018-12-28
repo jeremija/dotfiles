@@ -43,10 +43,6 @@ title "scripts"
 mkdir -pv "$HOME/scripts/redshift"
 symlink redshift/redshift.sh "$HOME/scripts/redshift/redshift.sh"
 
-title ".vim"
-mkdir -pv "$HOME/.vim/autoload"
-symlink vim-plug/plug.vim "$HOME/.vim/autoload/plug.vim"
-
 title "setting up python virtualenvs for neovim"
 $HOME/.config/nvim/python2/setup.sh
 $HOME/.config/nvim/python3/setup.sh

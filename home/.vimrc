@@ -1,7 +1,11 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:config_dir = expand('~/.config/nvim/config/')
+let g:nvim_dir = expand('~/.config/nvim')
+let &runtimepath = g:nvim_dir . ',' . &runtimepath
+let &packpath = g:nvim_dir . ',' . &packpath
+
+let s:config_dir = g:nvim_dir . '/config/'
 let g:python_host_prog = s:config_dir . '../python2/env/bin/python2'
 let g:python3_host_prog = s:config_dir . '../python3/env/bin/python3'
 

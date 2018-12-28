@@ -15,10 +15,10 @@ elseif g:is_mac
 endif
 set colorcolumn=80
 set wildmenu
-silent !mkdir -p ~/.vim/.backup ~/.vim/.undo ~/.vim/.swp
-set backupdir=~/.vim/.backup//
-set undodir=~/.vim/.undo//
-set directory=~/.vim/.swp//
+silent !mkdir -p g:nvim_dir/.backup g:nvim_dir/.undo g:nvim_dir/.swp
+let &backupdir=g:nvim_dir . '/.backup//'
+let &undodir=g:nvim_dir . '/.undo//'
+let &directory=g:nvim_dir . '/.swp//'
 
 " sane menu config
 set completeopt=longest,menuone

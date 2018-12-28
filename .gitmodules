@@ -92,3 +92,7 @@
 	path = config/nvim/pack/bundle/start/vim-snippets
 	url = ../vim-snippets
 	branch = private
+[submodule "config/nvim/pack/bundle/start/ale"]
+	path = config/nvim/pack/bundle/start/ale
+	url = ../ale
+	branch = jeremija/bingo
