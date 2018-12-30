@@ -557,3 +557,4 @@ key_bindings:
   - { key: X,        mods: Alt|Shift,  chars: "\x1bX"                    }
   - { key: Y,        mods: Alt|Shift,  chars: "\x1bY"                    }
   - { key: Z,        mods: Alt|Shift,  chars: "\x1bZ"                    }
+  - { key: Space,    mods: Control,    chars: "\x00"                     }

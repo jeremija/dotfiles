@@ -1,8 +1,20 @@
+function! GetCompletions() abort
+	let l:completion_enabled = get(g:, 'ale_completion_enabled', 0)
+	if !l:completion_enabled
+		call ale#completion#Enable()
+	endif
+	call ale#completion#GetCompletions()
+	if !l:completion_enabled
+		call ale#completion#Disable()
+	endif
+endfunction
+
 let mapleader = ","
 noremap <Leader>i :ImportJSWord<CR>
 noremap <Leader>I :ImportJSFix<CR>
 noremap <Leader>gi :ImportJSGoto<CR>
 inoremap <C-k> <Esc>:ImportJSWord<CR>a
+inoremap <silent><C-Space> <C-\><C-O>:call GetCompletions()<CR>
 noremap <Leader>j :ALEPreviousWrap<CR>
 noremap <Leader>k :ALENextWrap<CR>
 noremap <Leader>c :Commentary<CR>
@@ -29,6 +41,7 @@ noremap <C-J> <C-W>j
 noremap <C-K> <C-W>k
 noremap <C-L> <C-W>l
 noremap <silent> <C-p> :call fzf#run({ 'source': 'rg --hidden --files $(git rev-parse --show-cdup)', 'sink': 'e' })<CR>
+
 
 command! -bang -nargs=* Rg
 	\ call fzf#vim#grep(
