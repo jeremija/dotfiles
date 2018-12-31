@@ -30,11 +30,8 @@ let g:ale_fixers = {
 \  'typescript': ['tslint'],
 \  'go': ['gofmt', 'goimports'],
 \}
-let g:ale_completion_enabled = 1
 let g:ale_kotlin_languageserver_executable = 'kotlin-language-server'
 let g:ale_kotlin_kotlinc_options = '-d build/ale-kotlinc'
-" let g:ale_go_bingo_options = '--mode stdio --logfile /tmp/lspserver.log --trace'
-"  'kotlin': ['kotlinc', 'ktlint', 'languageserver']
 let g:ale_linters = {
 \  'go': ['gofmt', 'golint', 'govet', 'bingo'],
 \}
