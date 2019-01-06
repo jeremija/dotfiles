@@ -49,3 +49,5 @@ if has('nvim')
   set guicursor=
 endif
 
+" Enable mouse
+set mouse=a
