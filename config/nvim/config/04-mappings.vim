@@ -30,19 +30,8 @@ noremap <C-K> <C-W>k
 noremap <C-L> <C-W>l
 noremap <silent> <C-p> :call fzf#run({ 'source': 'rg --hidden --files $(git rev-parse --show-cdup)', 'sink': 'e' })<CR>
 
-" Show completions even when g:ale_completion_enabled = 0
-function! GetCompletions() abort
-	let l:completion_enabled = get(g:, 'ale_completion_enabled', 0)
-  if !l:completion_enabled
-    let g:ale_completion_enabled = 1
-	endif
-  call ale#completion#GetCompletions()
-  if !l:completion_enabled
-		let g:ale_completion_enabled = 0
-	endif
-endfunction
-
-inoremap <silent><C-Space> <C-\><C-O>:call GetCompletions()<CR>
+imap <C-Space> <Plug>(ale_complete)
+nmap <C-Space> <Plug>(ale_complete)
 
 " Bind <Tab> and <S-Tab> to Up/Down when popup menu is visible
 inoremap <expr> <Tab> pumvisible() ? "\<Down>" : "\<Tab>"
