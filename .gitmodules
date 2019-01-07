@@ -94,5 +94,4 @@
 	branch = private
 [submodule "config/nvim/pack/bundle/start/ale"]
 	path = config/nvim/pack/bundle/start/ale
-	url = ../ale
-	branch = jeremija/bingo
+	url = https://github.com/w0rp/ale
