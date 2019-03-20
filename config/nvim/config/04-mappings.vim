@@ -12,8 +12,8 @@ noremap <Leader>tx :tabclose<CR>
 noremap <Leader>b :Buffers<CR>
 noremap <Leader>r :vertical resize 82<CR>
 noremap <Leader>d :ALEDetail<CR>
-noremap <Leader>D :ALEGoToDefinition<CR>
-noremap <Leader>t :ALEHover<CR>
+noremap <Leader>gd :ALEGoToDefinition<CR>
+noremap <Leader>gt :ALEHover<CR>
 noremap <Leader>gT :ALEGoToDefinitionInTab<CR>
 noremap <Leader>R :ALEFindReferences<CR>
 noremap <Leader>nt :NERDTreeToggle<CR>
@@ -26,6 +26,7 @@ noremap <Leader>tf :TestFile<CR>
 noremap <Leader>ts :TestSuite<CR>
 noremap <Leader>tl :TestLast<CR>
 noremap <Leader>tv :TestVisit<CR>
+noremap <Leader>ss vip:sort<CR>
 
 noremap <C-PageUp> :bprev<CR>
 noremap <C-PageDown> :bnext<CR>
