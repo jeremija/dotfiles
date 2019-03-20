@@ -1,5 +1,8 @@
 set t_Co=256
 silent! colorscheme last256
+
+hi tsxTagName ctermfg=11
+hi tsxAttrib ctermfg=172
 hi MatchParen cterm=bold ctermbg=none ctermfg=white
 hi StatusLine  ctermfg=172 ctermbg=none
 hi StatusLineNC  ctermfg=none ctermbg=none cterm=none
