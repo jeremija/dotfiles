@@ -73,9 +73,6 @@
 [submodule "config/nvim/pack/bundle/start/vim-graphql"]
 	path = config/nvim/pack/bundle/start/vim-graphql
 	url = https://github.com/jparise/vim-graphql
-[submodule "config/nvim/pack/bundle/start/vim-tsx"]
-	path = config/nvim/pack/bundle/start/vim-tsx
-	url = https://github.com/ianks/vim-tsx
 [submodule "config/nvim/pack/bundle/start/ultisnips"]
 	path = config/nvim/pack/bundle/start/ultisnips
 	url = https://github.com/SirVer/ultisnips
