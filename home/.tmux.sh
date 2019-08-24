@@ -5,6 +5,21 @@ function resize () {
   tmux resize -x $x
 }
 
+function move-pane() {
+  target=$1
+
+  win_exists=$(tmux list-windows -F '#I' | grep "^$target\$" | wc -l)
+  panes=$(tmux list-panes -F '#D' | wc -l)
+
+  if [ $win_exists -eq 1 ]; then
+    tmux move-pane -t $target.
+  elif [ $panes -eq 1 ]; then
+    tmux move-window -t $target
+  else
+    tmux break-pane -t $target.
+  fi
+}
+
 func=$1
 shift
 args=$@
