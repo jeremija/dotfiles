@@ -58,9 +58,6 @@
 [submodule "config/nvim/pack/bundle/start/rust.vim"]
 	path = config/nvim/pack/bundle/start/rust.vim
 	url = https://github.com/rust-lang/rust.vim
-[submodule "config/nvim/pack/bundle/start/typescript-vim"]
-	path = config/nvim/pack/bundle/start/typescript-vim
-	url = https://github.com/leafgarland/typescript-vim
 [submodule "config/nvim/pack/bundle/start/vim-import-js"]
 	path = config/nvim/pack/bundle/start/vim-import-js
 	url = https://github.com/galooshi/vim-import-js
@@ -104,3 +101,6 @@
 [submodule "config/nvim/pack/bundle/start/nim.vim"]
 	path = config/nvim/pack/bundle/start/nim.vim
 	url = https://github.com/zah/nim.vim/
+[submodule "config/nvim/pack/bundle/start/yats.vim"]
+	path = config/nvim/pack/bundle/start/yats.vim
+	url = https://github.com/HerringtonDarkholme/yats.vim
