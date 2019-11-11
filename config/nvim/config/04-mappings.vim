@@ -1,21 +1,23 @@
-let mapleader = ","
-noremap <Leader>i :ImportJSWord<CR>
-noremap <Leader>I :ImportJSFix<CR>
+let g:mapleader = ','
 noremap <Leader>gi :ImportJSGoto<CR>
 inoremap <C-k> <Esc>:ImportJSWord<CR>a
-noremap <Leader>j :ALEPreviousWrap<CR>
-noremap <Leader>k :ALENextWrap<CR>
+noremap <Leader>j :ALENextWrap<CR>
+noremap <Leader>k :ALEPreviousWrap<CR>
 noremap <Leader>c :Commentary<CR>
 noremap <Leader>. :bnext<CR>
 noremap <Leader>m :bprev<CR>
 noremap <Leader>tx :tabclose<CR>
-noremap <Leader>b :Buffers<CR>
-noremap <Leader>r :vertical resize 82<CR>
+noremap <Leader>p :Buffers<CR>
+noremap <Leader>e :vertical resize 82<CR>
 noremap <Leader>d :ALEDetail<CR>
+noremap <Leader>D :ALEDocumentation<CR>
 noremap <Leader>gd :ALEGoToDefinition<CR>
 noremap <Leader>gt :ALEHover<CR>
 noremap <Leader>gT :ALEGoToDefinitionInTab<CR>
 noremap <Leader>R :ALEFindReferences<CR>
+noremap <Leader>o :ALEOrganizeImports<CR>
+noremap <Leader>r :ALERename<CR>
+noremap <Leader>x :ALEFix<CR>
 noremap <Leader>nt :NERDTreeToggle<CR>
 noremap <Leader>nx :NERDTreeClose<CR>
 noremap <Leader>nf :NERDTreeFind<CR>

@@ -51,3 +51,6 @@ endif
 
 " Enable mouse
 set mouse=a
+
+" Disable folding
+set nofoldenable

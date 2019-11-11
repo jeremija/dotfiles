@@ -20,8 +20,8 @@ function! LinterStatus() abort
 
     return l:counts.total == 0 ? 'OK' : printf(
     \   '%dW %dE',
-    \   all_non_errors,
-    \   all_errors
+    \   l:all_non_errors,
+    \   l:all_errors
     \)
 endfunction
 
