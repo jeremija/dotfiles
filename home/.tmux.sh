@@ -2,7 +2,7 @@
 
 function resize () {
   x=$(( 82 * $1 + ($1 - 1) ))
-  tmux resize -x $x
+  tmux resize-pane -x $x
 }
 
 function move-pane() {
