@@ -101,3 +101,6 @@
 [submodule "config/nvim/pack/bundle/start/vim-backslash"]
 	path = config/nvim/pack/bundle/start/vim-backslash
 	url = https://github.com/lambdalisue/vim-backslash
+[submodule "config/nvim/pack/bundle/start/nim.vim"]
+	path = config/nvim/pack/bundle/start/nim.vim
+	url = https://github.com/zah/nim.vim/
