@@ -48,3 +48,15 @@ let g:UltiSnipsExpandTrigger = '<c-s>'
 let g:UltiSnipsListSnippets = '<c-l>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-tab>'
+
+function! OpenTest() abort
+  let l:filename = expand('%:p:r')
+  let l:ext = expand('%:e')
+  let l:test_file = l:filename . '.test.' . l:ext
+  if filereadable(l:test_file)
+    execute 'edit ' . l:test_file
+  else
+    echom 'File not found'
+  endif
+endfunction
+command OpenTest :call OpenTest()

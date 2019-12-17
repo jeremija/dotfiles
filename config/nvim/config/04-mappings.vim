@@ -29,6 +29,7 @@ noremap <Leader>ts :TestSuite<CR>
 noremap <Leader>tl :TestLast<CR>
 noremap <Leader>tv :TestVisit<CR>
 noremap <Leader>ss vip:sort<CR>
+noremap <Leader>tt :OpenTest<CR>
 
 noremap <C-PageUp> :bprev<CR>
 noremap <C-PageDown> :bnext<CR>
