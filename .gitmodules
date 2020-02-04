@@ -104,3 +104,6 @@
 [submodule "config/nvim/pack/bundle/start/yats.vim"]
 	path = config/nvim/pack/bundle/start/yats.vim
 	url = https://github.com/HerringtonDarkholme/yats.vim
+[submodule "config/nvim/pack/bundle/start/goyo.vim"]
+	path = config/nvim/pack/bundle/start/goyo.vim
+	url = https://github.com/junegunn/goyo.vim
