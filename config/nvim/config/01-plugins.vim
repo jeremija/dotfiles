@@ -37,7 +37,7 @@ let g:ale_fix_on_save = 1
 let g:ale_kotlin_languageserver_executable = 'kotlin-language-server'
 let g:ale_kotlin_kotlinc_options = '-d build/ale-kotlinc'
 let g:ale_linters = {
-\  'go': ['gofmt', 'golint', 'govet', 'bingo'],
+\  'go': ['gofmt', 'golint', 'govet', 'gopls'],
 \}
 let g:ale_completion_tsserver_autoimport = 1
 
@@ -52,11 +52,20 @@ let g:UltiSnipsJumpBackwardTrigger = '<S-tab>'
 function! OpenTest() abort
   let l:filename = expand('%:p:r')
   let l:ext = expand('%:e')
-  let l:test_file = l:filename . '.test.' . l:ext
-  if filereadable(l:test_file)
-    execute 'edit ' . l:test_file
+  let l:test_part = get(b:, 'opentest_test_part', '.test')
+  let l:pattern = '\V' . l:test_part . '\$'
+
+  if l:filename =~# l:pattern
+    let l:file_to_open = substitute(l:filename, l:pattern, '', '') . '.' . l:ext
   else
-    echom 'File not found'
+    let l:file_to_open = l:filename . l:test_part . '.' . l:ext
   endif
+
+  if !filereadable(l:file_to_open)
+    echom 'File not found: ' . l:file_to_open
+    return
+  endif
+
+  execute 'edit ' . l:file_to_open
 endfunction
 command OpenTest :call OpenTest()
