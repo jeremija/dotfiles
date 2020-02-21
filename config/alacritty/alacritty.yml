@@ -45,7 +45,7 @@ window:
   #     - none: Neither borders nor title bar
   #     - buttonless: Title bar, transparent background and title bar buttons
   #     - transparent: Title bar, transparent background, but no title bar buttons
-  decorations: full
+  decorations: none
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -63,7 +63,7 @@ scrolling:
   # to allow mouse scrolling for applications like `man`.
   #
   # Specifying `0` will disable faux scrolling.
-  faux_multiplier: 3
+  multiplier: 3
 
   # Scroll to the bottom when new text is written to the terminal.
   auto_scroll: false
@@ -562,3 +562,4 @@ key_bindings:
   - { key: Y,        mods: Alt|Shift,  chars: "\x1bY"                    }
   - { key: Z,        mods: Alt|Shift,  chars: "\x1bZ"                    }
   - { key: Space,    mods: Control,    chars: "\x00"                     }
+  - { key: N,        mods: Control|Shift, action: SpawnNewInstance       }
