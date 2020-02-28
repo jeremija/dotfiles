@@ -107,3 +107,6 @@
 [submodule "config/nvim/pack/bundle/start/goyo.vim"]
 	path = config/nvim/pack/bundle/start/goyo.vim
 	url = https://github.com/junegunn/goyo.vim
+[submodule "config/nvim/pack/bundle/start/diffchar.vim"]
+	path = config/nvim/pack/bundle/start/diffchar.vim
+	url = https://github.com/rickhowe/diffchar.vim
