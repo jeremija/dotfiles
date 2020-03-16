@@ -38,6 +38,7 @@ let g:ale_kotlin_languageserver_executable = 'kotlin-language-server'
 let g:ale_kotlin_kotlinc_options = '-d build/ale-kotlinc'
 let g:ale_linters = {
 \  'go': ['gofmt', 'golint', 'govet', 'gopls'],
+\  'rust': ['cargo', 'rls'],
 \}
 let g:ale_completion_tsserver_autoimport = 1
 
