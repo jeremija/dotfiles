@@ -88,7 +88,8 @@
 	branch = private
 [submodule "config/nvim/pack/bundle/start/ale"]
 	path = config/nvim/pack/bundle/start/ale
-	url = https://github.com/w0rp/ale
+	; url = https://github.com/w0rp/ale
+	url = https://github.com/jeremija/ale
 [submodule "config/nvim/pack/bundle/start/vim-test"]
 	path = config/nvim/pack/bundle/start/vim-test
 	url = https://github.com/janko-m/vim-test
