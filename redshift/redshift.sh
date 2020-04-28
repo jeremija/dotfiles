@@ -58,8 +58,8 @@ if [ $last_red -eq $new_red ] && [ $bri_equal -eq 1 ]; then
   exit 0;
 fi;
 
-echo "Calling 'redshift -O $new_red -b $new_bri'"
-redshift -O $new_red -b $new_bri
+echo "Calling 'redshift -P -O $new_red -b $new_bri'"
+redshift -P -O $new_red -b $new_bri
 if [ $? -eq 0 ]; then
   echo "Saving $new_red $new_bri to file..."
   echo $new_red $new_bri > "$DIR/.redshift.last"

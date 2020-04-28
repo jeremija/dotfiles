@@ -15,20 +15,20 @@ xrdb -m ~/.Xresources
 xmodmap ~/.Xmodmap
 
 # mouse sensitivity
-xset m 3/2 1
+# xset m 3/2 1
 # keyboard repeat rate
-xset r rate 200 100
+ xset r rate 100 50
 
 # disable touchpad
-xinput set-int-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 8 0
+# xinput set-int-prop "SynPS/2 Synaptics TouchPad" "Device Enabled" 8 0
 # set scroll with right mouse button, instead of the first
-xinput set-prop "TPPS/2 IBM TrackPoint" "libinput Button Scrolling Button" 3
+# xinput set-prop "TPPS/2 IBM TrackPoint" "libinput Button Scrolling Button" 3
 
 # xrandr --output HDMI-0 --left-of DVI-D-0 --primary
 xrandr --output HDMI-1 --left-of DVI-D-1 --primary
 
 # disable screen blanking
-xset dpms 600 600 600
+xset dpms 0 0 0
 xset s off
 
 # gnome-keyring-daemon
@@ -44,13 +44,15 @@ case $DESKTOP_SESSION in
   plasma|xfce)
   ;;
   *)
+    parcellite &
     # enable network manager and bluetooth applets
     nm-applet &
     blueman-applet &
     # compositing manager
-    compton --backend glx &
+    picom --backend glx &
     # lock the screen when going to suspend
     xss-lock ~/.i3/lock.sh &
+    xautolock -locker ~/.i3/lock.sh -time 10 -secure &
 
     # restore wallpaper
     nitrogen --restore
