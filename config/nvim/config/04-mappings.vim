@@ -8,7 +8,8 @@ noremap <Leader>. :bnext<CR>
 noremap <Leader>m :bprev<CR>
 noremap <Leader>tx :tabclose<CR>
 noremap <Leader>p :Buffers<CR>
-noremap <Leader>e :vertical resize 82<CR>
+noremap <Leader>e :e <C-R>=expand("%:h") . "/" <CR>
+noremap <Leader>E :vertical resize 82<CR>
 noremap <Leader>d :ALEDetail<CR>
 noremap <Leader>D :ALEDocumentation<CR>
 noremap <Leader>gd :ALEGoToDefinition<CR>
