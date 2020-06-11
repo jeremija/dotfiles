@@ -63,11 +63,6 @@ function! OpenTest() abort
     let l:file_to_open = l:filename . l:test_part . '.' . l:ext
   endif
 
-  if !filereadable(l:file_to_open)
-    echom 'File not found: ' . l:file_to_open
-    return
-  endif
-
   execute 'edit ' . l:file_to_open
 endfunction
 command OpenTest :call OpenTest()
