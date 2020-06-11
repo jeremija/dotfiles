@@ -6,7 +6,6 @@ export VISUAL=vim
 export SUDO_EDITOR=$EDITOR
 export TERMINAL=termite
 export BROWSER=firefox
-export QT_STYLE_OVERRIDE=GTK+
 export XDG_CONFIG_HOME="$HOME/.config"
 export $(dbus-launch)
 
@@ -26,11 +25,8 @@ xinput set-button-map "SynPS/2 Synaptics TouchPad" 1 3 2 4 5 6 7
 # set scroll with right mouse button, instead of the first
 # xinput set-prop "TPPS/2 IBM TrackPoint" "libinput Button Scrolling Button" 3
 
-# xrandr --output HDMI-0 --left-of DVI-D-0 --primary
-xrandr --output HDMI-1 --left-of DVI-D-1 --primary
-
 # disable screen blanking
-xset dpms 0 0 0
+xset dpms 600 600 600
 xset s off
 
 # gnome-keyring-daemon
@@ -43,9 +39,14 @@ xbindkeys
 ~/scripts/redshift/redshift.sh reread
 
 case $DESKTOP_SESSION in
+  KDE)
+  ;;
   plasma|xfce)
   ;;
   *)
+    export QT_STYLE_OVERRIDE=GTK+
+
+    # clipboard manager
     parcellite &
     # enable network manager and bluetooth applets
     nm-applet &
@@ -53,8 +54,7 @@ case $DESKTOP_SESSION in
     # compositing manager
     picom --backend glx &
     # lock the screen when going to suspend
-    xss-lock ~/.i3/lock.sh &
-    xautolock -locker ~/.i3/lock.sh -time 10 -secure &
+    xss-lock -l -- xsecurelock &
 
     # restore wallpaper
     nitrogen --restore
