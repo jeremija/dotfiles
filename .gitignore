@@ -8,3 +8,4 @@ config/cmus/cache
 config/cmus/cmusfm.conf
 config/nvim/tmp
 .zlocal
+.netrwhist
