@@ -13,10 +13,10 @@
 "ponymix toggle"
     XF86AudioMute
 
-"ponymix unmute && ponymix increase 5"
+"ponymix unmute && ponymix increase 2"
     XF86AudioRaiseVolume
 
-"ponymix unmute && ponymix decrease 5"
+"ponymix unmute && ponymix decrease 2"
     XF86AudioLowerVolume
 
 "kbdlight down"
@@ -31,8 +31,13 @@
 "alacritty"
     Mod4 + Return
 
-"~/.i3/lock.sh"
-    Alt + Shift + l
+# "~/.i3/lock.sh"
+#"loginctl lock-session"
+#    Alt + Shift + l
+
+"loginctl lock-session"
+    Control + Mod4 + q
+
 
 "~/.i3/lock.sh & systemctl suspend"
     Mod4 + Alt + F4
@@ -45,6 +50,9 @@
 
 "rofi -show window"
     Mod4 + Tab
+
+"maim -l -c 1,0,0,0.4 -s --format=png /dev/stdout | xclip -selection clipboard -target image/png"
+    Mod4 + P
 
 "maim -l -c 1,0,0,0.4 -s --format=png /dev/stdout | xclip -selection clipboard -target image/png"
     Print
