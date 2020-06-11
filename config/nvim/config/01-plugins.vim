@@ -36,8 +36,9 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 let g:ale_kotlin_languageserver_executable = 'kotlin-language-server'
 let g:ale_kotlin_kotlinc_options = '-d build/ale-kotlinc'
+let g:ale_go_golangci_lint_package=1
 let g:ale_linters = {
-\  'go': ['gofmt', 'golint', 'govet', 'gopls'],
+\  'go': ['gopls', 'golangci-lint'],
 \  'rust': ['cargo', 'rls'],
 \}
 let g:ale_completion_tsserver_autoimport = 1
