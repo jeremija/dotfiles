@@ -16,7 +16,8 @@ set $alt Mod1
 # is used in the bar {} block below. ISO 10646 = Unicode
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # font pango:Terminus 8
-font pango:MonteCarlo Fixed 12 12
+# font pango:MonteCarlo 12
+font pango:MonteCarlo 12
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
@@ -134,28 +135,28 @@ bindsym $mod+Shift+F10 move container to workspace 20
 bindsym $mod+Shift+F11 move container to workspace 21
 bindsym $mod+Shift+F12 move container to workspace 22
 
-workspace 1 output LVDS1
-workspace 2 output LVDS1
-workspace 3 output LVDS1
-workspace 4 output LVDS1
-workspace 5 output LVDS1
-workspace 6 output LVDS1
-workspace 7 output LVDS1
-workspace 8 output LVDS1
-workspace 9 output LVDS1
-workspace 10 output LVDS1
-workspace 11 output HDMI1
-workspace 12 output HDMI1
-workspace 13 output HDMI1
-workspace 14 output HDMI1
-workspace 15 output HDMI1
-workspace 16 output HDMI1
-workspace 17 output HDMI1
-workspace 18 output HDMI1
-workspace 19 output HDMI1
-workspace 20 output HDMI1
-workspace 21 output HDMI1
-workspace 22 output HDMI1
+# workspace 1 output LVDS1
+# workspace 2 output LVDS1
+# workspace 3 output LVDS1
+# workspace 4 output LVDS1
+# workspace 5 output LVDS1
+# workspace 6 output LVDS1
+# workspace 7 output LVDS1
+# workspace 8 output LVDS1
+# workspace 9 output LVDS1
+# workspace 10 output LVDS1
+# workspace 11 output HDMI1
+# workspace 12 output HDMI1
+# workspace 13 output HDMI1
+# workspace 14 output HDMI1
+# workspace 15 output HDMI1
+# workspace 16 output HDMI1
+# workspace 17 output HDMI1
+# workspace 18 output HDMI1
+# workspace 19 output HDMI1
+# workspace 20 output HDMI1
+# workspace 21 output HDMI1
+# workspace 22 output HDMI1
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -230,6 +231,7 @@ for_window [class="Xfce4-notifyd"] floating enable;border none; focus tiling
 for_window [class="Qjackctl"] floating enable;
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Wine"] floating enable
+for_window [class="KeePassXC"] floating enable
 
 bindsym Mod1+F4 kill
 
