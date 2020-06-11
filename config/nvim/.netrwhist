@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/Users/steinj19/Documents'
-let g:netrw_dirhist_2='/Users/steinj19'
-let g:netrw_dirhist_3='/Users/steinj19/Documents'
-let g:netrw_dirhist_4='/Users/steinj19/.gitbook/versions'
-let g:netrw_dirhist_5='/Users/steinj19/src/nyu/sshconfig/sshconfig'
-let g:netrw_dirhist_6='/Users/steinj19/src/nyu/edu-api/.git'
-let g:netrw_dirhist_7='/Users/steinj19/src/nyu/gitlab'
