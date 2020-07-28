@@ -33,19 +33,20 @@ xset s off
 eval $(ssh-agent)
 export SSH_AUTH_SOCK
 
-# run xbindkeys
-xbindkeys
-
 ~/scripts/redshift/redshift.sh reread
 
 case $DESKTOP_SESSION in
   KDE)
     export QSG_RENDER_LOOP=basic
+    sxhkd -c ~/.config/sxhkd/sxhkdrc.kde &
   ;;
   plasma|xfce)
+    sxhkd -c ~/.config/sxhkd/sxhkdrc.kde &
   ;;
   *)
     export QT_STYLE_OVERRIDE=GTK+
+
+    xbindkeys
 
     # clipboard manager
     parcellite &
