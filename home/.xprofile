@@ -40,6 +40,7 @@ xbindkeys
 
 case $DESKTOP_SESSION in
   KDE)
+    export QSG_RENDER_LOOP=basic
   ;;
   plasma|xfce)
   ;;
