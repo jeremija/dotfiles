@@ -114,70 +114,107 @@ font:
 draw_bold_text_with_bright_colors: true
 
 # Colors (Tomorrow Night Bright)
-colors:
-  # Default colors
-  primary:
-    background: '0x000000'
-    foreground: '0xeaeaea'
+colors_schemes:
+  # Colors (modified paper color light or pencil light)
+  light: &light
+    # Default colors
+    primary:
+      background: '0xffffff'
+      foreground: '0x878787'
 
-    # Bright and dim foreground colors
+    cursor:
+      text: '0xeeeeee'
+      cursor: '0x878787'
+
+    # Normal colors
+    normal:
+      black:   '0xffffff'
+      red:     '0xffcc99'
+      green:   '0x008700'
+      yellow:  '0x5f8700'
+      blue:    '0x0087af'
+      magenta: '0x878787'
+      cyan:    '0x005f87'
+      white:   '0x444444'
+      limegreen: '0x000000'
+
+    # Bright colors
+    bright:
+      black:   '0xbcbcbc'
+      red:     '0xd70000'
+      green:   '0xd70087'
+      yellow:  '0x8700af'
+      blue:    '0x6666bb'
+      magenta: '0xd75f00'
+      cyan:    '0x605faf'
+      white:   '0x005f87'
+  dark: &dark
+    # Default colors
+    primary:
+      background: '0x000000'
+      foreground: '0xeaeaea'
+
+      # Bright and dim foreground colors
+      #
+      # The dimmed foreground color is calculated automatically if it is not present.
+      # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
+      # is `false`, the normal foreground color will be used.
+      #dim_foreground: '0x9a9a9a'
+      #bright_foreground: '0xffffff'
+
+    # Cursor colors
     #
-    # The dimmed foreground color is calculated automatically if it is not present.
-    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
-    # is `false`, the normal foreground color will be used.
-    #dim_foreground: '0x9a9a9a'
-    #bright_foreground: '0xffffff'
+    # Colors which should be used to draw the terminal cursor. If these are unset,
+    # the cursor color will be the inverse of the cell color.
+    cursor:
+    #  text: '0x000000'
+     cursor: '0xffffff'
 
-  # Cursor colors
-  #
-  # Colors which should be used to draw the terminal cursor. If these are unset,
-  # the cursor color will be the inverse of the cell color.
-  cursor:
-  #  text: '0x000000'
-   cursor: '0xffffff'
+    # Normal colors
+    normal:
+      black:   '0x000000'
+      red:     '0xd54e53'
+      green:   '0xb9ca4a'
+      yellow:  '0xe6c547'
+      blue: '0x3d57ff'
+      magenta: '0xc397d8'
+      cyan:    '0x70c0ba'
+      white:   '0xffffff'
 
-  # Normal colors
-  normal:
-    black:   '0x000000'
-    red:     '0xd54e53'
-    green:   '0xb9ca4a'
-    yellow:  '0xe6c547'
-    blue: '0x3d57ff'
-    magenta: '0xc397d8'
-    cyan:    '0x70c0ba'
-    white:   '0xffffff'
+    # Bright colors
+    bright:
+      black:   '0x666666'
+      red:     '0xff3334'
+      green:   '0x9ec400'
+      yellow:  '0xe7c547'
+      blue:    '0x6871ff'
+      magenta: '0xb77ee0'
+      cyan:    '0x54ced6'
+      white:   '0xffffff'
 
-  # Bright colors
-  bright:
-    black:   '0x666666'
-    red:     '0xff3334'
-    green:   '0x9ec400'
-    yellow:  '0xe7c547'
-    blue:    '0x6871ff'
-    magenta: '0xb77ee0'
-    cyan:    '0x54ced6'
-    white:   '0xffffff'
+    # Dim colors
+    #
+    # If the dim colors are not set, they will be calculated automatically based
+    # on the `normal` colors.
+    dim:
+      black:   '0x333333'
+      red:     '0xf2777a'
+      green:   '0x99cc99'
+      yellow:  '0xffcc66'
+      blue:    '0x6699cc'
+      magenta: '0xcc99cc'
+      cyan:    '0x66cccc'
+      white:   '0xdddddd'
 
-  # Dim colors
-  #
-  # If the dim colors are not set, they will be calculated automatically based
-  # on the `normal` colors.
-  dim:
-    black:   '0x333333'
-    red:     '0xf2777a'
-    green:   '0x99cc99'
-    yellow:  '0xffcc66'
-    blue:    '0x6699cc'
-    magenta: '0xcc99cc'
-    cyan:    '0x66cccc'
-    white:   '0xdddddd'
+    # Indexed Colors
+    #
+    # The indexed colors include all colors from 16 to 256.
+    # When these are not set, they're filled with sensible defaults.
+    #indexed_colors:
+    #  - { index: 16, color: '0x000000' }
 
-  # Indexed Colors
-  #
-  # The indexed colors include all colors from 16 to 256.
-  # When these are not set, they're filled with sensible defaults.
-  #indexed_colors:
-  #  - { index: 16, color: '0x000000' }
+# Colors (Tomorrow Night Bright)
+colors: *dark
 
 # Visual Bell
 #
@@ -376,6 +413,8 @@ key_bindings:
   - { key: Key0,     mods: Command, action: ResetFontSize                }
   - { key: Equals,   mods: Command, action: IncreaseFontSize             }
   - { key: Minus,    mods: Command, action: DecreaseFontSize             }
+  - { key: Equals,   mods: Control, action: IncreaseFontSize             }
+  - { key: Minus,    mods: Control, action: DecreaseFontSize             }
   - { key: K,        mods: Command, action: ClearHistory                 }
   - { key: K,        mods: Command, chars: "\x0c"                        }
   - { key: PageUp,   mods: Shift,   chars: "\x1b[5;2~"                   }
