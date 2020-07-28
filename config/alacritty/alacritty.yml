@@ -69,24 +69,24 @@ scrolling:
 font:
   # Normal (roman) font face
   normal:
-    family: MonteCarlo
+    family: Monospace
     # The `style` can be specified to pick a specific face.
     # style: Regular
 
   # Bold font face
   bold:
-    family: MonteCarlo
+    family: Monospace
     # The `style` can be specified to pick a specific face.
     style: Bold
 
   # Italic font face
   italic:
-    family: MonteCarlo
+    family: Monospace
     # The `style` can be specified to pick a specific face.
     #style: Italic
 
   # Point size
-  size: 11
+  size: 12
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -120,7 +120,7 @@ colors_schemes:
     # Default colors
     primary:
       background: '0xffffff'
-      foreground: '0x878787'
+      foreground: '0x333333'
 
     cursor:
       text: '0xeeeeee'
@@ -129,11 +129,11 @@ colors_schemes:
     # Normal colors
     normal:
       black:   '0xffffff'
-      red:     '0xffcc99'
-      green:   '0x008700'
+      red:     '0xee3333'
+      green:   '0x00aa77'
       yellow:  '0x5f8700'
       blue:    '0x0087af'
-      magenta: '0x878787'
+      magenta: '0xdd00dd'
       cyan:    '0x005f87'
       white:   '0x444444'
       limegreen: '0x000000'
@@ -151,7 +151,7 @@ colors_schemes:
 
     indexed_colors:
       - { index: 248, color: '0x333333' } # vim jeremija normal
-      - { index: 233, color: '0xeeeeee' } # vim jeremija color column
+      - { index: 233, color: '0xf2f2f2' } # vim jeremija color column
       - { index: 240, color: '0x949494' } # vim jeremija comment
   dark: &dark
     # Default colors
