@@ -9,3 +9,4 @@ config/cmus/cmusfm.conf
 config/nvim/tmp
 .zlocal
 .netrwhist
+config/nvim/config/99-local.vim

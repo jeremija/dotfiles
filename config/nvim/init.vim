@@ -14,3 +14,9 @@ exec 'source ' . s:config_dir . '01-plugins.vim'
 exec 'source ' . s:config_dir . '02-general.vim'
 exec 'source ' . s:config_dir . '03-theme.vim'
 exec 'source ' . s:config_dir . '04-mappings.vim'
+
+let s:local_config = s:config_dir . '99-local.vim'
+
+if filereadable(s:local_config)
+  exec 'source ' . s:local_config
+endif
