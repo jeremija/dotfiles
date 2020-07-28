@@ -148,6 +148,11 @@ colors_schemes:
       magenta: '0xd75f00'
       cyan:    '0x605faf'
       white:   '0x005f87'
+
+    indexed_colors:
+      - { index: 248, color: '0x333333' } # vim jeremija normal
+      - { index: 233, color: '0xeeeeee' } # vim jeremija color column
+      - { index: 240, color: '0x949494' } # vim jeremija comment
   dark: &dark
     # Default colors
     primary:
