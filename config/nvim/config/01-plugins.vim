@@ -65,4 +65,21 @@ function! OpenTest() abort
 
   execute 'edit ' . l:file_to_open
 endfunction
-command OpenTest :call OpenTest()
+command! OpenTest :call OpenTest()
+
+function! ToggleLinter(name) abort
+  for l:original_filetype in split(&filetype, '\.')
+    if has_key(g:ale_linters, l:original_filetype)
+      let l:linters = g:ale_linters[l:original_filetype]
+      let l:index = index(l:linters, a:name)
+      if l:index > 0
+        call remove(l:linters, l:index)
+      else
+        call add(l:linters, a:name)
+      endif
+      echo l:original_filetype . ': ' . string(l:linters)
+    endif
+  endfor
+  call ale#toggle#Reset()
+endfunction
+command! -nargs=1 ToggleLinter :call ToggleLinter(<q-args>)
