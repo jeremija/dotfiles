@@ -22,8 +22,8 @@ function move-pane() {
 
 function theme() {
   if [[ $1 == "light" ]]; then
-    tmux set -g pane-border-style fg=colour250
-    tmux set -g pane-active-border-style fg=colour255
+    tmux set -g pane-border-style fg=colour255
+    tmux set -g pane-active-border-style fg=colour250
   else
     tmux set -g pane-border-style fg=colour234
     tmux set -g pane-active-border-style fg=colour24
