@@ -10,13 +10,13 @@
 "brightnessctl s 5%+"
     XF86MonBrightnessUp
 
-"ponymix toggle"
+"ponymix toggle && dunstify -r 99999 Volume\ $(bash -c 'if ponymix is-muted; then echo Muted; else echo Unmuted; fi')"
     XF86AudioMute
 
-"ponymix unmute && ponymix increase 2"
+"ponymix unmute && dunstify -r 99999 Volume\ $(ponymix increase 2)%"
     XF86AudioRaiseVolume
 
-"ponymix unmute && ponymix decrease 2"
+"ponymix unmute && dunstify -r 99999 Volume\ $(ponymix decrease 2)%"
     XF86AudioLowerVolume
 
 "kbdlight down"
@@ -48,17 +48,20 @@
 "rofi -show run"
     Mod4 + d
 
-# "rofi -show window"
-#     Mod4 + Tab
+"rofi -show window"
+    Mod4 + Tab
 
 "maim -l -c 1,0,0,0.4 -s --format=png /dev/stdout | xclip -selection clipboard -target image/png"
     Mod4 + P
 
+"maim --format=png /dev/stdout | xclip -selection clipboard -target image/png"
+    Shift + Mod4 + P
+
 "maim -l -c 1,0,0,0.4 -s --format=png /dev/stdout | xclip -selection clipboard -target image/png"
     Print
 
-"maim -l -c 1,0,0,0.4 -s --format=png /dev/stdout | xclip -selection clipboard -target image/png"
-    Mod4 + Shift + 4
+# "maim -l -c 1,0,0,0.4 -s --format=png /dev/stdout | xclip -selection clipboard -target image/png"
+#     Mod4 + Shift + 4
 
 "/bin/false"
     Control + Shift + Q
