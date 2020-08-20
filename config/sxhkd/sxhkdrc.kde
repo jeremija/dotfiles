@@ -69,13 +69,13 @@ super + alt + F2
 control + super + minus
   ~/scripts/redshift/redshift.sh -100
 
-control + super + plus
+control + super + equal
   ~/scripts/redshift/redshift.sh +100
 
 control + super + 0
   ~/scripts/redshift/redshift.sh 0
 
-control + shift + super + plus
+control + shift + super + equal
   ~/scripts/redshift/redshift.sh 0 0.02
 
 control + shift + super + minus
