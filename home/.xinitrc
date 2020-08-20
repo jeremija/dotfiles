@@ -1,6 +1,7 @@
 #!/bin/sh
 
-session=${session:-startplasma-x11}
+# session=${session:-startplasma-x11}
+session=${session:-i3}
 
 case $session in
   startplasma-x11)
