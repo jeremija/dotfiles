@@ -153,6 +153,10 @@ colors_schemes:
       - { index: 248, color: '0x333333' } # vim jeremija normal
       - { index: 233, color: '0xf2f2f2' } # vim jeremija color column
       - { index: 240, color: '0x949494' } # vim jeremija comment
+      - { index: 236, color: '0xcceeee'} # nerd tree and fzf bg color
+      - { index: 244, color: '0xddffff' } # vim jeremija pmenu bg
+      - { index: 254, color: '0x000000'} # fzf fg color
+      - { index: 66, color: '0xdddddd' } # vim jeremija pmenu sel bg
   dark: &dark
     # Default colors
     primary:
@@ -242,7 +246,7 @@ colors: *dark
 #   - Linear
 #
 # Specifying a `duration` of `0` will disable the visual bell.
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
 
