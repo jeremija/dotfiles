@@ -1,6 +1,5 @@
 [global]
-    # font = Dina 6
-    font = Avenir Lt Medium 8
+    font = Sans-serif 6
 
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -69,12 +68,12 @@
 
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
-    shrink = yes
+    shrink = no
 
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing windowmanager is
     # present (e.g. xcompmgr, compiz, etc.).
-    transparency = 20
+    transparency = 5
 
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
@@ -143,7 +142,7 @@
     browser = xdg-open
 
     # Align icons left/right/off
-    icon_position = left
+    icon_position = off
 
     # Paths to default icons.
     icon_folders = /usr/share/icons/Faenza/status/32/:/usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/
