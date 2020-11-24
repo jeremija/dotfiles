@@ -1,0 +1,22 @@
+#!/bin/bash
+
+cfg_file=~/.config/alacritty/alacritty.yml
+
+cmd=$1
+arg=$2
+
+case $cmd in
+    theme)
+        theme="$arg"
+        echo changing theme to $theme
+        sed -i "s/^colors: .*$/colors: \*$theme/" $cfg_file
+        ~/.tmux.sh theme $theme
+    ;;
+    font)
+        echo changing font to $arg
+        sed -i "s/  family: .*$/  family: $arg/" $cfg_file
+    ;;
+    *)
+        echo unknown command: $1
+        exit 1
+esac
