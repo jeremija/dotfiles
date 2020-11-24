@@ -34,14 +34,12 @@ function link_files {
 }
 
 link_files home "$HOME"
+mkdir -pv "$HOME/bin"
+link_files bin "$HOME/bin"
 mkdir -pv "$HOME/.config"
 link_files config "$HOME/.config"
 link_files home/.zprezto/runcoms "$HOME" "z*" "."
 link_files "Library/Application Support" "$HOME/Library/Application Support"
-
-title "scripts"
-mkdir -pv "$HOME/scripts/redshift"
-symlink redshift/redshift.sh "$HOME/scripts/redshift/redshift.sh"
 
 title "setting up python virtualenvs for neovim"
 $HOME/.config/nvim/python2/setup.sh

@@ -9,6 +9,11 @@ if [ $# -lt 1 ]; then
   exit 1;
 fi;
 
+redshift_cmd="redshift"
+
+if which for-each-display; then
+  redshift_cmd="for-each-display $redshift_cmd"
+fi
 
 arg_two=$2
 if [ "$arg_two" == "" ]; then
@@ -25,7 +30,7 @@ last_red=$(echo $last_values | cut -d ' ' -f 1)
 last_bri=$(echo $last_values | cut -d ' ' -f 2)
 
 if [ "$1" == "reread" ]; then
-    redshift -O $last_red -b $last_bri;
+    $redshift_cmd -O $last_red -b $last_bri;
     save_for_i3_bar $last_red $last_bri;
     exit 0;
 fi
@@ -52,14 +57,14 @@ echo red $last_red $new_red
 echo bri $last_bri $new_bri
 if [ $last_red -eq $new_red ] && [ $bri_equal -eq 1 ]; then
   echo "No change -- resetting! Calling 'redshift -x'"
-  redshift -x
+  $redshift_cmd -x
   echo 6500 1.0 > "$DIR/.redshift.last"
   save_for_i3_bar 6500 1.0
   exit 0;
 fi;
 
 echo "Calling 'redshift -P -O $new_red -b $new_bri'"
-redshift -P -O $new_red -b $new_bri
+$redshift_cmd -P -O $new_red -b $new_bri
 if [ $? -eq 0 ]; then
   echo "Saving $new_red $new_bri to file..."
   echo $new_red $new_bri > "$DIR/.redshift.last"

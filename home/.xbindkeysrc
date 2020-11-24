@@ -82,19 +82,19 @@
 # redshift
 #
 
-"~/scripts/redshift/redshift.sh -100"
+"redshift.sh -100"
     Control + Mod4 + minus
 
-"~/scripts/redshift/redshift.sh +100"
+"redshift.sh +100"
     Control + Mod4 + plus
 
-"~/scripts/redshift/redshift.sh 0"
+"redshift.sh 0"
     Control + Mod4 + 0
 
-"~/scripts/redshift/redshift.sh 0 0.02"
+"redshift.sh 0 0.02"
     Control + Shift + Mod4 + plus
 
-"~/scripts/redshift/redshift.sh 0 -0.02"
+"redshift.sh 0 -0.02"
     Control + Shift + Mod4 + minus
 
 #

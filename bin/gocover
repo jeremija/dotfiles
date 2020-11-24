@@ -1,0 +1,10 @@
+#!/bin/bash
+set -eu
+
+pkg=$1
+shift
+
+# set -x
+go test "$pkg" -coverprofile=coverage.out "$@" && go tool cover -html=coverage.out
+
+exit $?
