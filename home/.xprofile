@@ -51,7 +51,9 @@ case $DESKTOP_SESSION in
     xbindkeys
 
     nm-applet --indicator &
-    xfce4-power-manager
+    # use sddm and /etc/systemd/logind.conf for power settings.
+    # xfce4-power-manager
+    cbatticon &
 
     # clipboard manager
     parcellite &
