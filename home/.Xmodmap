@@ -11,3 +11,9 @@ keysym j = j J Down NoSymbol NoSymbol NoSymbol
 keysym k = k K Up NoSymbol NoSymbol NoSymbol
 keysym l = l L Right NoSymbol lstroke Lstroke
 keysym a = a A Escape NoSymbol NoSymbol NoSymbol
+
+! Exchange left Alt and left Win
+remove mod1 = Alt_L
+remove mod4 = Super_L
+add mod1 = Super_L
+add mod4 = Alt_L
