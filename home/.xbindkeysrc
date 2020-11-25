@@ -35,7 +35,7 @@
 #"loginctl lock-session"
 #    Alt + Shift + l
 
-"loginctl lock-session"
+"loginctl lock-session && for-each-display xset dpms force off"
     Control + Mod4 + q
 
 
