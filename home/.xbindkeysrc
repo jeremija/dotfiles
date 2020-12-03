@@ -57,7 +57,7 @@
 "maim --format=png /dev/stdout | xclip -selection clipboard -target image/png"
     Shift + Mod4 + P
 
-"maim -l -c 1,0,0,0.4 -s --format=png /dev/stdout | xclip -selection clipboard -target image/png"
+"maim --format=png /dev/stdout | xclip -selection clipboard -target image/png"
     Print
 
 # "maim -l -c 1,0,0,0.4 -s --format=png /dev/stdout | xclip -selection clipboard -target image/png"

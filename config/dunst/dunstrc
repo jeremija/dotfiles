@@ -1,5 +1,5 @@
 [global]
-    font = Sans-serif 6
+    font = sans-serif 10
 
     # Allow a small subset of html markup:
     #   <b>bold</b>
