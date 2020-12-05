@@ -1,0 +1,39 @@
+#!/bin/bash
+
+set -eu
+
+cmd=${1:-}
+
+if [ "$cmd" == "on" ]; then
+  autorandr --load laptop
+
+  echo killling any existing intel-virtual-output
+  killall intel-virtual-output 2>/dev/null 1>/dev/null || true
+  # just in case it didn't get killed gracefully
+  killall -9 intel-virtual-output 2>/dev/null 1>/dev/null || true
+
+  echo starting intel-virtual-output
+  intel-virtual-output
+
+  autorandr --load desktop2
+
+  echo setting dpms on virtual output
+  DISPLAY=:0 xset dpms 600 600 660
+  DISPLAY=:8 xset dpms 600 600 660
+elif [ "$cmd" == "off" ]; then
+  autorandr --load laptop
+
+  echo killling intel-virtual-output
+  killall intel-virtual-output 2>/dev/null 1>/dev/null || true
+  # just in case it didn't get killed gracefully
+  killall -9 intel-virtual-output 2>/dev/null 1>/dev/null || true
+
+  echo setting dpms on virtual output
+  DISPLAY=:0 xset dpms 600 600 660
+elif [ "$cmd" == "gpuoff" ]; then
+  echo Disabling gpu, will ask for sudo password...
+  echo OFF | sudo tee /proc/acpi/bbswitch
+  echo "GPU state: $(cat /proc/acpi/bbswitch)"
+else
+  echo "Usage: $(basename $0) <on|off>"
+fi

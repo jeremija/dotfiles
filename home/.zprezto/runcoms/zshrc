@@ -1,0 +1,142 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# Customize to your needs...
+
+
+__fsel() {
+  # set -o nonomatch
+  # command git rev-parse --show-cdup > /dev/null || exit
+  command rg --hidden --files $(git rev-parse --show-cdup) | fzf
+}
+
+__gdsel() {
+  set -e
+  set -o nonomatch
+  command git rev-parse --show-cdup > /dev/null || exit
+  command git diff --name-only | fzf
+}
+
+__cur_dir_sel() {
+  command rg --hidden --files | fzf
+}
+
+__git_branch_sel() {
+  command git branch --format='%(refname:short)' -a | sed 's/^origin\///g' | sort | uniq | fzf
+}
+
+file-widget() {
+  if [[ "$LBUFFER" != "" ]]; then
+      LBUFFER="$LBUFFER$(__fsel)"
+  else
+      LBUFFER="vim $(__fsel)"
+  fi
+
+  zle redisplay
+}
+
+git-branch-widget() {
+  LBUFFER="$LBUFFER$(__git_branch_sel)"
+  zle redisplay
+}
+
+changed-file-widget() {
+  LBUFFER="${LBUFFER}$(__gdsel)"
+  zle redisplay
+}
+
+current-dir-widget() {
+  if [[ "$LBUFFER" != "" ]]; then
+      LBUFFER="$LBUFFER$(__cur_dir_sel)"
+  else
+      LBUFFER="vim $(__cur_dir_sel)"
+  fi
+  zle redisplay
+}
+
+zle -N file-widget
+zle -N changed-file-widget
+zle -N current-dir-widget
+zle -N git-branch-widget
+bindkey '^P' file-widget
+# bindkey '^O' changed-file-widget
+bindkey '^O' current-dir-widget
+bindkey '^G' git-branch-widget
+
+# ALT-C - cd into the selected directory
+fzf-cd-widget() {
+  LBUFFER="$LBUFFER${$(command fd -t d | sed 's/^/.\//' | sed 's/$/\//' | fzf +m):-.}"
+  zle redisplay
+}
+zle     -N    fzf-cd-widget
+bindkey '\ec' fzf-cd-widget
+
+# CTRL-R - Paste the selected command from history into the command line
+fzf-history-widget() {
+  local selected
+  if selected=$(fc -l 1 | fzf +s --tac +m -n2..,.. --toggle-sort=ctrl-r -q "$LBUFFER"); then
+    num=$(echo "$selected" | head -1 | awk '{print $1}' | sed 's/[^0-9]//g')
+    LBUFFER=!$num
+    zle expand-history
+  fi
+  zle redisplay
+}
+zle     -N   fzf-history-widget
+bindkey '^R' fzf-history-widget
+
+unsetopt cdablevars
+setopt HIST_IGNORE_ALL_DUPS
+
+alias ssh="TERM=xterm ssh"
+# alias tig="tig --all"
+alias gst="git status"
+alias ga="git add"
+alias gd="git diff"
+alias gcmsg="git commit -m"
+alias gc!="git commit --amend"
+alias gc@="gc! --no-edit"
+alias tmux-id="tmux display-message -p '#S:#I'"
+unalias rm
+
+alias c='jump'
+
+if [[ "$OSTYPE" == linux* ]]; then
+  # dir colors
+  eval $(dircolors ~/.dircolors)
+fi
+alias ..='cd ..'
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
+alias ..4='cd ../../../..'
+alias ..5='cd ../../../../..'
+alias cal='gcal --starting-day=1'
+alias rg='rg --smart-case'
+alias npx='npx --no-install'
+alias tmux='tmux -2'
+
+unsetopt CORRECT
+
+if [[ -n $VIRTUAL_ENV ]]; then
+  source "$VIRTUAL_ENV/bin/activate"
+fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+
+# load direnv
+if which direnv >/dev/null 2>/dev/null; then
+  eval "$(direnv hook zsh)"
+fi
+
+if [[ -s "${ZDOTDIR:-$HOME}/.zlocal.zsh" ]]; then
+  source ~/.zlocal.zsh
+fi

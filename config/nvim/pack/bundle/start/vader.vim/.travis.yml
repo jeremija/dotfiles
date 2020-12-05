@@ -1,0 +1,66 @@
+dist: xenial
+language: minimal
+
+matrix:
+  include:
+    - env: ENV=vim
+      addons:
+        apt:
+          packages:
+            - ruby
+            - ruby-dev
+    - env: ENV=vim-travis
+      addons:
+        apt:
+          packages:
+            - vim-nox-py2
+    - env: ENV=nvim
+    - env: ENV=nvim VADER_OUTPUT_FILE=/dev/stderr
+    - env: ENV=nvim TESTVIM_OPTS=--headless
+    - env: ENV=nvim-stable
+      addons:
+        apt:
+          sources:
+            - sourceline: 'ppa:neovim-ppa/stable'
+          packages:
+            - neovim
+
+install:
+  - pip install --user covimerage
+  - |
+    set -e
+    pushd /tmp
+    if [ "$ENV" = vim ]; then
+      rvm use system
+      git clone --depth=1 https://github.com/vim/vim
+      cd vim
+      ./configure --with-features=huge --enable-rubyinterp --enable-pythoninterp --prefix /tmp/vim
+      make
+      make install
+      PATH=/tmp/vim/bin:$PATH
+    elif [ "$ENV" = nvim ] || [ "${ENV#nvim-}" != "$ENV" ]; then
+      if [ "$ENV" = nvim ]; then
+        # Install Neovim nightly (into /tmp/_neovim).
+        TRAVIS_BUILD_DIR=/tmp eval "$(curl -Ss https://raw.githubusercontent.com/neovim/bot-ci/master/scripts/travis-setup.sh) nightly-x64"
+      fi
+      gem install neovim
+      pip install --user pynvim
+    fi
+    popd
+
+script:
+  - export TESTVIM="${ENV%%-*}"
+  - $TESTVIM --version
+  # Wrap $TESTVIM with covimerage for coverage reporting.
+  # Uses --no-report, because test/run-tests.sh changes the directory, and that does not pick up .coveragerc then.
+  - VADER_TEST_VIM="covimerage run --source $PWD --data-file $PWD/.coverage_covimerage --no-report $TESTVIM $TESTVIM_OPTS" ./test/run-tests.sh
+  # Test/cover :Vader use case (without bang).
+  - |
+    covimerage run --append --source . --no-report $TESTVIM $TESTVIM_OPTS -Nu test/vimrc \
+      -c 'Vader test/*' \
+      -c 'exe get(get(g:, "vader_result", {}), "successful", 0) ? "qall!" : "cq"'
+
+  # Report coverage.  This should fail the build to detect any problems.
+  - covimerage -vv xml
+  - covimerage report -m
+  - bash <(curl -s https://codecov.io/bash) -Z -f coverage.xml -F "$TESTVIM,${ENV//-/_}"

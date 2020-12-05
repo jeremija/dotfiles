@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -eu
+
+disp="$(ls /tmp/.X11-unix | sed 's/X/:/g')"
+
+for DISPLAY in $disp; do
+  echo DISPLAY=$DISPLAY "$@"
+  "$@"
+done

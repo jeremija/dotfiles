@@ -1,0 +1,110 @@
+super + minus
+  brightnessctl s 2%-
+
+super + equal
+  brightnessctl s 2%+
+
+XF86MonBrightnessDown
+  brightnessctl s 2%-
+
+XF86MonBrightnessUp
+  brightnessctl s 2%+
+
+XF86AudioMute
+  ponymix toggle
+
+XF86AudioRaiseVolume
+  ponymix unmute && ponymix increase 2
+
+XF86AudioLowerVolume
+  ponymix unmute && ponymix decrease 2
+
+XF86KbdBrightnessDown
+  kbdlight down
+
+XF86KbdBrightnessUp
+  kbdlight up
+
+XF86AudioMicMute
+  pactl set-source-mute  $(pacmd list-sources | grep '\* index' | sed -r 's/  \* index: ([0-9])/\1/g') toggle
+
+super + Return
+  alacritty
+
+super + alt + F4
+  systemctl suspend
+
+control + super + q
+  loginctl lock-session
+
+shift + super + t
+  thunar
+
+super + d
+  rofi -show run
+
+super + Tab
+  rofi -show window
+
+super + shift + 4
+  maim -l -c 1,0,0,0.4 -s --format=png /dev/stdout | xclip -selection clipboard -target image/png
+
+control + shift + Q
+  /bin/false
+
+#
+# keyboard
+#
+
+super + alt + F1
+  setxkbmap en_US
+
+super + alt + F2
+  setxkbmap hr
+
+#
+# redshift
+#
+
+control + super + minus
+  ~/scripts/redshift/redshift.sh -100
+
+control + super + equal
+  ~/scripts/redshift/redshift.sh +100
+
+control + super + 0
+  ~/scripts/redshift/redshift.sh 0
+
+control + shift + super + equal
+  ~/scripts/redshift/redshift.sh 0 0.02
+
+control + shift + super + minus
+  ~/scripts/redshift/redshift.sh 0 -0.02
+
+#
+# cmus
+#
+
+control + super + z
+  cmus-remote --prev
+
+control + super + x
+  cmus-remote --play
+
+control + super + c
+  cmus-remote --pause
+
+control + super + v
+  cmus-remote --stop
+
+control + super + b
+  cmus-remote --next
+
+control + super + 3
+  cmus-remote --seek -5
+
+control + super + 4
+  cmus-remote --seek +5
+
+# super + q
+#   "~/.i3/status.sh --notify"

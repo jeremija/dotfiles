@@ -1,0 +1,127 @@
+"brightnessctl s 5%-"
+    Mod4 + minus
+
+"brightnessctl s 5%+"
+    Mod4 + equal
+
+"brightnessctl s 5%-"
+    XF86MonBrightnessDown
+
+"brightnessctl s 5%+"
+    XF86MonBrightnessUp
+
+"ponymix toggle && dunstify -r 99999 Volume\ $(bash -c 'if ponymix is-muted; then echo Muted; else echo Unmuted; fi')"
+    XF86AudioMute
+
+"ponymix unmute && dunstify -r 99999 Volume\ $(ponymix increase 2)%"
+    XF86AudioRaiseVolume
+
+"ponymix unmute && dunstify -r 99999 Volume\ $(ponymix decrease 2)%"
+    XF86AudioLowerVolume
+
+"kbdlight down"
+    XF86KbdBrightnessDown
+
+"kbdlight up"
+    XF86KbdBrightnessUp
+
+"pactl set-source-mute  $(pacmd list-sources | grep '\* index' | sed -r 's/  \* index: ([0-9])/\1/g') toggle"
+    XF86AudioMicMute
+
+"alacritty"
+    Mod4 + Return
+
+# "~/.i3/lock.sh"
+#"loginctl lock-session"
+#    Alt + Shift + l
+
+"loginctl lock-session && for-each-display xset dpms force off"
+    Control + Mod4 + q
+
+
+"~/.i3/lock.sh & systemctl suspend"
+    Mod4 + Alt + F4
+
+"thunar"
+    Shift + Mod4 + t
+
+"rofi -show run"
+    Mod4 + d
+
+"rofi -show window"
+    Mod4 + Tab
+
+"maim -l -c 1,0,0,0.4 -s --format=png /dev/stdout | xclip -selection clipboard -target image/png"
+    Mod4 + P
+
+"maim --format=png /dev/stdout | xclip -selection clipboard -target image/png"
+    Shift + Mod4 + P
+
+"maim --format=png /dev/stdout | xclip -selection clipboard -target image/png"
+    Print
+
+# "maim -l -c 1,0,0,0.4 -s --format=png /dev/stdout | xclip -selection clipboard -target image/png"
+#     Mod4 + Shift + 4
+
+"/bin/false"
+    Control + Shift + Q
+
+
+#
+# keyboard
+#
+
+"setxkbmap en_US"
+    Mod4 + Alt + F1
+
+"setxkbmap hr"
+    Mod4 + Alt + F2
+
+
+#
+# redshift
+#
+
+"redshift.sh -100"
+    Control + Mod4 + minus
+
+"redshift.sh +100"
+    Control + Mod4 + plus
+
+"redshift.sh 0"
+    Control + Mod4 + 0
+
+"redshift.sh 0 0.02"
+    Control + Shift + Mod4 + plus
+
+"redshift.sh 0 -0.02"
+    Control + Shift + Mod4 + minus
+
+#
+# cmus
+#
+
+"cmus-remote --prev"
+    Control + Mod4 + z
+
+"cmus-remote --play"
+    Control + Mod4 + x
+
+"cmus-remote --pause"
+    Control + Mod4 + c
+
+"cmus-remote --stop"
+    Control + Mod4 + v
+
+"cmus-remote --next"
+    Control + Mod4 + b
+
+"cmus-remote --seek -5"
+    Control + Mod4 + 3
+
+"cmus-remote --seek +5"
+    Control + Mod4 + 4
+
+# "~/.i3/status.sh --notify"
+#     Mod4 + q
+
