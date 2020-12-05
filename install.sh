@@ -41,8 +41,14 @@ link_files config "$HOME/.config"
 link_files home/.zprezto/runcoms "$HOME" "z*" "."
 link_files "Library/Application Support" "$HOME/Library/Application Support"
 
-title "setting up python virtualenvs for neovim"
-$HOME/.config/nvim/python2/setup.sh
-$HOME/.config/nvim/python3/setup.sh
+title "Not setting up python virtualenvs for neovim"
+echo
+echo "if you wish to install them in manually, run:"
+echo
+echo    \$HOME/.config/nvim/python2/setup.sh
+echo    \$HOME/.config/nvim/python3/setup.sh
+echo
+echo "Note that python2 is deprecated."
+echo "On linux it is preferred to install python-neovim."
 
 title 'done'
