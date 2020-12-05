@@ -1,0 +1,9 @@
+#!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+cd $DIR
+
+if [[ -x env/bin/python3 ]]; then
+  exec env/bin/python3 "$@"
+else
+  exec python3 "$@"
+fi
