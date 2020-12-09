@@ -21,6 +21,7 @@ let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 0
 let g:ale_echo_cursor = 0
+let g:ale_hover_cursor = 0
 let g:ale_pattern_options = {
 \  'node_modules': {'ale_enabled': 0},
 \}
