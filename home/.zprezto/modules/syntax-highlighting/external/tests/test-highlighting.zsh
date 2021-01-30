@@ -93,9 +93,13 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=($1)
 
 # In zsh<5.3, 'typeset -p arrayvar' emits two lines, so we use this wrapper instead.
 typeset_p() {
-	for 1 ; do
-		print -r -- "$1=( ${(@q-P)1} )"
-	done
+  for 1 ; do
+    if [[ ${(tP)1} == *array* ]]; then
+      print -r -- "$1=( ${(@q-P)1} )"
+    else
+      print -r -- "$1=${(q-P)1}"
+    fi
+  done
 }
 
 # Escape # as ♯ and newline as ↵ they are illegal in the 'description' part of TAP output
@@ -113,12 +117,11 @@ run_test_internal() {
   local srcdir="$PWD"
   builtin cd -q -- "$tests_tempdir" || { echo >&2 "Bail out! On ${(qq)1}: cd failed: $?"; return 1 }
 
-  echo "# ${1:t:r}"
-
   # Load the data and prepare checking it.
   local BUFFER CURSOR MARK PENDING PREBUFFER REGION_ACTIVE WIDGET REPLY skip_test unsorted=0
   local expected_mismatch
   local -a expected_region_highlight region_highlight
+
   . "$srcdir"/"$1"
 
   (( $#skip_test )) && { print -r -- "1..0 # SKIP $skip_test"; return; }
@@ -139,7 +142,12 @@ run_test_internal() {
     expected_region_highlight=("${(@n)expected_region_highlight}")
   fi
 
+  # Print the plan line, and some comments for human readers
   echo "1..$(( $#expected_region_highlight + 1))"
+  echo "## ${1:t:r}"
+  [[ -n $PREBUFFER ]] && printf '# %s\n' "$(typeset_p PREBUFFER)"
+  [[ -n $BUFFER ]] && printf '# %s\n' "$(typeset_p BUFFER)"
+
   local i
   for ((i=1; i<=$#expected_region_highlight; i++)); do
     local -a expected_highlight_zone; expected_highlight_zone=( ${(z)expected_region_highlight[i]} )
@@ -202,7 +210,7 @@ run_test() {
       local ret=$pipestatus[1] stderr=$pipestatus[2]
       if (( ! stderr )); then
         # stdout will become stderr
-	echo "Bail out! On ${(qq)1}: output on stderr"; return 1
+        echo "Bail out! On ${(qq)1}: output on stderr"; return 1
       else
         return $ret
       fi

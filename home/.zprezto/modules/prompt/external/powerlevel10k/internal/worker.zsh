@@ -89,12 +89,15 @@ function _p9k_worker_invoke() {
 }
 
 function _p9k_worker_cleanup() {
-  eval "$__p9k_intro"
+  # __p9k_intro bugs out here in some cases for some reason.
+  emulate -L zsh
   [[ $_p9k__worker_shell_pid == $sysparams[pid] ]] && _p9k_worker_stop
   return 0
 }
 
 function _p9k_worker_stop() {
+  # See comments in _p9k_worker_cleanup.
+  emulate -L zsh
   add-zsh-hook -D zshexit _p9k_worker_cleanup
   [[ -n $_p9k__worker_resp_fd     ]] && zle -F $_p9k__worker_resp_fd
   [[ -n $_p9k__worker_resp_fd     ]] && exec {_p9k__worker_resp_fd}>&-
@@ -181,12 +184,14 @@ function _p9k_worker_start() {
     _p9k__worker_file_prefix=${TMPDIR:-/tmp}/p10k.worker.$EUID.$sysparams[pid].$EPOCHSECONDS
 
     sysopen -r -o cloexec -u _p9k__worker_resp_fd <(
+      exec 0</dev/null
       if [[ -n $_POWERLEVEL9K_WORKER_LOG_LEVEL ]]; then
         exec 2>$_p9k__worker_file_prefix.log
         setopt xtrace
       else
         exec 2>/dev/null
       fi
+      builtin cd -q /                    || return
       zmodload zsh/zselect               || return
       ! { zselect -t0 || (( $? != 1 )) } || return
       local _p9k_worker_pgid=$sysparams[pid]

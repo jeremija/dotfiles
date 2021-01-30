@@ -42,6 +42,7 @@ let g:ale_linters = {
 \  'go': ['gopls', 'golangci-lint'],
 \  'rust': ['cargo', 'rls'],
 \}
+let g:ale_go_golangci_lint_options = ''
 let g:ale_completion_autoimport = 1
 
 let g:NERDTreeIgnore = ['__pycache__', '\.pyc$']

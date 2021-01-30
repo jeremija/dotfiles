@@ -5,7 +5,11 @@ Xft.hintstyle: hintslight
 
 Xft.autohint:  false
 Xft.lcdfilter: lcddefault
-! Xft.dpi:       96
+! Prevent alacritty from resizing bitmap fonts automatically when switching
+! monitors.
+! https://github.com/alacritty/alacritty/issues/2670#issuecomment-514082096
+! https://github.com/alacritty/alacritty/issues/3762
+Xft.dpi:       96
 
 xterm*faceName: Dina
 xterm*faceSize: 8

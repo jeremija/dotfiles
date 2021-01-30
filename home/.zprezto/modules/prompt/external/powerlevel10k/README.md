@@ -8,11 +8,15 @@ Powerlevel10k is a theme for Zsh. It emphasizes [speed](#uncompromising-performa
 ![Powerlevel10k](
 https://raw.githubusercontent.com/romkatv/powerlevel10k-media/master/prompt-styles-high-contrast.png)
 
-To see what Powerlevel10k is about, scroll through [features](#features).
+Ready to [get started](#get-started)? See below.
+
+To see what Powerlevel10k is about go to [features](#features).
 
 Powerlevel9k users, go [here](#powerlevel9k-compatibility).
 
-Ready to give Powerlevel10k a try?
+See the [table of contents](#table-of-contents) at the bottom.
+
+## Get Started
 
 1. Install [the recommended font](#meslo-nerd-font-patched-for-powerlevel10k). *Optional but highly
    recommended.*
@@ -21,12 +25,14 @@ Ready to give Powerlevel10k a try?
    - [Oh My Zsh](#oh-my-zsh)
    - [Prezto](#prezto)
    - [Zim](#zim)
+   - [Antibody](#antibody)
    - [Antigen](#antigen)
    - [Zplug](#zplug)
    - [Zgen](#zgen)
    - [Zplugin](#zplugin)
    - [Zinit](#zinit)
    - [Homebrew](#homebrew)
+   - [Arch Linux](#arch-linux)
 1. Restart Zsh.
 1. Type `p10k configure` if the configuration wizard doesn't start automatically.
 
@@ -83,10 +89,10 @@ Note how the effect of every command is instantly reflected by the very next pro
 
 | Command                       | Prompt Indicator | Meaning                                                               |
 |-------------------------------|:----------------:|----------------------------------------------------------------------:|
-| `timew start hack linux`      | `🛡️ hack linux`  | time tracking enabled in [timewarrior](https://timewarrior.net/)      |
+| `timew start hack linux`      | `⌚ hack linux`  | time tracking enabled in [timewarrior](https://timewarrior.net/)      |
 | `touch x y`                   | `?2`             | 2 untracked files in the Git repo                                     |
 | `rm COPYING`                  | `!1`             | 1 unstaged change in the Git repo                                     |
-| `echo 2.7.3 >.python-version` | `🐍 2.7.3`       | the current python version in [pyenv](https://github.com/pyenv/pyenv) |
+| `echo 3.7.3 >.python-version` | `🐍 3.7.3`       | the current python version in [pyenv](https://github.com/pyenv/pyenv) |
 
 Other Zsh themes capable of displaying the same information either produce prompt lag or print
 prompt that doesn't reflect the current state of the system and then refresh it later. With
@@ -177,8 +183,8 @@ Here's the relevant parameter for kubernetes context:
 
 ```zsh
 # Show prompt segment "kubecontext" only when the command you are typing
-# invokes kubectl, helm, kubens, kubectx, oc, istioctl or kogito.
-typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito'
+# invokes kubectl, helm, kubens, kubectx, oc, istioctl, kogito, k9s or helmfile.
+typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile'
 ```
 
 To customize when different prompt segments are shown, open `~/.p10k.zsh`, search for
@@ -260,7 +266,7 @@ enable as many segments as you like. It won't slow down your prompt or Zsh start
 | `os_icon` | your OS logo (apple for macOS, swirl for debian, etc.) |
 | `dir` | current working directory |
 | `vcs` | Git repository status |
-| `prompt_char` | multi-functional prompt symbol; changes depending on vi mode: `❯`, `❮`, `Ⅴ`, `▶` for insert, command, visual and replace mode respectively; turns red on error |
+| `prompt_char` | multi-functional prompt symbol; changes depending on vi mode: `❯`, `❮`, `V`, `▶` for insert, command, visual and replace mode respectively; turns red on error |
 | `context` | user@hostname |
 | `status` | exit code of the last command |
 | `command_execution_time` | duration (wall time) of the last command |
@@ -289,6 +295,8 @@ enable as many segments as you like. It won't slow down your prompt or Zsh start
 | `dotnet_version` | [dotnet](https://dotnet.microsoft.com) version |
 | `php_version` | [php](https://www.php.net/) version |
 | `laravel_version` | [laravel php framework](https://laravel.com/) version |
+| `java_version` | [java](https://www.java.com/) version |
+| `package` | `name@version` from [package.json](https://docs.npmjs.com/files/package.json) |
 | `kubecontext` | current [kubernetes](https://kubernetes.io/) context |
 | `terraform` | [terraform](https://www.terraform.io) workspace |
 | `aws` | [aws profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) |
@@ -340,7 +348,15 @@ Powerlevel10k.
 
 ```zsh
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>! ~/.zshrc
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+```
+
+Users in mainland China can use the official mirror on gitee.com for faster download.<br>
+中国大陆用户可以使用 gitee.com 上的官方镜像加速下载.
+
+```zsh
+git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 ```
 
 This is the simplest kind of installation and it works even if you are using a plugin manager. Just
@@ -350,7 +366,14 @@ make sure to disable the current theme in your plugin manager. See
 ### Oh My Zsh
 
 ```zsh
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+Users in mainland China can use the official mirror on gitee.com for faster download.<br>
+中国大陆用户可以使用 gitee.com 上的官方镜像加速下载.
+
+```zsh
+git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 ```
 
 Set `ZSH_THEME="powerlevel10k/powerlevel10k"` in `~/.zshrc`.
@@ -362,6 +385,10 @@ Add `zstyle :prezto:module:prompt theme powerlevel10k` to `~/.zpreztorc`.
 ### Zim
 
 Add `zmodule romkatv/powerlevel10k` to `~/.zimrc` and run `zimfw install`.
+
+### Antibody
+
+Add `antibody bundle romkatv/powerlevel10k` to `~/.zshrc`.
 
 ### Antigen
 
@@ -394,8 +421,23 @@ supported by Powerlevel10k.
 
 ```zsh
 brew install romkatv/powerlevel10k/powerlevel10k
-echo 'source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme' >>! ~/.zshrc
+echo "source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
 ```
+
+### Arch Linux
+
+```zsh
+yay -S --noconfirm zsh-theme-powerlevel10k-git
+echo 'source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+```
+
+[zsh-theme-powerlevel10k-git](https://aur.archlinux.org/packages/zsh-theme-powerlevel10k-git/)
+referenced above is the official Powerlevel10k package.
+
+There is also [zsh-theme-powerlevel10k](
+  https://www.archlinux.org/packages/community/x86_64/zsh-theme-powerlevel10k/) community package.
+Historicaly, [it has been breaking often and for extended periods of time](
+  https://github.com/romkatv/powerlevel10k/pull/786). **Do not use it.**
 
 ## Configuration
 
@@ -458,12 +500,15 @@ the default system fonts. The full choice of style options is available only whe
 
 👇 **Recommended font**: Meslo Nerd Font patched for Powerlevel10k. 👇
 
-### <a name='recommended-meslo-nerd-font-patched-for-powerlevel10k'></a>Meslo Nerd Font patched for Powerlevel10k
+### <a name='recommended-meslo-nerd-font-patched-for-powerlevel10k'></a><a name='font'></a>Meslo Nerd Font patched for Powerlevel10k
 
-Gorgeous monospace font designed by Jim Lyles for Apple, customized by André Berg, patched by Ryan
-L McIntyre of Nerd Fonts, and hand-edited in FontForge by yours truly. Contains all glyphs and
-symbols that Powerlevel10k may need. Battle-tested in dozens of different terminals on all major
-operating systems.
+Gorgeous monospace font designed by Jim Lyles for Bitstream, customized by the same for Apple,
+further customized by André Berg, and finally patched by yours truly with customized scripts
+originally developed by Ryan L McIntyre of Nerd Fonts. Contains all glyphs and symbols that
+Powerlevel10k may need. Battle-tested in dozens of different terminals on all major operating
+systems.
+
+*FAQ*: [How was the recommended font created?](#how-was-the-recommended-font-created)
 
 #### Automatic font installation
 
@@ -488,10 +533,10 @@ Download these four ttf files:
 Double-click on each file and click "Install". This will make `MesloLGS NF` font available to all
 applications on your system. Configure your terminal to use this font:
 
-- **iTerm2**: Open *iTerm2 → Preferences → Profiles → Text* and set *Font* to `MesloLGS NF`.
-  Alternatively, type `p10k configure` and answer `Yes` when asked whether to install
-  *Meslo Nerd Font*.
-- **Apple Terminal** Open *Terminal → Preferences → Profiles → Text*, click *Change* under *Font*
+- **iTerm2**: Type `p10k configure` and answer `Yes` when asked whether to install
+  *Meslo Nerd Font*. Alternatively, open *iTerm2 → Preferences → Profiles → Text* and set *Font* to
+  `MesloLGS NF`.
+- **Apple Terminal**: Open *Terminal → Preferences → Profiles → Text*, click *Change* under *Font*
   and select `MesloLGS NF` family.
 - **Hyper**: Open *Hyper → Edit → Preferences* and change the value of `fontFamily` under
   `module.exports.config` to `MesloLGS NF`.
@@ -506,10 +551,37 @@ applications on your system. Configure your terminal to use this font:
   *Custom font* under *Text Appearance* and select `MesloLGS NF Regular`.
 - **Windows Console Host** (the old thing): Click the icon in the top left corner, then
   *Properties → Font* and set *Font* to `MesloLGS NF`.
-- **Windows Terminal** (the new thing): Open *Settings* (`Ctrl+,`), search for `fontFace` and set
+- **Microsoft Terminal** (the new thing): Open *Settings* (`Ctrl+,`), search for `fontFace` and set
   value to `MesloLGS NF` for every profile.
+- **IntelliJ**: Open *Intellij → Edit → Preferences → Editor → Color Scheme → Console Font*.
+  Select *Use console font instead of the default* and set the font name to `MesloLGS NF`.
 - **Termux**: Type `p10k configure` and answer `Yes` when asked whether to install
   *Meslo Nerd Font*.
+- **Blink**: Type `config`, go to *Appearance*, tap *Add a new font*, tap *Open Gallery*, select
+  *MesloLGS NF.css*, tap *import* and type `exit` in the home view to reload the font.
+- **Terminus**: Open *Settings → Appearance* and set *Font* to `MesloLGS NF`.
+- **Terminator**: Open *Preferences* using the context menu. Under *Profiles* select the *General*
+  tab (should be selected already), uncheck *Use the system fixed width font* (if not already)
+  and select `MesloLGS NF Regular`. Exit the Preferences dialog by clicking *Close*.
+- **Guake**: Right Click on an open terminal and open *Preferences*. Under *Appearance*
+  tab, uncheck *Use the system fixed width font* (if not already) and select `MesloLGS NF Regular`.
+  Exit the Preferences dialog by clicking *Close*.
+- **MobaXterm**: Open *Settings* → *Configuration* → *Terminal* → (Under *Terminal look and feel*)
+  and change *Font* to `MesloLGS NF`.
+- **WSLtty**: Right click on an open terminal and then on *Options*. In the *Text* section, under
+  *Font*, click *"Select..."* and set Font to `MesloLGS NF Regular`.
+- **Alacritty**: Create or open `~/.config/alacritty/alacritty.yml` and add the following section
+  to it:
+  ```yaml
+  font:
+    normal:
+      family: "MesloLGS NF"
+  ```
+ - **Kitty**: Create or open `~/.config/kitty/kitty.conf` and add the following line to it:
+   ```text
+   font_family MesloLGS NF
+   ```
+   Restart Kitty by closing all sessions and opening a new session.
 
 **IMPORTANT:** Run `p10k configure` after changing terminal font. The old `~/.p10k.zsh` may work
 incorrectly with the new font.
@@ -523,9 +595,9 @@ Try Powerlevel10k in Docker. You can safely make any changes to the file system 
 the theme. Once you exit Zsh, the image is deleted.
 
 ```zsh
-docker run -e TERM -e COLORTERM -it --rm debian:buster bash -uec '
-  apt update
-  apt install -y git zsh nano vim
+docker run -e TERM -e COLORTERM -it --rm alpine sh -uec '
+  apk update
+  apk add git zsh nano vim
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
   echo "source ~/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
   cd ~/powerlevel10k
@@ -548,21 +620,97 @@ Powerlevel10k is released under the
 
 The command to update Powerlevel10k depends on how it was installed.
 
-| Installation            | Update command                                 |
-|-------------------------|------------------------------------------------|
-| [Manual](#manual)       | `git -C ~/powerlevel10k pull`                  |
-| [Oh My Zsh](#oh-my-zsh) | `git -C $ZSH_CUSTOM/themes/powerlevel10k pull` |
-| [Prezto](#prezto)       | `zprezto-update`                               |
-| [Zim](#zim)             | `zimfw update`                                 |
-| [Antigen](#antigen)     | `antigen update`                               |
-| [Zplug](#zplug)         | `zplug update`                                 |
-| [Zgen](#zgen)           | `zgen update`                                  |
-| [Zplugin](#zplugin)     | `zplugin update`                               |
-| [Zinit](#zinit)         | `zinit update`                                 |
-| [Homebrew](#homebrew)   | `brew update && brew upgrade`                  |
+| Installation              | Update command                                              |
+|---------------------------|-------------------------------------------------------------|
+| [Manual](#manual)         | `git -C ~/powerlevel10k pull`                               |
+| [Oh My Zsh](#oh-my-zsh)   | `git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k pull` |
+| [Prezto](#prezto)         | `zprezto-update`                                            |
+| [Zim](#zim)               | `zimfw update`                                              |
+| [Antigen](#antigen)       | `antigen update`                                            |
+| [Zplug](#zplug)           | `zplug update`                                              |
+| [Zgen](#zgen)             | `zgen update`                                               |
+| [Zplugin](#zplugin)       | `zplugin update`                                            |
+| [Zinit](#zinit)           | `zinit update`                                              |
+| [Homebrew](#homebrew)     | `brew update && brew upgrade`                               |
+| [Arch Linux](#arch-linux) | `yay -S --noconfirm zsh-theme-powerlevel10k-git`            |
 
 **IMPORTANT**: Restart Zsh after updating Powerlevel10k. [Do not use `source ~/.zshrc`](
   #weird-things-happen-after-typing-source-zshrc).
+
+### How do I uninstall Powerlevel10k?
+
+1. Remove all references to "p10k" from `~/.zshrc`. You might have this snippet at the top:
+   ```zsh
+   if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+   fi
+   ```
+   And this at the bottom:
+   ```zsh
+   [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+   ```
+   These are added by the [configuration wizard](#configuration-wizard). Remove them.
+2. Remove all references to "powerlevel10k" from `~/.zshrc`, `~/.zpreztorc` and `~/.zimrc` (some
+   of these files may be missing -- this is normal). These references have been added manually by
+   yourself when installing Powerlevel10k. Refer to the [installation instructions](#installation)
+   if you need a reminder.
+3. Verify that all references to "p10k" and "powerlevel10k" are gone from `~/.zshrc`, `~/.zpreztorc`
+   and `~/.zimrc`.
+   ```zsh
+   grep -E 'p10k|powerlevel10k' ~/.zshrc ~/.zpreztorc ~/.zimrc 2>/dev/null
+   ```
+   If this command produces output, there are still references to "p10k" or "powerlevel10k". You
+   need to remove them.
+4. Delete Powerlevel10k configuration file. This file is created by the
+   [configuration wizard](#configuration-wizard) and may contain manual edits by yourself.
+   ```zsh
+   rm -f ~/.p10k.zsh
+   ```
+5. Delete Powerlevel10k source files. These files have been downloaded when you've installed
+   Powerlevel10k. The command to delete them depends on which installation method you'd chosen.
+   Refer to the [installation instructions](#installation) if you need a reminder.
+
+   | Installation              | Uninstall command                                                |
+   |---------------------------|------------------------------------------------------------------|
+   | [Manual](#manual)         | `rm -rf ~/powerlevel10k`                                         |
+   | [Oh My Zsh](#oh-my-zsh)   | `rm -rf -- ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k` |
+   | [Prezto](#prezto)         | n/a                                                              |
+   | [Zim](#zim)               | `zimfw uninstall`                                                |
+   | [Antigen](#antigen)       | `antigen purge romkatv/powerlevel10k`                            |
+   | [Zplug](#zplug)           | `zplug clean`                                                    |
+   | [Zgen](#zgen)             | `zgen reset`                                                     |
+   | [Zplugin](#zplugin)       | `zplugin delete romkatv/powerlevel10k`                           |
+   | [Zinit](#zinit)           | `zinit delete romkatv/powerlevel10k`                             |
+   | [Homebrew](#homebrew)     | `brew uninstall powerlevel10k; brew untap romkatv/powerlevel10k` |
+   | [Arch Linux](#arch-linux) | `yay -R --noconfirm zsh-theme-powerlevel10k-git`                 |
+5. Restart Zsh. [Do not use `source ~/.zshrc`](#weird-things-happen-after-typing-source-zshrc).
+
+### How do I install Powerlevel10k on a machine without Internet access?
+
+1. Run this command on the machine without Internet access:
+   ```sh
+   uname -sm | tr '[A-Z]' '[a-z]'
+   ```
+2. Run these commands on a machine connected to the Internet after replacing the value of
+   `target_uname` with the output of the previous command:
+   ```sh
+   target_uname="replace this with the output of the previous command"
+   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+   GITSTATUS_CACHE_DIR="$HOME"/powerlevel10k/gitstatus/usrbin ~/powerlevel10k/gitstatus/install -f -s "${target_uname% *}" -m "${target_uname#* }"
+   ```
+3. Copy `~/powerlevel10k` from the machine connected to the Internet to the one without Internet
+   access.
+4. Add `source ~/powerlevel10k/powerlevel10k.zsh-theme` to `~/.zshrc` on the machine without
+   Internet access:
+   ```zsh
+   echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+   ```
+5. If `~/.zshrc` on the machine without Internet access sets `ZSH_THEME`, remove that line.
+   ```zsh
+   sed -i.bak '/^ZSH_THEME=/d' ~/.zshrc
+   ```
+
+To update, remove `~/powerlevel10k` on both machines and repeat steps 1-3.
 
 ### Where can I ask for help and report bugs?
 
@@ -583,12 +731,24 @@ If necessary, encrypt your communication with [this PGP key](
 Powerlevel10k defines prompt and nothing else. It sets [prompt-related options](
   http://zsh.sourceforge.net/Doc/Release/Options.html#Prompting), and parameters `PS1` and `RPS1`.
 
+![Prompt Highlight](
+  https://raw.githubusercontent.com/romkatv/powerlevel10k-media/master/prompt-highlight.png)
+
+Everything within the highlighted areas on the screenshot is produced by Powerlevel10k.
+Powerlevel10k has no control over the terminal content or colors outside these areas.
+
 Powerlevel10k does not affect:
 
-- Terminal window title.
+- Terminal window/tab title.
 - Colors used by `ls`.
-- Command line colors (syntax highlighting).
+- The behavior of `git` command.
+- The content and style of <kbd>Tab</kbd> completions.
+- Command line colors (syntax highlighting, autosuggestions, etc.).
+- Key bindings.
+- Aliases.
 - Prompt parameters other than `PS1` and `RPS1`.
+- Zsh options other than those [related to prompt](
+    http://zsh.sourceforge.net/Doc/Release/Options.html#Prompting).
 
 ### I'm using Powerlevel9k with Oh My Zsh. How do I migrate?
 
@@ -597,7 +757,7 @@ Powerlevel10k does not affect:
 # Add powerlevel10k to the list of Oh My Zsh themes.
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
 # Replace ZSH_THEME="powerlevel9k/powerlevel9k" with ZSH_THEME="powerlevel10k/powerlevel10k".
-sed 's/powerlevel9k/powerlevel10k/g' -i ~/.zshrc
+sed -i.bak 's/powerlevel9k/powerlevel10k/g' ~/.zshrc
 # Restart Zsh.
 exec zsh
 ```
@@ -754,12 +914,39 @@ When using Lean, Classic or Rainbow style, `~/.p10k.zsh` contains the following 
 ```zsh
 # Don't show Git status in prompt for repositories whose workdir matches this pattern.
 # For example, if set to '~', the Git repository at $HOME/.git will be ignored.
-# Multiple patterns can be combined with '|': '~|~/some/dir'.
+# Multiple patterns can be combined with '|': '~(|/foo)|/bar/baz/*'.
 typeset -g POWERLEVEL9K_VCS_DISABLED_WORKDIR_PATTERN='~'
 ```
 
 To see Git status for `$HOME/.git` in prompt, open `~/.p10k.zsh` and remove
 `POWERLEVEL9K_VCS_DISABLED_WORKDIR_PATTERN`.
+
+### Why does Git status sometimes appear grey and then gets colored after a short period of time?
+
+tl;dr: When Git status in prompt is greyed out, it means Powerlevel10k is currently computing
+up-to-date Git status in the background. Prompt will get automatically refreshed when this
+computation completes.
+
+When your current directory is within a Git repository, Powerlevel10k computes up-to-date Git
+status after every command. If the repository is large, or the machine is slow, this computation
+can take quite a bit of time. If it takes longer than 10 milliseconds (configurable via
+`POWERLEVEL9K_VCS_MAX_SYNC_LATENCY_SECONDS`), Powerlevel10k displays the last known Git status in
+grey and continues to compute up-to-date Git status in the background. When the computation
+completes, Powerlevel10k refreshes prompt with new information, this time with colored Git status.
+
+When using *Rainbow* style, Git status is displayed as black on grey while it's still being
+computed. Depending on the terminal color palette, this may be difficult to read. In this case you
+might want to change the background color to something ligher for more contrast. To do that, open
+`~/.p10k.zsh`, search for `POWERLEVEL9K_VCS_LOADING_BACKGROUND`, uncomment it if it's commented out,
+and change the value.
+
+```zsh
+typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=244
+```
+
+Type `source ~/.p10k.zsh` to apply your changes to the current Zsh session.
+
+*Related*: [How do I change prompt colors?](#how-do-i-change-prompt-colors)
 
 ### How do I add username and/or hostname to prompt?
 
@@ -803,13 +990,40 @@ a relevant tool.
 
 ```zsh
 # Show prompt segment "kubecontext" only when the command you are typing
-# invokes kubectl, helm, kubens, kubectx, oc, istioctl or kogito.
-typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito'
+# invokes kubectl, helm, kubens, kubectx, oc, istioctl, kogito, k9s or helmfile.
+typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile'
 ```
 
 Configs created by `p10k configure` may contain parameters of this kind. To customize when different
 prompt segments are shown, open `~/.p10k.zsh`, search for `SHOW_ON_COMMAND` and either remove these
 parameters or change their values.
+
+You can also define a function in `~/.zshrc` to toggle the display of a prompt segment between
+*always* and *on command*. This is similar to `kubeon`/`kubeoff` from
+[kube-ps1](https://github.com/jonmosco/kube-ps1).
+
+```zsh
+function kube-toggle() {
+  if (( ${+POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND} )); then
+    unset POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND
+  else
+    POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile'
+  fi
+  p10k reload
+  if zle; then
+    zle push-input
+    zle accept-line
+  fi
+}
+```
+
+Invoke this function by typing `kube-toggle`. You can also bind it to a key by adding two more lines
+to `~/.zshrc`:
+
+```zsh
+zle -N kube-toggle
+bindkey '^]' kube-toggle  # ctrl-] to toggle kubecontext in powerlevel10k prompt
+```
 
 ### How do I change prompt colors?
 
@@ -849,7 +1063,7 @@ Type `source ~/.p10k.zsh` to apply your changes to the current Zsh session.
 To see how different colors look in your terminal, run the following command:
 
 ```zsh
-for i in {0..255}; do print -Pn "%K{$i} %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%8)):#7}:+$'\n'}; done
+for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done
 ```
 
 ### Why does Powerlevel10k spawn extra processes?
@@ -957,7 +1171,7 @@ Similarly, if you enable transient prompt, sparse prompt (with an empty line bef
 great choice.
 
 If you are using vi keymap, choose prompt with `prompt_char` in it (shown as green `❯` in the
-wizard). This symbol changes depending on vi mode: `❯`, `❮`, `Ⅴ`, `▶` for insert, command, visual
+wizard). This symbol changes depending on vi mode: `❯`, `❮`, `V`, `▶` for insert, command, visual
 and replace mode respectively. When a command fails, the symbol turns red. *Lean* style always has
 `prompt_char` in it. *Rainbow* and *Classic* styles have it only in the two-line configuration
 without left frame.
@@ -992,13 +1206,6 @@ command is reflected in the *next* prompt.
 For details, see [this post on /r/zsh](
 https://www.reddit.com/r/zsh/comments/eg49ff/powerlevel10k_prompt_history_exit_code_colors/fc5huku).
 
-### Is there an AUR package for Powerlevel10k?
-
-There are two:
-[zsh-theme-powerlevel10k-git](https://aur.archlinux.org/packages/zsh-theme-powerlevel10k-git/) and
-[zsh-theme-powerlevel10k](https://aur.archlinux.org/packages/zsh-theme-powerlevel10k/). Both
-packages are owned by unaffiliated volunteers.
-
 ### What is the minimum supported Zsh version?
 
 Zsh 5.1 or newer should work. Fast startup requires Zsh >= 5.4.
@@ -1014,6 +1221,31 @@ custom background color (`#171A1B` instead of `#2E3436` -- twice as dark).
 
 Syntax highlighting, where present, was provided by [zsh-syntax-highlighting](
   https://github.com/zsh-users/zsh-syntax-highlighting).
+
+### How was the recommended font created?
+
+[The recommended font](#meslo-nerd-font-patched-for-powerlevel10k) is the product of many
+individuals. Its origin is *Bitstream Vera Sans Mono*, which has given birth to *Menlo*, which in
+turn has spawned *Meslo*. Finally, extra glyphs have been added to *Meslo* with scripts forked
+from Nerd Fonts. The final font is released under the terms of
+[Apache License](
+  https://raw.githubusercontent.com/romkatv/powerlevel10k-media/master/MesloLGS%20NF%20License.txt).
+
+MesloLGS NF font can be recreated with the following command (requires `git` and `docker`):
+
+```zsh
+git clone --depth=1 https://github.com/romkatv/nerd-fonts.git
+cd nerd-fonts
+./build 'Meslo/S/*'
+```
+
+If everything goes well, four `ttf` files will appear in `./out`.
+
+### How to package Powerlevel10k for distribution?
+
+It's currently neither easy nor recommended to package and distribute Powerlevel10k. There are no
+instructions you can follow that would allow you to easily update your package when new versions of
+Powerlevel10k are released. This may change in the future but not soon.
 
 ## Troubleshooting
 
@@ -1064,6 +1296,7 @@ There are several things you can try to deal with these imperfections:
   it, switching to another font may help but is unlikely.
 - Change terminal font size one point up or down. For example, in iTerm2 powerline prompt looks
   perfect at font sizes 11 and 13 but breaks down at 12.
+- Enable builtin powerline glyphs in terminal settings if your terminal supports it (iTerm2 does).
 - Change font hinting and/or anti-aliasing mode in the terminal settings.
 - Shift all text one pixel up/down/left/right if your terminal has an option to do so.
 - Try a different terminal.
@@ -1148,6 +1381,11 @@ Note that this prompt is different from the original as it's missing a space aft
 This can be caused by a low-level bug in macOS. See
 [this issue](https://github.com/romkatv/powerlevel10k/issues/241).
 
+This can also happen if prompt contains glyphs designated as "wide" in the Unicode standard and your
+terminal incorrectly displays them as non-wide. Terminals suffering from this limitation include
+Konsole, Hyper and the integrated VSCode Terminal. The solution is to use a different terminal or
+remove all wide glyphs from prompt.
+
 #### If the prompt line is shorter than the frame and is not mangled
 
 ```text
@@ -1200,11 +1438,6 @@ configuration wizard won't offer prompt styles that use them. *Fix*: Restart you
 install [the recommended font](#meslo-nerd-font-patched-for-powerlevel10k). Verify by running
 `p10k configure` and checking that all glyphs render correctly.
 
-The minimum screen size at which configuration wizard can function is 55 columns by 21 lines.
-However, not all prompt styles are offered at such small screen size as there is simply not enough
-space to present them. *Fix*: Resize your terminal to at least 80 columns by 25 lines prior to
-running `p10k configure`. Verify with `print ${COLUMNS}x${LINES}`.
-
 ### Cannot install the recommended font
 
 Once you download [the recommended font](#meslo-nerd-font-patched-for-powerlevel10k),
@@ -1226,11 +1459,11 @@ From [Zsh documentation](
   http://zsh.sourceforge.net/Doc/Release/Parameters.html#index-ZLE_005fRPROMPT_005fINDENT):
 
 > `ZLE_RPROMPT_INDENT <S>`
-> 
+>
 > If set, used to give the indentation between the right hand side of the right prompt in the line
 > editor as given by `RPS1` or `RPROMPT` and the right hand side of the screen. If not set, the
 > value `1` is used.
-> 
+>
 > Typically this will be used to set the value to `0` so that the prompt appears flush with the
 > right hand side of the screen.
 
@@ -1306,25 +1539,27 @@ theme (so that you end up with no theme) and then installing Powerlevel10k manua
 
 ```zsh
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>! ~/.zshrc
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 ```
 
 This method of installation won't make anything slower or otherwise sub-par.
 
 ### Directory is difficult to see in prompt when using Rainbow style
 
-In Classic style the current working directory is shown with bright white white text on blue
-background. The white is fixed and always looks the same but the appearance of "blue" is defined
-by your terminal color palette. If it's very light, it's difficult to see white text on it.
+In Rainbow style the current working directory is shown with bright white text on blue background.
+The white is fixed and always looks the same but the appearance of "blue" is defined by your
+terminal color palette. If it's very light, it may be difficult to see white text on it.
 
 There are several ways to fix this.
 
 - Type `p10k configure` and choose a more readable prompt style.
 - [Change terminal color palette](#change-the-color-palette-used-by-your-terminal). Try Tango Dark
   or Solarized Dark, or change just the "blue" color.
-- [Change directory background color](#set-colors-through-Powerlevel10k-configuration-parameters).
-  The parameter you are looking for is called `POWERLEVEL9K_DIR_BACKGROUND`. You can find it in
-  in `~/.p10k.zsh`. Uncomment it if it's commented out and try different values.
+- [Change directory background and/or foreground color](#set-colors-through-Powerlevel10k-configuration-parameters).
+  The parameters you are looking for are called `POWERLEVEL9K_DIR_BACKGROUND`,
+  `POWERLEVEL9K_DIR_FOREGROUND`, `POWERLEVEL9K_DIR_SHORTENED_FOREGROUND`,
+  `POWERLEVEL9K_DIR_ANCHOR_FOREGROUND` and `POWERLEVEL9K_DIR_ANCHOR_BOLD`. You can find them in
+  in `~/.p10k.zsh`.
 
 ### Horrific mess when resizing terminal window
 
@@ -1421,12 +1656,19 @@ upon terminal shrinking due to the command line wrapping around.
 
 #### Zsh patch
 
-The bug described above has been fixed in [this branch](
+The bug described above has been partially fixed (only for some terminals) in [this branch](
   https://github.com/romkatv/zsh/tree/fix-winchanged). The idea behind the fix is to use `sc` (save
 cursor) terminal capability before printing prompt and `rc` (restore cursor) to move cursor back
-to the same position when prompt needs to be refreshed.
+to the original position when prompt needs to be refreshed.
 
-There are two alternative approaches to fixing the bug that may seem to work at fight glance but in
+The patch works only on terminals that reflow saved cursor position together with text when the
+terminal window is resized. The patch has no observable effect on terminals that don't reflow text
+on resize (both patched and unpatched Zsh behave correctly) and on terminals that reflow text but
+not saved cursor position (both patched and unpatched Zsh redraw prompt at the same incorrect
+position). In other words, the patch fixes the resizing issue on some terminals while keeping the
+behavior unchanged on others.
+
+There are two alternative approaches to fixing the bug that may seem to work at first glance but in
 fact don't:
 
 - Instead of `sc`, use `u7` terminal capability to query the current cursor position and then `cup`
@@ -1446,19 +1688,69 @@ There is no ETA for the patch making its way into upstream Zsh. See [discussion]
 There are a few mitigation options for this issue.
 
 - Apply [the patch](#zsh-patch) and [rebuild Zsh from source](
-    https://github.com/zsh-users/zsh/blob/master/INSTALL).
+    https://github.com/zsh-users/zsh/blob/master/INSTALL). It won't help if you are using Alacritty,
+  Kitty or some other terminal that reflows text on resize but doesn't reflow saved cursor position.
+  On such terminals the patch will have no visible effect.
 - Disable text reflowing on window resize in terminal settings. If your terminal doesn't have this
   setting, try a different terminal.
 - Avoid long lines between the start of prompt and cursor.
   1. Disable ruler with `POWERLEVEL9K_SHOW_RULER=false`.
-  1. Disable prompt connection with `POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR=' '`.
-  1. Disable right frame with `POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX=` and
-     `POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX=` and
-     `POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX=`.
-  1. Remove all elements from `POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS`. Right prompt on the last prompt
-     line will cause resizing issues only when the cursor is below it. This isn't very common, so
-     you might want to keep some elements in `POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS` provided that
-     none of them are succeeded by `newline`.
+  2. Disable prompt connection with `POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR=' '`.
+  3. Disable right frame with `POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX=''`,
+     `POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX=''` and
+     `POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX=''`.
+  4. Set `POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()`. Right prompt on the last prompt line will cause
+     resizing issues only when the cursor is below it. This isn't very common, so you might want to
+     keep some elements in `POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS` provided that none of them are
+     succeeded by `newline`.
+
+### Icons cut off in Konsole
+
+When using Konsole with a non-monospace font, icons may be cut off on the right side. Here
+"non-monospace" refers to any font with glyphs wider than a single column, or wider than two columns
+for glyphs designated as "wide" in the Unicode standard.
+
+![Icons cut off in Konsole](
+  https://raw.githubusercontent.com/romkatv/powerlevel10k-media/master/konsole-non-monospace-font.png)
+
+The last line on the screenshot shows a cut off Arch Linux logo.
+
+There are several mitigation options for this issue.
+
+1. Use a different terminal. Konsole is the only terminal that exhibits this behavior.
+2. Use a monospace font.
+3. Manually add an extra space after the icon that gets cut off. For example, if the content of
+   `os_icon` prompt segment gets cut off, open `~/.p10k.zsh`, search for
+   `POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION` and change it as follows:
+```zsh
+typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='${P9K_CONTENT} '  # extra space at the end
+```
+4. Use a different icon that is monospace. For example, if Arch Linux logo gets cut off, add
+   the following parameter to `~/.p10k.zsh`:
+```zsh
+typeset -g POWERLEVEL9K_LINUX_ARCH_ICON='Arch'  # plain "Arch" in place of a logo
+```
+5. Disable the display of the icon that gets cut off. For example, if the content of
+   `os_icon` prompt segment gets cut off, open `~/.p10k.zsh` and remove `os_icon` from
+   `POWERLEVEL9K_LEFT_PROMPT_ELEMENTS` and `POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS`.
+
+*Note*: [Non-monospace fonts are not officially supported by Konsole](
+  https://bugs.kde.org/show_bug.cgi?id=418553#c5).
+
+### Arch Linux logo has a dot in the bottom right corner
+
+![Arch Linux Logo with a dot](
+  https://raw.githubusercontent.com/romkatv/powerlevel10k-media/master/arch-linux-logo-dot.png)
+
+Some fonts have this incorrect dotted icon in bold typeface. There are two ways to fix this issue.
+
+1. Use a font with a correct Arch Linux logo in bold typeface. For example,
+  [the recommended Powerlevel10k font](#meslo-nerd-font-patched-for-powerlevel10k).
+2. Display the icon in regular (non-bold) typeface. To do this, open `~/.p10k.zsh`, search for
+   `POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION` and remove `%B` from its value.
+```zsh
+typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='${P9K_CONTENT}'  # not bold
+```
 
 ## Table of contents
 
@@ -1479,12 +1771,14 @@ There are a few mitigation options for this issue.
   - [Oh My Zsh](#oh-my-zsh)
   - [Prezto](#prezto)
   - [Zim](#zim)
+  - [Antibody](#antibody)
   - [Antigen](#antigen)
   - [Zplug](#zplug)
   - [Zgen](#zgen)
   - [Zplugin](#zplugin)
   - [Zinit](#zinit)
   - [Homebrew](#homebrew)
+  - [Arch Linux](#arch-linux)
 - [Configuration](#configuration)
   - [For new users](#for-new-users)
   - [For Powerlevel9k users](#for-powerlevel9k-users)
@@ -1496,6 +1790,8 @@ There are a few mitigation options for this issue.
 - [License](#license)
 - [FAQ](#faq)
   - [How do I update Powerlevel10k?](#how-do-i-update-powerlevel10k)
+  - [How do I uninstall Powerlevel10k?](#how-do-i-uninstall-powerlevel10k)
+  - [How do I install Powerlevel10k on a machine without Internet access?](#how-do-i-install-powerlevel10k-on-a-machine-without-internet-access)
   - [Where can I ask for help and report bugs?](#where-can-i-ask-for-help-and-report-bugs)
   - [Which aspects of shell and terminal does Powerlevel10k affect?](#which-aspects-of-shell-and-terminal-does-powerlevel10k-affect)
   - [I'm using Powerlevel9k with Oh My Zsh. How do I migrate?](#im-using-powerlevel9k-with-oh-my-zsh-how-do-i-migrate)
@@ -1504,6 +1800,7 @@ There are a few mitigation options for this issue.
   - [What do different symbols in Git status mean?](#what-do-different-symbols-in-git-status-mean)
   - [How do I change the format of Git status?](#how-do-i-change-the-format-of-git-status)
   - [Why is Git status from `$HOME/.git` not displayed in prompt?](#why-is-git-status-from-homegit-not-displayed-in-prompt)
+  - [Why does Git status sometimes appear grey and then gets colored after a short period of time?](#why-does-git-status-sometimes-appear-grey-and-then-gets-colored-after-a-short-period-of-time)
   - [How do I add username and/or hostname to prompt?](#how-do-i-add-username-andor-hostname-to-prompt)
   - [Why some prompt segments appear and disappear as I'm typing?](#why-some-prompt-segments-appear-and-disappear-as-im-typing)
   - [How do I change prompt colors?](#how-do-i-change-prompt-colors)
@@ -1515,9 +1812,10 @@ There are a few mitigation options for this issue.
   - [What is the best prompt style in the configuration wizard?](#what-is-the-best-prompt-style-in-the-configuration-wizard)
   - [How to make Powerlevel10k look like robbyrussell Oh My Zsh theme?](#how-to-make-powerlevel10k-look-like-robbyrussell-oh-my-zsh-theme)
   - [Can prompts for completed commands display error status for *those* commands instead of the commands preceding them?](#can-prompts-for-completed-commands-display-error-status-for-those-commands-instead-of-the-commands-preceding-them)
-  - [Is there an AUR package for Powerlevel10k?](#is-there-an-aur-package-for-powerlevel10k)
   - [What is the minimum supported Zsh version?](#what-is-the-minimum-supported-zsh-version)
   - [How were these screenshots and animated gifs created?](#how-were-these-screenshots-and-animated-gifs-created)
+  - [How was the recommended font created?](#how-was-the-recommended-font-created)
+  - [How to package Powerlevel10k for distribution?](#how-to-package-powerlevel10k-for-distribution)
 - [Troubleshooting](#troubleshooting)
   - [Question mark in prompt](#question-mark-in-prompt)
   - [Icons, glyphs or powerline symbols don't render](#icons-glyphs-or-powerline-symbols-dont-render)
@@ -1537,3 +1835,5 @@ There are a few mitigation options for this issue.
   - [Cannot make Powerlevel10k work with my plugin manager](#cannot-make-powerlevel10k-work-with-my-plugin-manager)
   - [Directory is difficult to see in prompt when using Rainbow style](#directory-is-difficult-to-see-in-prompt-when-using-rainbow-style)
   - [Horrific mess when resizing terminal window](#horrific-mess-when-resizing-terminal-window)
+  - [Icons cut off in Konsole](#icons-cut-off-in-konsole)
+  - [Arch Linux logo has a dot in the bottom right corner](#arch-linux-logo-has-a-dot-in-the-bottom-right-corner)

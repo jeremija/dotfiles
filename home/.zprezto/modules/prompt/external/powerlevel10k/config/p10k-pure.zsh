@@ -23,12 +23,13 @@
 'builtin' 'setopt' 'no_aliases' 'no_sh_glob' 'brace_expand'
 
 () {
-  emulate -L zsh
-
-  autoload -Uz is-at-least && is-at-least 5.1 || return
+  emulate -L zsh -o extended_glob
 
   # Unset all configuration options.
-  unset -m 'POWERLEVEL9K_*'
+  unset -m '(POWERLEVEL9K_*|DEFAULT_USER)~POWERLEVEL9K_GITSTATUS_DIR'
+
+  # Zsh >= 5.1 is required.
+  autoload -Uz is-at-least && is-at-least 5.1 || return
 
   # Prompt colors.
   local grey=242
@@ -184,6 +185,9 @@
   # This works even with POWERLEVEL9K_DISABLE_HOT_RELOAD=true.
   (( ! $+functions[p10k] )) || p10k reload
 }
+
+# Tell `p10k configure` which file it should overwrite.
+typeset -g POWERLEVEL9K_CONFIG_FILE=${${(%):-%x}:a}
 
 (( ${#p10k_config_opts} )) && setopt ${p10k_config_opts[@]}
 'builtin' 'unset' 'p10k_config_opts'
