@@ -12,6 +12,7 @@ done
 
 export ZSH_DOTFILES_DIR="$(dirname $ZSH_DOTFILES_DIR)"
 
+export HISTSIZE=10000
 export HISTFILE=$HOME/.zhistory
 
 #
