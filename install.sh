@@ -38,7 +38,7 @@ mkdir -pv "$HOME/bin"
 link_files bin "$HOME/bin"
 mkdir -pv "$HOME/.config"
 link_files config "$HOME/.config"
-link_files home/.zprezto/runcoms "$HOME" "z*" "."
+link_files zsh "$HOME" ".z*" ""
 link_files "Library/Application Support" "$HOME/Library/Application Support"
 
 title "Not setting up python virtualenvs for neovim"
