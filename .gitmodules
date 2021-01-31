@@ -1,9 +1,6 @@
 [submodule "tmux-themepack"]
 	path = tmux-themepack
 	url = https://github.com/jimeh/tmux-themepack
-[submodule "home/.zprezto"]
-	path = home/.zprezto
-	url = ../prezto
 [submodule "config/nvim/pack/bundle/start/vim-colorschemes"]
 	path = config/nvim/pack/bundle/start/vim-colorschemes
 	url = https://github.com/flazz/vim-colorschemes
