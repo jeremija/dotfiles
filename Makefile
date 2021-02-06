@@ -30,7 +30,7 @@ mac-tweaks: FORCE
 submodules: FORCE
 	git submodule update --init --recursive
 
-flatten: FORCE
+release: FORCE
 	./flatten.sh
 
 FORCE:
