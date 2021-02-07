@@ -32,8 +32,6 @@ xset dpms 600 600 600
 xset s off
 
 # gnome-keyring-daemon
-eval $(ssh-agent)
-export SSH_AUTH_SOCK
 
 ~/scripts/redshift/redshift.sh reread
 
