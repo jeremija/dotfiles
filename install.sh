@@ -41,6 +41,9 @@ link_files config "$HOME/.config"
 link_files zsh "$HOME" ".z*" ""
 link_files "Library/Application Support" "$HOME/Library/Application Support"
 
+mkdir -pv "$HOME/.config/systemd/user"
+link_files systemd "$HOME/.config/systemd/user"
+
 title "Not setting up python virtualenvs for neovim"
 echo
 echo "if you wish to install them in manually, run:"
@@ -50,5 +53,11 @@ echo    \$HOME/.config/nvim/python3/setup.sh
 echo
 echo "Note that python2 is deprecated."
 echo "On linux it is preferred to install python-neovim."
+echo
+echo "Also, on linux you might want to run the following:"
+echo
+for file in systemd/*.service; do
+    echo "  systemctl --user enable --now $(basename $file)"
+done
 
 title 'done'

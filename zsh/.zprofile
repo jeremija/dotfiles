@@ -16,6 +16,9 @@ export HISTSIZE=10000
 export SAVEHIST=$HISTSIZE
 export HISTFILE=$HOME/.zhistory
 
+# To be used in combination with systemd user ssh-agent.service
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
 #
 # Browser
 #
