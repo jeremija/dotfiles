@@ -45,6 +45,10 @@ case $DESKTOP_SESSION in
     sxhkd -c ~/.config/sxhkd/sxhkdrc.kde &
   ;;
   *)
+    if [[ "$DESKTOP_SESSION" == *bspwm ]]; then
+      sxhkd &
+    fi
+
     # export QT_STYLE_OVERRIDE=GTK+
     export QT_QPA_PLATFORMTHEME=qt5ct
 

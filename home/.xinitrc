@@ -10,6 +10,9 @@ case $session in
   startxfce4)
     export DESKTOP_SESSION=xfce
     ;;
+  bspwm)
+    export DESKTOP_SESSION=bspwm
+    ;;
 esac
 
 export XDG_CURRENT_DESKTOP=$DESKTOP_SESSION
