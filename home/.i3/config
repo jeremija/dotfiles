@@ -208,7 +208,8 @@ bar {
         # status_command ~/.i3/py3status.sh -c ~/.i3/i3status.conf -n 1
         # status_command J4STATUS_PLUGINS_DIR=/home/jere/src/linux/j4status_plugins_dir j4status -c ~/.i3/j4status.conf
         position top
-        status_command i3status -c ~/.i3/i3status.conf
+        # status_command i3status -c ~/.i3/i3status.conf
+        status_command sh -c 'i3status-rs ~/.i3/i3status-rs.toml || i3status -c ~/.i3/i3status.conf'
         tray_output primary
 }
 
@@ -254,6 +255,8 @@ popup_during_fullscreen smart
 
 #hide_edge_borders both
 hide_edge_borders none
+
+default_border pixel 1px
 
 ### MULTI MONITOR SETUP ###
 # exec xrandr --output HDMI3 --auto --right-of HDMI1
