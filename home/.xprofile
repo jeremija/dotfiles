@@ -59,7 +59,9 @@ case $DESKTOP_SESSION in
     cbatticon &
 
     # clipboard manager
-    parcellite &
+    copyq &
+    # disable storing clipboard history
+    copyq disable
     # enable network manager and bluetooth applets
     # nm-applet &
     # blueman-applet &
