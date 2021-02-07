@@ -7,7 +7,8 @@ export SUDO_EDITOR=$EDITOR
 export TERMINAL=termite
 export BROWSER=google-chrome-stable
 export XDG_CONFIG_HOME="$HOME/.config"
-export $(dbus-launch)
+# export $(dbus-launch)
+export NO_AT_BRIDGE=1
 
 # read .Xresources file
 xrdb -m ~/.Xresources
