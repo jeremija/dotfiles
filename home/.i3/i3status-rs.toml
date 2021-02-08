@@ -1,13 +1,21 @@
-icons = "awesome"
-
 [theme]
 name = "solarized-dark"
+
+[icons]
+name = "awesome"
+
+[icons.overrides]
+backlight_empty = " _ "
+backlight_partial1 = " ▂ "
+backlight_partial2 = " ▄ "
+backlight_partial3 = " ▆ "
+backlight_full = " █ "
 
 [theme.overrides]
 idle_bg = "#000000"
 idle_fg = "#93a1a1"
-info_bg = "#268bd2"
-info_fg = "#002b36"
+info_bg = "#000000"
+info_fg = "#268bd2"
 
 good_bg = "#002b42"
 warning_bg = "#002b42"
@@ -17,11 +25,21 @@ good_fg = "#93a1a1"
 warning_fg = "#e7c547"
 critical_fg = "#ff3334"
 
-separator = ""
+# separator = ""
 separator_bg = "auto"
 separator_fg = "auto"
 alternating_tint_bg = "#000000"
 alternating_tint_fg = "#000000"
+
+[[block]]
+block = "cpu"
+interval = 1
+
+[[block]]
+block = "memory"
+display_type = "memory"
+format_mem = "{Mup}%"
+format_swap = "{SUp}%"
 
 [[block]]
 block = "disk_space"
@@ -32,16 +50,6 @@ unit = "GB"
 interval = 20
 warning = 20.0
 alert = 10.0
-
-[[block]]
-block = "memory"
-display_type = "memory"
-format_mem = "{Mup}%"
-format_swap = "{SUp}%"
-
-[[block]]
-block = "cpu"
-interval = 1
 
 [[block]]
 block = "load"
