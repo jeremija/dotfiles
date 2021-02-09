@@ -42,6 +42,11 @@ format_mem = "{Mup}%"
 format_swap = "{SUp}%"
 
 [[block]]
+block = "load"
+interval = 1
+format = "{1m}"
+
+[[block]]
 block = "disk_space"
 path = "/"
 alias = "/"
@@ -51,21 +56,19 @@ interval = 20
 warning = 20.0
 alert = 10.0
 
-[[block]]
-block = "load"
-interval = 1
-format = "{1m}"
+# [[block]]
+# block = "net"
+# device = "wlan0"
+# # format = "{ssid} {signal_strength} {ip} {speed_down} {graph_down}"
+# format = "{ssid} {signal_strength} {ip} {speed_up} {speed_down} "
+# interval = 5
+# use_bits = false
 
 [[block]]
-block = "sound"
-
-[[block]]
-block = "net"
-device = "wlan0"
-# format = "{ssid} {signal_strength} {ip} {speed_down} {graph_down}"
-format = "{ssid} {signal_strength} {ip} {speed_up} {speed_down} "
-interval = 5
-use_bits = false
+block = "networkmanager"
+on_click = "alacritty -e nmtui"
+interface_name_exclude = ["br\\-[0-9a-f]{12}", "docker\\d+"]
+interface_name_include = []
 
 [[block]]
 block = "backlight"
@@ -89,19 +92,23 @@ chip = "*-isa-*"
 # inputs = ["CPUTIN", "SYSTIN"]
 
 [[block]]
-driver = "sysfs"
 block = "battery"
+driver = "sysfs"
 interval = 10
 format = "{percentage}% {time}"
+
+[[block]]
+block = "custom"
+command = ''' dunstctl is-paused >/dev/null;
+  [[ "$(dunstctl is-paused)" == "false" ]] &&
+  echo '{"state":"Idle","text":" \uf075  ON "}' ||
+  echo '{"state":"Info","text":" \uf4b3 OFF "}'
+'''
+json = true
+on_click = "dunstctl set-paused toggle"
 
 [[block]]
 block = "time"
 interval = 1
 format = "%a %Y-%m-%d %H:%M:%S"
 
-
-# [[block]]
-# block = "networkmanager"
-# on_click = "alacritty -e nmtui"
-# interface_name_exclude = ["br\\-[0-9a-f]{12}", "docker\\d+"]
-# interface_name_include = []
