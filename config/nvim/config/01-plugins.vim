@@ -85,3 +85,10 @@ function! ToggleLinter(name) abort
   call ale#toggle#Reset()
 endfunction
 command! -nargs=1 ToggleLinter :call ToggleLinter(<q-args>)
+
+let g:fzf_layout = {
+\ 'window': {
+\   'width':0.95,
+\   'height': 0.8,
+\  },
+\}
