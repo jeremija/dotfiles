@@ -38,7 +38,7 @@ noremap <C-H> <C-W>h
 noremap <C-J> <C-W>j
 noremap <C-K> <C-W>k
 noremap <C-L> <C-W>l
-noremap <silent> <C-p> :call fzf#run({ 'source': 'rg --hidden --files', 'sink': 'e' })<CR>
+noremap <silent> <C-p> :call fzf#run(fzf#wrap({ 'source': 'rg --hidden --files', 'options': ['--preview', 'cat {}'], 'sink': 'e' }))<CR>
 inoremap <expr> <C-X><C-J> fzf#vim#complete#path('rg --hidden --files')
 noremap <silent> <Leader>f :Rg<CR>
 
