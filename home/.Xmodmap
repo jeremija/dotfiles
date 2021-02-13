@@ -12,8 +12,11 @@ keysym k = k K Up NoSymbol NoSymbol NoSymbol
 keysym l = l L Right NoSymbol lstroke Lstroke
 keysym a = a A Escape NoSymbol NoSymbol NoSymbol
 
+! NOTE: use setxkbmap -option altwin:swap_alt_win instead of below because it
+! does not mess up with switching to another TTY via ctrl + alt + F<num>.
+!
 ! Exchange left Alt and left Win
-remove mod1 = Alt_L
-remove mod4 = Super_L
-add mod1 = Super_L
-add mod4 = Alt_L
+! remove mod1 = Alt_L
+! remove mod4 = Super_L
+! add mod1 = Super_L
+! add mod4 = Alt_L

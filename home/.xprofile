@@ -12,6 +12,7 @@ export NO_AT_BRIDGE=1
 
 # read .Xresources file
 xrdb -m ~/.Xresources
+setxkbmap -option altwin:swap_alt_win
 xmodmap ~/.Xmodmap
 
 # mouse sensitivity
