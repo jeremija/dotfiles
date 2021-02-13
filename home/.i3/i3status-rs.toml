@@ -95,7 +95,7 @@ chip = "*-isa-*"
 block = "battery"
 driver = "sysfs"
 interval = 10
-format = "{percentage}% {time}"
+format = "{percentage}% {time} {power}W"
 
 [[block]]
 block = "custom"
