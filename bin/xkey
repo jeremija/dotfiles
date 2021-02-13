@@ -1,4 +1,5 @@
 #!/bin/bash
 
 xset r rate 200 25
+setxkbmap -option altwin:swap_alt_win
 xmodmap ~/.Xmodmap
