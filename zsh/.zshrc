@@ -82,6 +82,9 @@ fzf-history-widget() {
 zle     -N   fzf-history-widget
 bindkey '^R' fzf-history-widget
 
+# fix backspace in vi mode after edit
+bindkey "^?" backward-delete-char
+
 unsetopt cdablevars
 
 setopt alwaystoend
