@@ -38,7 +38,7 @@ interval = 1
 [[block]]
 block = "memory"
 display_type = "memory"
-format_mem = "{Mup}%"
+format_mem = "{mem_total_used_percents}"
 format_swap = "{SUp}%"
 
 [[block]]
@@ -87,7 +87,7 @@ block = "temperature"
 collapsed = false
 interval = 5
 # format = "{min}° min, {max}° max, {average}° avg"
-format = "{max}°C"
+format = "{max}C"
 chip = "*-isa-*"
 # inputs = ["CPUTIN", "SYSTIN"]
 
