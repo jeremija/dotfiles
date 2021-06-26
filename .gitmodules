@@ -105,3 +105,6 @@
 [submodule "config/nvim/pack/bundle/start/diffchar.vim"]
 	path = config/nvim/pack/bundle/start/diffchar.vim
 	url = https://github.com/rickhowe/diffchar.vim
+[submodule "config/nvim/pack/bundle/start/vim-dirdiff"]
+	path = config/nvim/pack/bundle/start/vim-dirdiff
+	url = https://github.com/jeremija/vim-dirdiff
