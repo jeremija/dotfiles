@@ -1,0 +1,21 @@
+[include]
+	path = ~/.gitconfig.local
+
+[alias]
+	lg = log --pretty='format:%C(yellow)%H%Creset %C(cyan)%ad%Creset %s %Cred%d%Creset %C(cyan)[%an]' --date='format-local:%Y-%m-%d %H:%M %a'
+	dirdiff = difftool --ignore-submodules --dir-diff --no-symlinks --tool=dirdiff
+
+[pull]
+	ff = only
+
+[merge]
+	tool = vimdiff
+
+[mergetool]
+	prompt = true
+
+[mergetool "vimdiff"]
+	cmd = vim -d $BASE $LOCAL
+
+[difftool "dirdiff"]
+	cmd = vim -f '+next' '+execute \"DirDiff\" argv(0) argv(1)' $LOCAL $REMOTE

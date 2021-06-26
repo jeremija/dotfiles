@@ -491,7 +491,7 @@ function! ale#c#GetCFlags(buffer, output) abort
         endif
     endif
 
-    if s:CanParseMakefile(a:buffer) && !empty(a:output) && !empty(l:cflags)
+    if empty(l:cflags) && s:CanParseMakefile(a:buffer) && !empty(a:output)
         let l:cflags = ale#c#ParseCFlagsFromMakeOutput(a:buffer, a:output)
     endif
 
@@ -506,19 +506,25 @@ function! ale#c#GetMakeCommand(buffer) abort
     if s:CanParseMakefile(a:buffer)
         let l:path = ale#path#FindNearestFile(a:buffer, 'Makefile')
 
+        if empty(l:path)
+            let l:path = ale#path#FindNearestFile(a:buffer, 'GNUmakefile')
+        endif
+
         if !empty(l:path)
             let l:always_make = ale#Var(a:buffer, 'c_always_make')
 
-            return ale#path#CdString(fnamemodify(l:path, ':h'))
-            \   . 'make -n' . (l:always_make ? ' --always-make' : '')
+            return [
+            \   fnamemodify(l:path, ':h'),
+            \   'make -n' . (l:always_make ? ' --always-make' : ''),
+            \]
         endif
     endif
 
-    return ''
+    return ['', '']
 endfunction
 
 function! ale#c#RunMakeCommand(buffer, Callback) abort
-    let l:command = ale#c#GetMakeCommand(a:buffer)
+    let [l:cwd, l:command] = ale#c#GetMakeCommand(a:buffer)
 
     if empty(l:command)
         return a:Callback(a:buffer, [])
@@ -528,6 +534,7 @@ function! ale#c#RunMakeCommand(buffer, Callback) abort
     \   a:buffer,
     \   l:command,
     \   {b, output -> a:Callback(a:buffer, output)},
+    \   {'cwd': l:cwd},
     \)
 endfunction
 
