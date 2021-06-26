@@ -125,3 +125,20 @@
 # "~/.i3/status.sh --notify"
 #     Mod4 + q
 
+"keepassxc"
+  Mod4 + c
+
+"alacmd font Dina"
+  Mod4 + m
+
+"alacmd font Monospace"
+  Mod4 + Shift + m
+
+"alacmd theme dark"
+  Mod4 + n
+
+"alacmd theme light"
+  Mod4 + Shift + n
+
+"autorandr --change"
+  Mod4 + x
