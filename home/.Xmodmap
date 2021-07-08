@@ -6,11 +6,20 @@ remove Shift = Caps_Lock
 keycode 66 = NoSymbol NoSymbol
 keycode 66 = Mode_switch
 
+! map CapsLock + home row keys to Left/Down/Up/Right
 keysym h = h H Left NoSymbol NoSymbol NoSymbol
 keysym j = j J Down NoSymbol NoSymbol NoSymbol
 keysym k = k K Up NoSymbol NoSymbol NoSymbol
 keysym l = l L Right NoSymbol lstroke Lstroke
-keysym a = a A Escape NoSymbol NoSymbol NoSymbol
+
+! map CapsLock + C to Escape
+keysym c = c C Escape NoSymbol NoSymbol NoSymbol
+
+! map CapsLock + keys above the home row to Home/PgUp/PgDown/PgEnd
+keysym y = y Y Home Y y Y
+keysym u = u U Next U u U
+keysym i = i I Prior I i I
+keysym o = o O End O o O
 
 ! NOTE: use setxkbmap -option altwin:swap_alt_win instead of below because it
 ! does not mess up with switching to another TTY via ctrl + alt + F<num>.

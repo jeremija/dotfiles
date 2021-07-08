@@ -119,16 +119,16 @@ colors_schemes:
   light: &light
     # Default colors
     primary:
-      background: '0xffffff'
+      background: '0xefe7d2'
       foreground: '0x333333'
 
     cursor:
       text: '0xeeeeee'
-      cursor: '0x878787'
+      cursor: '0xaaaaaa'
 
     # Normal colors
     normal:
-      black:   '0xffffff'
+      black:   '0xefe7d2'
       red:     '0xee3333'
       green:   '0x00aa77'
       yellow:  '0x5f8700'
@@ -151,9 +151,9 @@ colors_schemes:
 
     indexed_colors:
       - { index: 248, color: '0x333333' } # vim jeremija normal
-      - { index: 233, color: '0xf2f2f2' } # vim jeremija color column
+      - { index: 233, color: '0xebe3ce' } # vim jeremija color column
       - { index: 240, color: '0x949494' } # vim jeremija comment
-      - { index: 236, color: '0xcceeee'} # nerd tree and fzf bg color
+      - { index: 236, color: '0xebe3ce'} # nerd tree and fzf bg color
       - { index: 244, color: '0xddffff' } # vim jeremija pmenu bg
       - { index: 254, color: '0x000000'} # fzf fg color
       - { index: 66, color: '0xdddddd' } # vim jeremija pmenu sel bg
