@@ -201,8 +201,8 @@ function! <SID>DirDiff(srcA, srcB)
     " We first write to that file
     " Constructs the command line
     let langStr = ""
-    let cmd = "!" . g:DirDiffLangString . "diff"
-    let cmdarg = " -r --brief"
+    let cmd = "!" . g:DirDiffLangString . "dirdiff.sh"
+    let cmdarg = ""
 
     if (g:DirDiffIgnoreFileNameCase)
 	let cmdarg = cmdarg." --ignore-file-name-case"
@@ -493,6 +493,7 @@ function! <SID>DirDiffOpen()
     let s:FilenameB = <SID>EscapeFileName(fileB)
 
     if <SID>IsOnly(line)
+        echom "IsOnly"
         " We open the file
         let fileSrc = <SID>ParseOnlySrc(line)
         if (fileSrc == "A")
@@ -518,7 +519,10 @@ function! <SID>DirDiffOpen()
         endif
 
         " Fool the window saying that this is diff
-        diffthis
+        if !isdirectory(fileToOpen)
+          diffthis
+        endif
+
         call <SID>GotoDiffWindow()
         " Resize the window
         exe("resize " . g:DirDiffWindowSize)
@@ -527,20 +531,21 @@ function! <SID>DirDiffOpen()
     elseif <SID>IsDiffer(line)
 
         if exists("s:LastMode")
+          echom "exists: ".string(s:LastMode)
             if s:LastMode == 2
                 call <SID>Drop(previousFileB)
                 silent exec "edit ".s:FilenameB
-                silent exec "bd ".bufnr(previousFileB)
+                silent exec "bd! ".bufnr(previousFileB)
 
                 call <SID>Drop(previousFileA)
-                silent exec "bd ".bufnr(previousFileA)
+                silent exec "bd! ".bufnr(previousFileA)
 
-                silent exec "vert diffsplit ".s:FilenameA
+                silent exec "leftabove vert diffsplit ".s:FilenameA
             else
                 let previousFile = (s:LastMode == "A") ? previousFileA : previousFileB
                 call <SID>Drop(previousFile)
                 silent exec "edit ".s:FilenameB
-                silent exec "bd ".bufnr(previousFile)
+                silent exec "bd! ".bufnr(previousFile)
                 diffthis
 
                 " To ensure that A is on the left and B on the right, splitright must be off
@@ -1035,7 +1040,7 @@ function! <SID>GetDiffStrings()
 	silent exe s:DirDiffMakeDirCmd . "\"" . tmp1 . "\""
 	silent exe s:DirDiffMakeDirCmd . "\"" . tmp2 . "\""
 	silent exe "!echo test > \"" . tmp1 . s:sep . "test" . "\""
-	silent exe "!" . g:DirDiffLangString . "diff -r --brief \"" . tmp1 . "\" \"" . tmp2 . "\" > \"" . tmpdiff . "\""
+	silent exe "!" . g:DirDiffLangString . "dirdiff.sh \"" . tmp1 . "\" \"" . tmp2 . "\" > \"" . tmpdiff . "\""
 
 	" Now get the result of that diff cmd
 	silent exe "split ". tmpdiff
@@ -1053,7 +1058,7 @@ function! <SID>GetDiffStrings()
     "echo "Getting the diff in GetDiffStrings"
 
 	silent exe "!echo testdifferent > \"" . tmp2 . s:sep . "test" . "\""
-	silent exe "!" . g:DirDiffLangString . "diff -r --brief \"" . tmp1 . "\" \"" . tmp2 . "\" > \"" . tmpdiff . "\""
+	silent exe "!" . g:DirDiffLangString . "dirdiff.sh \"" . tmp1 . "\" \"" . tmp2 . "\" > \"" . tmpdiff . "\""
 
 	silent exe "split ". tmpdiff
 	let s:DirDiffDifferLine = substitute( getline(1), tmp1rx . ".*$", "", '')
