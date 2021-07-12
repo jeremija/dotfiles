@@ -518,10 +518,8 @@ function! <SID>DirDiffOpen()
             silent exec "split ".fileToOpen
         endif
 
-        " Fool the window saying that this is diff
-        if !isdirectory(fileToOpen)
-          diffthis
-        endif
+        " Turn off the diff for all buffers. This helps reset diffchar.
+        diffoff!
 
         call <SID>GotoDiffWindow()
         " Resize the window
@@ -546,7 +544,7 @@ function! <SID>DirDiffOpen()
                 call <SID>Drop(previousFile)
                 silent exec "edit ".s:FilenameB
                 silent exec "bd! ".bufnr(previousFile)
-                diffthis
+                " diffthis
 
                 " To ensure that A is on the left and B on the right, splitright must be off
                 silent exec "leftabove vert diffsplit ".s:FilenameA
