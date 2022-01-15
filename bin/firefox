@@ -1,3 +1,9 @@
 #!/bin/bash
+
 export MOZ_USE_XINPUT2=1
+
+if [ "$WAYLAND_DISPLAY" != "" ]; then
+  export MOZ_ENABLE_WAYLAND=1
+fi
+
 exec /usr/bin/firefox "$@"
