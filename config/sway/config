@@ -90,6 +90,7 @@ hide_edge_borders none
 
     # Kill focused window
     bindsym $mod+q kill
+    bindsym $mod+Control+q exec swaylock -f -c 000000
 
     # Start your launcher
     # bindsym $mod+d exec $menu
