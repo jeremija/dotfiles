@@ -6,8 +6,8 @@ xkb_symbols "basic" {
 
   key <AD06> { [ y, Y, Home,   Home   ] };
   key <AD07> { [ u, u, Next,  Next    ] };
-  key <AD08> { [ i, i, Prior,   Prior ] };
-  key <AD09> { [ o, o, End,    End    ] };
+  key <AD08> { [ i, I, Prior,   Prior ] };
+  key <AD09> { [ o, O, End,    End    ] };
   key <AC06> { [ h, H, Left,   Left   ] };
   key <AC07> { [ j, J, Down,   Down   ] };
   key <AC08> { [ k, K, Up,     Up     ] };
