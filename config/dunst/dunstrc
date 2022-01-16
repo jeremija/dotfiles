@@ -147,6 +147,8 @@
     # Paths to default icons.
     icon_folders = /usr/share/icons/Faenza/status/32/:/usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/
 
+    frame_width = 0
+
 [frame]
     width = 0
     color = "#aaaaaa"
