@@ -10,3 +10,4 @@ config/nvim/tmp
 .zlocal
 .netrwhist
 config/nvim/config/99-local.vim
+config/sway/local.conf.d
