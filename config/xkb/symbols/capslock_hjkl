@@ -1,8 +1,8 @@
 default partial alphanumeric_keys
-xkb_symbols "intl" {
-  include "us(intl)"
+xkb_symbols "basic" {
+  include "us(basic)"
   include "level3(caps_switch)"
-  name[Group1] = "English (US, intl., with hjkl as arrows, yuio as home/pgdown/pgup,end)";
+  name[Group1] = "English (US, basic, with hjkl as arrows, yuio as home/pgdown/pgup,end)";
 
   key <AD06> { [ y, Y, Home,   Home   ] };
   key <AD07> { [ u, u, Next,  Next    ] };
@@ -15,4 +15,3 @@ xkb_symbols "intl" {
 
   key <AB02> { [ x, X, Delete, Delete ] };
 };
-

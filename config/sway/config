@@ -70,9 +70,8 @@ input type:keyboard {
     repeat_rate 25
 
     xkb_options altwin:swap_alt_win
-    xkb_variant intl
+    xkb_variant basic
     xkb_layout capslock_hjkl
-    # xkb_layout capslock_hjkl_as_arrows
 }
 
 # default_border pixel 1px
