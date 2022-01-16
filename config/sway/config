@@ -64,10 +64,16 @@ exec swayidle -w \
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
-input * repeat_delay 200
-input * repeat_rate 25
 
-input * xkb_options altwin:swap_alt_win,ctrl:nocaps
+input type:keyboard {
+    repeat_delay 200
+    repeat_rate 25
+
+    xkb_options altwin:swap_alt_win
+    xkb_variant intl
+    xkb_layout capslock_hjkl
+    # xkb_layout capslock_hjkl_as_arrows
+}
 
 # default_border pixel 1px
 default_border pixel 1
