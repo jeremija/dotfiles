@@ -85,7 +85,8 @@ hide_edge_borders none
     # Start a terminal
     bindsym $mod+Return exec $term
 
-    bindsym $mod+d exec alacritty --class 'AlacrittyLauncher' -e bash -c 'compgen -c | grep -v fzf | sort -u | fzf --layout=reverse | xargs -r swaymsg -t command exec'
+    bindsym $mod+d exec alacritty --class 'AlacrittyLauncher' -e bash -c 'compgen -c | grep -v fzf | sort -u | fzf --history="$HOME/.launchhistory" --history-size=100 --layout=reverse | tail -n 1 | xargs -0 -r swaymsg -t command exec'
+    bindsym $mod+Shift+d exec alacritty --class 'AlacrittyLauncher' -e bash -c 'cat $HOME/.launchhistory     | fzf --history="$HOME/.launchhistory" --history-size=100 --layout=reverse | tail -n 1 | xargs -0 -r swaymsg -t command exec'
     # check id with "swaymsg -t get_tree
 
     # Kill focused window
