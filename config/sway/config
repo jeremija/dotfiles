@@ -51,6 +51,8 @@ exec swayidle -w \
          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
          before-sleep 'swaylock -f -c 000000'
 
+exec nm-applet --indicator
+
 ### Input configuration
 #
 # Example configuration:
@@ -110,11 +112,11 @@ hide_edge_borders none
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
 
-    bindsym $mod+Control+Minus exec gammastep.sh -100
-    bindsym $mod+Control+Equal exec gammastep.sh +100
-    bindsym $mod+Control+0 exec gammastep.sh 0
-    bindsym $mod+Control+Underscore exec gammastep.sh 0 -0.02
-    bindsym $mod+Control+Plus exec gammastep.sh 0 0.02
+    bindsym $mod+Control+Minus      exec wl-gammarelay.sh -100
+    bindsym $mod+Control+Equal      exec wl-gammarelay.sh +100
+    bindsym $mod+Control+0          exec killall wl-gammarelay
+    bindsym $mod+Control+Underscore exec wl-gammarelay.sh +0 -0.02
+    bindsym $mod+Control+Plus       exec wl-gammarelay.sh +0 +0.02
 
     bindsym $mod+Minus exec brightnessctl s 5%-
     bindsym $mod+Equal exec brightnessctl s 5%+
@@ -255,18 +257,19 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
+    swaybar_command waybar
     position top
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     # status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
-    status_command i3status-rs ~/.i3/i3status-rs.toml
+    # status_command i3status-rs ~/.i3/i3status-rs.toml
 
-    colors {
-        statusline #ffffff
-        background #000000
-        # inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+    # colors {
+    #     statusline #ffffff
+    #     background #000000
+    #     # inactive_workspace #32323200 #32323200 #5c5c5c
+    # }
 }
 
 focus_follows_mouse no

@@ -5,7 +5,7 @@ xkb_symbols "basic" {
   name[Group1] = "English (US, basic, with hjkl as arrows, yuio as home/pgdown/pgup,end)";
 
   key <AD06> { [ y, Y, Home,   Home   ] };
-  key <AD07> { [ u, u, Next,  Next    ] };
+  key <AD07> { [ u, U, Next,  Next    ] };
   key <AD08> { [ i, I, Prior,   Prior ] };
   key <AD09> { [ o, O, End,    End    ] };
   key <AC06> { [ h, H, Left,   Left   ] };
