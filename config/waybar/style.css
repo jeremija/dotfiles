@@ -54,12 +54,10 @@ tooltip label {
 
 #battery {
     background-color: transparent;
-    /* color: white; */
 }
 
 #battery.charging {
-    /* color: white; */
-    background-color: #26A65B;
+    color: #26A65B;
 }
 
 @keyframes blink {

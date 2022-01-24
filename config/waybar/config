@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/mode", "custom/media"],
     /* "modules-center": ["sway/window"], */
-    "modules-right": ["idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "sway/language", "battery", "battery#bat2", "clock#utc", "clock", "tray"],
+    "modules-right": ["idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "custom/wl-gammarelay", "backlight", "keyboard-state", "sway/language", "battery", "battery#bat2", "clock#utc", "clock", "tray"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -74,16 +74,15 @@
         "spacing": 0
     },
     "clock": {
-        // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format": "{:%Y-%m-%d %H:%M:%S}",
-        /* "format-alt": "{:%Y-%m-%d}" */
+        "interval": 1
     },
     "clock#utc": {
         "timezone": "UTC",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format": "UTC {:%H:%M:%S}",
-        /* "format-alt": "{:%Y-%m-%d}" */
+        "interval": 1
     },
     "cpu": {
         "format": "{usage}% ",
@@ -103,7 +102,9 @@
     "backlight": {
         // "device": "acpi_video1",
         "format": "{percent}% {icon}",
-        "format-icons": ["", ""]
+        "format-icons": ["", ""],
+        "on-scroll-up": "brightnessctl s 2%+",
+        "on-scroll-down": "brightnessctl s 2%-"
     },
     "battery": {
         "states": {
@@ -161,5 +162,11 @@
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    },
+    "custom/wl-gammarelay": {
+        "format": "{} ",
+        "exec": "wl-gammarelay --no-daemon --reconnect-timeout 1s --subscribe color | jq --unbuffered --compact-output -r -c '.updates[] | select(.key == \"color\") | .color | .temperature + \" \" + .brightness'",
+        "on-scroll-up": "wl-gammarelay --no-daemon --temperature +100",
+        "on-scroll-down": "wl-gammarelay --no-daemon --temperature -100"
     }
 }
