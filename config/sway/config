@@ -10,6 +10,7 @@ font pango:Terminus 8
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
+set $alt Mod1
 # Home row direction keys, like vim
 set $left h
 set $down j
@@ -49,9 +50,11 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 exec swayidle -w \
          timeout 595 'swaylock -f -c 000000' \
          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         timeout 3600 'systemctl suspend' \
          before-sleep 'swaylock -f -c 000000'
 
 exec nm-applet --indicator
+exec pasystray
 
 ### Input configuration
 #
@@ -87,8 +90,8 @@ hide_edge_borders none
     # Start a terminal
     bindsym $mod+Return exec $term
 
-    bindsym $mod+d exec alacritty --class 'AlacrittyLauncher' -e bash -c 'compgen -c | grep -v fzf | sort -u | fzf --history="$HOME/.launchhistory" --history-size=100 --layout=reverse | tail -n 1 | xargs -0 -r swaymsg -t command exec'
-    bindsym $mod+Shift+d exec alacritty --class 'AlacrittyLauncher' -e bash -c 'cat $HOME/.launchhistory     | fzf --history="$HOME/.launchhistory" --history-size=100 --layout=reverse | tail -n 1 | xargs -0 -r swaymsg -t command exec'
+    bindsym $mod+d exec alacritty --class 'AlacrittyLauncher' -e bash -c 'compgen -c | grep -v fzf | sort -u | fzf --history="$HOME/.launchhistory" --print-query --history-size=100 --print-query --layout=reverse | tail -n 1 | xargs -0 -r swaymsg -t command exec'
+    bindsym $mod+Shift+d exec alacritty --class 'AlacrittyLauncher' -e bash -c 'cat $HOME/.launchhistory     | fzf --history="$HOME/.launchhistory" --print-query --history-size=100 --print-query --layout=reverse | tail -n 1 | xargs -0 -r swaymsg -t command exec'
     # check id with "swaymsg -t get_tree
 
     # Kill focused window
@@ -112,16 +115,23 @@ hide_edge_borders none
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
 
-    bindsym $mod+Control+Minus      exec wl-gammarelay.sh -100
-    bindsym $mod+Control+Equal      exec wl-gammarelay.sh +100
+    bindsym $mod+Control+Minus      exec wl-gammarelay -t -100
+    bindsym $mod+Control+Equal      exec wl-gammarelay -t +100
     bindsym $mod+Control+0          exec killall wl-gammarelay
-    bindsym $mod+Control+Underscore exec wl-gammarelay.sh +0 -0.02
-    bindsym $mod+Control+Plus       exec wl-gammarelay.sh +0 +0.02
+    bindsym $mod+Control+Underscore exec wl-gammarelay -b -0.02
+    bindsym $mod+Control+Plus       exec wl-gammarelay -b +0.02
 
-    bindsym $mod+Minus exec brightnessctl s 5%-
-    bindsym $mod+Equal exec brightnessctl s 5%+
-    bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
-    bindsym XF86MonBrightnessUp exec brightnessctl s 5%+
+    # Screenshots
+    bindsym $mod+p       exec grim -g "$(slurp)" - | wl-copy -t image/png
+    bindsym $mod+Shift+p exec grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" - | wl-copy -t image/png
+
+    # Video recording
+    bindsym $mod+BracketLeft exec alacritty --class 'AlacrittyRecorder' -e bash -c 'wf-recorder -g "$(slurp)" -f ~/Desktop/"$(date +%Y_%m_%d_%H_%M_%S_recording.mp4)"'
+
+    bindsym $mod+Minus exec brightnessctl s 2%-
+    bindsym $mod+Equal exec brightnessctl s 2%+
+    bindsym XF86MonBrightnessDown exec brightnessctl s 2%-
+    bindsym XF86MonBrightnessUp exec brightnessctl s 2%+
 
     bindsym XF86AudioMute exec ponymix toggle && dunstify -r 99999 Volume\ $(bash -c 'if ponymix is-muted; then echo Muted; else echo Unmuted; fi')
     bindsym XF86AudioLowerVolume exec ponymix unmute && dunstify -r 99999 Volume\ $(ponymix decrease 2)%
@@ -190,6 +200,12 @@ hide_edge_borders none
     bindsym $mod+Shift+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
+
+    # Multiple monitors
+    bindsym Shift+$alt+$mod+h move workspace to output left
+    bindsym Shift+$alt+$mod+j move workspace to output down
+    bindsym Shift+$alt+$mod+k move workspace to output up
+    bindsym Shift+$alt+$mod+l move workspace to output right
 #
 # Layout stuff:
 #
