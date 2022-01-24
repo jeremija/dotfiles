@@ -291,6 +291,7 @@ bar {
 focus_follows_mouse no
 
 for_window [app_id="AlacrittyLauncher"] floating enable
+for_window [app_id="AlacrittyRecorder"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 
 # Note: set theme using the following commands:
