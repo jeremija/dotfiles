@@ -55,12 +55,6 @@
 [submodule "config/nvim/pack/bundle/start/vim-import-js"]
 	path = config/nvim/pack/bundle/start/vim-import-js
 	url = https://github.com/galooshi/vim-import-js
-[submodule "config/nvim/pack/bundle/start/nerdtree"]
-	path = config/nvim/pack/bundle/start/nerdtree
-	url = https://github.com/scrooloose/nerdtree
-[submodule "config/nvim/pack/bundle/start/nerdtree-git-plugin"]
-	path = config/nvim/pack/bundle/start/nerdtree-git-plugin
-	url = https://github.com/Xuyuanp/nerdtree-git-plugin
 [submodule "config/nvim/pack/bundle/start/vim-graphql"]
 	path = config/nvim/pack/bundle/start/vim-graphql
 	url = https://github.com/jparise/vim-graphql
@@ -108,3 +102,9 @@
 [submodule "config/nvim/pack/bundle/start/vim-dirdiff"]
 	path = config/nvim/pack/bundle/start/vim-dirdiff
 	url = https://github.com/jeremija/vim-dirdiff
+[submodule "config/nvim/pack/bundle/start/nvim-tree.lua"]
+	path = config/nvim/pack/bundle/start/nvim-tree.lua
+	url = https://github.com/kyazdani42/nvim-tree.lua
+[submodule "config/nvim/pack/bundle/start/nvim-web-devicons"]
+	path = config/nvim/pack/bundle/start/nvim-web-devicons
+	url = https://github.com/kyazdani42/nvim-web-devicons

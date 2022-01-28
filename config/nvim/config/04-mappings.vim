@@ -19,11 +19,10 @@ noremap <Leader>R :ALEFindReferences<CR>
 noremap <Leader>o :ALEOrganizeImports<CR>
 noremap <Leader>r :ALERename<CR>
 noremap <Leader>x :ALEFix<CR>
-noremap <Leader>nt :NERDTreeToggle<CR>
-noremap <Leader>nx :NERDTreeClose<CR>
-noremap <Leader>nf :NERDTreeFind<CR>
-noremap <Leader>nF :NERDTreeFocus<CR>
-noremap <Leader>nc :NERDTreeCWD<CR>
+noremap <Leader>nt :NvimTreeToggle<CR>
+noremap <Leader>nx :NvimTreeClose<CR>
+noremap <Leader>nf :NvimTreeFindFile<CR>
+noremap <Leader>nF :NvimTreeFocus<CR>
 noremap <Leader>tn :TestNearest<CR>
 noremap <Leader>tf :TestFile<CR>
 noremap <Leader>ts :TestSuite<CR>
