@@ -164,9 +164,9 @@
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
     "custom/wl-gammarelay": {
-        "format": "{} ",
-        "exec": "wl-gammarelay --no-daemon --reconnect-timeout 1s --subscribe color | jq --unbuffered --compact-output -r -c '.updates[] | select(.key == \"color\") | .color | .temperature + \" \" + .brightness'",
-        "on-scroll-up": "wl-gammarelay --no-daemon --temperature +100",
-        "on-scroll-down": "wl-gammarelay --no-daemon --temperature -100"
+      "format": "{} ",
+      "exec": "wl-gammarelay --subscribe",
+      "on-scroll-up": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n +100",
+      "on-scroll-down": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n -100"
     }
 }

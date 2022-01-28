@@ -114,12 +114,13 @@ hide_edge_borders none
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
+    exec wl-gammarelay
 
-    bindsym $mod+Control+Minus      exec wl-gammarelay -t -100
-    bindsym $mod+Control+Equal      exec wl-gammarelay -t +100
-    bindsym $mod+Control+0          exec wl-gammarelay -t 6500 -b 1
-    bindsym $mod+Control+Underscore exec wl-gammarelay -b -0.02
-    bindsym $mod+Control+Plus       exec wl-gammarelay -b +0.02
+    bindsym $mod+Control+Minus      exec busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n -100
+    bindsym $mod+Control+Equal      exec busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n +100
+    bindsym $mod+Control+0          exec busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 1.0 && busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Temperature q 6500
+    bindsym $mod+Control+Underscore exec busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateBrightness d -0.2
+    bindsym $mod+Control+Plus       exec busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateBrightness d +0.2
 
     # Screenshots
     bindsym $mod+p       exec grim -g "$(slurp)" - | wl-copy -t image/png
