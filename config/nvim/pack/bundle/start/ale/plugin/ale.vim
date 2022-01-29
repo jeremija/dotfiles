@@ -172,8 +172,14 @@ let g:ale_completion_enabled = get(g:, 'ale_completion_enabled', 0)
 " Enable automatic detection of pipenv for Python linters.
 let g:ale_python_auto_pipenv = get(g:, 'ale_python_auto_pipenv', 0)
 
+" Enable automatic detection of poetry for Python linters.
+let g:ale_python_auto_poetry = get(g:, 'ale_python_auto_poetry', 0)
+
 " This variable can be overridden to set the GO111MODULE environment variable.
 let g:ale_go_go111module = get(g:, 'ale_go_go111module', '')
+
+" Default executable for deno, needed set before plugin start
+let g:ale_deno_executable = get(g:, 'ale_deno_executable', 'deno')
 
 " If 1, enable a popup menu for commands.
 let g:ale_popup_menu_enabled = get(g:, 'ale_popup_menu_enabled', has('gui_running'))
@@ -264,6 +270,9 @@ command! -bar ALEImport :call ale#completion#Import()
 " Rename symbols using tsserver and LSP
 command! -bar -bang ALERename :call ale#rename#Execute()
 
+" Rename file using tsserver
+command! -bar -bang ALEFileRename :call ale#filerename#Execute()
+
 " Apply code actions to a range.
 command! -bar -range ALECodeAction :call ale#codefix#Execute(<range>)
 
@@ -310,6 +319,7 @@ nnoremap <silent> <Plug>(ale_documentation) :ALEDocumentation<Return>
 inoremap <silent> <Plug>(ale_complete) <C-\><C-O>:ALEComplete<Return>
 nnoremap <silent> <Plug>(ale_import) :ALEImport<Return>
 nnoremap <silent> <Plug>(ale_rename) :ALERename<Return>
+nnoremap <silent> <Plug>(ale_filerename) :ALEFileRename<Return>
 nnoremap <silent> <Plug>(ale_code_action) :ALECodeAction<Return>
 nnoremap <silent> <Plug>(ale_repeat_selection) :ALERepeatSelection<Return>
 

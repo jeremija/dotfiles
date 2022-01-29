@@ -1,5 +1,5 @@
 Before:
-  runtime ale_linters/dart/dartanalyzer.vim
+  runtime ale_linters/dart/dart_analyze.vim
 
 After:
   call ale#linter#Reset()
@@ -20,9 +20,9 @@ Execute(Basic problems should be parsed correctly):
   \     'col': 16,
   \   },
   \ ],
-  \ ale_linters#dart#dartanalyzer#Handle(bufnr(''), [
+  \ ale_linters#dart#dart_analyze#Handle(bufnr(''), [
   \ 'Analyzing main.dart...',
-  \ '  error • Expected to find ''}'' at main.dart:5:1 • expected_token',
-  \ '  warning • A value of type ''String'' can''t be assigned to a variable of type ''int'' at main.dart:2:16 • invalid_assignment',
+  \ '  error - main.dart:5:1 - Expected to find ''}'' - expected_token',
+  \ '  warning - main.dart:2:16 - A value of type ''String'' can''t be assigned to a variable of type ''int'' - invalid_assignment',
   \ '1 error and 1 warning found.',
   \ ])

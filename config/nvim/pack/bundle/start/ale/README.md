@@ -263,6 +263,9 @@ See `:help ale-symbol-search` for more information.
 ALE supports renaming symbols in symbols in code such as variables or class
 names with the `ALERename` command.
 
+`ALEFileRename` will rename file and fix import paths (tsserver
+only).
+
 `ALECodeAction` will execute actions on the cursor or applied to a visual
 range selection, such as automatically fixing errors.
 
@@ -928,6 +931,13 @@ make it look nicer.
 
 ```vim
 let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
+```
+
+Since vim's default uses nice unicode characters when possible, you can trick
+ale into using that default with
+
+```vim
+let g:ale_floating_window_border = repeat([''], 6)
 ```
 
 <a name="faq-vim-lsp"></a>
