@@ -293,7 +293,10 @@ elif [[ "$OSTYPE" == linux-android ]]; then
 else
   alias o='xdg-open'
 
-  if (( $+commands[xclip] )); then
+  if (( ${+WAYLAND_DISPLAY} )); then
+    alias pbcopy='wl-copy'
+    alias pbpaste='wl-paste --no-newline'
+  elif (( $+commands[xclip] )); then
     alias pbcopy='xclip -selection clipboard -in'
     alias pbpaste='xclip -selection clipboard -out'
   elif (( $+commands[xsel] )); then
