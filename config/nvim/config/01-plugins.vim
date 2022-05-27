@@ -91,7 +91,6 @@ let g:fzf_layout = {
 \  },
 \}
 
-let g:nvim_tree_disable_window_picker = 1
 let g:nvim_tree_symlink_arrow = ' -> '
 let g:nvim_tree_create_in_closed_folder = 1
 let g:nvim_tree_show_icons = {
@@ -127,11 +126,17 @@ let g:nvim_tree_icons = {
 
 lua << EOF
 require'nvim-tree'.setup {
+  actions = {
+    open_file = {
+      window_picker = {
+        enable = false,
+      }
+    },
+  },
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
   ignore_ft_on_setup  = {},
-  auto_close          = false,
   open_on_tab         = false,
   hijack_cursor       = false,
   update_cwd          = false,

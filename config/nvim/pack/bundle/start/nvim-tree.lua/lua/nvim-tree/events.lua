@@ -3,12 +3,14 @@ local M = {}
 local global_handlers = {}
 
 local Event = {
-  Ready = 'Ready',
-  NodeRenamed = 'NodeRenamed',
-  FileCreated = 'FileCreated',
-  FileRemoved = 'FileRemoved',
-  FolderCreated = 'FolderCreated',
-  FolderRemoved = 'FolderRemoved',
+  Ready = "Ready",
+  NodeRenamed = "NodeRenamed",
+  TreeOpen = "TreeOpen",
+  TreeClose = "TreeClose",
+  FileCreated = "FileCreated",
+  FileRemoved = "FileRemoved",
+  FolderCreated = "FolderCreated",
+  FolderRemoved = "FolderRemoved",
 }
 
 local function get_handlers(event_name)
@@ -21,12 +23,11 @@ local function register_handler(event_name, handler)
   global_handlers[event_name] = handlers
 end
 
-
 local function dispatch(event_name, payload)
   for _, handler in pairs(get_handlers(event_name)) do
     local success, error = pcall(handler, payload)
     if not success then
-      vim.api.nvim_err_writeln('Handler for event ' .. event_name .. ' errored. ' .. vim.inspect(error))
+      vim.api.nvim_err_writeln("Handler for event " .. event_name .. " errored. " .. vim.inspect(error))
     end
   end
 end
@@ -38,27 +39,37 @@ end
 
 --@private
 function M._dispatch_node_renamed(old_name, new_name)
-  dispatch(Event.NodeRenamed, {old_name=old_name, new_name=new_name})
+  dispatch(Event.NodeRenamed, { old_name = old_name, new_name = new_name })
 end
 
 --@private
 function M._dispatch_file_removed(fname)
-  dispatch(Event.FileRemoved, {fname=fname})
+  dispatch(Event.FileRemoved, { fname = fname })
 end
 
 --@private
 function M._dispatch_file_created(fname)
-  dispatch(Event.FileCreated, {fname=fname})
+  dispatch(Event.FileCreated, { fname = fname })
 end
 
 --@private
 function M._dispatch_folder_created(folder_name)
-  dispatch(Event.FolderCreated, {folder_name=folder_name})
+  dispatch(Event.FolderCreated, { folder_name = folder_name })
 end
 
 --@private
 function M._dispatch_folder_removed(folder_name)
-  dispatch(Event.FolderRemoved, {folder_name=folder_name})
+  dispatch(Event.FolderRemoved, { folder_name = folder_name })
+end
+
+--@private
+function M._dispatch_on_tree_open()
+  dispatch(Event.TreeOpen, nil)
+end
+
+--@private
+function M._dispatch_on_tree_close()
+  dispatch(Event.TreeClose, nil)
 end
 
 --Registers a handler for the Ready event.
@@ -101,6 +112,18 @@ end
 --  - folder_name (string) Absolute path to the removed folder.
 function M.on_folder_removed(handler)
   register_handler(Event.FolderRemoved, handler)
+end
+
+--Registers a handler for the TreeOpen event.
+--@param handler (function) Handler with the signature function(payload)
+function M.on_tree_open(handler)
+  register_handler(Event.TreeOpen, handler)
+end
+
+--Registers a handler for the TreeClose event.
+--@param handler (function) Handler with the signature function(payload)
+function M.on_tree_close(handler)
+  register_handler(Event.TreeClose, handler)
 end
 
 return M

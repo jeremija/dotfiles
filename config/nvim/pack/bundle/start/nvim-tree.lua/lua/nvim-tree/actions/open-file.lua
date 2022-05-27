@@ -1,11 +1,25 @@
+-- Copyright 2019 Yazdani Kiyan under MIT License
 local api = vim.api
 
-local config = require'nvim-tree.config'
-local lib = require'nvim-tree.lib'
-local utils = require'nvim-tree.utils'
-local view = require'nvim-tree.view'
+local lib = require "nvim-tree.lib"
+local utils = require "nvim-tree.utils"
+local view = require "nvim-tree.view"
 
 local M = {}
+
+local function get_split_cmd()
+  local side = view.View.side
+  if side == "right" then
+    return "aboveleft"
+  end
+  if side == "left" then
+    return "belowright"
+  end
+  if side == "top" then
+    return "bot"
+  end
+  return "top"
+end
 
 ---Get user to pick a window. Selectable windows are all windows in the current
 ---tabpage that aren't NvimTree.
@@ -16,11 +30,10 @@ local function pick_window()
   local tabpage = api.nvim_get_current_tabpage()
   local win_ids = api.nvim_tabpage_list_wins(tabpage)
   local tree_winid = view.get_winnr(tabpage)
-  local exclude = config.window_picker_exclude()
 
-  local selectable = vim.tbl_filter(function (id)
+  local selectable = vim.tbl_filter(function(id)
     local bufid = api.nvim_win_get_buf(id)
-    for option, v in pairs(exclude) do
+    for option, v in pairs(M.window_picker.exclude) do
       local ok, option_value = pcall(api.nvim_buf_get_option, bufid, option)
       if ok and vim.tbl_contains(v, option_value) then
         return false
@@ -28,18 +41,15 @@ local function pick_window()
     end
 
     local win_config = api.nvim_win_get_config(id)
-    return id ~= tree_winid
-      and win_config.focusable
-      and not win_config.external
+    return id ~= tree_winid and win_config.focusable and not win_config.external
   end, win_ids)
 
   -- If there are no selectable windows: return. If there's only 1, return it without picking.
-  if #selectable == 0 then return -1 end
-  if #selectable == 1 then return selectable[1] end
-
-  local chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-  if vim.g.nvim_tree_window_picker_chars then
-    chars = tostring(vim.g.nvim_tree_window_picker_chars):upper()
+  if #selectable == 0 then
+    return -1
+  end
+  if #selectable == 1 then
+    return selectable[1]
   end
 
   local i = 1
@@ -48,29 +58,48 @@ local function pick_window()
   local laststatus = vim.o.laststatus
   vim.o.laststatus = 2
 
+  local not_selectable = vim.tbl_filter(function(id)
+    return not vim.tbl_contains(selectable, id)
+  end, win_ids)
+
+  if laststatus == 3 then
+    for _, win_id in ipairs(not_selectable) do
+      local ok_status, statusline = pcall(api.nvim_win_get_option, win_id, "statusline")
+      local ok_hl, winhl = pcall(api.nvim_win_get_option, win_id, "winhl")
+
+      win_opts[win_id] = {
+        statusline = ok_status and statusline or "",
+        winhl = ok_hl and winhl or "",
+      }
+
+      -- Clear statusline for windows not selectable
+      api.nvim_win_set_option(win_id, "statusline", " ")
+    end
+  end
+
   -- Setup UI
   for _, id in ipairs(selectable) do
-    local char = chars:sub(i, i)
+    local char = M.window_picker.chars:sub(i, i)
     local ok_status, statusline = pcall(api.nvim_win_get_option, id, "statusline")
     local ok_hl, winhl = pcall(api.nvim_win_get_option, id, "winhl")
 
     win_opts[id] = {
       statusline = ok_status and statusline or "",
-      winhl = ok_hl and winhl or ""
+      winhl = ok_hl and winhl or "",
     }
     win_map[char] = id
 
     api.nvim_win_set_option(id, "statusline", "%=" .. char .. "%=")
-    api.nvim_win_set_option(
-      id, "winhl", "StatusLine:NvimTreeWindowPicker,StatusLineNC:NvimTreeWindowPicker"
-    )
+    api.nvim_win_set_option(id, "winhl", "StatusLine:NvimTreeWindowPicker,StatusLineNC:NvimTreeWindowPicker")
 
     i = i + 1
-    if i > #chars then break end
+    if i > #M.window_picker.chars then
+      break
+    end
   end
 
-  vim.cmd("redraw")
-  print("Pick window: ")
+  vim.cmd "redraw"
+  print "Pick window: "
   local _, resp = pcall(utils.get_user_input_char)
   resp = (resp or ""):upper()
   utils.clear_prompt()
@@ -82,121 +111,177 @@ local function pick_window()
     end
   end
 
+  if laststatus == 3 then
+    for _, id in ipairs(not_selectable) do
+      for opt, value in pairs(win_opts[id]) do
+        api.nvim_win_set_option(id, opt, value)
+      end
+    end
+  end
+
   vim.o.laststatus = laststatus
+
+  if not vim.tbl_contains(vim.split(M.window_picker.chars, ""), resp) then
+    return
+  end
 
   return win_map[resp]
 end
 
 local function open_file_in_tab(filename)
-  local close = vim.g.nvim_tree_quit_on_open == 1
-  if close then
+  if M.quit_on_open then
     view.close()
+  end
+  vim.cmd("tabe " .. vim.fn.fnameescape(filename))
+end
+
+local function on_preview(buf_loaded)
+  if not buf_loaded then
+    vim.bo.bufhidden = "delete"
+
+    api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+      group = api.nvim_create_augroup("RemoveBufHidden", {}),
+      buffer = api.nvim_get_current_buf(),
+      callback = function()
+        vim.bo.bufhidden = ""
+      end,
+      once = true,
+    })
+  end
+  view.focus()
+end
+
+local function get_target_winid(mode)
+  local target_winid
+  if not M.window_picker.enable or mode == "edit_no_picker" then
+    target_winid = lib.target_winid
   else
-    -- Switch window first to ensure new window doesn't inherit settings from
-    -- NvimTree
-    if lib.Tree.target_winid > 0 and api.nvim_win_is_valid(lib.Tree.target_winid) then
-      api.nvim_set_current_win(lib.Tree.target_winid)
-    else
-      vim.cmd("wincmd p")
+    local pick_window_id = pick_window()
+    if pick_window_id == nil then
+      return
+    end
+    target_winid = pick_window_id
+  end
+
+  if target_winid == -1 then
+    target_winid = lib.target_winid
+  end
+  return target_winid
+end
+
+-- This is only to avoid the BufEnter for nvim-tree to trigger
+-- which would cause find-file to run on an invalid file.
+local function set_current_win_no_autocmd(winid)
+  vim.cmd "set ei=BufEnter"
+  api.nvim_set_current_win(winid)
+  vim.cmd 'set ei=""'
+end
+
+local function when_not_found(filename, mode, win_ids)
+  local target_winid = get_target_winid(mode)
+  local do_split = mode == "split" or mode == "vsplit"
+  local vertical = mode ~= "split"
+
+  -- Target is invalid or window does not exist in current tabpage: create new window
+  if not target_winid or not vim.tbl_contains(win_ids, target_winid) then
+    local split_cmd = get_split_cmd()
+    local splitside = view.is_vertical() and "vsp" or "sp"
+    vim.cmd(split_cmd .. " " .. splitside)
+    target_winid = api.nvim_get_current_win()
+    lib.target_winid = target_winid
+
+    -- No need to split, as we created a new window.
+    do_split = false
+  elseif not vim.o.hidden then
+    -- If `hidden` is not enabled, check if buffer in target window is
+    -- modified, and create new split if it is.
+    local target_bufid = api.nvim_win_get_buf(target_winid)
+    if api.nvim_buf_get_option(target_bufid, "modified") then
+      do_split = true
     end
   end
 
-  -- This sequence of commands are here to ensure a number of things: the new
-  -- buffer must be opened in the current tabpage first so that focus can be
-  -- brought back to the tree if it wasn't quit_on_open. It also ensures that
-  -- when we open the new tabpage with the file, its window doesn't inherit
-  -- settings from NvimTree, as it was already loaded.
+  local fname = vim.fn.fnameescape(filename)
 
+  local cmd
+  if do_split or #api.nvim_list_wins() == 1 then
+    cmd = string.format("%ssplit %s", vertical and "vertical " or "", fname)
+  else
+    cmd = string.format("edit %s", fname)
+  end
+
+  set_current_win_no_autocmd(target_winid)
+  pcall(vim.cmd, cmd)
+  lib.set_target_win()
+end
+
+local function is_already_open(filename, win_ids)
+  for _, id in ipairs(win_ids) do
+    if filename == api.nvim_buf_get_name(api.nvim_win_get_buf(id)) then
+      api.nvim_set_current_win(id)
+      return true
+    end
+  end
+
+  return false
+end
+
+local function is_already_loaded(filename)
+  for _, buf_id in ipairs(api.nvim_list_bufs()) do
+    if api.nvim_buf_is_loaded(buf_id) and filename == api.nvim_buf_get_name(buf_id) then
+      return true
+    end
+  end
+  return false
+end
+
+local function edit_in_current_buf(filename)
+  require("nvim-tree.view").abandon_current_window()
   vim.cmd("edit " .. vim.fn.fnameescape(filename))
-
-  local alt_bufid = vim.fn.bufnr("#")
-  if alt_bufid ~= -1 then
-    api.nvim_set_current_buf(alt_bufid)
-  end
-
-  if not close then
-    vim.cmd("wincmd p")
-  end
-
-  vim.cmd("tabe " .. vim.fn.fnameescape(filename))
 end
 
 function M.fn(mode, filename)
   if mode == "tabnew" then
-    open_file_in_tab(filename)
-    return
+    return open_file_in_tab(filename)
+  end
+
+  if mode == "edit_in_place" then
+    return edit_in_current_buf(filename)
   end
 
   local tabpage = api.nvim_get_current_tabpage()
   local win_ids = api.nvim_tabpage_list_wins(tabpage)
 
-  local target_winid
-  if vim.g.nvim_tree_disable_window_picker == 1 or mode == "edit_no_picker" then
-    target_winid = lib.Tree.target_winid
-  else
-    target_winid = pick_window()
-  end
-
-  if target_winid == -1 then
-    target_winid = lib.Tree.target_winid
-  end
-
-  local do_split = mode == "split" or mode == "vsplit"
-  local vertical = mode ~= "split"
-
-  -- Check if filename is already open in a window
-  local found = false
-  for _, id in ipairs(win_ids) do
-    if filename == api.nvim_buf_get_name(api.nvim_win_get_buf(id)) then
-      if mode == "preview" then return end
-      found = true
-      api.nvim_set_current_win(id)
-      break
-    end
+  local found = is_already_open(filename, win_ids)
+  if found and mode == "preview" then
+    return
   end
 
   if not found then
-    if not target_winid or not vim.tbl_contains(win_ids, target_winid) then
-      -- Target is invalid, or window does not exist in current tabpage: create
-      -- new window
-      local window_opts = config.window_options()
-      local splitside = view.is_vertical() and "vsp" or "sp"
-      vim.cmd(window_opts.split_command .. " " .. splitside)
-      target_winid = api.nvim_get_current_win()
-      lib.Tree.target_winid = target_winid
+    when_not_found(filename, mode, win_ids)
+  end
 
-      -- No need to split, as we created a new window.
-      do_split = false
-    elseif not vim.o.hidden then
-      -- If `hidden` is not enabled, check if buffer in target window is
-      -- modified, and create new split if it is.
-      local target_bufid = api.nvim_win_get_buf(target_winid)
-      if api.nvim_buf_get_option(target_bufid, "modified") then
-        do_split = true
-      end
-    end
-
-    local cmd
-    if do_split then
-      cmd = string.format("%ssplit ", vertical and "vertical " or "")
-    else
-      cmd = "edit "
-    end
-
-    cmd = cmd .. vim.fn.fnameescape(filename)
-    api.nvim_set_current_win(target_winid)
-    vim.cmd(cmd)
+  if M.resize_window then
     view.resize()
   end
 
   if mode == "preview" then
-    view.focus()
-    return
+    local buf_loaded = is_already_loaded(filename)
+    return on_preview(buf_loaded)
   end
 
-  if vim.g.nvim_tree_quit_on_open == 1 then
+  if M.quit_on_open then
     view.close()
   end
+end
+
+function M.setup(opts)
+  M.quit_on_open = opts.actions.open_file.quit_on_open
+  M.resize_window = opts.actions.open_file.resize_window
+  if opts.actions.open_file.window_picker.chars then
+    opts.actions.open_file.window_picker.chars = tostring(opts.actions.open_file.window_picker.chars):upper()
+  end
+  M.window_picker = opts.actions.open_file.window_picker
 end
 
 return M
