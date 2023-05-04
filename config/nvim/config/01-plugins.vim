@@ -17,6 +17,8 @@ let g:R_assign = 0
 
 set signcolumn=yes
 
+" disable ALE LSP in favor of native support in Neovim.
+let g:ale_disable_lsp = 1
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 0
@@ -33,16 +35,17 @@ let g:ale_fixers = {
 \  'javascript': ['eslint'],
 \  'typescript': ['eslint'],
 \  'go': ['gofmt', 'goimports'],
+\  'rust': ['rustfmt'],
 \}
 let g:ale_fix_on_save = 1
 let g:ale_kotlin_languageserver_executable = 'kotlin-language-server'
 let g:ale_kotlin_kotlinc_options = '-d build/ale-kotlinc'
-let g:ale_go_golangci_lint_package=1
 let g:ale_linters = {
 \  'go': ['gopls', 'golangci-lint'],
-\  'rust': ['cargo', 'rls'],
+\  'rust': ['analyzer'],
 \}
 let g:ale_go_golangci_lint_options = ''
+let g:ale_go_golangci_lint_package=1
 let g:ale_completion_autoimport = 1
 
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/pack/bundle/start/vim-snippets/UltiSnips'
@@ -191,3 +194,71 @@ require'nvim-tree'.setup {
   }
 }
 EOF
+
+let g:git_urls = {}
+
+function! OpenGit(range, line1, line2) abort
+  let l:file = expand('%:p')
+  let l:root = l:file
+  let l:check = fnamemodify(l:file, ':h')
+  let l:found = 0
+
+  while l:check !=# l:root
+    let l:git_dir = l:check . '/.git'
+
+    if isdirectory(l:git_dir)
+      let l:root = l:check
+      let l:found = 1
+      break
+    endif
+
+    let l:root = l:check
+    let l:check = fnamemodify(l:check, ':h')
+  endwhile
+
+  if !l:found
+    throw 'No git repo found'
+  endif
+
+  let l:hash = systemlist(['git', '-C', l:root, 'rev-parse', 'HEAD'])[0]
+  let l:remote = systemlist(['git', '-C', l:root, 'remote'])[0]
+  let l:url = systemlist(['git', '-C', l:root, 'remote', 'get-url', l:remote])[0]
+
+  " remove the SSH protocol prefix
+  let l:url = substitute(l:url, '^ssh://', 'https://', '')
+  let l:url = substitute(l:url, 'https://.*@', 'https://', '')
+  let l:url = substitute(l:url, '\.git$', '', '')
+
+  if has_key(g:git_urls, l:url)
+    let l:url = g:git_urls[l:url]
+  endif
+
+  let l:rel_path = substitute(l:file, l:root . '/', '', '')
+
+  let l:gitlab_url = l:url . '/blob/' . l:hash . '/' . l:rel_path
+
+  if a:range == 0
+  elseif a:range == 1 || a:line1 ==# a:line2
+    let l:gitlab_url = l:gitlab_url . '#L' . a:line1
+  else
+    let l:line2 = a:line2
+    if l:url =~ "^https://github.com"
+      let l:line2 = 'L' . l:line2
+    endif
+    let l:gitlab_url = l:gitlab_url . '#L' . a:line1 . '-' . l:line2
+  endif
+
+  echom l:gitlab_url
+
+  " Linux
+  let l:exec = 'xdg-open'
+
+  if executable('open')
+    " Mac
+    let l:exec = 'open'
+  endif
+
+  call system([l:exec, l:gitlab_url])
+endfunction
+
+command! -range OpenGit :call OpenGit(<range>, <line1>, <line2>)

@@ -52,6 +52,8 @@ current-dir-widget() {
   zle redisplay
 }
 
+# enable vi mode
+bindkey -v
 zle -N file-widget
 zle -N changed-file-widget
 zle -N current-dir-widget
@@ -63,7 +65,7 @@ bindkey '^G' git-branch-widget
 
 # ALT-C - cd into the selected directory
 fzf-cd-widget() {
-  LBUFFER="$LBUFFER${$(command fd -t d | sed 's/^/.\//' | sed 's/$/\//' | fzf +m):-.}"
+  LBUFFER="$LBUFFER${$(command fd --strip-cwd-prefix -t d | sed 's/^/.\//; s|\([^/]\)$|\1/|' |  fzf +m):-.}"
   zle redisplay
 }
 zle     -N    fzf-cd-widget
@@ -129,7 +131,7 @@ alias ga="git add"
 alias gd="git diff"
 alias gcmsg="git commit -m"
 alias gc!="git commit --amend"
-alias gc@="gc! --no-edit"
+alias gc@="git commit --fixup=HEAD"
 alias tmux-id="tmux display-message -p '#S:#I'"
 
 alias gcmsg='git commit -m'
