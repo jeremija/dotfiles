@@ -1,8 +1,8 @@
 let g:mapleader = ','
 noremap <Leader>gi :ImportJSGoto<CR>
 inoremap <C-k> <Esc>:ImportJSWord<CR>a
-noremap <Leader>j :ALENextWrap<CR>
-noremap <Leader>k :ALEPreviousWrap<CR>
+noremap <Leader>aj :ALENextWrap<CR>
+noremap <Leader>ak :ALEPreviousWrap<CR>
 noremap <Leader>c :Commentary<CR>
 noremap <Leader>. :bnext<CR>
 noremap <Leader>m :bprev<CR>
@@ -10,15 +10,15 @@ noremap <Leader>tx :tabclose<CR>
 noremap <Leader>p :Buffers<CR>
 noremap <Leader>e :e <C-R>=expand("%:h") . "/" <CR>
 noremap <Leader>E :vertical resize 82<CR>
-noremap <Leader>d :ALEDetail<CR>
-noremap <Leader>D :ALEDocumentation<CR>
-noremap <Leader>gd :ALEGoToDefinition<CR>
-noremap <Leader>gt :ALEHover<CR>
-noremap <Leader>gT :ALEGoToDefinitionInTab<CR>
-noremap <Leader>R :ALEFindReferences<CR>
-noremap <Leader>o :ALEOrganizeImports<CR>
-noremap <Leader>r :ALERename<CR>
-noremap <Leader>x :ALEFix<CR>
+noremap <Leader>ad :ALEDetail<CR>
+noremap <Leader>aD :ALEDocumentation<CR>
+noremap <Leader>agd :ALEGoToDefinition<CR>
+noremap <Leader>agt :ALEHover<CR>
+noremap <Leader>agT :ALEGoToDefinitionInTab<CR>
+noremap <Leader>aR :ALEFindReferences<CR>
+noremap <Leader>ao :ALEOrganizeImports<CR>
+noremap <Leader>ar :ALERename<CR>
+noremap <Leader>ax :ALEFix<CR>
 noremap <Leader>nt :NvimTreeToggle<CR>
 noremap <Leader>nx :NvimTreeClose<CR>
 noremap <Leader>nf :NvimTreeFindFile<CR>
@@ -41,8 +41,8 @@ noremap <silent> <C-p> :call fzf#run(fzf#wrap({ 'source': 'rg --hidden --files',
 inoremap <expr> <C-X><C-J> fzf#vim#complete#path('rg --hidden --files')
 noremap <silent> <Leader>f :Rg<CR>
 
-imap <C-Space> <Plug>(ale_complete)
-nmap <C-Space> <Plug>(ale_complete)
+imap <C-A> <Plug>(ale_complete)
+nmap <C-A> <Plug>(ale_complete)
 
 " Bind <Tab> and <S-Tab> to Up/Down when popup menu is visible
 inoremap <expr> <Tab> pumvisible() ? "\<Down>" : "\<Tab>"

@@ -108,3 +108,6 @@
 [submodule "config/nvim/pack/bundle/start/nvim-web-devicons"]
 	path = config/nvim/pack/bundle/start/nvim-web-devicons
 	url = https://github.com/kyazdani42/nvim-web-devicons
+[submodule "config/nvim/pack/bundle/start/nvim-lspconfig"]
+	path = config/nvim/pack/bundle/start/nvim-lspconfig
+	url = https://github.com/neovim/nvim-lspconfig

@@ -22,3 +22,5 @@ if filereadable(s:local_config)
   exec 'source ' . s:local_config
 endif
 ]])
+
+require "01-plugins"

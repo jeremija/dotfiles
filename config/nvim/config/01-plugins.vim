@@ -17,6 +17,8 @@ let g:R_assign = 0
 
 set signcolumn=yes
 
+" disable ALE LSP in favor of native support in Neovim.
+let g:ale_disable_lsp = 1
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 0
