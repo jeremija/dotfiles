@@ -98,7 +98,7 @@ let g:nvim_tree_symlink_arrow = ' -> '
 let g:nvim_tree_create_in_closed_folder = 1
 let g:nvim_tree_show_icons = {
 \ 'git': 1,
-\ 'folders': 1,
+\ 'folders': 0,
 \ 'files': 0,
 \ 'folder_arrows': 0,
 \ }

@@ -37,7 +37,7 @@ noremap <C-H> <C-W>h
 noremap <C-J> <C-W>j
 noremap <C-K> <C-W>k
 noremap <C-L> <C-W>l
-noremap <silent> <C-p> :call fzf#run(fzf#wrap({ 'source': 'rg --hidden --files', 'options': ['--preview', 'cat {}'], 'sink': 'e' }))<CR>
+noremap <silent> <C-p> :call fzf#run(fzf#wrap({ 'source': 'rg --hidden --files', 'options': ['--preview', 'head --bytes 2048 {}'], 'sink': 'e' }))<CR>
 inoremap <expr> <C-X><C-J> fzf#vim#complete#path('rg --hidden --files')
 noremap <silent> <Leader>f :Rg<CR>
 
@@ -47,3 +47,6 @@ nmap <C-A> <Plug>(ale_complete)
 " Bind <Tab> and <S-Tab> to Up/Down when popup menu is visible
 inoremap <expr> <Tab> pumvisible() ? "\<Down>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<Up>" : "\<S-Tab>"
+
+inoremap <C-Space> <C-x><C-o>
+inoremap <C-@> <C-Space>
