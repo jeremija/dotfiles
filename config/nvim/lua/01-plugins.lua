@@ -8,6 +8,15 @@ lspconfig.rust_analyzer.setup {
   },
 }
 
+-- Ensure floating preview window has max width.
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  -- opts.border = opts.border or 'single'
+  opts.max_width = opts.max_width or 80
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
+
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('n', ',i', vim.diagnostic.open_float)
