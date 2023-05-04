@@ -1,5 +1,5 @@
+vim.cmd([[
 set encoding=utf-8
-scriptencoding utf-8
 
 let g:nvim_dir = expand('~/.config/nvim')
 let &runtimepath = g:nvim_dir . ',' . &runtimepath
@@ -21,3 +21,4 @@ let s:local_config = s:config_dir . '99-local.vim'
 if filereadable(s:local_config)
   exec 'source ' . s:local_config
 endif
+]])
