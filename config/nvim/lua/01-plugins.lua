@@ -70,7 +70,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, opts)
     vim.keymap.set('n', ',gT', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', ',r', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, ',c', vim.lsp.buf.code_action, opts)
+    vim.keymap.set({ 'n', 'v' }, ',C', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', ',R', vim.lsp.buf.references, opts)
     vim.keymap.set('n', ',x', function()
       vim.lsp.buf.format { async = true }
