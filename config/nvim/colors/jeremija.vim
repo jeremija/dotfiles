@@ -26,7 +26,12 @@ function! LinterStatus() abort
     let l:all_errors = l:counts.error + l:counts.style_error
     let l:all_non_errors = l:counts.total - l:all_errors
 
-    return l:counts.total == 0 ? 'OK' : printf(
+    let l:all_errors += luaeval('#vim.diagnostic.get(0, {severity = vim.diagnostic.severity.ERROR })')
+    let l:all_non_errors += luaeval('#vim.diagnostic.get(0, {severity = vim.diagnostic.severity.WARN })')
+
+    let l:total = l:all_errors + l:all_non_errors
+
+    return l:total == 0 ? 'OK' : printf(
     \   '%dW %dE',
     \   l:all_non_errors,
     \   l:all_errors
