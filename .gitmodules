@@ -111,3 +111,6 @@
 [submodule "config/nvim/pack/bundle/start/nvim-lspconfig"]
 	path = config/nvim/pack/bundle/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig
+[submodule "config/nvim/pack/bundle/start/vim-abolish"]
+	path = config/nvim/pack/bundle/start/vim-abolish
+	url = https://github.com/tpope/vim-abolish
