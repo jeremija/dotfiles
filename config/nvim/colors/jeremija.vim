@@ -16,6 +16,9 @@ hi DiffDelete ctermbg=none ctermfg=black
 hi DiffChange ctermbg=233 ctermfg=248
 hi DiffText ctermbg=236 ctermfg=11
 
+" floating window for LSP popups
+hi NormalFloat ctermbg=233
+
 " status function for ale
 function! LinterStatus() abort
     let l:counts = ale#statusline#Count(bufnr(''))
