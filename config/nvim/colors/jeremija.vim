@@ -16,6 +16,9 @@ hi DiffDelete ctermbg=none ctermfg=black
 hi DiffChange ctermbg=233 ctermfg=248
 hi DiffText ctermbg=236 ctermfg=11
 
+" floating window for LSP popups
+hi NormalFloat ctermbg=233
+
 " status function for ale
 function! LinterStatus() abort
     let l:counts = ale#statusline#Count(bufnr(''))
@@ -23,7 +26,12 @@ function! LinterStatus() abort
     let l:all_errors = l:counts.error + l:counts.style_error
     let l:all_non_errors = l:counts.total - l:all_errors
 
-    return l:counts.total == 0 ? 'OK' : printf(
+    let l:all_errors += luaeval('#vim.diagnostic.get(0, {severity = vim.diagnostic.severity.ERROR })')
+    let l:all_non_errors += luaeval('#vim.diagnostic.get(0, {severity = vim.diagnostic.severity.WARN })')
+
+    let l:total = l:all_errors + l:all_non_errors
+
+    return l:total == 0 ? 'OK' : printf(
     \   '%dW %dE',
     \   l:all_non_errors,
     \   l:all_errors
