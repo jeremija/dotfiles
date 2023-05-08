@@ -43,8 +43,8 @@ end
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('n', ',i', vim.diagnostic.open_float)
-vim.keymap.set('n', ',j', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ',k', vim.diagnostic.goto_next)
+vim.keymap.set('n', ',j', vim.diagnostic.goto_next)
+vim.keymap.set('n', ',k', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ',q', vim.diagnostic.setloclist)
 
 -- Use LspAttach autocommand to only map the following keys
