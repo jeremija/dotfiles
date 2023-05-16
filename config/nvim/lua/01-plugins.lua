@@ -82,10 +82,6 @@ local function register_completion_item_resolve_callback(client)
     client.server_capabilities.completionProvider and
     client.server_capabilities.completionProvider.resolveProvider
 
-  if not resolve_provider then
-    return
-  end
-
   vim.api.nvim_create_autocmd({"CompleteDone"}, {
     group = vim.api.nvim_create_augroup(au_group, {clear = false}),
     callback = function(_)
@@ -98,6 +94,19 @@ local function register_completion_item_resolve_callback(client)
 
       local item = completed_item.user_data.nvim.lsp.completion_item
       local bufnr = vim.api.nvim_get_current_buf()
+
+      -- Check if the item already has completions attached.
+      -- https://github.com/neovim/neovim/issues/12310#issuecomment-628269290
+      if item.additionalTextEdits and #item.additionalTextEdits > 0 then
+        vim.lsp.util.apply_text_edits(item.additionalTextEdits, bufnr, client.offset_encoding)
+        return
+      end
+
+      -- Check if the server supports resolving completions.
+      if not resolve_provider then
+        return
+      end
+
       vim.lsp.buf_request(bufnr, "completionItem/resolve", item, function(err, result, _)
           if err ~= nil then
             return
