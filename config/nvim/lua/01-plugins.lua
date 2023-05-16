@@ -1,7 +1,29 @@
+local completion_item_resolve_capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- Add auto import capabilities for rust-analyzer and typescript-language-server.
+-- See also the register_completion_item_resolve_callback function below.
+--
+-- More info:
+-- - https://rust-analyzer.github.io/manual.html#completion-with-autoimport
+-- - https://www.reddit.com/r/neovim/comments/mn8ipa/lsp_add_missing_imports_on_complete_using_the/
+-- - https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/
+completion_item_resolve_capabilities.textDocument.completion.completionItem = {
+  resolveSupport = {
+    properties = {"additionalTextEdits"}
+  }
+}
+
 local lspconfig = require('lspconfig')
-lspconfig.gopls.setup {}
-lspconfig.tsserver.setup {}
+lspconfig.gopls.setup {
+  capabilities = completion_item_resolve_capabilities,
+}
+
+lspconfig.tsserver.setup {
+  capabilities = completion_item_resolve_capabilities,
+}
+
 lspconfig.rust_analyzer.setup {
+  capabilities = completion_item_resolve_capabilities,
   -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
     ['rust-analyzer'] = {},
@@ -47,10 +69,64 @@ vim.keymap.set('n', ',j', vim.diagnostic.goto_next)
 vim.keymap.set('n', ',k', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ',q', vim.diagnostic.setloclist)
 
+local au_group = 'UserLspConfig'
+
+-- This function will register an autocmd for CompleteDone even and call
+-- completionItem/resolve when the LSP server capabilities include
+-- completionProvider.resolveProvider.
+--
+-- If the server supports it, make sure to register the client's
+-- completion_item_resolve_capabilities.
+local function register_completion_item_resolve_callback(client)
+  local resolve_provider = client.server_capabilities and
+    client.server_capabilities.completionProvider and
+    client.server_capabilities.completionProvider.resolveProvider
+
+  if not resolve_provider then
+    return
+  end
+
+  vim.api.nvim_create_autocmd({"CompleteDone"}, {
+    group = vim.api.nvim_create_augroup(au_group, {clear = false}),
+    callback = function(_)
+      local completed_item = vim.v.completed_item
+      if not (completed_item and completed_item.user_data and
+          completed_item.user_data.nvim and completed_item.user_data.nvim.lsp and
+          completed_item.user_data.nvim.lsp.completion_item) then
+          return
+      end
+
+      local item = completed_item.user_data.nvim.lsp.completion_item
+      local bufnr = vim.api.nvim_get_current_buf()
+      vim.lsp.buf_request(bufnr, "completionItem/resolve", item, function(err, result, _)
+          if err ~= nil then
+            return
+          end
+
+          if not result then
+            return
+          end
+
+          if not result.additionalTextEdits then
+            return
+          end
+
+          if #result.additionalTextEdits == 0 then
+            return
+          end
+
+          vim.lsp.util.apply_text_edits(result.additionalTextEdits, bufnr, client.offset_encoding)
+        end
+      )
+    end,
+  })
+end
+
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  group = vim.api.nvim_create_augroup(au_group, {}),
+
   callback = function(ev)
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
@@ -75,5 +151,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', ',x', function()
       vim.lsp.buf.format { async = true }
     end, opts)
+
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
+    if not client then
+      print("LspAttach event: no LSP client", ev.data.client_id)
+      return
+    end
+
+    register_completion_item_resolve_callback(client)
   end,
 })

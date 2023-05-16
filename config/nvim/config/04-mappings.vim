@@ -41,8 +41,8 @@ noremap <silent> <C-p> :call fzf#run(fzf#wrap({ 'source': 'rg --hidden --files',
 inoremap <expr> <C-X><C-J> fzf#vim#complete#path('rg --hidden --files')
 noremap <silent> <Leader>f :Rg<CR>
 
-imap <C-A> <Plug>(ale_complete)
-nmap <C-A> <Plug>(ale_complete)
+" imap <C-A> <Plug>(ale_complete)
+" nmap <C-A> <Plug>(ale_complete)
 
 " Bind <Tab> and <S-Tab> to Up/Down when popup menu is visible
 inoremap <expr> <Tab> pumvisible() ? "\<Down>" : "\<Tab>"
