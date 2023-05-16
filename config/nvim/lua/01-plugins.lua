@@ -77,13 +77,14 @@ local au_group = 'UserLspConfig'
 --
 -- If the server supports it, make sure to register the client's
 -- completion_item_resolve_capabilities.
-local function register_completion_item_resolve_callback(client)
+local function register_completion_item_resolve_callback(buf, client)
   local resolve_provider = client.server_capabilities and
     client.server_capabilities.completionProvider and
     client.server_capabilities.completionProvider.resolveProvider
 
   vim.api.nvim_create_autocmd({"CompleteDone"}, {
     group = vim.api.nvim_create_augroup(au_group, {clear = false}),
+    buffer = buf,
     callback = function(_)
       local completed_item = vim.v.completed_item
       if not (completed_item and completed_item.user_data and
@@ -168,6 +169,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       return
     end
 
-    register_completion_item_resolve_callback(client)
+    register_completion_item_resolve_callback(ev.buf, client)
   end,
 })
