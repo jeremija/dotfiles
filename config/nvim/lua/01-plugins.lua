@@ -225,6 +225,15 @@ vim.diagnostic.config({ virtual_text = false })
 
 -- vim.lsp.set_log_level('trace')
 
+local function find_references()
+  vim.lsp.buf.references(nil, {
+    on_list = function(opts)
+      vim.fn.setloclist(0, {}, ' ', opts)
+      vim.api.nvim_command('lopen')
+    end,
+  })
+end
+
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -250,7 +259,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', ',gT', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', ',r', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, ',C', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', ',R', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', ',R', find_references, opts)
     vim.keymap.set('n', ',x', function()
       vim.lsp.buf.format { async = true }
     end, opts)
