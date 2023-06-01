@@ -143,7 +143,12 @@ end
 vim.keymap.set('n', ',i', vim.diagnostic.open_float)
 vim.keymap.set('n', ',j', vim.diagnostic.goto_next)
 vim.keymap.set('n', ',k', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ',q', vim.diagnostic.setloclist)
+vim.keymap.set('n', ',q', function()
+  vim.diagnostic.setloclist{ title = 'Buffer diagnostics' }
+end)
+vim.keymap.set('n', ',Q', function()
+  vim.diagnostic.setqflist{ title = 'Workspace diagnostics' }
+end)
 
 local au_group = 'UserLspConfig'
 
@@ -262,4 +267,33 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     register_completion_item_resolve_callback(ev.buf, client)
   end,
+})
+
+-- Update quickfix/loclist in real-time.
+-- Inspiration from https://github.com/onsails/diaglist.nvim/issues/3#issuecomment-931792663
+local function update_diagnostics(global_too)
+    if not vim.lsp.buf.server_ready() then
+        return
+    end
+
+    if vim.fn.getloclist(vim.fn.winnr(), { title = 0 }).title == 'Buffer diagnostics' then
+        vim.diagnostic.setloclist{ open = false, title = 'Buffer diagnostics' }
+    end
+
+    if global_too and vim.fn.getqflist{ title = 0 }.title == 'Workspace diagnostics' then
+        vim.diagnostic.setqflist{ open = false,  title = 'Workspace diagnostics' }
+    end
+end
+
+
+vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
+  callback = function()
+    update_diagnostics(false)
+  end
+})
+
+vim.api.nvim_create_autocmd({ 'DiagnosticChanged' }, {
+  callback = function()
+    update_diagnostics(true)
+  end
 })
