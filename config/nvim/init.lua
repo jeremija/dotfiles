@@ -8,8 +8,6 @@ let &packpath = g:nvim_dir . ',' . &packpath
 let s:config_dir = g:nvim_dir . '/config/'
 let g:python_host_prog = g:nvim_dir . '/python2/python2-wrapper'
 let g:python3_host_prog = g:nvim_dir . '/python3/python3-wrapper'
-kk
-
 
 exec 'source ' . s:config_dir . '01-plugins.vim'
 exec 'source ' . s:config_dir . '02-general.vim'
