@@ -18,6 +18,8 @@ hi DiffText ctermbg=236 ctermfg=11
 
 " floating window for LSP popups
 hi NormalFloat ctermbg=233
+" search highlight and quickfix selection
+hi Search ctermbg=172
 
 " status function for ale
 function! LinterStatus() abort
