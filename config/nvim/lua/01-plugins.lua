@@ -13,6 +13,8 @@ completion_item_resolve_capabilities.textDocument.completion.completionItem = {
   }
 }
 
+require("fidget").setup {}
+
 local lspconfig = require('lspconfig')
 lspconfig.gopls.setup {
   capabilities = completion_item_resolve_capabilities,
@@ -22,11 +24,85 @@ lspconfig.tsserver.setup {
   capabilities = completion_item_resolve_capabilities,
 }
 
+-- This function is used as a workaround when jumping to definitions. If we
+-- jump to a rust library, the default implementation would add the whole
+-- library to the workspace as a new project, but that would result in
+-- rust-analyzer doing duplicate work and analyze the project all over again.
+-- Instead, we just find the most recent root_dir from the same file type for
+-- which we'd already figured out the root_dir. It's not 100% accurate since
+-- the user could've navigated to another buffer by the time LSP returned a
+-- response, but should otherwise work well.
+local function most_recent_root_dir(cur_bufnr)
+    local filetype = vim.bo[cur_bufnr].filetype
+    local buffers = {}
+
+    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+      if not (bufnr == cur_bufnr) and
+        vim.api.nvim_buf_is_loaded(bufnr) and
+        vim.bo[bufnr].filetype == filetype
+      then
+        local root_dir = vim.b[bufnr].lsp_root_dir
+        if root_dir then
+          table.insert(buffers, {
+            root_dir = root_dir,
+            lastused = vim.fn.getbufinfo(bufnr)[1].lastused,
+          })
+        end
+      end
+    end
+
+    table.sort(buffers, function(a, b)
+      return a.lastused > b.lastused
+    end)
+
+    local item = buffers[1]
+
+    return item and item.root_dir
+end
+
+local function is_in_workspace(path)
+  local workspace_dir = vim.fn.getcwd()
+  return vim.startswith(path, workspace_dir)
+end
+
+local root_dir = function(filename, bufnr)
+  if not is_in_workspace(filename) then
+    return most_recent_root_dir(bufnr)
+  end
+
+  local root_dir = lspconfig.util.root_pattern("Cargo.lock")(filename)
+
+  vim.b[bufnr].lsp_root_dir = root_dir
+
+  return root_dir
+end
+
 lspconfig.rust_analyzer.setup {
+  root_dir = root_dir,
   capabilities = completion_item_resolve_capabilities,
   -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
-    ['rust-analyzer'] = {},
+    ['rust-analyzer'] = {
+      imports = {
+        granularity = {
+          group = "module",
+        },
+        prefix = "self",
+      },
+      check = {
+        features = "all",
+      },
+      cargo = {
+        buildScripts = {
+          enable = true,
+        },
+        features = "all",
+      },
+      procMacro = {
+        enable = true,
+      },
+      checkOnSave = true,
+    },
   },
 }
 
@@ -78,9 +154,17 @@ local au_group = 'UserLspConfig'
 -- If the server supports it, make sure to register the client's
 -- completion_item_resolve_capabilities.
 local function register_completion_item_resolve_callback(buf, client)
+  if vim.b[buf].lsp_resolve_callback_registered then
+    return
+  end
+
+  vim.b[buf].lsp_resolve_callback_registered = true
+
   local resolve_provider = client.server_capabilities and
     client.server_capabilities.completionProvider and
     client.server_capabilities.completionProvider.resolveProvider
+
+  local offset_encoding = client.offset_encoding
 
   vim.api.nvim_create_autocmd({"CompleteDone"}, {
     group = vim.api.nvim_create_augroup(au_group, {clear = false}),
@@ -99,7 +183,7 @@ local function register_completion_item_resolve_callback(buf, client)
       -- Check if the item already has completions attached.
       -- https://github.com/neovim/neovim/issues/12310#issuecomment-628269290
       if item.additionalTextEdits and #item.additionalTextEdits > 0 then
-        vim.lsp.util.apply_text_edits(item.additionalTextEdits, bufnr, client.offset_encoding)
+        vim.lsp.util.apply_text_edits(item.additionalTextEdits, bufnr, offset_encoding)
         return
       end
 
@@ -125,12 +209,16 @@ local function register_completion_item_resolve_callback(buf, client)
             return
           end
 
-          vim.lsp.util.apply_text_edits(result.additionalTextEdits, bufnr, client.offset_encoding)
+          vim.lsp.util.apply_text_edits(result.additionalTextEdits, bufnr, offset_encoding)
         end
       )
     end,
   })
 end
+
+vim.diagnostic.config({ virtual_text = false })
+
+-- vim.lsp.set_log_level('trace')
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
@@ -168,6 +256,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
       print("LspAttach event: no LSP client", ev.data.client_id)
       return
     end
+
+    -- disable syntax highlighting
+    client.server_capabilities.semanticTokensProvider = nil
 
     register_completion_item_resolve_callback(ev.buf, client)
   end,
