@@ -35,7 +35,7 @@ let g:ale_fixers = {
 \  'javascript': ['eslint'],
 \  'typescript': ['eslint'],
 \  'go': ['gofmt', 'goimports'],
-\  'rust': ['rustfmt'],
+\  'rust': [],
 \}
 let g:ale_fix_on_save = 1
 let g:ale_kotlin_languageserver_executable = 'kotlin-language-server'
