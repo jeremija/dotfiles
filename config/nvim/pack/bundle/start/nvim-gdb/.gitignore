@@ -1,0 +1,15 @@
+tags
+a.out
+a.exe
+.ropeproject/
+__pycache__/
+.mypy_cache/
+*.pyc
+.nvimlog
+backends.txt
+.luarocks/
+.luarc.json
+lua_modules
+*.rockspec
+luarocks*
+lua.bat

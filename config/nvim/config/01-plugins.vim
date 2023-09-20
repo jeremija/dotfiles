@@ -94,10 +94,11 @@ let g:fzf_layout = {
 \  },
 \}
 
+" let g:nvim_tree_git_icon_padding = ''
 let g:nvim_tree_symlink_arrow = ' -> '
 let g:nvim_tree_create_in_closed_folder = 1
 let g:nvim_tree_show_icons = {
-\ 'git': 1,
+\ 'git': 0,
 \ 'folders': 0,
 \ 'files': 0,
 \ 'folder_arrows': 0,
@@ -142,13 +143,14 @@ require'nvim-tree'.setup {
   ignore_ft_on_setup  = {},
   open_on_tab         = false,
   hijack_cursor       = false,
-  update_cwd          = false,
+  update_cwd          = true,
   update_to_buf_dir   = {
     enable = true,
     auto_open = true,
   },
   diagnostics = {
-    enable = false,
+    enable = true,
+    show_on_dirs = true,
     icons = {
       hint = "",
       info = "",
@@ -191,6 +193,11 @@ require'nvim-tree'.setup {
   trash = {
     cmd = "trash",
     require_confirm = true
+  },
+  renderer = {
+    icons = {
+      git_placement = "before",
+    }
   }
 }
 EOF

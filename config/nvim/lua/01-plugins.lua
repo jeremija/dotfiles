@@ -65,19 +65,31 @@ local function is_in_workspace(path)
   return vim.startswith(path, workspace_dir)
 end
 
-local root_dir = function(filename, bufnr)
+local function find_root_dir(filename, bufnr)
   if not is_in_workspace(filename) then
     return most_recent_root_dir(bufnr)
   end
 
   local root_dir = lspconfig.util.root_pattern("Cargo.lock")(filename)
+  if root_dir then
+    return root_dir
+  end
 
-  vim.b[bufnr].lsp_root_dir = root_dir
+  return lspconfig.util.root_pattern("Cargo.toml", "rust-project.json")(filename)
+end
+
+local root_dir = function(filename, bufnr)
+  local root_dir = find_root_dir(filename, bufnr)
+
+  if root_dir and bufnr then
+    vim.b[bufnr].lsp_root_dir = root_dir
+  end
 
   return root_dir
 end
 
 lspconfig.rust_analyzer.setup {
+  cmd = { 'rust-analyzer' },
   root_dir = root_dir,
   capabilities = completion_item_resolve_capabilities,
   -- Server-specific settings. See `:help lspconfig-setup`
@@ -102,6 +114,9 @@ lspconfig.rust_analyzer.setup {
         enable = true,
       },
       checkOnSave = true,
+      -- cachePriming = {
+      --   enable = false,
+      -- },
     },
   },
 }
@@ -250,7 +265,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', ',gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', ',gt', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', ',gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', ',d', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', ',gs', vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', ',wa', vim.lsp.buf.add_workspace_folder, opts)
     vim.keymap.set('n', ',wr', vim.lsp.buf.remove_workspace_folder, opts)
     vim.keymap.set('n', ',wl', function()
