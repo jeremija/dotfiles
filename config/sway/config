@@ -144,8 +144,8 @@ hide_edge_borders none
 # "ponymix unmute && dunstify -r 99999 Volume\ $(ponymix decrease 2)%"
 #     XF86AudioLowerVolume
 
-    bindsym $mod+m exec alacmd font Dina
-    bindsym $mod+Shift+m exec alacmd font Monospace
+    bindsym $mod+m exec alacmd font dina
+    bindsym $mod+Shift+m exec alacmd font monospace
     bindsym $mod+n exec alacmd theme dark
     bindsym $mod+Shift+n exec alacmd theme light
     bindsym $mod+c exec keepassxc
