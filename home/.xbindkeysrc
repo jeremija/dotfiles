@@ -128,10 +128,10 @@
 "keepassxc"
   Mod4 + c
 
-"alacmd font Dina"
+"alacmd font dina"
   Mod4 + m
 
-"alacmd font Monospace"
+"alacmd font monospace"
   Mod4 + Shift + m
 
 "alacmd theme dark"

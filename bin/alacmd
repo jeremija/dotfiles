@@ -1,6 +1,8 @@
 #!/bin/bash
 
-cfg_file=~/.config/alacritty/alacritty.yml
+set -eux
+
+cfg_file=~/.config/alacritty/alacritty.toml
 
 cmd=$1
 arg=$2
@@ -9,12 +11,13 @@ case $cmd in
     theme)
         theme="$arg"
         echo changing theme to $theme
-        sed -i "s/^colors: .*$/colors: \*$theme/" $cfg_file
+        sed -i "s/theme-.*\.toml\"/theme-$theme.toml\"/" $cfg_file
         ~/.tmux.sh theme $theme
     ;;
     font)
-        echo changing font to $arg
-        sed -i "s/  family: .*$/  family: $arg/" $cfg_file
+        font="$arg"
+        echo changing font to $font
+        sed -i "s/font-.*\.toml\"/font-$font.toml\"/" $cfg_file
     ;;
     *)
         echo unknown command: $1
