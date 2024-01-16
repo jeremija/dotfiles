@@ -11,6 +11,7 @@ let g:typescript_opfirst='\%([<>=,?^%|*/&]\|\([-:+]\)\1\@!\|!=\|in\%(stanceof\)\
 
 let g:python_highlight_all = 1
 let g:vim_indent_cont = 0
+let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown', 'fzf']
 
 let g:R_tmux_split = 1
 let g:R_assign = 0
@@ -103,7 +104,7 @@ let g:nvim_tree_show_icons = {
 \ 'files': 0,
 \ 'folder_arrows': 0,
 \ }
-\ 
+
 let g:nvim_tree_icons = {
 \ 'default': '',
 \ 'symlink': '',

@@ -13,6 +13,7 @@ completion_item_resolve_capabilities.textDocument.completion.completionItem = {
   }
 }
 
+-- LSP progress loader
 require("fidget").setup {}
 
 local lspconfig = require('lspconfig')

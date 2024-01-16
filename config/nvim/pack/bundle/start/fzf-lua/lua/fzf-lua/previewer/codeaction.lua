@@ -1,0 +1,253 @@
+local utils = require "fzf-lua.utils"
+local shell = require "fzf-lua.shell"
+local native = require("fzf-lua.previewer.fzf")
+local builtin = require("fzf-lua.previewer.builtin")
+
+local M = {}
+
+-- Thanks to @aznhe21's `actions-preview.nvim` for the diff generation code
+-- https://github.com/aznhe21/actions-preview.nvim/blob/master/lua/actions-preview/action.lua
+local function get_lines(bufnr)
+  vim.fn.bufload(bufnr)
+  return vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+end
+
+local function get_eol(bufnr)
+  local ff = vim.api.nvim_buf_get_option(bufnr, "fileformat")
+  if ff == "dos" then
+    return "\r\n"
+  elseif ff == "unix" then
+    return "\n"
+  elseif ff == "mac" then
+    return "\r"
+  else
+    error("invalid fileformat")
+  end
+end
+
+local function diff_text_edits(text_edits, bufnr, offset_encoding, diff_opts)
+  local eol = get_eol(bufnr)
+  local orig_lines = get_lines(bufnr)
+  local tmpbuf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(tmpbuf, 0, -1, false, orig_lines)
+  vim.lsp.util.apply_text_edits(text_edits, tmpbuf, offset_encoding)
+  local new_lines = get_lines(tmpbuf)
+  vim.api.nvim_buf_delete(tmpbuf, { force = true })
+  local diff = vim.diff(
+    table.concat(orig_lines, eol) .. eol,
+    table.concat(new_lines, eol) .. eol,
+    diff_opts)
+  return utils.strsplit(vim.trim(diff), eol)
+end
+
+-- based on `vim.lsp.util.apply_text_document_edit`
+-- https://github.com/neovim/neovim/blob/v0.9.2/runtime/lua/vim/lsp/util.lua#L576
+local function diff_text_document_edit(text_document_edit, offset_encoding, diff_opts)
+  local text_document = text_document_edit.textDocument
+  local bufnr = vim.uri_to_bufnr(text_document.uri)
+
+  return diff_text_edits(text_document_edit.edits, bufnr, offset_encoding, diff_opts)
+end
+
+-- based on `vim.lsp.util.apply_workspace_edit`
+-- https://github.com/neovim/neovim/blob/v0.9.4/runtime/lua/vim/lsp/util.lua#L848
+local function diff_workspace_edit(workspace_edit, offset_encoding, diff_opts)
+  local diff = {}
+  if workspace_edit.documentChanges then
+    for _, change in ipairs(workspace_edit.documentChanges) do
+      -- imitate git diff
+      if change.kind == "rename" then
+        local old_path = vim.fn.fnamemodify(vim.uri_to_fname(change.oldUri), ":.")
+        local new_path = vim.fn.fnamemodify(vim.uri_to_fname(change.newUri), ":.")
+
+        table.insert(diff, string.format("diff --code-actions a/%s b/%s", old_path, new_path))
+        table.insert(diff, string.format("rename from %s", old_path))
+        table.insert(diff, string.format("rename to %s", new_path))
+        table.insert(diff, "")
+      elseif change.kind == "create" then
+        local path = vim.fn.fnamemodify(vim.uri_to_fname(change.uri), ":.")
+
+        table.insert(diff, string.format("diff --code-actions a/%s b/%s", path, path))
+        table.insert(diff, "new file")
+        table.insert(diff, "")
+      elseif change.kind == "delete" then
+        local path = vim.fn.fnamemodify(vim.uri_to_fname(change.uri), ":.")
+
+        table.insert(diff, string.format("diff --code-actions a/%s b/%s", path, path))
+        table.insert(diff, string.format("--- a/%s", path))
+        table.insert(diff, "+++ /dev/null")
+        table.insert(diff, "")
+      elseif change.kind then
+        -- do nothing
+      else
+        local path = vim.fn.fnamemodify(vim.uri_to_fname(change.textDocument.uri), ":.")
+
+        table.insert(diff, string.format("diff --code-actions a/%s b/%s", path, path))
+        table.insert(diff, string.format("--- a/%s", path))
+        table.insert(diff, string.format("+++ b/%s", path))
+        for _, l in ipairs(diff_text_document_edit(change, offset_encoding, diff_opts) or {}) do
+          table.insert(diff, l)
+        end
+        table.insert(diff, "")
+        table.insert(diff, "")
+      end
+    end
+
+    return diff
+  end
+
+  local all_changes = workspace_edit.changes
+  if all_changes and not vim.tbl_isempty(all_changes) then
+    for uri, changes in pairs(all_changes) do
+      local path = vim.fn.fnamemodify(vim.uri_to_fname(uri), ":.")
+      local bufnr = vim.uri_to_bufnr(uri)
+
+      table.insert(diff, string.format("diff --code-actions a/%s b/%s", path, path))
+      table.insert(diff, string.format("--- a/%s", path))
+      table.insert(diff, string.format("+++ b/%s", path))
+      for _, l in ipairs(diff_text_edits(changes, bufnr, offset_encoding, diff_opts) or {}) do
+        table.insert(diff, l)
+      end
+      table.insert(diff, "")
+      table.insert(diff, "")
+    end
+  end
+
+  return diff
+end
+
+local function diff_tuple(err, tuple, diff_opts)
+  if err then
+    return {
+      string.format('"codeAction/resolve" failed with error %d: %s', err.code, err.message)
+    }
+  end
+  local action = tuple[2]
+  if action.edit then
+    local client = vim.lsp.get_client_by_id(tuple[1])
+    return diff_workspace_edit(action.edit, client.offset_encoding, diff_opts)
+  else
+    local command = type(action.command) == "table" and action.command or action
+    return {
+      string.format(
+        "Code action preview is only available for document/workspace edits (%s).",
+        command and type(command.command) == "string"
+        and string.format("command:%s", command.command)
+        or string.format("kind:%s", action.kind))
+    }
+  end
+end
+
+-- https://github.com/neovim/neovim/blob/v0.9.4/runtime/lua/vim/lsp/buf.lua#L666
+local function preview_action_tuple(tuple, diff_opts, callback)
+  -- neovim changed the ui.select params with 0.10.0 (#947)
+  -- { client_id, action } ==> { ctx = <LSP context>, action = <action> }
+  if tuple.ctx then
+    tuple = { tuple.ctx.client_id, tuple.action }
+  end
+  local client = assert(vim.lsp.get_client_by_id(tuple[1]))
+  local action = tuple[2]
+  if
+      not action.edit
+      and client
+      and vim.tbl_get(client.server_capabilities, "codeActionProvider", "resolveProvider")
+  then
+    local function on_result(diff_callback, err, resolved_action)
+      if err then
+        return diff_callback(err, tuple, diff_opts)
+      else
+        return diff_callback(err, { tuple[1], resolved_action }, diff_opts)
+      end
+    end
+
+    if callback then
+      client.request("codeAction/resolve", action, function(err, resolved_action)
+        on_result(callback, err, resolved_action)
+      end)
+      return { string.format("Resolving action (%s)...", action.kind) }
+    else
+      local res = client.request_sync("codeAction/resolve", action)
+      local err, resolved_action = res and res.err, res and res.result
+      if type(err) == "table" or type(resolved_action) == "table" then
+        return on_result(diff_tuple, err, resolved_action)
+      else
+        -- display the default "unsupported" message
+        return diff_tuple(nil, tuple, diff_opts)
+      end
+    end
+  else
+    return diff_tuple(nil, tuple, diff_opts)
+  end
+end
+
+
+M.builtin = builtin.base:extend()
+
+function M.builtin:new(o, opts, fzf_win)
+  assert(opts._ui_select and opts._ui_select.kind == "codeaction")
+  M.builtin.super.new(self, o, opts, fzf_win)
+  setmetatable(self, M.builtin)
+  self.diff_opts = o.diff_opts
+  return self
+end
+
+function M.builtin:gen_winopts()
+  local winopts = {
+    wrap       = false,
+    cursorline = false,
+    number     = false
+  }
+  return vim.tbl_extend("keep", winopts, self.winopts)
+end
+
+function M.builtin:populate_preview_buf(entry_str)
+  if not self.win or not self.win:validate_preview() then return end
+  local idx = tonumber(entry_str:match("^%d+%."))
+  assert(type(idx) == "number")
+  local tuple = self.opts._items[idx]
+  local lines = preview_action_tuple(tuple, self.diff_opts,
+    -- use the async version for "codeAction/resolve"
+    function(err, resolved_tuple)
+      if vim.api.nvim_buf_is_valid(self.tmpbuf) then
+        vim.api.nvim_buf_set_lines(self.tmpbuf, 0, -1, false,
+          diff_tuple(err, resolved_tuple, self.diff_opts))
+      end
+    end)
+  self.tmpbuf = self:get_tmp_buffer()
+  vim.api.nvim_buf_set_lines(self.tmpbuf, 0, -1, false, lines)
+  vim.api.nvim_buf_set_option(self.tmpbuf, "filetype", "git")
+  self:set_preview_buf(self.tmpbuf)
+  self.win:update_title(string.format(" Action #%d ", idx))
+  self.win:update_scrollbar()
+end
+
+M.native = native.base:extend()
+
+function M.native:new(o, opts, fzf_win)
+  assert(opts._ui_select and opts._ui_select.kind == "codeaction")
+  M.native.super.new(self, o, opts, fzf_win)
+  setmetatable(self, M.native)
+  self.pager = opts.preview_pager == nil and o.pager or opts.preview_pager
+  if type(self.pager) == "function" then
+    self.pager = self.pager()
+  end
+  self.diff_opts = o.diff_opts
+  return self
+end
+
+function M.native:cmdline(o)
+  o = o or {}
+  local act = shell.raw_action(function(entries, _, _)
+    local idx = tonumber(entries[1]:match("^%d+%."))
+    assert(type(idx) == "number")
+    local tuple = self.opts._items[idx]
+    local lines = preview_action_tuple(tuple, self.diff_opts)
+    return table.concat(lines, "\r\n")
+  end, "{}", self.opts.debug)
+  if self.pager and #self.pager > 0 and vim.fn.executable(self.pager:match("[^%s]+")) == 1 then
+    act = act .. " | " .. self.pager
+  end
+  return act
+end
+
+return M
