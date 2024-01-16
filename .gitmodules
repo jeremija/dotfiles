@@ -120,3 +120,6 @@
 [submodule "config/nvim/pack/bundle/start/nvim-gdb"]
 	path = config/nvim/pack/bundle/start/nvim-gdb
 	url = https://github.com/sakhnik/nvim-gdb
+[submodule "config/nvim/pack/bundle/start/fzf-lua"]
+	path = config/nvim/pack/bundle/start/fzf-lua
+	url = https://github.com/ibhagwan/fzf-lua
