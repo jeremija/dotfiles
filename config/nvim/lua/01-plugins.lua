@@ -16,6 +16,14 @@ completion_item_resolve_capabilities.textDocument.completion.completionItem = {
 -- LSP progress loader
 require("fidget").setup {}
 
+require('fzf-lua').setup {
+  defaults = {
+    lsp = {
+      async_or_timeout = 120000
+    }
+  }
+}
+
 local lspconfig = require('lspconfig')
 lspconfig.gopls.setup {
   capabilities = completion_item_resolve_capabilities,
@@ -274,7 +282,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, opts)
     vim.keymap.set('n', ',gT', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', ',r', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, ',C', vim.lsp.buf.code_action, opts)
+    vim.keymap.set({ 'n', 'v' }, ',lC', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', ',R', find_references, opts)
     vim.keymap.set('n', ',x', function()
       vim.lsp.buf.format { async = true }

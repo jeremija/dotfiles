@@ -31,6 +31,24 @@ noremap <Leader>tv :TestVisit<CR>
 noremap <Leader>ss vip:sort<CR>
 noremap <Leader>tt :OpenTest<CR>
 
+noremap <Leader>C :FzfLua lsp_code_actions<CR>
+vnoremap <Leader>C :FzfLua lsp_code_actions<CR>
+noremap <Leader>lr :FzfLua lsp_references<CR>
+noremap <Leader>ldf :FzfLua lsp_definitions<CR>
+noremap <Leader>ldc :FzfLua lsp_declarations<CR>
+noremap <Leader>lt :FzfLua lsp_typedefs<CR>
+noremap <Leader>li :FzfLua lsp_implementations<CR>
+noremap <Leader>lds :FzfLua lsp_document_symbols<CR>
+noremap <Leader>lws :FzfLua lsp_workspace_symbols<CR>
+noremap <Leader>llws :FzfLua lsp_live_workspace_symbols<CR>
+noremap <Leader>li :FzfLua lsp_incoming_calls<CR>
+noremap <Leader>lo :FzfLua lsp_outgoing_calls<CR>
+noremap <Leader>lf :FzfLua lsp_finder<CR>
+noremap <Leader>dd :FzfLua diagnostics_document<CR>
+noremap <Leader>dw :FzfLua diagnostics_workspace<CR>
+noremap <Leader>ldd :FzfLua lsp_document_diagnostics<CR>
+noremap <Leader>lwd :FzfLua lsp_workspace_diagnostics<CR>
+
 noremap <C-PageUp> :bprev<CR>
 noremap <C-PageDown> :bnext<CR>
 noremap <C-H> <C-W>h
