@@ -17,10 +17,14 @@ completion_item_resolve_capabilities.textDocument.completion.completionItem = {
 require("fidget").setup {}
 
 require('fzf-lua').setup {
-  defaults = {
-    lsp = {
-      async_or_timeout = 120000
-    }
+  lsp = {
+    async_or_timeout = 120000,
+    code_actions = {
+      async_or_timeout = 120000,
+    },
+    symbols = {
+      async_or_timeout = 120000,
+    },
   }
 }
 
