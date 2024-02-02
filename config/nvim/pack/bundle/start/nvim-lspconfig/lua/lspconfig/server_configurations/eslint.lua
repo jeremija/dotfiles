@@ -32,13 +32,6 @@ local function fix_all(opts)
   })
 end
 
-local bin_name = 'vscode-eslint-language-server'
-local cmd = { bin_name, '--stdio' }
-
-if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name, '--stdio' }
-end
-
 local root_file = {
   '.eslintrc',
   '.eslintrc.js',
@@ -51,7 +44,7 @@ local root_file = {
 
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { 'vscode-eslint-language-server', '--stdio' },
     filetypes = {
       'javascript',
       'javascriptreact',
@@ -71,7 +64,7 @@ return {
     -- Refer to https://github.com/Microsoft/vscode-eslint#settings-options for documentation.
     settings = {
       validate = 'on',
-      packageManager = 'npm',
+      packageManager = nil,
       useESLintClass = false,
       experimental = {
         useFlatConfig = false,
@@ -112,11 +105,16 @@ return {
         name = vim.fn.fnamemodify(new_root_dir, ':t'),
       }
 
+      -- Support flat config
+      if vim.fn.filereadable(new_root_dir .. '/eslint.config.js') == 1 then
+        config.settings.experimental.useFlatConfig = true
+      end
+
       -- Support Yarn2 (PnP) projects
       local pnp_cjs = util.path.join(new_root_dir, '.pnp.cjs')
       local pnp_js = util.path.join(new_root_dir, '.pnp.js')
       if util.path.exists(pnp_cjs) or util.path.exists(pnp_js) then
-        config.cmd = vim.list_extend({ 'yarn', 'exec' }, cmd)
+        config.cmd = vim.list_extend({ 'yarn', 'exec' }, config.cmd)
       end
     end,
     handlers = {

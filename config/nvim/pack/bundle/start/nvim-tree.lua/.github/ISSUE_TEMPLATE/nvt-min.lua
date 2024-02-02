@@ -1,3 +1,6 @@
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.cmd [[set runtimepath=$VIMRUNTIME]]
 vim.cmd [[set packpath=/tmp/nvt-min/site]]
 local package_root = "/tmp/nvt-min/site/pack"
@@ -6,8 +9,8 @@ local function load_plugins()
   require("packer").startup {
     {
       "wbthomason/packer.nvim",
-      "kyazdani42/nvim-tree.lua",
-      "kyazdani42/nvim-web-devicons",
+      "nvim-tree/nvim-tree.lua",
+      "nvim-tree/nvim-web-devicons",
       -- ADD PLUGINS THAT ARE _NECESSARY_ FOR REPRODUCING THE ISSUE
     },
     config = {
@@ -32,3 +35,13 @@ _G.setup = function()
   require("nvim-tree").setup {}
 end
 
+-- UNCOMMENT this block for diagnostics issues, substituting pattern and cmd as appropriate.
+-- Requires diagnostics.enable = true in setup.
+--[[
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "lua",
+  callback = function()
+    vim.lsp.start { cmd = { "lua-language-server" } }
+  end,
+})
+]]

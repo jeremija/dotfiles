@@ -1,18 +1,20 @@
 local util = require 'lspconfig.util'
 
-local bin_name = 'helm_ls'
-local cmd = { bin_name, 'serve' }
-
-if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', unpack(cmd) }
-end
+local default_capabilities = {
+  workspace = {
+    didChangeWatchedFiles = {
+      dynamicRegistration = true,
+    },
+  },
+}
 
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { 'helm_ls', 'serve' },
     filetypes = { 'helm' },
     root_dir = util.root_pattern 'Chart.yaml',
     single_file_support = true,
+    capabilities = default_capabilities,
   },
   docs = {
     description = [[
@@ -28,6 +30,7 @@ If need Helm file highlight use [vim-helm](https://github.com/towolf/vim-helm) p
 ]],
     default_config = {
       root_dir = [[root_pattern("Chart.yaml")]],
+      capabilities = [[default capabilities, with dynamicRegistration for didChangeWatchedFiles true]],
     },
   },
 }

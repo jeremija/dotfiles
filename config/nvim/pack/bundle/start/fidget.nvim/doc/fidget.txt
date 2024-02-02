@@ -1,491 +1,328 @@
-*fidget.txt*                               Standalone UI for nvim-lsp progress
+*fidget.txt* Extensible UI for Neovim notifications and LSP progress messages.
 
 ==============================================================================
 Table of Contents                                   *fidget-table-of-contents*
 
-1. fidget.nvim                                            |fidget-fidget.nvim|
-  - Installation                             |fidget-fidget.nvim-installation|
-  - Concepts                                     |fidget-fidget.nvim-concepts|
-  - Options                                       |fidget-fidget.nvim-options|
-  - Commands                                     |fidget-fidget.nvim-commands|
-  - Highlights                                 |fidget-fidget.nvim-highlights|
-  - Spinners                                     |fidget-fidget.nvim-spinners|
-  - Troubleshooting                       |fidget-fidget.nvim-troubleshooting|
-  - Acknowledgements                     |fidget-fidget.nvim-acknowledgements|
+1. Getting Started                                    |fidget-getting-started|
+  - Requirements                         |fidget-getting-started-requirements|
+  - Installation                         |fidget-getting-started-installation|
+  - Versioning                             |fidget-getting-started-versioning|
+2. Options                                                    |fidget-options|
+3. Lua API                                                    |fidget-lua-api|
+4. Commands                                                  |fidget-commands|
+5. Highlights                                              |fidget-highlights|
+6. Related Work                                          |fidget-related-work|
+  - Acknowledgements                    |fidget-related-work-acknowledgements|
 
 ==============================================================================
-1. fidget.nvim                                            *fidget-fidget.nvim*
+1. Getting Started                                    *fidget-getting-started*
 
 
-INSTALLATION                                 *fidget-fidget.nvim-installation*
+REQUIREMENTS                             *fidget-getting-started-requirements*
 
-Install this plugin using your favorite plugin manager. For example, using
-vim-plug <https://github.com/junegunn/vim-plug>:
+Fidget requires Neovim v0.8.0+.
+
+If you would like to see progress notifications, you must have configured
+Neovim with an LSP server that uses the `$/progress`
+<https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#progress>
+handler. For an up-to-date list of LSP servers this plugin is known to work
+with, see this Wiki page
+<https://github.com/j-hui/fidget.nvim/wiki/Known-compatible-LSP-servers>.
+
+
+INSTALLATION                             *fidget-getting-started-installation*
+
+Install this plugin using your favorite plugin manager.
+
+See the |fidget-documentation| for `setup()` options.
+
+
+LAZY ~
+
+>lua
+    {
+      "j-hui/fidget.nvim",
+      opts = {
+        -- options
+      },
+    }
+<
+
+
+VIM-PLUG ~
 
 >vim
     Plug 'j-hui/fidget.nvim'
+    
+    " Make sure the plugin is installed using :PlugInstall. Then, somewhere after plug#end():
+    lua <<EOF
+    require("fidget").setup {
+      -- options
+    }
+    EOF
 <
 
-Make sure the plugin installed (e.g., run `:PlugInstall` if using vim-plug).
-After the plugin is loaded (e.g., after `plug#end()` for vim-plug), call its
-`setup` function (in Lua):
 
->lua
-    require"fidget".setup{}
+ROCKS.NVIM ~
+
+>vim
+    :Rocks install fidget.nvim
 <
 
-`setup` takes a table of |fidget-options| as its parameter, used to configure
-the plugin.
 
+VERSIONING                                 *fidget-getting-started-versioning*
 
-CONCEPTS                                         *fidget-fidget.nvim-concepts*
+Fidget is actively developed on the `main` branch, and may occasionally undergo
+breaking changes.
 
-This section summarizes the vocabulary used by this plugin and its
-documentation to describe relevant concepts, and clarifies the relationship
-between those concepts.
+If you would like to ensure configuration/API stability, you can pin your tag
+to one of the release tags <https://github.com/j-hui/fidget.nvim/releases/>.
 
-A **task** is a particular job that is completed in the background. Examples
-include indexing a project, linting a module, or formatting a file.
-
-A task’s **message** describes its status.
-
-A **fidget** (a pun on "widget") represents an entity that performs a
-collection of tasks. For now, this plugin only supports fidgets that represent
-LSP servers. A fidget may perform multiple tasks concurrently.
-
-A fidget’s **spinner** is an icon shown next next to the fidget’s name, for
-purely aesthetic purposes.
-
-This plugin displays the progress of tasks grouped by fidget. For example, if
-there are two fidgets, `fidgetA` and `fidgetB`, with tasks `taskA1`, `taskA2`
-and `taskB1`, `taskB2`, respectively, they might be displayed as follows:
-
->
-    fidgetA ...
-    Started [taskA1]
-    Ongoing [taskA2]
-    fidgetB ...
-    Completed [taskB1]
-    Ongoing [taskB2]
-<
-
-Each fidget’s spinner is `...`; the tasks’ messages are `Started`,
-`Ongoing`, and `Completed`.
-
-
-OPTIONS                                           *fidget-fidget.nvim-options*
-
-The following table shows the default options for this plugin:
+For instance, using Lazy <https://github.com/folke/lazy.nvim>
 
 >lua
     {
-      text = {
-        spinner = "pipe",         -- animation shown when tasks are ongoing
-        done = "✔",               -- character shown when all tasks are complete
-        commenced = "Started",    -- message shown when task starts
-        completed = "Completed",  -- message shown when task completes
+      "j-hui/fidget.nvim",
+      tag = "v1.0.0",
+      opts = {
+        -- options
       },
-      align = {
-        bottom = true,            -- align fidgets along bottom edge of buffer
-        right = true,             -- align fidgets along right edge of buffer
-      },
-      timer = {
-        spinner_rate = 125,       -- frame rate of spinner animation, in ms
-        fidget_decay = 2000,      -- how long to keep around empty fidget, in ms
-        task_decay = 1000,        -- how long to keep around completed task, in ms
-      },
-      window = {
-        relative = "win",         -- where to anchor, either "win" or "editor"
-        blend = 100,              -- &winblend for the window
-        zindex = nil,             -- the zindex value for the window
-        border = "none",          -- style of border for the fidget window
-      },
-      fmt = {
-        leftpad = true,           -- right-justify text in fidget box
-        stack_upwards = true,     -- list of tasks grows upwards
-        max_width = 0,            -- maximum width of the fidget box
-        fidget =                  -- function to format fidget title
-          function(fidget_name, spinner)
-            return string.format("%s %s", spinner, fidget_name)
+    }
+<
+
+
+==============================================================================
+2. Options                                                    *fidget-options*
+
+Fidgetcan be configured by passing a table of options to the `setup()`.
+Available options are shown below:
+
+>lua
+    {
+      -- Options related to LSP progress subsystem
+      progress = {
+        poll_rate = 0,                -- How and when to poll for progress messages
+        suppress_on_insert = false,   -- Suppress new messages while in insert mode
+        ignore_done_already = false,  -- Ignore new tasks that are already complete
+        ignore_empty_message = false, -- Ignore new tasks that don't contain a message
+        clear_on_detach =             -- Clear notification group when LSP server detaches
+          function(client_id)
+            local client = vim.lsp.get_client_by_id(client_id)
+            return client and client.name or nil
           end,
-        task =                    -- function to format each task line
-          function(task_name, message, percentage)
-            return string.format(
-              "%s%s [%s]",
-              message,
-              percentage and string.format(" (%s%%)", percentage) or "",
-              task_name
-            )
-          end,
-      },
-      sources = {                 -- Sources to configure
-        * = {                     -- Name of source
-          ignore = false,         -- Ignore notifications from this source
+        notification_group =          -- How to get a progress message's notification group key
+          function(msg) return msg.lsp_client.name end,
+        ignore = {},                  -- List of LSP servers to ignore
+    
+        -- Options related to how LSP progress messages are displayed as notifications
+        display = {
+          render_limit = 16,          -- How many LSP messages to show at once
+          done_ttl = 3,               -- How long a message should persist after completion
+          done_icon = "✔",            -- Icon shown when all LSP progress tasks are complete
+          done_style = "Constant",    -- Highlight group for completed LSP tasks
+          progress_ttl = math.huge,   -- How long a message should persist when in progress
+          progress_icon =             -- Icon shown when LSP progress tasks are in progress
+            { pattern = "dots", period = 1 },
+          progress_style =            -- Highlight group for in-progress LSP tasks
+            "WarningMsg",
+          group_style = "Title",      -- Highlight group for group name (LSP server name)
+          icon_style = "Question",    -- Highlight group for group icons
+          priority = 30,              -- Ordering priority for LSP notification group
+          skip_history = true,        -- Whether progress notifications should be omitted from history
+          format_message =            -- How to format a progress message
+            require("fidget.progress.display").default_format_message,
+          format_annote =             -- How to format a progress annotation
+            function(msg) return msg.title end,
+          format_group_name =         -- How to format a progress notification group's name
+            function(group) return tostring(group) end,
+          overrides = {               -- Override options from the default notification config
+            rust_analyzer = { name = "rust-analyzer" },
+          },
+        },
+    
+        -- Options related to Neovim's built-in LSP client
+        lsp = {
+          progress_ringbuf_size = 0,  -- Configure the nvim's LSP progress ring buffer size
         },
       },
-      debug = {
-        logging = false,          -- whether to enable logging, for debugging
-        strict = false,           -- whether to interpret LSP strictly
-      },
-    }
-<
-
-
-TEXT.SPINNER
-
-Animation shown in fidget title when its tasks are ongoing. Can either be the
-name of one of the predefined |fidget-fidget-spinners|, or an array of strings
-representing each frame of the animation.
-
-Type: `string` or `[string]` (default: `"pipe"`)
-
-
-TEXT.DONE
-
-Text shown in fidget title when all its tasks are completed, i.e., it has no
-more tasks.
-
-Type: `string` (default: `"✔"`)
-
-
-TEXT.COMMENCED
-
-Message shown when a task starts.
-
-Type: `string` (default: `"Started"`)
-
-
-TEXT.COMPLETED
-
-Message shown when a task completes.
-
-Type: `string` (default: `"Completed"`)
-
-
-ALIGN.BOTTOM
-
-Whether to align fidgets along the bottom edge of each buffer.
-
-Type: `bool` (default: `true`)
-
-
-ALIGN.RIGHT
-
-Whether to align fidgets along the right edge of each buffer. Setting this to
-`false` is not recommended, since that will lead to the fidget text being
-regularly overlaid on top of buffer text (which is supported but unsightly).
-
-Type: `bool` (default: `true`)
-
-
-WINDOW.RELATIVE
-
-Whether to position the window relative to the current window, or the editor.
-Valid values are `"win"` or `"editor"`.
-
-Type: `string` (default: `"win"`)
-
-
-WINDOW.BLEND
-
-The value to use for `&winblend` for the window, to adjust transparency.
-
-Type: `number` (default: `100`)
-
-
-WINDOW.ZINDEX
-
-The value to use for `zindex` (see `:h nvim_open_win`) for the window.
-
-Type: `number` (default: `nil`)
-
-
-WINDOW.BORDER
-
-The value to use for the window `border` (see `:h nvim_open_win`), to adjust
-the Fidget window border style.
-
-Type: `string` (default: `"none"`)
-
-
-TIMER.SPINNER_RATE
-
-Duration of each frame of the spinner animation, in ms. Set to `0` to only use
-the first frame of the spinner animation.
-
-Type: `number` (default: `125`)
-
-
-TIMER.FIDGET_DECAY
-
-How long to continue showing a fidget after all its tasks are completed, in ms.
-Set to `0` to clear each fidget as soon as all its tasks are completed; set to
-any negative number to keep it around indefinitely (not recommended).
-
-Type: `number` (default: `2000`)
-
-
-TIMER.TASK_DECAY
-
-How long to continue showing a task after it is complete, in ms. Set to `0` to
-clear each task as soon as it is completed; set to any negative number to keep
-it around until its fidget is cleared.
-
-Type: `number` (default: `1000`)
-
-
-FMT.LEFTPAD
-
-Whether to right-justify the text in a fidget box by left-padding it with
-spaces. Recommended when |fidget-align.right| is `true`.
-
-Type: `bool` (default: `true`)
-
-
-FMT.STACK_UPWARDS
-
-Whether the list of tasks should grow upward in a fidget box. With this set to
-`true`, fidget titles tend to jump around less.
-
-Type: `bool` (default: `true`)
-
-
-FMT.MAX_WIDTH
-
-Maximum width of the fidget box; longer lines are truncated. If this option is
-set to `0`, then the width of the fidget box will be limited only by that of
-the focused window/editor (depending on |fidget-window.relative|).
-
-Type: `number` (default: `0`)
-
-
-FMT.FIDGET
-
-Function used to format the title of a fidget. Given two arguments: the name of
-the fidget, and the current frame of the spinner. Returns the formatted fidget
-title.
-
-Type: `(string, string) -> string` (default: something sane)
-
-
-FMT.TASK
-
-Function used to format the status of each task. Given three arguments: the
-name of the task, its message, and its progress as a percentage. Returns the
-formatted task status. If this value is false, don’t show tasks at all.
-
-Type: `(string, string, string) -> string` (default: something sane)
-
-
-SOURCES.SOURCE_NAME
-
-Options for fidget source with name `SOURCE_NAME`.
-
-Type: `{options}` (default: see individual per-source options)
-
-
-SOURCES.SOURCE_NAME.IGNORE
-
-Disable fidgets from `SOURCE_NAME`.
-
-Type: `bool` (default: `false`)
-
-
-DEBUG.LOGGING
-
-Whether to enable logging, for debugging. The log is written to
-`~/.local/share/nvim/fidget.nvim.log`.
-
-Type: `bool` (default: `false`)
-
-
-DEBUG.STRICT
-
-Whether this plugin should follow a strict interpretation of the LSP protocol,
-e.g., notifications missing the `kind` field.
-
-Setting this to `false` (the default) will likely lead to more sensible
-behavior with non-conforming language servers, but may mask server misbehavior.
-
-Type: `bool` (default: `false`)
-
-
-COMMANDS                                         *fidget-fidget.nvim-commands*
-
-
-FIDGETCLOSE
-
-Closes ongoing fidget(s) (i.e., it has incomplete tasks), removing its spinner.
-Arguments can be given to close specific fidgets, e.g.,:
-
->
-    :FidgetClose null-ls rust-analyzer
-<
-
-If no arguments are provided, all sources will be closed.
-
-This command is primarily useful for clearing the UI when tasks appear to be
-unresponsive (see https://github.com/j-hui/fidget.nvim/issues/28). Note that
-this command does not silence a source: subsequent notifications will restart
-the fidget.
-
-
-HIGHLIGHTS                                     *fidget-fidget.nvim-highlights*
-
-This plugin uses the following highlights to display the fidgets, and can be
-overridden to customize how fidgets look.
-
-For example, to make the `FidgetTitle` blue, add the following to your .vimrc:
-
->vim
-    highlight FidgetTitle ctermfg=110 guifg=#6cb6eb
-<
-
-Or to link <hi-link> it to the `Variable` highlight group:
-
->vim
-    highlight link FidgetTitle Variable
-<
-
-
-FIDGETTITLE
-
-Highlight used for the title of a fidget.
-
-Default: linked to hl-Title <hl-Title>
-
-
-FIDGETTASK
-
-Highlight used for the body (the tasks) of a fidget.
-
-Default: linked to hl-LineNr <hl-LineNr>
-
-
-SPINNERS                                         *fidget-fidget.nvim-spinners*
-
-The |fidget-text.spinner| option recognizes the following spinner pattern
-names:
-
->
-    dots
-    dots_negative
-    dots_snake
-    dots_footsteps
-    dots_hop
-    line
-    pipe
-    dots_ellipsis
-    dots_scrolling
-    star
-    flip
-    hamburger
-    grow_vertical
-    grow_horizontal
-    noise
-    dots_bounce
-    triangle
-    arc
-    circle
-    square_corners
-    circle_quarters
-    circle_halves
-    dots_toggle
-    box_toggle
-    arrow
-    zip
-    bouncing_bar
-    bouncing_ball
-    clock
-    earth
-    moon
-    dots_pulse
-    meter
-<
-
-See <lua/fidget/spinners.lua> of this plugin’s source code to see how each
-animation is defined.
-
-
-TROUBLESHOOTING                           *fidget-fidget.nvim-troubleshooting*
-
-If in doubt, file an issue on <https://github.com/j-hui/fidget.nvim/issues>.
-
-
-I SET UP THIS PLUGIN BUT NOTHING APPEARS! ~
-
-This plugin automatically installs its progress handler, but that may be
-overwritten by other plugins by the time you arrive at the text buffer. For
-example, if you also use nvim-lua/lsp-status.nvim
-<https://github.com/nvim-lua/lsp-status.nvim>, its `register_progress` function
-will overwrite Fidget’s progress handler.
-
-You can check whether Fidget’s progress handler is correctly installed using
-`is_installed`. For example, to do this interactively, run the following Vim
-command:
-
->vim
-    :lua print(require"fidget".is_installed())
-<
-
-If it isn’t installed, make sure that it works by manually calling `setup`,
-e.g.,:
-
->vim
-    :lua require"fidget".setup{}
-<
-
-If that works, then you need to make sure other plugins aren’t clashing with
-this one, or at least call Fidget’s `setup` function after the other plugins
-are done setting up.
-
-
-MY PROGRESS NOTIFICATIONS ARE BEING CUT SHORT. ~
-
-Some language servers may send long progress messages that cannot be nicely
-displayed on a single line. These messages are forcibly truncated to the width
-of the focused editor window or 99 characters, whichever is shorter.
-
-The way truncation is implemented is not sensitive to the format of each line,
-potentially leading to lines with unmatched brackets:
-
->
-    Message [long title...
-<
-
-If you would like to to avoid this behavior, you can override the
-|fidget-fmt.task| handler with one that truncates the message/title before
-formatting:
-
->lua
-    {
-      fmt = {
-        task =
-          function(task_name, message, percentage)
-            if #message > 42 then
-              message = string.format("%.39s...", message)
+    
+      -- Options related to notification subsystem
+      notification = {
+        poll_rate = 10,               -- How frequently to update and render notifications
+        filter = vim.log.levels.INFO, -- Minimum notifications level
+        history_size = 128,           -- Number of removed messages to retain in history
+        override_vim_notify = false,  -- Automatically override vim.notify() with Fidget
+        configs =                     -- How to configure notification groups when instantiated
+          { default = require("fidget.notification").default_config },
+        redirect =                    -- Conditionally redirect notifications to another backend
+          function(msg, level, opts)
+            if opts and opts.on_open then
+              return require("fidget.integration.nvim-notify").delegate(msg, level, opts)
             end
-            if #task_name > 42 then
-              task_name = string.format("%.39s...", task_name)
-            end
-            return string.format(
-              "%s%s [%s]",
-              message,
-              percentage and string.format(" (%s%%)", percentage) or "",
-              task_name
-            )
           end,
+    
+        -- Options related to how notifications are rendered as text
+        view = {
+          stack_upwards = true,       -- Display notification items from bottom to top
+          icon_separator = " ",       -- Separator between group name and icon
+          group_separator = "---",    -- Separator between notification groups
+          group_separator_hl =        -- Highlight group used for group separator
+            "Comment",
+          render_message =            -- How to render notification messages
+            function(msg, cnt)
+              return cnt == 1 and msg or string.format("(%dx) %s", cnt, msg)
+            end,
+        },
+    
+        -- Options related to the notification window and buffer
+        window = {
+          normal_hl = "Comment",      -- Base highlight group in the notification window
+          winblend = 100,             -- Background color opacity in the notification window
+          border = "none",            -- Border around the notification window
+          zindex = 45,                -- Stacking priority of the notification window
+          max_width = 0,              -- Maximum width of the notification window
+          max_height = 0,             -- Maximum height of the notification window
+          x_padding = 1,              -- Padding from right edge of window boundary
+          y_padding = 0,              -- Padding from bottom edge of window boundary
+          align = "bottom",           -- How to align the notification window
+          relative = "editor",        -- What the notification window position is relative to
+        },
+      },
+    
+      -- Options related to integrating with other plugins
+      integration = {
+        ["nvim-tree"] = {
+          enable = true,              -- Integrate with nvim-tree/nvim-tree.lua (if installed)
+        },
+      },
+    
+      -- Options related to logging
+      logger = {
+        level = vim.log.levels.WARN,  -- Minimum logging level
+        float_precision = 0.01,       -- Limit the number of decimals displayed for floats
+        path =                        -- Where Fidget writes its logs to
+          string.format("%s/fidget.nvim.log", vim.fn.stdpath("cache")),
       },
     }
 <
 
+For more details, see |fidget-option.txt|.
 
-ACKNOWLEDGEMENTS                         *fidget-fidget.nvim-acknowledgements*
 
-This plugin takes inspiration and borrows code from arkav/lualine-lsp-progress
-<https://github.com/arkav/lualine-lsp-progress>.
+==============================================================================
+3. Lua API                                                    *fidget-lua-api*
 
-|fidget-fidget-spinner| designs adapted from the npm package
+See |fidget-api.txt|.
+
+
+==============================================================================
+4. Commands                                                  *fidget-commands*
+
+*fidget-:Fidget* *:Fidget*
+
+Fidget exposes some of its Lua API functions through `:Fidget` sub-commands
+(e.g., `:Fidget clear`), which support shell-like arguments and completion.
+These sub-commands are documented below.
+
+:Fidget clear                                           *fidget-:Fidget-clear*
+
+    Clear active notifications
+
+    Positional arguments: ~
+        {group_key}                    (any)        group to clear
+
+
+:Fidget clear_history                           *fidget-:Fidget-clear_history*
+
+    Clear notifications history
+
+    Flags: ~
+        --before {seconds}             (number)     filter history for items updated at least this long ago
+        --group_key {group_key}        (any)        clear history by group key
+        --include_active {true|false}  (boolean)    whether to clear items that have not been removed (default: true)
+        --include_removed {true|false} (boolean)    whether to clear items that have have been removed (default: true)
+        --since {seconds}              (number)     filter history for items updated at most this long ago
+
+    Positional arguments: ~
+        {group_key}                    (any)        clear history by group key
+
+
+:Fidget history                                       *fidget-:Fidget-history*
+
+    Show notifications history
+
+    Flags: ~
+        --before {seconds}             (number)     filter history for items updated at least this long ago
+        --group_key {group_key}        (any)        filter history by group key
+        --include_active {true|false}  (boolean)    whether to clear items that have not been removed (default: `true`)
+        --include_removed {true|false} (boolean)    whether to clear items that have have been removed (default: `true`)
+        --since {seconds}              (number)     filter history for items updated at most this long ago
+
+    Positional arguments: ~
+        {group_key}                    (any)        filter history by group key
+
+
+:Fidget lsp_suppress                             *fidget-:Fidget-lsp_suppress*
+
+    Suppress LSP progress notifications
+
+    Positional arguments: ~
+        {suppress}                     (boolean)    whether to suppress (omitting this argument toggles suppression)
+
+
+:Fidget suppress                                     *fidget-:Fidget-suppress*
+
+    Suppress notification window
+
+    Positional arguments: ~
+        {suppress}                     (boolean)    whether to suppress (omitting this argument toggles suppression)
+
+
+
+==============================================================================
+5. Highlights                                              *fidget-highlights*
+
+Rather than defining its own highlights, Fidget’s default configuration uses
+built-in highlight groups that are typically overridden by custom Vim color
+schemes. With any luck, these will look reasonable when rendered, but the
+visual outcome will really depend on what your color scheme decided to do with
+those highlight groups.
+
+You can override these highlight groups (e.g., `icon_style`) using the
+|fidget-options| shown above.
+
+
+==============================================================================
+6. Related Work                                          *fidget-related-work*
+
+rcarriga/nvim-notify <https://github.com/rcarriga/nvim-notify> is first and
+foremost a `vim.notify()` backend, and it also supports LSP progress
+notifications
+<https://github.com/rcarriga/nvim-notify/wiki/Usage-Recipes#lsp-status-updates>
+(with the integration seems to have been packaged up in mrded/nvim-lsp-notify
+<https://github.com/mrded/nvim-lsp-notify>).
+
+vigoux/notifier.nvim <https://github.com/vigoux/notifier.nvim> is a
+`vim.notify()` backend that comes with first-class LSP notification support.
+
+neoclide/coc.nvim <https://github.com/neoclide/coc.nvim> provides a nice LSP
+progress UI in the status line, which first inspired my desire to have this
+feature for nvim-lsp.
+
+arkav/lualine-lsp-progress <https://github.com/arkav/lualine-lsp-progress> was
+the original inspiration for Fidget, and funnels LSP progress messages into
+nvim-lualine/lualine.nvim <https://github.com/nvim-lualine/lualine.nvim>. I
+once borrowed some of its code (though much of that code has since been
+rewritten).
+
+nvim-lua/lsp-status.nvim <https://github.com/nvim-lua/lsp-status.nvim> also
+supports showing progress text, though it requires some configuration to
+integrate that into their status line.
+
+
+ACKNOWLEDGEMENTS                        *fidget-related-work-acknowledgements*
+
+Most of the Fidget spinner patterns were adapted from the npm package
 sindresorhus/cli-spinners <https://github.com/sindresorhus/cli-spinners>.
 
 Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>

@@ -37,73 +37,8 @@ lspconfig.tsserver.setup {
   capabilities = completion_item_resolve_capabilities,
 }
 
--- This function is used as a workaround when jumping to definitions. If we
--- jump to a rust library, the default implementation would add the whole
--- library to the workspace as a new project, but that would result in
--- rust-analyzer doing duplicate work and analyze the project all over again.
--- Instead, we just find the most recent root_dir from the same file type for
--- which we'd already figured out the root_dir. It's not 100% accurate since
--- the user could've navigated to another buffer by the time LSP returned a
--- response, but should otherwise work well.
-local function most_recent_root_dir(cur_bufnr)
-    local filetype = vim.bo[cur_bufnr].filetype
-    local buffers = {}
-
-    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-      if not (bufnr == cur_bufnr) and
-        vim.api.nvim_buf_is_loaded(bufnr) and
-        vim.bo[bufnr].filetype == filetype
-      then
-        local root_dir = vim.b[bufnr].lsp_root_dir
-        if root_dir then
-          table.insert(buffers, {
-            root_dir = root_dir,
-            lastused = vim.fn.getbufinfo(bufnr)[1].lastused,
-          })
-        end
-      end
-    end
-
-    table.sort(buffers, function(a, b)
-      return a.lastused > b.lastused
-    end)
-
-    local item = buffers[1]
-
-    return item and item.root_dir
-end
-
-local function is_in_workspace(path)
-  local workspace_dir = vim.fn.getcwd()
-  return vim.startswith(path, workspace_dir)
-end
-
-local function find_root_dir(filename, bufnr)
-  if not is_in_workspace(filename) then
-    return most_recent_root_dir(bufnr)
-  end
-
-  local root_dir = lspconfig.util.root_pattern("Cargo.lock")(filename)
-  if root_dir then
-    return root_dir
-  end
-
-  return lspconfig.util.root_pattern("Cargo.toml", "rust-project.json")(filename)
-end
-
-local root_dir = function(filename, bufnr)
-  local root_dir = find_root_dir(filename, bufnr)
-
-  if root_dir and bufnr then
-    vim.b[bufnr].lsp_root_dir = root_dir
-  end
-
-  return root_dir
-end
-
 lspconfig.rust_analyzer.setup {
   cmd = { 'rust-analyzer' },
-  root_dir = root_dir,
   capabilities = completion_item_resolve_capabilities,
   -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
@@ -116,6 +51,7 @@ lspconfig.rust_analyzer.setup {
       },
       check = {
         features = "all",
+        -- allTargets = false,
       },
       cargo = {
         buildScripts = {
@@ -126,7 +62,12 @@ lspconfig.rust_analyzer.setup {
       procMacro = {
         enable = true,
       },
-      checkOnSave = true,
+      checkOnSave = {
+        extraArgs = {
+          "--target-dir",
+          "target/rust-analyzer",
+        },
+      },
       -- cachePriming = {
       --   enable = false,
       -- },

@@ -7,28 +7,75 @@ on:
   push:
     branches:
       - master
+      - release-please--branches--master--components--nvim-tree
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  luacheck:
-    name: luacheck
+  lint:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
 
-      - name: Prepare
-        run: |
-          sudo apt-get update
-          sudo add-apt-repository universe
-          sudo apt install luarocks -y
-          sudo luarocks install luacheck
-      - name: Run luacheck
-        run: luacheck .
-  stylua:
-    name: stylua
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        lua_version: [ 5.1 ]
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: JohnnyMorganz/stylua-action@1.0.0
+      - uses: actions/checkout@v4
+
+      - uses: leafo/gh-actions-lua@v10
+        with:
+          luaVersion: ${{ matrix.lua_version }}
+
+      - uses: leafo/gh-actions-luarocks@v4
+
+      - run: luarocks install luacheck 1.1.1
+
+      - run: make lint
+
+  style:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        stylua_version: [ 0.19.1 ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: stylua
+        uses: JohnnyMorganz/stylua-action@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: --color always --check lua/
+          version: ${{ matrix.stylua_version }}
+          args: --check lua
+
+      - run: make style-doc
+
+  check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        nvim_version: [ v0.9.4 ]
+        luals_version: [ 3.7.3 ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: ${{ matrix.nvim_version }}
+
+      - name: install luals
+        run: |
+          mkdir -p luals
+          curl -L "https://github.com/LuaLS/lua-language-server/releases/download/${{ matrix.luals_version }}/lua-language-server-${{ matrix.luals_version }}-linux-x64.tar.gz" | tar zx --directory luals
+
+      - name: make check
+        run: VIMRUNTIME=/home/runner/nvim-${{ matrix.nvim_version }}/share/nvim/runtime PATH="luals/bin:${PATH}" make check
+
+      - run: make help-check
