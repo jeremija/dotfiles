@@ -22,9 +22,6 @@
 [submodule "config/nvim/pack/bundle/start/python-syntax"]
 	path = config/nvim/pack/bundle/start/python-syntax
 	url = https://github.com/hdima/python-syntax
-[submodule "config/nvim/pack/bundle/start/vim-pug"]
-	path = config/nvim/pack/bundle/start/vim-pug
-	url = https://github.com/digitaltoad/vim-pug
 [submodule "config/nvim/pack/bundle/start/vim-sleuth"]
 	path = config/nvim/pack/bundle/start/vim-sleuth
 	url = https://github.com/tpope/vim-sleuth
@@ -34,12 +31,6 @@
 [submodule "config/nvim/pack/bundle/start/vim-jsx"]
 	path = config/nvim/pack/bundle/start/vim-jsx
 	url = https://github.com/mxw/vim-jsx
-[submodule "config/nvim/pack/bundle/start/Nvim-R"]
-	path = config/nvim/pack/bundle/start/Nvim-R
-	url = https://github.com/jalvesaq/Nvim-R
-[submodule "config/nvim/pack/bundle/start/vim-python-pep8-indent"]
-	path = config/nvim/pack/bundle/start/vim-python-pep8-indent
-	url = https://github.com/hynek/vim-python-pep8-indent
 [submodule "config/nvim/pack/bundle/start/vim-bufkill"]
 	path = config/nvim/pack/bundle/start/vim-bufkill
 	url = https://github.com/qpkorr/vim-bufkill
@@ -52,9 +43,6 @@
 [submodule "config/nvim/pack/bundle/start/rust.vim"]
 	path = config/nvim/pack/bundle/start/rust.vim
 	url = https://github.com/rust-lang/rust.vim
-[submodule "config/nvim/pack/bundle/start/vim-import-js"]
-	path = config/nvim/pack/bundle/start/vim-import-js
-	url = https://github.com/galooshi/vim-import-js
 [submodule "config/nvim/pack/bundle/start/vim-graphql"]
 	path = config/nvim/pack/bundle/start/vim-graphql
 	url = https://github.com/jparise/vim-graphql
@@ -64,9 +52,6 @@
 [submodule "config/nvim/pack/bundle/start/editorconfig-vim"]
 	path = config/nvim/pack/bundle/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim
-[submodule "config/nvim/pack/bundle/start/kotlin-vim"]
-	path = config/nvim/pack/bundle/start/kotlin-vim
-	url = https://github.com/udalov/kotlin-vim
 [submodule "config/nvim/pack/bundle/start/vader.vim"]
 	path = config/nvim/pack/bundle/start/vader.vim
 	url = https://github.com/junegunn/vader.vim
@@ -78,18 +63,12 @@
 	path = config/nvim/pack/bundle/start/ale
 	; url = https://github.com/w0rp/ale
 	url = https://github.com/jeremija/ale
-[submodule "config/nvim/pack/bundle/start/vim-test"]
-	path = config/nvim/pack/bundle/start/vim-test
-	url = https://github.com/janko-m/vim-test
 [submodule "config/nvim/pack/bundle/start/vim-jsx-typescript"]
 	path = config/nvim/pack/bundle/start/vim-jsx-typescript
 	url = https://github.com/peitalin/vim-jsx-typescript
 [submodule "config/nvim/pack/bundle/start/vim-backslash"]
 	path = config/nvim/pack/bundle/start/vim-backslash
 	url = https://github.com/lambdalisue/vim-backslash
-[submodule "config/nvim/pack/bundle/start/nim.vim"]
-	path = config/nvim/pack/bundle/start/nim.vim
-	url = https://github.com/zah/nim.vim/
 [submodule "config/nvim/pack/bundle/start/yats.vim"]
 	path = config/nvim/pack/bundle/start/yats.vim
 	url = https://github.com/HerringtonDarkholme/yats.vim
