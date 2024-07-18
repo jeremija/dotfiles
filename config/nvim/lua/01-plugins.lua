@@ -250,10 +250,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- Update quickfix/loclist in real-time.
 -- Inspiration from https://github.com/onsails/diaglist.nvim/issues/3#issuecomment-931792663
 local function update_diagnostics(global_too)
-    if not vim.lsp.buf.server_ready() then
-        return
-    end
-
     if vim.fn.getloclist(vim.fn.winnr(), { title = 0 }).title == 'Buffer diagnostics' then
         vim.diagnostic.setloclist{ open = false, title = 'Buffer diagnostics' }
     end
