@@ -1,6 +1,7 @@
 runtime pack/bundle/start/vim-colorschemes/colors/last256.vim
 let g:colors_name = 'jeremija'
 
+set notermguicolors
 hi tsxTagName ctermfg=11
 hi tsxAttrib ctermfg=172
 hi MatchParen cterm=bold ctermbg=none ctermfg=white
