@@ -40,8 +40,8 @@ noremap <Leader>lt :FzfLua lsp_typedefs<CR>
 noremap <Leader>li :FzfLua lsp_implementations<CR>
 noremap <Leader>lds :FzfLua lsp_document_symbols<CR>
 noremap <Leader>lws :FzfLua lsp_workspace_symbols<CR>
-noremap <Leader>llws :FzfLua lsp_live_workspace_symbols<CR>
-noremap <Leader>li :FzfLua lsp_incoming_calls<CR>
+noremap <Leader>ws :FzfLua lsp_live_workspace_symbols<CR>
+noremap <Leader>lc :FzfLua lsp_incoming_calls<CR>
 noremap <Leader>lo :FzfLua lsp_outgoing_calls<CR>
 noremap <Leader>lf :FzfLua lsp_finder<CR>
 noremap <Leader>dd :FzfLua diagnostics_document<CR>
