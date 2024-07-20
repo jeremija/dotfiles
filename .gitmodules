@@ -102,3 +102,6 @@
 [submodule "config/nvim/pack/bundle/start/fzf-lua"]
 	path = config/nvim/pack/bundle/start/fzf-lua
 	url = https://github.com/ibhagwan/fzf-lua
+[submodule "config/nvim/pack/bundle/start/nvim-treesitter"]
+	path = config/nvim/pack/bundle/start/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter
