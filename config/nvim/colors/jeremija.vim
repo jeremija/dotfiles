@@ -17,6 +17,10 @@ hi DiffDelete ctermbg=none ctermfg=black
 hi DiffChange ctermbg=233 ctermfg=248
 hi DiffText ctermbg=236 ctermfg=11
 
+hi RenderMarkdownCode ctermbg=234
+hi RenderMarkdownQuote ctermfg=240
+hi RenderMarkdownInfo ctermfg=110
+
 " floating window for LSP popups
 hi NormalFloat ctermbg=233
 " search highlight and quickfix selection

@@ -105,3 +105,6 @@
 [submodule "config/nvim/pack/bundle/start/nvim-treesitter"]
 	path = config/nvim/pack/bundle/start/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter
+[submodule "config/nvim/pack/bundle/start/markdown.nvim"]
+	path = config/nvim/pack/bundle/start/markdown.nvim
+	url = https://github.com/jeremija/markdown.nvim

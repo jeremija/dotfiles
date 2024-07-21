@@ -100,6 +100,7 @@ lspconfig.lua_ls.setup {
 
 -- Ensure floating preview window has max width.
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+--- @diagnostic disable-next-line: duplicate-set-field
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   opts = opts or {}
   -- opts.border = opts.border or 'single'
@@ -311,5 +312,25 @@ require'nvim-treesitter.configs'.setup {
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
+  },
+
+  modules = {},
+}
+
+require('render-markdown').setup{
+  heading = {
+    enabled = false,
+  },
+  sign = {
+    enabled = false,
+  },
+  code = {
+    style = 'normal',
+    -- below = ' ',
+  },
+  anti_conceal = {
+      -- This enables hiding any added text on the line the cursor is on
+      -- This does have a performance penalty as we must listen to the 'CursorMoved' event
+      enabled = false,
   },
 }

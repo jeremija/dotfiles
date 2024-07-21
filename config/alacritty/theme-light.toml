@@ -7,6 +7,10 @@ color = "0xebe3ce"
 index = 233
 
 [[colors.indexed_colors]]
+color = "0xe1d9c6"
+index = 234
+
+[[colors.indexed_colors]]
 color = "0x949494"
 index = 240
 
