@@ -1,11 +1,65 @@
-local component = require('render-markdown.component')
-local list = require('render-markdown.list')
-local logger = require('render-markdown.logger')
-local shared = require('render-markdown.handler.shared')
+local Context = require('render-markdown.core.context')
+local List = require('render-markdown.lib.list')
 local state = require('render-markdown.state')
-local str = require('render-markdown.str')
-local ts = require('render-markdown.ts')
-local util = require('render-markdown.util')
+local treesitter = require('render-markdown.core.treesitter')
+
+---@class render.md.handler.buf.MarkdownInline
+---@field private config render.md.buffer.Config
+---@field private context render.md.Context
+---@field private marks render.md.Marks
+---@field private query vim.treesitter.Query
+---@field private renderers table<string, render.md.Renderer>
+local Handler = {}
+Handler.__index = Handler
+
+---@param buf integer
+---@return render.md.handler.buf.MarkdownInline
+function Handler.new(buf)
+    local self = setmetatable({}, Handler)
+    self.config = state.get(buf)
+    self.context = Context.get(buf)
+    self.marks = List.new_marks(buf, true)
+    self.query = treesitter.parse(
+        'markdown_inline',
+        [[
+            (code_span) @code_inline
+
+            (shortcut_link) @shortcut
+
+            [
+                (email_autolink)
+                (full_reference_link)
+                (image)
+                (inline_link)
+                (uri_autolink)
+            ] @link
+
+            ((inline) @inline_highlight
+                (#lua-match? @inline_highlight "==[^=]+=="))
+        ]]
+    )
+    self.renderers = {
+        code_inline = require('render-markdown.render.code_inline'),
+        inline_highlight = require('render-markdown.render.inline_highlight'),
+        link = require('render-markdown.render.link'),
+        shortcut = require('render-markdown.render.shortcut'),
+    }
+    return self
+end
+
+---@param root TSNode
+---@return render.md.Mark[]
+function Handler:parse(root)
+    self.context:query(root, self.query, function(capture, node)
+        local renderer = self.renderers[capture]
+        assert(renderer ~= nil, 'Unhandled inline capture: ' .. capture)
+        local render = renderer:new(self.marks, self.config, self.context, node)
+        if render:setup() then
+            render:render()
+        end
+    end)
+    return self.marks:get()
+end
 
 ---@class render.md.handler.MarkdownInline: render.md.Handler
 local M = {}
@@ -13,119 +67,8 @@ local M = {}
 ---@param root TSNode
 ---@param buf integer
 ---@return render.md.Mark[]
-M.parse = function(root, buf)
-    local marks = {}
-    local query = state.inline_query
-    for id, node in query:iter_captures(root, buf) do
-        local capture = query.captures[id]
-        local info = ts.info(node, buf)
-        logger.debug_node_info(capture, info)
-        if capture == 'code' then
-            list.add(marks, M.render_code(info))
-        elseif capture == 'callout' then
-            list.add(marks, M.render_callout(info))
-        elseif capture == 'link' then
-            list.add(marks, M.render_link(info))
-        else
-            logger.unhandled_capture('inline', capture)
-        end
-    end
-    return marks
-end
-
----@private
----@param info render.md.NodeInfo
----@return render.md.Mark?
-M.render_code = function(info)
-    local code = state.config.code
-    if not code.enabled then
-        return nil
-    end
-    if not vim.tbl_contains({ 'normal', 'full' }, code.style) then
-        return nil
-    end
-    ---@type render.md.Mark
-    return {
-        conceal = true,
-        start_row = info.start_row,
-        start_col = info.start_col,
-        opts = {
-            end_row = info.end_row,
-            end_col = info.end_col,
-            hl_group = code.highlight,
-        },
-    }
-end
-
----@private
----@param info render.md.NodeInfo
----@return render.md.Mark?
-M.render_callout = function(info)
-    local callout = component.callout(info.text, 'exact')
-    if callout ~= nil then
-        if not state.config.quote.enabled then
-            return nil
-        end
-        ---@type render.md.Mark
-        return {
-            conceal = true,
-            start_row = info.start_row,
-            start_col = info.start_col,
-            opts = {
-                end_row = info.end_row,
-                end_col = info.end_col,
-                virt_text = { { callout.text, callout.highlight } },
-                virt_text_pos = 'overlay',
-            },
-        }
-    else
-        if not state.config.checkbox.enabled then
-            return nil
-        end
-        -- Requires inline extmarks
-        if not util.has_10 then
-            return nil
-        end
-        local checkbox = component.checkbox(info.text, 'exact')
-        if checkbox == nil then
-            return nil
-        end
-        ---@type render.md.Mark
-        return {
-            conceal = true,
-            start_row = info.start_row,
-            start_col = info.start_col,
-            opts = {
-                end_row = info.end_row,
-                end_col = info.end_col,
-                virt_text = { { str.pad_to(info.text, checkbox.text), checkbox.highlight } },
-                virt_text_pos = 'inline',
-                conceal = '',
-            },
-        }
-    end
-end
-
----@private
----@param info render.md.NodeInfo
----@return render.md.Mark?
-M.render_link = function(info)
-    local icon = shared.link_icon(info)
-    if icon == nil then
-        return nil
-    end
-    ---@type render.md.Mark
-    return {
-        conceal = true,
-        start_row = info.start_row,
-        start_col = info.start_col,
-        opts = {
-            end_row = info.end_row,
-            end_col = info.end_col,
-            virt_text = { { icon, state.config.link.highlight } },
-            virt_text_pos = 'inline',
-        },
-    }
+function M.parse(root, buf)
+    return Handler.new(buf):parse(root)
 end
 
 return M

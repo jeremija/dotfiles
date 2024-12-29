@@ -1,5 +1,4 @@
-*.cast
-medium.md
-large.md
-test.md
-test.log
+doc/tags
+*.gif
+*.png
+/temp/

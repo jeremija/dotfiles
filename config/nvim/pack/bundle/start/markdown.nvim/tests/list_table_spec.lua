@@ -1,56 +1,102 @@
-local async_tests = require('plenary.async.tests')
+---@module 'luassert'
+
 local util = require('tests.util')
 
-async_tests.describe('list_table.md', function()
-    async_tests.it('default', function()
+describe('list_table.md', function()
+    it('default', function()
         util.setup('demo/list_table.md')
 
-        local expected = {}
+        local expected, row = {}, util.row()
 
-        -- Unordered list
-        vim.list_extend(expected, util.heading(0, 1))
+        vim.list_extend(expected, util.heading(row:get(), 1))
+
         vim.list_extend(expected, {
-            util.bullet(2, 0, 1), -- List Item 1
-            util.link(2, 20, 47, false), -- List Item 1, link
-            util.bullet(3, 0, 1), -- List Item 2
-            util.inline_code(3, 20, 28), -- List Item 2, code
-            util.bullet(4, 2, 2, 2), -- Nested List 1 Item 1
-            util.bullet(5, 4, 2), -- Nested List 1 Item 2
-            util.bullet(6, 6, 3), -- Nested List 2 Item 1
-            util.bullet(7, 8, 4), -- Nested List 3 Item 1
-            util.bullet(8, 10, 1), -- Nested List 4 Item 1
-            util.bullet(9, 0, 1), -- List Item 3
+            util.bullet(row:increment(2), 0, 1),
+            util.link(row:get(), 20, 47, 'web'),
+            util.bullet(row:increment(), 0, 1),
+            util.highlight(row:get(), 20, 28, 'CodeInline'),
+            util.bullet(row:increment(), 2, 2, 2),
+            util.bullet(row:increment(), 4, 2),
+            util.bullet(row:increment(), 6, 3),
+            util.bullet(row:increment(), 8, 4),
+            util.bullet(row:increment(), 10, 1),
+            util.bullet(row:increment(), 0, 1),
+            util.link(row:get(), 20, 45, 'link'),
         })
 
-        -- Ordered list
-        vim.list_extend(expected, util.heading(11, 1))
+        vim.list_extend(expected, util.heading(row:increment(2), 1))
 
-        -- Table
-        vim.list_extend(expected, util.heading(17, 1))
         vim.list_extend(expected, {
-            util.table_pipe(19, 0, true), -- Heading pipe 1
-            util.table_border(19, 'above', { 18, 20 }),
-            util.inline_code(19, 2, 18), -- Inline code in heading
-            util.table_padding(19, 18, 2), -- Heading padding 1
-            util.table_pipe(19, 19, true), -- Heading pipe 2
-            util.table_padding(19, 39, 2), -- Heading padding 2
-            util.table_pipe(19, 40, true), -- Heading pipe 2
-            util.table_border(20, 'delimiter', { 18, 20 }),
-            util.table_pipe(21, 0, false), -- Row 1 pipe 1
-            util.table_pipe(21, 19, false), -- Row 1 pipe 2
-            util.table_padding(21, 39, 4), -- Row 1 padding 2
-            util.table_pipe(21, 40, false), -- Row 1 pipe 3
-            util.table_pipe(22, 0, false), -- Row 2 pipe 1
-            util.table_border(22, 'below', { 18, 20 }),
-            util.inline_code(22, 2, 15), -- Row 2 inline code
-            util.table_padding(22, 18, 2), -- Row 2 padding 1
-            util.table_pipe(22, 19, false), -- Row 2 pipe 2
-            util.link(22, 21, 39, false), -- Row 2 link
-            util.table_padding(22, 39, 7), -- Row 2 padding 2
-            util.table_pipe(22, 40, false), -- Row 2 pipe 3
+            util.ordered(row:increment(2), 0, '1.'),
+            util.ordered(row:increment(1), 0, '2.'),
         })
 
-        local actual = util.get_actual_marks()
-        util.marks_are_equal(expected, actual)
+        vim.list_extend(expected, util.heading(row:increment(2), 1))
+
+        vim.list_extend(expected, {
+            util.table_border(row:increment(2), true, { 8, 15, 7, 6 }),
+            util.table_pipe(row:get(), 0, true),
+            util.highlight(row:get(), 2, 8, 'CodeInline'),
+            util.table_padding(row:get(), 9, 2),
+            util.table_pipe(row:get(), 9, true),
+            util.table_padding(row:get(), 11, 3),
+            util.conceal(row:get(), 24, 25),
+            util.table_pipe(row:get(), 25, true),
+            util.table_pipe(row:get(), 33, true),
+            util.table_pipe(row:get(), 40, true),
+        })
+        table.insert(expected, util.table_delimiter(row:increment(), { { 1, 7 }, { 1, 13, 1 }, { 6, 1 }, 6 }))
+        vim.list_extend(expected, {
+            util.table_pipe(row:increment(), 0, false),
+            util.highlight(row:get(), 2, 8, 'CodeInline'),
+            util.table_padding(row:get(), 9, 2),
+            util.table_pipe(row:get(), 9, false),
+            util.table_padding(row:get(), 11, 4),
+            util.table_pipe(row:get(), 25, false),
+            util.table_pipe(row:get(), 33, false),
+            util.table_pipe(row:get(), 40, false),
+        })
+        vim.list_extend(expected, {
+            util.table_pipe(row:increment(), 0, false),
+            util.table_pipe(row:get(), 9, false),
+            util.table_padding(row:get(), 11, 3),
+            util.link(row:get(), 11, 24, 'link'),
+            util.table_padding(row:get(), 25, 4),
+            util.table_pipe(row:get(), 25, false),
+            util.table_padding(row:get(), 27, 1),
+            util.conceal(row:get(), 32, 33),
+            util.table_pipe(row:get(), 33, false),
+            util.table_pipe(row:get(), 40, false),
+            util.table_border(row:get(), false, { 8, 15, 7, 6 }),
+        })
+
+        util.assert_view(expected, {
+            '󰫎   1 󰲡 Unordered List',
+            '    2',
+            '    3 ● List Item 1: with 󰖟 link',
+            '    4 ● List Item 2: with inline code',
+            '    5     ○ Nested List 1 Item 1',
+            '    6     ○ Nested List 1 Item 2',
+            '    7       ◆ Nested List 2 Item 1',
+            '    8         ◇ Nested List 3 Item 1',
+            '    9           ● Nested List 4 Item 1',
+            '   10 ● List Item 3: with 󰌹 reference link',
+            '   11',
+            '󰫎  12 󰲡 Ordered List',
+            '   13',
+            '   14 1. Item 1',
+            '   15 2. Item 2',
+            '   16',
+            '󰫎  17 󰲡 Table',
+            '   18',
+            '      ┌────────┬───────────────┬───────┬──────┐',
+            '   19 │ Left   │    Center     │ Right │ None │',
+            '   20 ├━───────┼━─────────────━┼──────━┼──────┤',
+            '   21 │ Code   │     Bold      │ Plain │ Item │',
+            '   22 │ Item   │    󰌹 link     │  Item │ Item │',
+            '      └────────┴───────────────┴───────┴──────┘',
+            '   23',
+            '   24 [example]: https://example.com',
+        })
     end)
 end)

@@ -1,39 +1,37 @@
+local log = require('render-markdown.core.log')
 local state = require('render-markdown.state')
-local ui = require('render-markdown.ui')
-local util = require('render-markdown.util')
+local ui = require('render-markdown.core.ui')
+local util = require('render-markdown.core.util')
 
----@class render.md.manager.Data
----@field buffers integer[]
-
----@type render.md.manager.Data
-local data = {
-    buffers = {},
-}
+---@type integer[]
+local buffers = {}
 
 ---@class render.md.Manager
 local M = {}
 
 ---@private
----@type integer
 M.group = vim.api.nvim_create_augroup('RenderMarkdown', { clear = true })
 
+---Should only be called from plugin directory
 function M.setup()
-    -- Attach to buffers based on matching filetype, this will add additional events
-    vim.api.nvim_create_autocmd({ 'FileType' }, {
+    -- Attempt to attach to all buffers, cannot use pattern to support plugin directory
+    vim.api.nvim_create_autocmd('FileType', {
         group = M.group,
-        pattern = state.config.file_types,
-        callback = function(event)
-            M.attach(event.buf)
+        callback = function(args)
+            M.attach(args.buf)
         end,
     })
     -- Window resizing is not buffer specific so is managed more globablly
-    vim.api.nvim_create_autocmd({ 'WinResized' }, {
+    vim.api.nvim_create_autocmd('WinResized', {
         group = M.group,
-        callback = function()
+        callback = function(args)
+            if not state.enabled then
+                return
+            end
             for _, win in ipairs(vim.v.event.windows) do
-                local buf = util.win_to_buf(win)
-                if vim.tbl_contains(data.buffers, buf) then
-                    ui.schedule_refresh(buf, true)
+                local buf = vim.fn.winbufnr(win)
+                if M.is_attached(buf) then
+                    ui.update(buf, win, args.event, true)
                 end
             end
         end,
@@ -41,59 +39,89 @@ function M.setup()
 end
 
 ---@param enabled boolean
-M.set_all = function(enabled)
+function M.set_all(enabled)
     -- Attempt to attach current buffer in case this is from a lazy load
-    M.attach(vim.api.nvim_get_current_buf())
+    M.attach(util.current('buf'))
     state.enabled = enabled
-    for _, buf in ipairs(data.buffers) do
-        ui.schedule_refresh(buf, true)
+    for _, buf in ipairs(buffers) do
+        ui.update(buf, vim.fn.bufwinid(buf), 'UserCommand', true)
     end
+end
+
+---@param buf integer
+---@return boolean
+function M.is_attached(buf)
+    return vim.tbl_contains(buffers, buf)
 end
 
 ---@private
 ---@param buf integer
-M.attach = function(buf)
-    if not vim.tbl_contains(state.config.file_types, util.get_buf(buf, 'filetype')) then
+function M.attach(buf)
+    if not M.should_attach(buf) then
         return
     end
-    if vim.tbl_contains(state.config.exclude.buftypes, util.get_buf(buf, 'buftype')) then
-        return
+
+    local config = state.get(buf)
+    state.on.attach(buf)
+
+    local events = { 'BufWinEnter', 'BufLeave', 'CmdlineChanged', 'CursorHold', 'CursorMoved', 'WinScrolled' }
+    local change_events = { 'DiffUpdated', 'ModeChanged', 'TextChanged' }
+    if config:render('i') then
+        vim.list_extend(events, { 'CursorHoldI', 'CursorMovedI' })
+        vim.list_extend(change_events, { 'TextChangedI' })
     end
-    if vim.tbl_contains(data.buffers, buf) then
-        return
-    end
-    table.insert(data.buffers, buf)
-    vim.api.nvim_create_autocmd({ 'BufWinEnter', 'TextChanged' }, {
+    vim.api.nvim_create_autocmd(vim.list_extend(events, change_events), {
         group = M.group,
         buffer = buf,
-        callback = function()
-            ui.schedule_refresh(buf, true)
-        end,
-    })
-    vim.api.nvim_create_autocmd({ 'ModeChanged' }, {
-        group = M.group,
-        buffer = buf,
-        callback = function()
-            local render_modes = state.config.render_modes
-            local prev_rendered = vim.tbl_contains(render_modes, vim.v.event.old_mode)
-            local should_render = vim.tbl_contains(render_modes, vim.v.event.new_mode)
-            -- Only need to re-render if render state is changing. I.e. going from normal mode to
-            -- command mode with the default config, both are rendered, so no point re-rendering
-            if prev_rendered ~= should_render then
-                ui.schedule_refresh(buf, true)
+        callback = function(args)
+            if not state.enabled then
+                return
             end
+            local win, windows = util.current('win'), util.windows(buf)
+            win = vim.tbl_contains(windows, win) and win or windows[1]
+            if win == nil then
+                return
+            end
+            local event = args.event
+            ui.update(buf, win, event, vim.tbl_contains(change_events, event))
         end,
     })
-    if state.config.anti_conceal.enabled then
-        vim.api.nvim_create_autocmd({ 'CursorMoved' }, {
-            group = M.group,
-            buffer = buf,
-            callback = function()
-                -- Moving cursor should not result in text change, skip parsing
-                ui.schedule_refresh(buf, false)
-            end,
-        })
+end
+
+---@private
+---@param buf integer
+---@return boolean
+function M.should_attach(buf)
+    log.buf('info', 'attach', buf, 'start')
+
+    if M.is_attached(buf) then
+        log.buf('info', 'attach', buf, 'skip', 'already attached')
+        return false
     end
+
+    local file_type, file_types = util.get('buf', buf, 'filetype'), state.file_types
+    if not vim.tbl_contains(file_types, file_type) then
+        local reason = string.format('%s /∈ %s', file_type, vim.inspect(file_types))
+        log.buf('info', 'attach', buf, 'skip', 'file type', reason)
+        return false
+    end
+
+    local config = state.get(buf)
+    if not config.enabled then
+        log.buf('info', 'attach', buf, 'skip', 'state disabled')
+        return false
+    end
+
+    local file_size, max_file_size = util.file_size_mb(buf), config.max_file_size
+    if file_size > max_file_size then
+        local reason = string.format('%f > %f', file_size, max_file_size)
+        log.buf('info', 'attach', buf, 'skip', 'file size', reason)
+        return false
+    end
+
+    log.buf('info', 'attach', buf, 'success')
+    table.insert(buffers, buf)
+    return true
 end
 
 return M

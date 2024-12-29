@@ -3,7 +3,7 @@
 ## Install
 
 ```bash
-git clone --recursive https://github.com/jeremija/dotfiles ~/dotfiles
+git clone --branch release --depth 1 https://github.com/jeremija/dotfiles ~/dotfiles
 cd ~/dotfiles
 make install
 ```

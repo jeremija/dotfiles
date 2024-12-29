@@ -74,9 +74,9 @@ input type:keyboard {
     repeat_delay 200
     repeat_rate 25
 
-    xkb_options altwin:swap_alt_win
+    xkb_options altwin:swap_alt_win,grp:rctrl_switch
     xkb_variant basic
-    xkb_layout capslock_hjkl
+    xkb_layout capslock_hjkl,hr
 }
 
 # default_border pixel 1px
@@ -127,16 +127,17 @@ hide_edge_borders none
     bindsym $mod+Shift+p exec grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" - | wl-copy -t image/png
 
     # Video recording
-    bindsym $mod+BracketLeft exec alacritty --class 'AlacrittyRecorder' -e bash -c 'wf-recorder -g "$(slurp)" -f ~/Desktop/"$(date +%Y_%m_%d_%H_%M_%S_recording.mp4)"'
+    bindsym $mod+i exec alacritty --class 'AlacrittyRecorder' -e bash -c 'wf-recorder -g "$(slurp)" -f ~/Desktop/"$(date +%Y_%m_%d_%H_%M_%S_recording.mp4)"'
 
     bindsym $mod+Minus exec brightnessctl s 2%-
     bindsym $mod+Equal exec brightnessctl s 2%+
     bindsym XF86MonBrightnessDown exec brightnessctl s 2%-
     bindsym XF86MonBrightnessUp exec brightnessctl s 2%+
 
-    bindsym XF86AudioMute exec ponymix toggle && dunstify -r 99999 Volume\ $(bash -c 'if ponymix is-muted; then echo Muted; else echo Unmuted; fi')
-    bindsym XF86AudioLowerVolume exec ponymix unmute && dunstify -r 99999 Volume\ $(ponymix decrease 2)%
-    bindsym XF86AudioRaiseVolume exec ponymix unmute && dunstify -r 99999 Volume\ $(ponymix increase 2)%
+    bindsym XF86AudioMicMute exec pulsemixer --toggle-mute --id $(pulsemixer --list-sources | grep Default | awk '{print $3}' | sed 's/,$//')
+    bindsym XF86AudioMute exec pulsemixer --toggle-mute
+    bindsym XF86AudioLowerVolume exec pulsemixer --unmute --change-volume -2
+    bindsym XF86AudioRaiseVolume exec pulsemixer --unmute --change-volume +2
 
 # ""
 #     XF86AudioRaiseVolume

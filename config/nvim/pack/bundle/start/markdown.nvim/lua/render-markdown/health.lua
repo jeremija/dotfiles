@@ -3,11 +3,15 @@ local state = require('render-markdown.state')
 ---@class render.md.Health
 local M = {}
 
-function M.check()
-    vim.health.start('markdown.nvim [neovim version]')
-    M.version('0.9', '0.10')
+---@private
+M.version = '7.7.5'
 
-    vim.health.start('markdown.nvim [configuration]')
+function M.check()
+    M.start('version')
+    vim.health.ok('plugin ' .. M.version)
+    M.neovim('0.9', '0.10')
+
+    M.start('configuration')
     local errors = state.validate()
     if #errors == 0 then
         vim.health.ok('valid')
@@ -16,65 +20,89 @@ function M.check()
         vim.health.error(message)
     end
 
-    local latex = state.config.latex
+    local latex = state.latex
     local latex_advice = 'Disable LaTeX support to avoid this warning by setting { latex = { enabled = false } }'
 
-    vim.health.start('markdown.nvim [nvim-treesitter]')
-    local ok = pcall(require, 'nvim-treesitter')
-    if ok then
+    M.start('nvim-treesitter')
+    local has_treesitter = pcall(require, 'nvim-treesitter')
+    if has_treesitter then
         vim.health.ok('installed')
-
-        M.check_parser('markdown')
-        M.check_parser('markdown_inline')
+        for _, language in ipairs({ 'markdown', 'markdown_inline' }) do
+            M.check_parser(language)
+            M.check_highlight(language)
+        end
         if latex.enabled then
             M.check_parser('latex', latex_advice)
-        end
-
-        local highlight = require('nvim-treesitter.configs').get_module('highlight')
-        if highlight ~= nil and highlight.enable then
-            vim.health.ok('highlights enabled')
-        else
-            vim.health.error('highlights not enabled')
         end
     else
         vim.health.error('not installed')
     end
 
-    vim.health.start('markdown.nvim [executables]')
+    M.start('executables')
     if latex.enabled then
         M.check_executable(latex.converter, latex_advice)
     else
         vim.health.ok('none to check')
     end
+
+    M.start('conflicts')
+    M.check_plugin('headlines')
+    M.check_plugin('obsidian', function(obsidian)
+        if obsidian.get_client().opts.ui.enable == false then
+            return nil
+        else
+            return 'Ensure UI is disabled by setting ui = { enable = false } in obsidian.nvim config'
+        end
+    end)
 end
 
+---@private
+---@param name string
+function M.start(name)
+    vim.health.start(string.format('render-markdown.nvim [%s]', name))
+end
+
+---@private
 ---@param minimum string
 ---@param recommended string
-function M.version(minimum, recommended)
+function M.neovim(minimum, recommended)
     if vim.fn.has('nvim-' .. minimum) == 0 then
-        vim.health.error('Version < ' .. minimum)
+        vim.health.error('neovim < ' .. minimum)
     elseif vim.fn.has('nvim-' .. recommended) == 0 then
-        vim.health.warn('Version < ' .. recommended .. ' some features will not work')
+        vim.health.warn('neovim < ' .. recommended .. ' some features will not work')
     else
-        vim.health.ok('Version >= ' .. recommended)
+        vim.health.ok('neovim >= ' .. recommended)
     end
 end
 
----@param name string
----@param advice string?
-function M.check_parser(name, advice)
+---@private
+---@param language string
+---@param advice? string
+function M.check_parser(language, advice)
     local parsers = require('nvim-treesitter.parsers')
-    if parsers.has_parser(name) then
-        vim.health.ok(name .. ': parser installed')
+    if parsers.has_parser(language) then
+        vim.health.ok(language .. ': parser installed')
     elseif advice == nil then
-        vim.health.error(name .. ': parser not installed')
+        vim.health.error(language .. ': parser not installed')
     else
-        vim.health.warn(name .. ': parser not installed', advice)
+        vim.health.warn(language .. ': parser not installed', advice)
     end
 end
 
+---@private
+---@param language string
+function M.check_highlight(language)
+    local configs = require('nvim-treesitter.configs')
+    if configs.is_enabled('highlight', language, 0) then
+        vim.health.ok(language .. ': highlight enabled')
+    else
+        vim.health.error(language .. ': highlight not enabled')
+    end
+end
+
+---@private
 ---@param name string
----@param advice string?
+---@param advice? string
 function M.check_executable(name, advice)
     if vim.fn.executable(name) == 1 then
         vim.health.ok(name .. ': installed')
@@ -82,6 +110,25 @@ function M.check_executable(name, advice)
         vim.health.error(name .. ': not installed')
     else
         vim.health.warn(name .. ': not installed', advice)
+    end
+end
+
+---@private
+---@param name string
+---@param validate? fun(plugin: any): string?
+function M.check_plugin(name, validate)
+    local has_plugin, plugin = pcall(require, name)
+    if not has_plugin then
+        vim.health.ok(name .. ': not installed')
+    elseif validate == nil then
+        vim.health.error(name .. ': installed')
+    else
+        local advice = validate(plugin)
+        if advice == nil then
+            vim.health.ok(name .. ': installed but should not conflict')
+        else
+            vim.health.error(name .. ': installed', advice)
+        end
     end
 end
 

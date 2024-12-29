@@ -2,15 +2,70 @@
 
 ## `LaTeX` Formula Positioning
 
-[ISSUE #6](https://github.com/MeanderingProgrammer/markdown.nvim/issues/6)
+[ISSUE #6](https://github.com/MeanderingProgrammer/render-markdown.nvim/issues/6)
 
-`LaTeX` formula evaluations are placed above text rather than overlayed.
+`LaTeX` formula evaluations are placed above text rather than overlaid.
+
+A way around this is to use a separate plugin for `LaTeX` and disable that feature
+in this plugin. Different plugins will have different setups, below are some examples:
+
+[latex.nvim](https://github.com/ryleelyman/latex.nvim)
+
+```lua
+{
+    { 'ryleelyman/latex.nvim', opts = {} },
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
+        opts = {
+            latex = { enabled = false },
+            win_options = { conceallevel = { rendered = 2 } },
+        },
+    },
+}
+```
+
+[nabla.nvim](https://github.com/jbyuki/nabla.nvim)
+
+```lua
+{
+    { 'jbyuki/nabla.nvim' },
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
+        opts = {
+            latex = { enabled = false },
+            win_options = { conceallevel = { rendered = 2 } },
+            on = {
+                attach = function()
+                    require('nabla').enable_virt({ autogen = true })
+                end,
+            },
+        },
+    },
+}
+```
+
+> [!NOTE]
+>
+> These plugins can rely on a specific `conceallevel` to work properly, which
+> you will need to configure in this plugin like in the examples above.
+
+## Does Not Run in Telescope Preview
+
+[ISSUE #98](https://github.com/MeanderingProgrammer/render-markdown.nvim/issues/98)
+
+Telescope has a special way of previewing files that does not work like a
+standard buffer: [info](https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#previewers)
+
+Due to this the events this plugin relies on to attach to and render buffers
+do not get triggered.
 
 # Resolved Limitations
 
 ## Telescope Opening File
 
-[FIX 4ab8359](https://github.com/MeanderingProgrammer/markdown.nvim/commit/4ab835985de62b46b6785ae160f5f709b77a0f92)
+[FIX 4ab8359](https://github.com/MeanderingProgrammer/render-markdown.nvim/commit/4ab835985de62b46b6785ae160f5f709b77a0f92)
 
 Should no longer be an issue on any version of neovim if up to date.
 
@@ -31,11 +86,11 @@ that occurs after this to go back to `normal` mode.
 
 ## Text Boundaries
 
-[FIX 5ce3566](https://github.com/MeanderingProgrammer/markdown.nvim/commit/5ce35662725b1024c6dddc8d0bc03befc5abc878)
+[FIX 5ce3566](https://github.com/MeanderingProgrammer/render-markdown.nvim/commit/5ce35662725b1024c6dddc8d0bc03befc5abc878)
 
 Should no longer be an issue when using neovim >= `0.10.0`.
 
-[ISSUE #35](https://github.com/MeanderingProgrammer/markdown.nvim/issues/35)
+[ISSUE #35](https://github.com/MeanderingProgrammer/render-markdown.nvim/issues/35)
 
 Text that extends beyond available space will can overwrite content.
 
@@ -43,7 +98,7 @@ Text that extends beyond available space will can overwrite content.
 
 This is no longer the case as of `which-key` v3 release.
 
-[ISSUE #43](https://github.com/MeanderingProgrammer/markdown.nvim/issues/43)
+[ISSUE #43](https://github.com/MeanderingProgrammer/render-markdown.nvim/issues/43)
 
 Since `which-key` interjects when writing commands it can effectively limit the
 number of modes available to the user.

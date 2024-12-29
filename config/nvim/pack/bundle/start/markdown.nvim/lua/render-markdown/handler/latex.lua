@@ -1,14 +1,12 @@
-local logger = require('render-markdown.logger')
+local Iter = require('render-markdown.lib.iter')
+local List = require('render-markdown.lib.list')
+local Node = require('render-markdown.lib.node')
+local Str = require('render-markdown.lib.str')
+local log = require('render-markdown.core.log')
 local state = require('render-markdown.state')
-local ts = require('render-markdown.ts')
 
----@class render.md.LatexCache
----@field expressions table<string, string[]>
-
----@type render.md.LatexCache
-local cache = {
-    expressions = {},
-}
+---@type table<string, string>
+local cache = {}
 
 ---@class render.md.handler.Latex: render.md.Handler
 local M = {}
@@ -16,44 +14,50 @@ local M = {}
 ---@param root TSNode
 ---@param buf integer
 ---@return render.md.Mark[]
-M.parse = function(root, buf)
-    local latex = state.config.latex
+function M.parse(root, buf)
+    local latex = state.latex
     if not latex.enabled then
         return {}
     end
     if vim.fn.executable(latex.converter) ~= 1 then
-        logger.debug('Executable not found: ' .. latex.converter)
+        log.add('debug', 'executable not found', latex.converter)
         return {}
     end
 
-    local info = ts.info(root, buf)
-    logger.debug_node_info('latex', info)
+    local node = Node.new(buf, root)
+    log.node('latex', node)
 
-    local expressions = cache.expressions[info.text]
-    if expressions == nil then
-        local raw_expression = vim.fn.system(latex.converter, info.text)
-        local parsed_expressions = vim.split(vim.trim(raw_expression), '\n', { plain = true })
-        expressions = vim.tbl_map(vim.trim, parsed_expressions)
-        cache.expressions[info.text] = expressions
+    local raw_expression = cache[node.text]
+    if raw_expression == nil then
+        raw_expression = vim.fn.system(latex.converter, node.text)
+        if vim.v.shell_error == 1 then
+            log.add('error', latex.converter, raw_expression)
+            raw_expression = 'error'
+        end
+        cache[node.text] = raw_expression
     end
 
-    local latex_lines = vim.tbl_map(function(expression)
-        return { { expression, latex.highlight } }
-    end, expressions)
+    local expressions = Str.split(raw_expression, '\n')
+    for i = 1, #expressions do
+        expressions[i] = Str.pad(node.start_col) .. expressions[i]
+    end
+    for _ = 1, latex.top_pad do
+        table.insert(expressions, 1, '')
+    end
+    for _ = 1, latex.bottom_pad do
+        table.insert(expressions, '')
+    end
 
-    ---@type render.md.Mark
-    local latex_mark = {
-        conceal = false,
-        start_row = info.start_row,
-        start_col = info.start_col,
-        opts = {
-            end_row = info.end_row,
-            end_col = info.end_col,
-            virt_lines = latex_lines,
-            virt_lines_above = true,
-        },
-    }
-    return { latex_mark }
+    local latex_lines = Iter.list.map(expressions, function(expression)
+        return { { expression, latex.highlight } }
+    end)
+
+    local marks = List.new_marks(buf, true)
+    marks:add_over(false, node, {
+        virt_lines = latex_lines,
+        virt_lines_above = true,
+    })
+    return marks:get()
 end
 
 return M

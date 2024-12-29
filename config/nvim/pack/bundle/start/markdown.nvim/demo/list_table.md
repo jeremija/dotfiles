@@ -7,17 +7,18 @@
       - Nested List 2 Item 1
         - Nested List 3 Item 1
           - Nested List 4 Item 1
-+ List Item 3
++ List Item 3: with [reference link][example]
 
 # Ordered List
 
 1. Item 1
 2. Item 2
-3. Item 3
 
 # Table
 
-| `Inline Heading` | *Italic Heading*   |
-| ---------------- | ------------------ |
-| Regular Item     | **Bold Item**      |
-| `Item Inline`    | [Link Item](/test) |
+| `Left` | *Center*      | Right | None |
+|  :---  | :----:        |------:| -----|
+| `Code` | **Bold**      | Plain | Item |
+| Item   | [link](/test) | Item  | Item |
+
+[example]: https://example.com

@@ -1,117 +1,252 @@
-local async_tests = require('plenary.async.tests')
+---@module 'luassert'
+
 local util = require('tests.util')
 
-async_tests.describe('table.md', function()
-    async_tests.it('default', function()
+describe('table.md', function()
+    it('default', function()
         util.setup('tests/data/table.md')
 
-        local expected = {}
+        local expected, row = {}, util.row()
 
-        -- Table with inline
-        vim.list_extend(expected, util.heading(0, 1))
         vim.list_extend(expected, {
-            util.table_pipe(2, 0, true), -- Heading pipe 1
-            util.table_border(2, 'above', { 11, 24 }),
-            util.table_pipe(2, 12, true), -- Heading pipe 2
-            util.inline_code(2, 14, 25), -- Inline code in heading
-            util.table_padding(2, 36, 2), -- Heading padding 2
-            util.table_pipe(2, 37, true), -- Heading pipe 3
-            util.table_border(3, 'delimiter', { 11, 24 }),
-            util.table_pipe(4, 0, false), -- Row pipe 1
-            util.table_border(4, 'below', { 11, 24 }),
-            util.inline_code(4, 2, 12), -- Row inline code
-            util.table_padding(4, 12, 2), -- Row padding 1
-            util.table_pipe(4, 13, false), -- Row pipe 2
-            util.link(4, 15, 38, false), -- Row link
-            util.table_padding(4, 38, 16), -- Row padding 2
-            util.table_pipe(4, 39, false), -- Row pipe 3
+            util.heading(row:get(), 1),
+            util.table_border(row:increment(2), true, { 11, 24 }),
+            util.table_pipe(row:get(), 0, true),
+            util.table_pipe(row:get(), 12, true),
+            util.table_padding(row:get(), 14, 13),
+            util.highlight(row:get(), 14, 25, 'CodeInline'),
+            util.conceal(row:get(), 26, 37),
+            util.table_pipe(row:get(), 37, true),
+            util.table_delimiter(row:increment(), { 11, { 23, 1 } }),
+            util.table_pipe(row:increment(), 0, false),
+            util.highlight(row:get(), 2, 12, 'CodeInline'),
+            util.table_padding(row:get(), 13, 2),
+            util.table_pipe(row:get(), 13, false),
+            util.table_padding(row:get(), 15, 16),
+            util.link(row:get(), 15, 38, 'web'),
+            util.table_pipe(row:get(), 39, false),
+            util.table_pipe(row:increment(), 0, false),
+            util.table_padding(row:get(), 12, 8),
+            util.table_pipe(row:get(), 12, false),
+            util.table_padding(row:get(), 14, 16),
+            util.inline_highlight(row:get(), 14, 25),
+            util.conceal(row:get(), 26, 38),
+            util.table_pipe(row:get(), 38, false),
+            util.table_border(row:get(), false, { 11, 24 }),
         })
 
-        -- Table no inline
-        vim.list_extend(expected, util.heading(6, 1))
         vim.list_extend(expected, {
-            util.table_pipe(8, 0, true), -- Heading pipe 1
-            util.table_border(8, 'above', { 11, 11 }),
-            util.table_pipe(8, 12, true), -- Heading pipe 2
-            util.table_pipe(8, 24, true), -- Heading pipe 3
-            util.table_border(9, 'delimiter', { 11, 11 }),
-            util.table_pipe(10, 0, false), -- Row pipe 1
-            util.table_border(10, 'below', { 11, 11 }),
-            util.table_pipe(10, 12, false), -- Row pipe 2
-            util.table_pipe(10, 24, false), -- Row pipe 3
+            util.heading(row:increment(2), 1),
+            util.table_border(row:increment(2), true, { 11, 11 }),
+            util.table_pipe(row:get(), 0, true),
+            util.table_pipe(row:get(), 12, true),
+            util.table_pipe(row:get(), 24, true),
+            util.table_delimiter(row:increment(), { 11, 11 }),
+            util.table_pipe(row:increment(), 0, false),
+            util.table_pipe(row:get(), 12, false),
+            util.table_pipe(row:get(), 24, false),
+            util.table_border(row:get(), false, { 11, 11 }),
         })
 
-        local actual = util.get_actual_marks()
-        util.marks_are_equal(expected, actual)
+        util.assert_view(expected, {
+            '󰫎   1 󰲡 Table with Inline',
+            '    2',
+            '      ┌───────────┬────────────────────────┐',
+            '    3 │ Heading 1 │              Heading 2 │',
+            '    4 ├───────────┼───────────────────────━┤',
+            '    5 │ Item 行   │                 󰖟 link │',
+            '    6 │ 1         │                 Itém 2 │',
+            '      └───────────┴────────────────────────┘',
+            '    7',
+            '󰫎   8 󰲡 Table no Inline',
+            '    9',
+            '      ┌───────────┬───────────┐',
+            '   10 │ Heading 1 │ Heading 2 │',
+            '   11 ├───────────┼───────────┤',
+            '   12 │ Item 1    │ Item 2    │',
+            '      └───────────┴───────────┘',
+        })
     end)
 
-    async_tests.it('raw', function()
+    it('trimmed', function()
+        util.setup('tests/data/table.md', { pipe_table = { cell = 'trimmed' } })
+
+        local expected, row = {}, util.row()
+
+        vim.list_extend(expected, {
+            util.heading(row:get(), 1),
+            util.table_border(row:increment(2), true, { 11, 11 }),
+            util.table_pipe(row:get(), 0, true),
+            util.table_pipe(row:get(), 12, true),
+            util.highlight(row:get(), 14, 25, 'CodeInline'),
+            util.conceal(row:get(), 26, 37),
+            util.table_pipe(row:get(), 37, true),
+            util.table_delimiter(row:increment(), { 11, { 10, 1 } }, 13),
+            util.table_pipe(row:increment(), 0, false),
+            util.highlight(row:get(), 2, 12, 'CodeInline'),
+            util.table_padding(row:get(), 13, 2),
+            util.table_pipe(row:get(), 13, false),
+            util.table_padding(row:get(), 15, 3),
+            util.link(row:get(), 15, 38, 'web'),
+            util.table_pipe(row:get(), 39, false),
+            util.table_pipe(row:increment(), 0, false),
+            util.table_padding(row:get(), 12, 8),
+            util.table_pipe(row:get(), 12, false),
+            util.table_padding(row:get(), 14, 3),
+            util.inline_highlight(row:get(), 14, 25),
+            util.conceal(row:get(), 26, 38),
+            util.table_pipe(row:get(), 38, false),
+            util.table_border(row:get(), false, { 11, 11 }),
+        })
+
+        vim.list_extend(expected, {
+            util.heading(row:increment(2), 1),
+            util.table_border(row:increment(2), true, { 11, 11 }),
+            util.table_pipe(row:get(), 0, true),
+            util.table_pipe(row:get(), 12, true),
+            util.table_pipe(row:get(), 24, true),
+            util.table_delimiter(row:increment(), { 11, 11 }),
+            util.table_pipe(row:increment(), 0, false),
+            util.table_pipe(row:get(), 12, false),
+            util.table_pipe(row:get(), 24, false),
+            util.table_border(row:get(), false, { 11, 11 }),
+        })
+
+        util.assert_view(expected, {
+            '󰫎   1 󰲡 Table with Inline',
+            '    2',
+            '      ┌───────────┬───────────┐',
+            '    3 │ Heading 1 │ Heading 2 │',
+            '    4 ├───────────┼──────────━┤',
+            '    5 │ Item 行   │    󰖟 link │',
+            '    6 │ 1         │    Itém 2 │',
+            '      └───────────┴───────────┘',
+            '    7',
+            '󰫎   8 󰲡 Table no Inline',
+            '    9',
+            '      ┌───────────┬───────────┐',
+            '   10 │ Heading 1 │ Heading 2 │',
+            '   11 ├───────────┼───────────┤',
+            '   12 │ Item 1    │ Item 2    │',
+            '      └───────────┴───────────┘',
+        })
+    end)
+
+    it('raw', function()
         util.setup('tests/data/table.md', { pipe_table = { cell = 'raw' } })
 
-        local expected = {}
+        local expected, row = {}, util.row()
 
-        -- Table with inline
-        vim.list_extend(expected, util.heading(0, 1))
         vim.list_extend(expected, {
-            util.table_pipe(2, 0, true), -- Heading pipe 1
-            util.table_pipe(2, 12, true), -- Heading pipe 2
-            util.inline_code(2, 14, 25), -- Inline code in heading
-            util.table_pipe(2, 37, true), -- Heading pipe 3
-            util.table_border(3, 'delimiter', { 11, 24 }),
-            util.table_pipe(4, 0, false), -- Row pipe 1
-            util.inline_code(4, 2, 12), -- Row inline code
-            util.table_pipe(4, 13, false), -- Row pipe 2
-            util.link(4, 15, 38, false), -- Row link
-            util.table_pipe(4, 39, false), -- Row pipe 3
+            util.heading(row:get(), 1),
+            util.table_pipe(row:increment(2), 0, true),
+            util.table_pipe(row:get(), 12, true),
+            util.highlight(row:get(), 14, 25, 'CodeInline'),
+            util.table_pipe(row:get(), 37, true),
+            util.table_delimiter(row:increment(), { 11, { 23, 1 } }),
+            util.table_pipe(row:increment(), 0, false),
+            util.highlight(row:get(), 2, 12, 'CodeInline'),
+            util.table_pipe(row:get(), 13, false),
+            util.link(row:get(), 15, 38, 'web'),
+            util.table_pipe(row:get(), 39, false),
+            util.table_pipe(row:increment(), 0, false),
+            util.table_pipe(row:get(), 12, false),
+            util.inline_highlight(row:get(), 14, 25),
+            util.table_pipe(row:get(), 38, false),
         })
 
-        -- Table no inline
-        vim.list_extend(expected, util.heading(6, 1))
         vim.list_extend(expected, {
-            util.table_pipe(8, 0, true), -- Heading pipe 1
-            util.table_border(8, 'above', { 11, 11 }),
-            util.table_pipe(8, 12, true), -- Heading pipe 2
-            util.table_pipe(8, 24, true), -- Heading pipe 3
-            util.table_border(9, 'delimiter', { 11, 11 }),
-            util.table_pipe(10, 0, false), -- Row pipe 1
-            util.table_border(10, 'below', { 11, 11 }),
-            util.table_pipe(10, 12, false), -- Row pipe 2
-            util.table_pipe(10, 24, false), -- Row pipe 3
+            util.heading(row:increment(2), 1),
+            util.table_border(row:increment(2), true, { 11, 11 }),
+            util.table_pipe(row:get(), 0, true),
+            util.table_pipe(row:get(), 12, true),
+            util.table_pipe(row:get(), 24, true),
+            util.table_delimiter(row:increment(), { 11, 11 }),
+            util.table_pipe(row:increment(), 0, false),
+            util.table_pipe(row:get(), 12, false),
+            util.table_pipe(row:get(), 24, false),
+            util.table_border(row:get(), false, { 11, 11 }),
         })
 
-        local actual = util.get_actual_marks()
-        util.marks_are_equal(expected, actual)
+        util.assert_view(expected, {
+            '󰫎   1 󰲡 Table with Inline',
+            '    2',
+            '    3 │ Heading 1 │ Heading 2            │',
+            '    4 ├───────────┼───────────────────────━┤',
+            '    5 │ Item 行 │ 󰖟 link │',
+            '    6 │ 1 │ Itém 2             │',
+            '    7',
+            '󰫎   8 󰲡 Table no Inline',
+            '    9',
+            '      ┌───────────┬───────────┐',
+            '   10 │ Heading 1 │ Heading 2 │',
+            '   11 ├───────────┼───────────┤',
+            '   12 │ Item 1    │ Item 2    │',
+            '      └───────────┴───────────┘',
+        })
     end)
 
-    async_tests.it('overlay', function()
+    it('overlay', function()
+        ---@param row integer
+        ---@param col integer
+        ---@param value string
+        ---@param head boolean
+        ---@return render.md.MarkInfo
+        local function table_row(row, col, value, head)
+            local highlight = head and 'TableHead' or 'TableRow'
+            ---@type render.md.MarkInfo
+            return {
+                row = { row, row },
+                col = { 0, col },
+                virt_text = { { value, util.hl(highlight) } },
+                virt_text_pos = 'overlay',
+            }
+        end
+
         util.setup('tests/data/table.md', { pipe_table = { cell = 'overlay' } })
 
-        local expected = {}
+        local expected, row = {}, util.row()
 
-        -- Table with inline
-        vim.list_extend(expected, util.heading(0, 1))
         vim.list_extend(expected, {
-            util.table_row(2, 38, '│ Heading 1 │ `Heading 2`            │', true),
-            util.table_border(2, 'above', { 11, 24 }),
-            util.inline_code(2, 14, 25), -- Inline code in heading
-            util.table_border(3, 'delimiter', { 11, 24 }),
-            util.table_row(4, 40, '│ `Item 行` │ [link](https://行.com) │', false),
-            util.table_border(4, 'below', { 11, 24 }),
-            util.inline_code(4, 2, 12), -- Row inline code
-            util.link(4, 15, 38, false), -- Row link
+            util.heading(row:get(), 1),
+            util.table_border(row:increment(2), true, { 11, 24 }),
+            table_row(row:get(), 38, '│ Heading 1 │ `Heading 2`            │', true),
+            util.highlight(row:get(), 14, 25, 'CodeInline'),
+            util.table_delimiter(row:increment(), { 11, { 23, 1 } }),
+            table_row(row:increment(), 40, '│ `Item 行` │ [link](https://行.com) │', false),
+            util.highlight(row:get(), 2, 12, 'CodeInline'),
+            util.link(row:get(), 15, 38, 'web'),
+            table_row(row:increment(), 39, '│ &lt;1&gt; │ ==Itém 2==             │', false),
+            util.inline_highlight(row:get(), 14, 25),
+            util.table_border(row:get(), false, { 11, 24 }),
         })
 
-        -- Table no inline
-        vim.list_extend(expected, util.heading(6, 1))
         vim.list_extend(expected, {
-            util.table_row(8, 25, '│ Heading 1 │ Heading 2 │', true),
-            util.table_border(8, 'above', { 11, 11 }),
-            util.table_border(9, 'delimiter', { 11, 11 }),
-            util.table_row(10, 25, '│ Item 1    │ Item 2    │', false),
-            util.table_border(10, 'below', { 11, 11 }),
+            util.heading(row:increment(2), 1),
+            util.table_border(row:increment(2), true, { 11, 11 }),
+            table_row(row:get(), 25, '│ Heading 1 │ Heading 2 │', true),
+            util.table_delimiter(row:increment(), { 11, 11 }),
+            table_row(row:increment(), 25, '│ Item 1    │ Item 2    │', false),
+            util.table_border(row:get(), false, { 11, 11 }),
         })
 
-        local actual = util.get_actual_marks()
-        util.marks_are_equal(expected, actual)
+        util.assert_view(expected, {
+            '󰫎   1 󰲡 Table with Inline',
+            '    2',
+            '      ┌───────────┬────────────────────────┐',
+            '    3 │ Heading 1 │ `Heading 2`            │',
+            '    4 ├───────────┼───────────────────────━┤',
+            '    5 │ `Item 行` │ [link](https://行.com) │',
+            '    6 │ &lt;1&gt; │ ==Itém 2==             │',
+            '      └───────────┴────────────────────────┘',
+            '    7',
+            '󰫎   8 󰲡 Table no Inline',
+            '    9',
+            '      ┌───────────┬───────────┐',
+            '   10 │ Heading 1 │ Heading 2 │',
+            '   11 ├───────────┼───────────┤',
+            '   12 │ Item 1    │ Item 2    │',
+            '      └───────────┴───────────┘',
+        })
     end)
 end)

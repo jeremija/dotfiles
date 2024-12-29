@@ -1,76 +1,151 @@
-local state = require('render-markdown.state')
-local ui = require('render-markdown.ui')
-local util = require('plenary.async.util')
+---@module 'luassert'
 
-local eq = assert.are.same
+---@class render.md.test.Row
+---@field private value integer
+local Row = {}
+Row.__index = Row
+
+---@return render.md.test.Row
+function Row.new()
+    local self = setmetatable({}, Row)
+    self.value = 0
+    return self
+end
+
+---@return integer
+function Row:get()
+    return self.value
+end
+
+---@param n? integer
+---@return integer
+function Row:increment(n)
+    self.value = self.value + (n or 1)
+    return self.value
+end
 
 ---@class render.md.MarkInfo
----@field row integer[]
----@field col integer[]
+---@field row { [1]: integer, [2]?: integer }
+---@field col { [1]: integer, [2]?: integer }
 ---@field hl_eol? boolean
 ---@field hl_group? string
 ---@field conceal? string
----@field virt_text? { [1]: string, [2]: string }[]
+---@field virt_text? { [1]: string, [2]: string|string[] }[]
 ---@field virt_text_pos? string
+---@field virt_text_win_col? integer
 ---@field virt_lines? { [1]: string, [2]: string }[][]
 ---@field virt_lines_above? boolean
 ---@field sign_text? string
 ---@field sign_hl_group? string
+---@field priority? integer
+local MarkInfo = {}
+MarkInfo.__index = MarkInfo
 
----@class render.md.TestUtil
-local M = {}
-
----@param opts? render.md.UserConfig
----@return string[]
-M.validate = function(opts)
-    require('render-markdown').setup(opts)
-    return state.validate()
+---@param row integer
+---@param col integer
+---@param details vim.api.keyset.extmark_details
+---@return render.md.MarkInfo
+function MarkInfo.new(row, col, details)
+    local self = setmetatable({}, MarkInfo)
+    self.row = { row, details.end_row }
+    self.col = { col, details.end_col }
+    self.hl_eol = details.hl_eol
+    self.hl_group = details.hl_group
+    ---@diagnostic disable-next-line: assign-type-mismatch
+    self.conceal = details.conceal
+    self.virt_text = details.virt_text
+    self.virt_text_pos = details.virt_text_pos
+    self.virt_text_win_col = details.virt_text_win_col
+    self.virt_lines = details.virt_lines
+    self.virt_lines_above = details.virt_lines_above
+    self.sign_text = details.sign_text
+    self.sign_hl_group = details.sign_hl_group
+    if details.priority ~= 4096 then
+        self.priority = details.priority
+    end
+    return self
 end
+
+---@return integer[]
+function MarkInfo:priorities()
+    local result = {}
+
+    local row_offset = 0
+    if self.virt_lines ~= nil then
+        row_offset = self.virt_lines_above and -0.5 or 0.5
+    end
+    vim.list_extend(result, { self.row[1] + row_offset, (self.row[2] or self.row[1]) + row_offset })
+
+    local col = self.virt_text_win_col or 0
+    vim.list_extend(result, { math.max(self.col[1], col), math.max((self.col[2] or self.col[1]), col) })
+
+    vim.list_extend(result, {
+        self.virt_text_pos == 'inline' and 0 or 1, -- Inline text comes first
+        self.sign_text == nil and 0 or 1, -- Signs come later
+    })
+
+    return result
+end
+
+---@param a render.md.MarkInfo
+---@param b render.md.MarkInfo
+---@return boolean
+function MarkInfo.__lt(a, b)
+    local as, bs = a:priorities(), b:priorities()
+    for i = 1, math.max(#as, #bs) do
+        if as[i] ~= bs[i] then
+            return as[i] < bs[i]
+        end
+    end
+    return false
+end
+
+---@class render.md.test.Util
+local M = {}
 
 ---@param file string
 ---@param opts? render.md.UserConfig
-M.setup = function(file, opts)
+function M.setup(file, opts)
+    require('luassert.assert'):set_parameter('TableFormatLevel', 4)
+    require('luassert.assert'):set_parameter('TableErrorHighlightColor', 'none')
     require('render-markdown').setup(opts)
     vim.cmd('e ' .. file)
-    util.scheduler()
+    vim.api.nvim_win_set_cursor(0, { 2, 0 })
+    vim.wait(0)
 end
 
----@private
----@type string
-M.prefix = 'RenderMarkdown'
+M.row = Row.new
 
 ---@param row integer
 ---@param level integer
 ---@return render.md.MarkInfo[]
-M.heading = function(row, level)
+function M.heading(row, level)
     local icons = { '󰲡 ', ' 󰲣 ', '  󰲥 ', '   󰲧 ', '    󰲩 ', '     󰲫 ' }
-    local foreground = string.format('%sH%d', M.prefix, level)
-    local background = string.format('%sH%dBg', M.prefix, level)
+    local foreground = M.hl(string.format('H%d', level))
+    local background = M.hl(string.format('H%dBg', level))
+
+    ---@type render.md.MarkInfo
     local sign_mark = {
+        row = { row },
+        col = { 0 },
+        sign_text = '󰫎 ',
+        sign_hl_group = M.hl_sign(foreground),
+    }
+    ---@type render.md.MarkInfo
+    local icon_mark = {
         row = { row, row },
         col = { 0, level },
-        sign_text = '󰫎 ',
-        sign_hl_group = string.format('%s_%s_%sSign', M.prefix, foreground, M.prefix),
+        virt_text = { { icons[level], { foreground, background } } },
+        virt_text_pos = 'overlay',
     }
-    if row == 0 then
-        return { sign_mark }
-    else
-        return {
-            {
-                row = { row, row },
-                col = { 0, level },
-                virt_text = { { icons[level], { foreground, background } } },
-                virt_text_pos = 'overlay',
-            },
-            sign_mark,
-            {
-                row = { row, row + 1 },
-                col = { 0, 0 },
-                hl_group = background,
-                hl_eol = true,
-            },
-        }
-    end
+    ---@type render.md.MarkInfo
+    local background_mark = {
+        row = { row, row + 1 },
+        col = { 0, 0 },
+        hl_eol = true,
+        hl_group = background,
+    }
+    return { sign_mark, icon_mark, background_mark }
 end
 
 ---@param row integer
@@ -78,101 +153,28 @@ end
 ---@param level integer
 ---@param spaces? integer
 ---@return render.md.MarkInfo
-M.bullet = function(row, col, level, spaces)
+function M.bullet(row, col, level, spaces)
     local icons = { '●', '○', '◆', '◇' }
     spaces = spaces or 0
+    ---@type render.md.MarkInfo
     return {
         row = { row, row },
         col = { col, col + spaces + 2 },
-        virt_text = { { string.rep(' ', spaces) .. icons[level], M.prefix .. 'Bullet' } },
+        virt_text = { { string.rep(' ', spaces) .. icons[level], M.hl('Bullet') } },
         virt_text_pos = 'overlay',
-    }
-end
-
----@param row integer
----@param icon string
----@param highlight string
----@param custom boolean
----@return render.md.MarkInfo[]
-M.checkbox = function(row, icon, highlight, custom)
-    local virt_text_pos = 'overlay'
-    local conceal = nil
-    if custom then
-        virt_text_pos = 'inline'
-        conceal = ''
-    end
-    return {
-        {
-            row = { row, row },
-            col = { 0, 2 },
-            conceal = '',
-        },
-        {
-            row = { row, row },
-            col = { 2, 5 },
-            virt_text = { { icon, highlight } },
-            virt_text_pos = virt_text_pos,
-            conceal = conceal,
-        },
-    }
-end
-
----@param row integer
----@param start_col integer
----@param end_col integer
----@return render.md.MarkInfo
-M.inline_code = function(row, start_col, end_col)
-    return {
-        row = { row, row },
-        col = { start_col, end_col },
-        hl_eol = false,
-        hl_group = M.prefix .. 'Code',
-    }
-end
-
----@param start_row integer
----@param end_row integer
----@return render.md.MarkInfo
-M.code_block = function(start_row, end_row)
-    return {
-        row = { start_row, end_row },
-        col = { 0, 0 },
-        hl_eol = true,
-        hl_group = M.prefix .. 'Code',
-    }
-end
-
----@param row integer
----@param start_col integer
----@param end_col integer
----@param icon string
----@param name string
----@param highlight string
----@return render.md.MarkInfo[]
-M.code_language = function(row, start_col, end_col, icon, name, highlight)
-    return {
-        {
-            row = { row, row },
-            col = { start_col, end_col },
-            sign_text = icon,
-            sign_hl_group = string.format('%s_%s_%sSign', M.prefix, highlight, M.prefix),
-        },
-        {
-            row = { row },
-            col = { start_col },
-            virt_text = { { icon .. name, { highlight, M.prefix .. 'Code' } } },
-            virt_text_pos = 'inline',
-        },
     }
 end
 
 ---@param row integer
 ---@param col integer
-M.code_below = function(row, col)
+---@param text string
+---@return render.md.MarkInfo
+function M.ordered(row, col, text)
+    ---@type render.md.MarkInfo
     return {
-        row = { row },
-        col = { col },
-        virt_text = { { string.rep('▀', vim.opt.columns:get()), M.prefix .. '_Inverse_' .. M.prefix .. 'Code' } },
+        row = { row, row },
+        col = { col, col + 3 },
+        virt_text = { { text, M.hl('Bullet') } },
         virt_text_pos = 'overlay',
     }
 end
@@ -180,17 +182,145 @@ end
 ---@param row integer
 ---@param start_col integer
 ---@param end_col integer
----@param image boolean
 ---@return render.md.MarkInfo
-M.link = function(row, start_col, end_col, image)
-    local icon = '󰌹 '
-    if image then
-        icon = '󰥶 '
-    end
+function M.conceal(row, start_col, end_col)
+    ---@type render.md.MarkInfo
     return {
         row = { row, row },
         col = { start_col, end_col },
-        virt_text = { { icon, M.prefix .. 'Link' } },
+        conceal = '',
+    }
+end
+
+---@param row integer
+---@param start_col integer
+---@param end_col integer
+---@param highlight string
+---@return render.md.MarkInfo
+function M.highlight(row, start_col, end_col, highlight)
+    ---@type render.md.MarkInfo
+    return {
+        row = { row, row },
+        col = { start_col, end_col },
+        hl_eol = false,
+        hl_group = M.hl(highlight),
+    }
+end
+
+---@param row integer
+---@param start_col integer
+---@param end_col integer
+---@return render.md.MarkInfo[]
+function M.inline_highlight(row, start_col, end_col)
+    return {
+        M.conceal(row, start_col, start_col + 2),
+        M.highlight(row, start_col, end_col, 'InlineHighlight'),
+        M.conceal(row, end_col - 2, end_col),
+    }
+end
+
+---@param row integer
+---@param col integer
+---@return render.md.MarkInfo
+function M.code_row(row, col)
+    ---@type render.md.MarkInfo
+    return {
+        row = { row, row + 1 },
+        col = { col, 0 },
+        hl_eol = true,
+        hl_group = M.hl('Code'),
+    }
+end
+
+---@param row integer
+---@param col integer
+---@param win_col integer
+---@return render.md.MarkInfo
+function M.code_hide(row, col, win_col)
+    ---@type render.md.MarkInfo
+    return {
+        row = { row },
+        col = { col },
+        virt_text = { { string.rep(' ', vim.o.columns * 2), 'Normal' } },
+        virt_text_pos = 'win_col',
+        virt_text_win_col = win_col,
+        priority = 0,
+    }
+end
+
+---@param row integer
+---@param col integer
+---@param name 'python'|'py'|'rust'|'rs'|'lua'
+---@param win_col? integer
+---@return render.md.MarkInfo[]
+function M.code_language(row, col, name, win_col)
+    local icon, highlight
+    if name == 'python' or name == 'py' then
+        icon, highlight = '󰌠 ', 'MiniIconsYellow'
+    elseif name == 'rust' or name == 'rs' then
+        icon, highlight = '󱘗 ', 'MiniIconsOrange'
+    elseif name == 'lua' then
+        icon, highlight = '󰢱 ', 'MiniIconsAzure'
+    end
+
+    ---@type render.md.MarkInfo
+    local sign_mark = {
+        row = { row },
+        col = { col },
+        sign_text = icon,
+        sign_hl_group = M.hl_sign(highlight),
+    }
+    ---@type render.md.MarkInfo
+    local language_mark = {
+        row = { row },
+        col = { col + 3 },
+        virt_text = { { icon .. name, { highlight, M.hl('Code') } } },
+        virt_text_pos = 'inline',
+    }
+    local result = { sign_mark, language_mark }
+    if win_col ~= nil then
+        table.insert(result, M.code_hide(row, col, win_col))
+    end
+    table.insert(result, M.code_row(row, col))
+    return result
+end
+
+---@param row integer
+---@param col integer
+---@param above boolean
+---@param width? integer
+---@return render.md.MarkInfo
+function M.code_border(row, col, above, width)
+    width = (width or vim.o.columns) - col
+    local icon = above and '▄' or '▀'
+    ---@type render.md.MarkInfo
+    return {
+        row = { row },
+        col = { col },
+        virt_text = { { icon:rep(width), M.hl_bg_to_fg('Code') } },
+        virt_text_pos = 'overlay',
+    }
+end
+
+---@param row integer
+---@param start_col integer
+---@param end_col integer
+---@param kind 'image'|'link'|'web'
+---@return render.md.MarkInfo
+function M.link(row, start_col, end_col, kind)
+    local icon
+    if kind == 'image' then
+        icon = '󰥶 '
+    elseif kind == 'link' then
+        icon = '󰌹 '
+    elseif kind == 'web' then
+        icon = '󰖟 '
+    end
+    ---@type render.md.MarkInfo
+    return {
+        row = { row, row },
+        col = { start_col, end_col },
+        virt_text = { { icon, M.hl('Link') } },
         virt_text_pos = 'inline',
     }
 end
@@ -199,12 +329,13 @@ end
 ---@param format string
 ---@param highlight string
 ---@return render.md.MarkInfo
-M.quote = function(row, format, highlight)
+function M.quote(row, format, highlight)
     local quote = string.format(format, '▋')
+    ---@type render.md.MarkInfo
     return {
         row = { row, row },
         col = { 0, vim.fn.strdisplaywidth(quote) },
-        virt_text = { { quote, M.prefix .. highlight } },
+        virt_text = { { quote, M.hl(highlight) } },
         virt_text_pos = 'overlay',
     }
 end
@@ -213,17 +344,13 @@ end
 ---@param col integer
 ---@param head boolean
 ---@return render.md.MarkInfo
-M.table_pipe = function(row, col, head)
-    local highlight
-    if head then
-        highlight = 'TableHead'
-    else
-        highlight = 'TableRow'
-    end
+function M.table_pipe(row, col, head)
+    local highlight = head and 'TableHead' or 'TableRow'
+    ---@type render.md.MarkInfo
     return {
         row = { row, row },
         col = { col, col + 1 },
-        virt_text = { { '│', M.prefix .. highlight } },
+        virt_text = { { '│', M.hl(highlight) } },
         virt_text_pos = 'overlay',
     }
 end
@@ -232,107 +359,150 @@ end
 ---@param col integer
 ---@param spaces integer
 ---@return render.md.MarkInfo
-M.table_padding = function(row, col, spaces)
+function M.table_padding(row, col, spaces)
+    ---@type render.md.MarkInfo
     return {
         row = { row },
         col = { col },
-        virt_text = { { string.rep(' ', spaces), M.prefix .. 'TableFill' } },
+        virt_text = { { string.rep(' ', spaces), M.hl('TableFill') } },
         virt_text_pos = 'inline',
+        priority = 0,
     }
 end
 
 ---@param row integer
----@param section 'above'|'delimiter'|'below'
+---@param above boolean
 ---@param lengths integer[]
+---@param indent? integer
 ---@return render.md.MarkInfo
-M.table_border = function(row, section, lengths)
-    local border
-    local highlight
-    if section == 'above' then
-        border = { '┌', '┬', '┐' }
-        highlight = 'TableHead'
-    elseif section == 'delimiter' then
-        border = { '├', '┼', '┤' }
-        highlight = 'TableHead'
-    elseif section == 'below' then
-        border = { '└', '┴', '┘' }
-        highlight = 'TableRow'
+function M.table_border(row, above, lengths, indent)
+    local line = {}
+    if indent ~= nil then
+        table.insert(line, { string.rep(' ', indent), 'Normal' })
     end
-
     local parts = vim.tbl_map(function(length)
         return string.rep('─', length)
     end, lengths)
-    local value = border[1] .. table.concat(parts, border[2]) .. border[3]
-
-    if vim.tbl_contains({ 'above', 'below' }, section) then
-        return {
-            row = { row },
-            col = { 0 },
-            virt_lines = { { { value, M.prefix .. highlight } } },
-            virt_lines_above = section == 'above',
-        }
+    if above then
+        table.insert(line, { '┌' .. table.concat(parts, '┬') .. '┐', M.hl('TableHead') })
     else
-        return {
-            row = { row, row },
-            col = { 0, vim.fn.strdisplaywidth(value) },
-            virt_text = { { value, M.prefix .. highlight } },
-            virt_text_pos = 'overlay',
-        }
+        table.insert(line, { '└' .. table.concat(parts, '┴') .. '┘', M.hl('TableRow') })
     end
+    ---@type render.md.MarkInfo
+    return {
+        row = { row },
+        col = { 0 },
+        virt_lines = { line },
+        virt_lines_above = above,
+    }
 end
 
 ---@param row integer
----@param col integer
----@param value string
----@param head boolean
+---@param sections (integer|integer[])[]
+---@param suffix? integer
 ---@return render.md.MarkInfo
-M.table_row = function(row, col, value, head)
-    local highlight
-    if head then
-        highlight = 'TableHead'
-    else
-        highlight = 'TableRow'
-    end
+function M.table_delimiter(row, sections, suffix)
+    local parts = vim.tbl_map(function(width_or_widths)
+        local widths = vim.islist(width_or_widths) and width_or_widths or { width_or_widths }
+        local section = vim.tbl_map(function(width)
+            return width == 1 and '━' or string.rep('─', width)
+        end, widths)
+        return table.concat(section, '')
+    end, sections)
+    local value = '├' .. table.concat(parts, '┼') .. '┤' .. string.rep(' ', suffix or 0)
+    ---@type render.md.MarkInfo
     return {
         row = { row, row },
-        col = { 0, col },
-        virt_text = { { value, M.prefix .. highlight } },
+        col = { 0, vim.fn.strdisplaywidth(value) },
+        virt_text = { { value, M.hl('TableHead') } },
         virt_text_pos = 'overlay',
     }
 end
 
+---@private
+---@param highlight string
+---@return string
+function M.hl_sign(highlight)
+    return M.hl('_' .. highlight .. '_' .. M.hl('Sign'))
+end
+
+---@param base string
+---@return string
+function M.hl_bg_to_fg(base)
+    return M.hl('_bgtofg_' .. M.hl(base))
+end
+
+---@param suffix string
+---@return string
+function M.hl(suffix)
+    return 'RenderMarkdown' .. suffix
+end
+
+---@param marks (render.md.MarkInfo|render.md.MarkInfo[])[]
+---@param screen string[]
+function M.assert_view(marks, screen)
+    M.assert_marks(marks)
+    M.assert_screen(screen)
+end
+
+---@param expected (render.md.MarkInfo|render.md.MarkInfo[])[]
+function M.assert_marks(expected)
+    local actual = M.actual_marks()
+
+    expected = vim.iter(expected)
+        :map(function(mark_or_marks)
+            return vim.islist(mark_or_marks) and mark_or_marks or { mark_or_marks }
+        end)
+        :flatten()
+        :totable()
+
+    for i = 1, math.min(#expected, #actual) do
+        assert.are.same(expected[i], actual[i], string.format('Marks at index %d mismatch', i))
+    end
+    assert.are.same(#expected, #actual, 'Different number of marks found')
+end
+
+---@private
 ---@return render.md.MarkInfo[]
-M.get_actual_marks = function()
+function M.actual_marks()
+    local namespace = require('render-markdown.core.ui').namespace
+    local marks = vim.api.nvim_buf_get_extmarks(0, namespace, 0, -1, { details = true })
+    ---@type render.md.MarkInfo[]
     local actual = {}
-    local marks = vim.api.nvim_buf_get_extmarks(0, ui.namespace, 0, -1, { details = true })
     for _, mark in ipairs(marks) do
         local _, row, col, details = unpack(mark)
-        ---@type render.md.MarkInfo
-        local mark_info = {
-            row = { row, details.end_row },
-            col = { col, details.end_col },
-            hl_eol = details.hl_eol,
-            hl_group = details.hl_group,
-            conceal = details.conceal,
-            virt_text = details.virt_text,
-            virt_text_pos = details.virt_text_pos,
-            virt_lines = details.virt_lines,
-            virt_lines_above = details.virt_lines_above,
-            sign_text = details.sign_text,
-            sign_hl_group = details.sign_hl_group,
-        }
-        table.insert(actual, mark_info)
+        table.insert(actual, MarkInfo.new(row, col, details))
     end
+    table.sort(actual)
     return actual
 end
 
----@param expected render.md.MarkInfo[]
----@param actual render.md.MarkInfo[]
-M.marks_are_equal = function(expected, actual)
-    for i = 1, math.min(#expected, #actual) do
-        eq(expected[i], actual[i], string.format('Marks at index %d mismatch', i))
+---@param expected string[]
+function M.assert_screen(expected)
+    local actual = M.actual_screen()
+    assert.are.same(expected, actual)
+end
+
+---@private
+---@return string[]
+function M.actual_screen()
+    vim.cmd('redraw')
+
+    local actual = {}
+    for row = 1, vim.o.lines do
+        local line = ''
+        for col = 1, vim.o.columns do
+            line = line .. vim.fn.screenstring(row, col)
+        end
+        -- Remove tailing whitespace to make tests easier to write
+        line = line:gsub('%s+$', '')
+        -- Stop collecting lines once we reach an empty one
+        if line == '~' then
+            break
+        end
+        table.insert(actual, line)
     end
-    eq(#expected, #actual, 'Different number of marks found')
+    return actual
 end
 
 return M
