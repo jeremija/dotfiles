@@ -6,6 +6,7 @@ config/cmus/*-history
 config/cmus/resume
 config/cmus/cache
 config/cmus/cmusfm.conf
+config/gtk-3.0/bookmarks
 config/nvim/tmp
 .zlocal
 .netrwhist

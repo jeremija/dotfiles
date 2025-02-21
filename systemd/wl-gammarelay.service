@@ -1,0 +1,12 @@
+[Unit]
+Description=Control swaywm temperature
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+Restart=always
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/wl-gammarelay --verbose
+
+[Install]
+WantedBy=graphical.target

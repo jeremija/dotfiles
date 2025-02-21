@@ -114,8 +114,6 @@ hide_edge_borders none
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
-    exec wl-gammarelay
-
     bindsym $mod+Control+Minus      exec busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n -100
     bindsym $mod+Control+Equal      exec busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateTemperature n +100
     bindsym $mod+Control+0          exec busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 1.0 && busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Temperature q 6500
@@ -129,15 +127,15 @@ hide_edge_borders none
     # Video recording
     bindsym $mod+i exec alacritty --class 'AlacrittyRecorder' -e bash -c 'wf-recorder -g "$(slurp)" -f ~/Desktop/"$(date +%Y_%m_%d_%H_%M_%S_recording.mp4)"'
 
-    bindsym $mod+Minus exec brightnessctl s 2%-
-    bindsym $mod+Equal exec brightnessctl s 2%+
-    bindsym XF86MonBrightnessDown exec brightnessctl s 2%-
-    bindsym XF86MonBrightnessUp exec brightnessctl s 2%+
+    bindsym $mod+Minus exec brightness-control.sh 2%-
+    bindsym $mod+Equal exec brightness-control.sh 2%+
+    bindsym XF86MonBrightnessDown exec brightness-control.sh 2%-
+    bindsym XF86MonBrightnessUp exec brightness-control.sh 2%+
 
     bindsym XF86AudioMicMute exec pulsemixer --toggle-mute --id $(pulsemixer --list-sources | grep Default | awk '{print $3}' | sed 's/,$//')
-    bindsym XF86AudioMute exec pulsemixer --toggle-mute
-    bindsym XF86AudioLowerVolume exec pulsemixer --unmute --change-volume -2
-    bindsym XF86AudioRaiseVolume exec pulsemixer --unmute --change-volume +2
+    bindsym XF86AudioMute exec volume-control.sh toggle-mute
+    bindsym XF86AudioLowerVolume exec volume-control.sh -2
+    bindsym XF86AudioRaiseVolume exec volume-control.sh +2
 
 # ""
 #     XF86AudioRaiseVolume
