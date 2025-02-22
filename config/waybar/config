@@ -5,9 +5,9 @@
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/media"],
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/window", "custom/media"],
     /* "modules-center": ["sway/window"], */
-    "modules-right": ["idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "custom/wl-gammarelay-temperature", "custom/wl-gammarelay-brightness", "backlight", "keyboard-state", "sway/language", "battery", "battery#bat2", "clock#utc", "clock", "tray"],
+    "modules-right": ["idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "custom/wl-gammarelay-temperature", "custom/wl-gammarelay-brightness", "backlight", "keyboard-state", "sway/language", "battery", "custom/mako", "clock#utc", "clock", "tray"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -103,8 +103,8 @@
         // "device": "acpi_video1",
         "format": "{percent}% {icon}",
         "format-icons": ["", ""],
-        "on-scroll-up": "brightnessctl s 2%+",
-        "on-scroll-down": "brightnessctl s 2%-"
+        "on-scroll-up": "brightness-control.sh 2%+",
+        "on-scroll-down": "brightness-control.sh 2%-"
     },
     "battery": {
         "states": {
@@ -174,5 +174,14 @@
         "exec": "wl-gammarelay --subscribe Brightness",
         "on-scroll-up": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateBrightness d +0.02",
         "on-scroll-down": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateBrightness d -0.02"
+    },
+    "custom/mako": {
+      "format": "{icon}",
+      "format-icons": ["", ""],
+      "return-type": "json",
+      "exec": "sleep 0.1 && bash -c \"if [[ \\\"$(makoctl mode)\\\" == \\\"default\\\" ]]; then echo '{\\\"percentage\\\":100,\\\"text\\\":\\\"on\\\"}'; else echo '{\\\"percentage\\\":0,\\\"text\\\":\\\"off\\\"}'; fi\"",
+      "interval": "once",
+      "exec-on-event": true,
+      "on-click": "bash -c \"if [[ \\\"$(makoctl mode)\\\" == \\\"default\\\" ]]; then makoctl mode -s dnd; else makoctl mode -s default; fi\"",
     }
 }
