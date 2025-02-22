@@ -131,7 +131,7 @@ alias ga="git add"
 alias gd="git diff"
 alias gcmsg="git commit -m"
 alias gc!="git commit --amend"
-alias gc@="git commit --fixup=HEAD"
+alias gc@="git commit --amend --no-edit"
 alias tmux-id="tmux display-message -p '#S:#I'"
 
 alias gcmsg='git commit -m'
