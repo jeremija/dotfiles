@@ -83,6 +83,8 @@ input type:keyboard {
 default_border pixel 1
 hide_edge_borders none
 
+primary_selection disabled
+
 ### Key bindings
 #
 # Basics:
