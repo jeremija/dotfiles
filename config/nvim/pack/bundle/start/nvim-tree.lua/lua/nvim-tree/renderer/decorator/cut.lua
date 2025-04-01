@@ -1,38 +1,29 @@
-local copy_paste
+local Decorator = require("nvim-tree.renderer.decorator")
 
-local HL_POSITION = require("nvim-tree.enum").HL_POSITION
-local ICON_PLACEMENT = require("nvim-tree.enum").ICON_PLACEMENT
+---@class (exact) CutDecorator: Decorator
+---@field private explorer Explorer
+local CutDecorator = Decorator:extend()
 
-local Decorator = require "nvim-tree.renderer.decorator"
+---@class CutDecorator
+---@overload fun(args: DecoratorArgs): CutDecorator
 
----@class DecoratorCut: Decorator
----@field enabled boolean
----@field icon HighlightedString|nil
-local DecoratorCut = Decorator:new()
+---@protected
+---@param args DecoratorArgs
+function CutDecorator:new(args)
+  self.explorer        = args.explorer
 
----@param opts table
----@return DecoratorCut
-function DecoratorCut:new(opts)
-  local o = Decorator.new(self, {
-    enabled = true,
-    hl_pos = HL_POSITION[opts.renderer.highlight_clipboard] or HL_POSITION.none,
-    icon_placement = ICON_PLACEMENT.none,
-  })
-  ---@cast o DecoratorCut
-
-  -- cyclic
-  copy_paste = copy_paste or require "nvim-tree.actions.fs.copy-paste"
-
-  return o
+  self.enabled         = true
+  self.highlight_range = self.explorer.opts.renderer.highlight_clipboard or "none"
+  self.icon_placement  = "none"
 end
 
 ---Cut highlight: renderer.highlight_clipboard and node is cut
 ---@param node Node
----@return string|nil group
-function DecoratorCut:calculate_highlight(node)
-  if self.hl_pos ~= HL_POSITION.none and copy_paste.is_cut(node) then
+---@return string? highlight_group
+function CutDecorator:highlight_group(node)
+  if self.highlight_range ~= "none" and self.explorer.clipboard:is_cut(node) then
     return "NvimTreeCutHL"
   end
 end
 
-return DecoratorCut
+return CutDecorator

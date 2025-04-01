@@ -4,20 +4,40 @@
 # luals-out/check.json will be produced on any issues, returning 1.
 # Outputs only check.json to stdout, all other messages to stderr, to allow jq etc.
 # $VIMRUNTIME specifies neovim runtime path, defaults to "/usr/share/nvim/runtime" if unset.
+#
+# Call with codestyle-check param to enable only codestyle-check
 
 if [ -z "${VIMRUNTIME}" ]; then
 	export VIMRUNTIME="/usr/share/nvim/runtime"
 fi
 
-DIR_SRC="lua"
-DIR_OUT="luals-out"
+DIR_SRC="${PWD}/lua"
+DIR_OUT="${PWD}/luals-out"
+FILE_LUARC="${DIR_OUT}/luarc.json"
 
 # clear output
 rm -rf "${DIR_OUT}"
 mkdir "${DIR_OUT}"
 
-# execute inside lua to prevent luals itself from being checked
-OUT=$(lua-language-server --check="${DIR_SRC}" --configpath="${PWD}/.luarc.json" --checklevel=Information --logpath="${DIR_OUT}" --loglevel=error)
+case "${1}" in
+	"codestyle-check")
+		jq \
+			'.diagnostics.neededFileStatus[] = "None" | .diagnostics.neededFileStatus."codestyle-check" = "Any"' \
+			"${PWD}/.luarc.json" > "${FILE_LUARC}"
+
+		;;
+	*)
+		# Add runtime.version for strict neovim baseline 5.1
+		# It is not set normally, to prevent luals loading 5.1 and 5.x, resulting in both versions being chosen on vim.lsp.buf.definition
+		jq \
+			'."runtime.version" = "Lua 5.1"' \
+			"${PWD}/.luarc.json" > "${FILE_LUARC}"
+
+		;;
+esac
+
+# execute inside lua directory to prevent luals itself from being checked
+OUT=$(lua-language-server --check="${DIR_SRC}" --configpath="${FILE_LUARC}" --checklevel=Information --logpath="${DIR_OUT}" --loglevel=error)
 RC=$?
 
 echo "${OUT}" >&2
@@ -29,15 +49,11 @@ fi
 
 # any output is a fail
 case "${OUT}" in
-	*Diagnosis\ complete*)
-		if [ -f "${DIR_OUT}/check.json" ]; then
-			cat "${DIR_OUT}/check.json"
-			exit 1
-		else
-			exit 0
-		fi
+	*Diagnosis\ completed,\ no\ problems\ found*)
+		exit 0
 		;;
 	*)
+		cat "${DIR_OUT}/check.json"
 		exit 1
 		;;
 esac

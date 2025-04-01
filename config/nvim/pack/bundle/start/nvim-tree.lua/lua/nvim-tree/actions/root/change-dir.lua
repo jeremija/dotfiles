@@ -1,6 +1,6 @@
-local log = require "nvim-tree.log"
-local utils = require "nvim-tree.utils"
-local core = require "nvim-tree.core"
+local log = require("nvim-tree.log")
+local utils = require("nvim-tree.utils")
+local core = require("nvim-tree.core")
 
 local M = {
   current_tab = vim.api.nvim_get_current_tabpage(),
@@ -25,7 +25,7 @@ end
 ---@param new_tabpage integer
 ---@return boolean
 local function is_window_event(new_tabpage)
-  local is_event_scope_window = vim.v.event.scope == "window" or vim.v.event.changed_window
+  local is_event_scope_window = vim.v.event.scope == "window" or vim.v.event.changed_window or false
   return is_event_scope_window and new_tabpage == M.current_tab
 end
 
@@ -91,7 +91,10 @@ M.force_dirchange = add_profiling_to(function(foldername, should_open_view)
   if should_open_view then
     require("nvim-tree.lib").open()
   else
-    require("nvim-tree.renderer").draw()
+    local explorer = core.get_explorer()
+    if explorer then
+      explorer.renderer:draw()
+    end
   end
 end)
 

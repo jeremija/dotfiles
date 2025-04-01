@@ -1,4 +1,5 @@
-local keymap = require "nvim-tree.keymap"
+local keymap = require("nvim-tree.keymap")
+local api = {} -- circular dependency
 
 local PAT_MOUSE = "^<.*Mouse"
 local PAT_CTRL = "^<C%-"
@@ -9,6 +10,8 @@ local WIN_HL = table.concat({
   "WinSeparator:NvimTreeWinSeparator",
   "CursorLine:NvimTreeCursorLine",
 }, ",")
+
+local namespace_help_id = vim.api.nvim_create_namespace("NvimTreeHelp")
 
 local M = {
   config = {},
@@ -26,12 +29,12 @@ local function tidy_lhs(lhs)
   lhs = lhs:gsub("^<lt>", "<")
 
   -- shorten ctrls
-  if lhs:lower():match "^<ctrl%-" then
+  if lhs:lower():match("^<ctrl%-") then
     lhs = lhs:lower():gsub("^<ctrl%-", "<C%-")
   end
 
   -- uppercase ctrls
-  if lhs:lower():match "^<c%-" then
+  if lhs:lower():match("^<c%-") then
     lhs = lhs:upper()
   end
 
@@ -52,6 +55,7 @@ end
 --- sort vim command lhs roughly as per :help index
 ---@param a string
 ---@param b string
+---@return boolean
 local function sort_lhs(a, b)
   -- mouse first
   if a:match(PAT_MOUSE) and not b:match(PAT_MOUSE) then
@@ -79,18 +83,19 @@ local function sort_lhs(a, b)
 end
 
 --- Compute all lines for the buffer
----@return table strings of text
----@return table arrays of arguments 3-6 for nvim_buf_add_highlight()
+---@param map table keymap.get_keymap
+---@return string[] lines of text
+---@return HighlightRangeArgs[] hl_range_args for lines
 ---@return number maximum length of text
-local function compute()
+local function compute(map)
   local head_lhs = "nvim-tree mappings"
   local head_rhs1 = "exit: q"
   local head_rhs2 = string.format("sort by %s: s", M.config.sort_by == "key" and "description" or "keymap")
 
   -- formatted lhs and desc from active keymap
-  local mappings = vim.tbl_map(function(map)
-    return { lhs = tidy_lhs(map.lhs), desc = tidy_desc(map.desc) }
-  end, keymap.get_keymap())
+  local mappings = vim.tbl_map(function(m)
+    return { lhs = tidy_lhs(m.lhs), desc = tidy_desc(m.desc) }
+  end, map)
 
   -- sorter function for mappings
   local sort_fn
@@ -119,13 +124,19 @@ local function compute()
   -- increase desc if lines are shorter than the header
   max_desc = math.max(max_desc, #head_lhs + #head_rhs1 - max_lhs)
 
-  -- header, not padded
-  local hl = { { "NvimTreeRootFolder", 0, 0, #head_lhs } }
+  -- header text, not padded
   local lines = {
     head_lhs .. string.rep(" ", max_desc + max_lhs - #head_lhs - #head_rhs1 + 2) .. head_rhs1,
     string.rep(" ", max_desc + max_lhs - #head_rhs2 + 2) .. head_rhs2,
   }
   local width = #lines[1]
+
+  -- header highlight, assume one character keys
+  local hl_range_args = {
+    { higroup = "NvimTreeFolderName", start = { 0, 0, },         finish = { 0, #head_lhs, }, },
+    { higroup = "NvimTreeFolderName", start = { 0, width - 1, }, finish = { 0, width, }, },
+    { higroup = "NvimTreeFolderName", start = { 1, width - 1, }, finish = { 1, width, }, },
+  }
 
   -- mappings, left padded 1
   local fmt = string.format(" %%-%ds %%-%ds", max_lhs, max_desc)
@@ -136,10 +147,10 @@ local function compute()
     width = math.max(#line, width)
 
     -- highlight lhs
-    table.insert(hl, { "NvimTreeFolderName", i + 1, 1, #l.lhs + 1 })
+    table.insert(hl_range_args, { higroup = "NvimTreeFolderName", start = { i + 1, 1, }, finish = { i + 1, #l.lhs + 1, }, })
   end
 
-  return lines, hl, width
+  return lines, hl_range_args, width
 end
 
 --- close the window and delete the buffer, if they exist
@@ -159,19 +170,31 @@ local function open()
   -- close existing, shouldn't be necessary
   close()
 
+  -- fetch all mappings
+  local map = keymap.get_keymap()
+
   -- text and highlight
-  local lines, hl, width = compute()
+  local lines, hl_range_args, width = compute(map)
 
   -- create the buffer
   M.bufnr = vim.api.nvim_create_buf(false, true)
 
   -- populate it
   vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, lines)
-  vim.api.nvim_buf_set_option(M.bufnr, "modifiable", false)
+
+  if vim.fn.has("nvim-0.10") == 1 then
+    vim.api.nvim_set_option_value("modifiable", false, { buf = M.bufnr })
+  else
+    vim.api.nvim_buf_set_option(M.bufnr, "modifiable", false) ---@diagnostic disable-line: deprecated
+  end
 
   -- highlight it
-  for _, h in ipairs(hl) do
-    vim.api.nvim_buf_add_highlight(M.bufnr, -1, h[1], h[2], h[3], h[4])
+  for _, args in ipairs(hl_range_args) do
+    if vim.fn.has("nvim-0.11") == 1 and vim.hl and vim.hl.range then
+      vim.hl.range(M.bufnr, namespace_help_id, args.higroup, args.start, args.finish, {})
+    else
+      vim.api.nvim_buf_add_highlight(M.bufnr, -1, args.higroup, args.start[1], args.start[2], args.finish[2]) ---@diagnostic disable-line: deprecated
+    end
   end
 
   -- open a very restricted window
@@ -195,12 +218,21 @@ local function open()
     open()
   end
 
-  local keymaps = {
+  -- hardcoded
+  local help_keymaps = {
     q = { fn = close, desc = "nvim-tree: exit help" },
+    ["<Esc>"] = { fn = close, desc = "nvim-tree: exit help" }, -- hidden
     s = { fn = toggle_sort, desc = "nvim-tree: toggle sorting method" },
   }
 
-  for k, v in pairs(keymaps) do
+  -- api help binding closes
+  for _, m in ipairs(map) do
+    if m.callback == api.tree.toggle_help then
+      help_keymaps[m.lhs] = { fn = close, desc = "nvim-tree: exit help" }
+    end
+  end
+
+  for k, v in pairs(help_keymaps) do
     vim.keymap.set("n", k, v.fn, {
       desc = v.desc,
       buffer = M.bufnr,
@@ -229,6 +261,8 @@ end
 function M.setup(opts)
   M.config.cursorline = opts.view.cursorline
   M.config.sort_by = opts.help.sort_by
+
+  api = require("nvim-tree.api")
 end
 
 return M

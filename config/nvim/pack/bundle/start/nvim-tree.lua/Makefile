@@ -5,7 +5,7 @@ all: lint style check
 #
 lint: luacheck
 
-style: stylua style-doc
+style: style-check style-doc
 
 check: luals
 
@@ -13,22 +13,23 @@ check: luals
 # subtasks
 #
 luacheck:
-	luacheck -q lua
+	luacheck --codes --quiet lua --exclude-files "**/_meta/**"
 
-stylua:
-	stylua lua --check
+# --diagnosis-as-error does not function for workspace, hence we post-process the output
+style-check:
+	@scripts/luals-check.sh codestyle-check
 
 style-doc:
 	scripts/doc-comments.sh
 
 luals:
-	scripts/luals-check.sh
+	@scripts/luals-check.sh
 
 #
 # fixes
 #
 style-fix:
-	stylua lua
+	CodeFormat format --config .editorconfig --workspace lua
 
 #
 # utility
@@ -43,5 +44,5 @@ help-check: help-update
 	git diff --exit-code doc/nvim-tree-lua.txt
 
 
-.PHONY: all lint style check luacheck stylua style-doc luals style-fix help-update help-check
+.PHONY: all lint style check luacheck style-check style-doc luals style-fix help-update help-check
 

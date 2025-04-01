@@ -1,35 +1,32 @@
-local buffers = require "nvim-tree.buffers"
+local buffers = require("nvim-tree.buffers")
 
-local HL_POSITION = require("nvim-tree.enum").HL_POSITION
-local ICON_PLACEMENT = require("nvim-tree.enum").ICON_PLACEMENT
+local Decorator = require("nvim-tree.renderer.decorator")
 
-local Decorator = require "nvim-tree.renderer.decorator"
+---@class (exact) OpenDecorator: Decorator
+---@field private explorer Explorer
+---@field private icon HighlightedString|nil
+local OpenDecorator = Decorator:extend()
 
----@class DecoratorOpened: Decorator
----@field enabled boolean
----@field icon HighlightedString|nil
-local DecoratorOpened = Decorator:new()
+---@class OpenDecorator
+---@overload fun(args: DecoratorArgs): OpenDecorator
 
----@param opts table
----@return DecoratorOpened
-function DecoratorOpened:new(opts)
-  local o = Decorator.new(self, {
-    enabled = true,
-    hl_pos = HL_POSITION[opts.renderer.highlight_opened_files] or HL_POSITION.none,
-    icon_placement = ICON_PLACEMENT.none,
-  })
-  ---@cast o DecoratorOpened
+---@protected
+---@param args DecoratorArgs
+function OpenDecorator:new(args)
+  self.explorer        = args.explorer
 
-  return o
+  self.enabled         = true
+  self.highlight_range = self.explorer.opts.renderer.highlight_opened_files or "none"
+  self.icon_placement  = "none"
 end
 
 ---Opened highlight: renderer.highlight_opened_files and node has an open buffer
 ---@param node Node
----@return string|nil group
-function DecoratorOpened:calculate_highlight(node)
-  if self.hl_pos ~= HL_POSITION.none and buffers.is_opened(node) then
+---@return string? highlight_group
+function OpenDecorator:highlight_group(node)
+  if self.highlight_range ~= "none" and buffers.is_opened(node) then
     return "NvimTreeOpenedHL"
   end
 end
 
-return DecoratorOpened
+return OpenDecorator

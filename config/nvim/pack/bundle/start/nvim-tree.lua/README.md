@@ -24,11 +24,11 @@
 
 Take a look at the [wiki](https://github.com/nvim-tree/nvim-tree.lua/wiki) for Showcases, Tips, Recipes and more.
 
-Community support: [matrix](https://matrix.to/#/#nvim-tree:matrix.org)
+Questions and general support: [Discussions](https://github.com/nvim-tree/nvim-tree.lua/discussions)
 
 ## Requirements
 
-[neovim >=0.8.0](https://github.com/neovim/neovim/wiki/Installing-Neovim)
+[neovim >=0.9.0](https://github.com/neovim/neovim/wiki/Installing-Neovim)
 
 [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) is optional and used to display file icons. It requires a [patched font](https://www.nerdfonts.com/). Your terminal emulator must be configured to use that font, usually "Hack Nerd Font"
 
@@ -37,6 +37,8 @@ Community support: [matrix](https://matrix.to/#/#nvim-tree:matrix.org)
 Please install via your preferred package manager. See [Installation](https://github.com/nvim-tree/nvim-tree.lua/wiki/Installation) for specific package manager instructions.
 
 `nvim-tree/nvim-tree.lua`
+
+Major or minor versions may be specified via tags: `v<MAJOR>` e.g. `v1` or `v<MAJOR>.<MINOR>` e.g. `v1.23`
 
 `nvim-tree/nvim-web-devicons` optional, for file icons
 
@@ -110,6 +112,23 @@ require("nvim-tree").setup {
 }
 ```
 
+### Highlight
+
+Run `:NvimTreeHiTest` to show all the highlights that nvim-tree uses.
+
+They can be customised before or after setup is called and will be immediately
+applied at runtime. e.g.
+
+```lua
+vim.cmd([[
+    :hi      NvimTreeExecFile    guifg=#ffa0a0
+    :hi      NvimTreeSpecialFile guifg=#ff80ff gui=underline
+    :hi      NvimTreeSymlink     guifg=Yellow  gui=italic
+    :hi link NvimTreeImageFile   Title
+]])
+```
+See [:help nvim-tree-highlight](doc/nvim-tree-lua.txt) for details.
+
 ## Commands
 
 See [:help nvim-tree-commands](doc/nvim-tree-lua.txt)
@@ -143,13 +162,13 @@ nvim-tree exposes a public API. This is non breaking, with additions made as nec
 
 See wiki [Recipes](https://github.com/nvim-tree/nvim-tree.lua/wiki/Recipes) and [Tips](https://github.com/nvim-tree/nvim-tree.lua/wiki/Tips) for ideas and inspiration.
 
-Please raise a [feature request](https://github.com/nvim-tree/nvim-tree.lua/issues/new?assignees=&labels=feature+request&template=feature_request.md&title=) if the API is insufficient for your needs. [Contributions](#Contributing) are always welcome.
+Please raise a [feature request](https://github.com/nvim-tree/nvim-tree.lua/issues/new?assignees=&labels=feature+request&template=feature_request.md&title=) if the API is insufficient for your needs. Contributions are always welcome, see below.
 
 You may also subscribe to events that nvim-tree will dispatch in a variety of situations, see [:help nvim-tree-events](doc/nvim-tree-lua.txt)
 
 ## Contributing
 
-PRs are always welcome. See [wiki](https://github.com/nvim-tree/nvim-tree.lua/wiki/Development) to get started.
+PRs are always welcome. See [CONTRIBUTING](CONTRIBUTING.md) and [wiki: Development](https://github.com/nvim-tree/nvim-tree.lua/wiki/Development) to get started.
 
 See [bug](https://github.com/nvim-tree/nvim-tree.lua/issues?q=is%3Aissue+is%3Aopen+label%3Abug) and [PR Please](https://github.com/nvim-tree/nvim-tree.lua/issues?q=is%3Aopen+is%3Aissue+label%3A%22PR+please%22) issues if you are looking for some work to get you started.
 

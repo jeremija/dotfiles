@@ -1,7 +1,9 @@
 local root = vim.fn.getcwd()
 
 describe('lspconfig', function()
+  --- @diagnostic disable-next-line:undefined-field
   local eq = assert.are.equal
+  --- @diagnostic disable-next-line:undefined-field
   local same = assert.are.same
 
   before_each(function()
@@ -9,127 +11,6 @@ describe('lspconfig', function()
   end)
 
   describe('util', function()
-    describe('path', function()
-      describe('escape_wildcards', function()
-        it('doesnt escape if not needed', function()
-          local lspconfig = require 'lspconfig'
-
-          local res = lspconfig.util.path.escape_wildcards '/usr/local/test/fname.lua'
-          eq('/usr/local/test/fname.lua', res)
-        end)
-        it('escapes if needed', function()
-          local lspconfig = require 'lspconfig'
-
-          local res = lspconfig.util.path.escape_wildcards '/usr/local/test/[sq brackets] fname?*.lua'
-          eq('/usr/local/test/\\[sq brackets\\] fname\\?\\*.lua', res)
-        end)
-      end)
-      describe('exists', function()
-        it('is present directory', function()
-          local lspconfig = require 'lspconfig'
-
-          local cwd = vim.fn.getcwd()
-          eq(true, lspconfig.util.path.exists(cwd) ~= false)
-        end)
-
-        it('is not present directory', function()
-          local lspconfig = require 'lspconfig'
-          local not_exist_dir = vim.fn.getcwd() .. '/not/exists'
-          eq(true, lspconfig.util.path.exists(not_exist_dir) == false)
-        end)
-
-        it('is present file', function()
-          local lspconfig = require 'lspconfig'
-          -- change the working directory to test directory
-          vim.api.nvim_command 'cd ./test/test_dir/'
-          local file = vim.fn.getcwd() .. '/root_marker.txt'
-          eq(true, lspconfig.util.path.exists(file) ~= false)
-        end)
-
-        it('is not present file', function()
-          local lspconfig = require 'lspconfig'
-          -- change the working directory to test directory
-          vim.api.nvim_command 'cd ./test/test_dir/'
-          local file = vim.fn.getcwd() .. '/not_exists.txt'
-          assert.is_false(lspconfig.util.path.exists(file))
-        end)
-      end)
-
-      describe('is_dir', function()
-        it('is directory', function()
-          local lspconfig = require 'lspconfig'
-          local cwd = vim.fn.getcwd()
-          assert.is_true(lspconfig.util.path.is_dir(cwd))
-        end)
-
-        it('is not present directory', function()
-          local lspconfig = require 'lspconfig'
-          local not_exist_dir = vim.fn.getcwd() .. '/not/exists'
-          eq(true, not lspconfig.util.path.is_dir(not_exist_dir))
-        end)
-
-        it('is file', function()
-          local lspconfig = require 'lspconfig'
-
-          -- change the working directory to test directory
-          vim.api.nvim_command 'cd ./test/test_dir/'
-          local file = vim.fn.getcwd() .. '/root_marker.txt'
-
-          eq(true, not lspconfig.util.path.is_dir(file))
-        end)
-      end)
-
-      describe('is_file', function()
-        it('is file', function()
-          local lspconfig = require 'lspconfig'
-
-          -- change the working directory to test directory
-          vim.api.nvim_command 'cd ./test/test_dir/'
-          local file = vim.fn.getcwd() .. '/root_marker.txt'
-
-          eq(true, lspconfig.util.path.is_file(file))
-        end)
-
-        it('is not present file', function()
-          local lspconfig = require 'lspconfig'
-
-          -- change the working directory to test directory
-          vim.api.nvim_command 'cd ./test/test_dir/'
-          local file = vim.fn.getcwd() .. '/not_exists.txt'
-
-          eq(true, not lspconfig.util.path.is_file(file))
-        end)
-
-        it('is directory', function()
-          local lspconfig = require 'lspconfig'
-
-          local cwd = vim.fn.getcwd()
-          eq(true, not lspconfig.util.path.is_file(cwd))
-        end)
-      end)
-
-      describe('is_absolute', function()
-        it('is absolute', function()
-          local lspconfig = require 'lspconfig'
-          eq(true, lspconfig.util.path.is_absolute '/foo/bar' ~= nil)
-        end)
-
-        it('is not absolute', function()
-          local lspconfig = require 'lspconfig'
-          assert.is_nil(lspconfig.util.path.is_absolute 'foo/bar')
-          assert.is_nil(lspconfig.util.path.is_absolute '../foo/bar')
-        end)
-      end)
-
-      describe('join', function()
-        it('', function()
-          local lspconfig = require 'lspconfig'
-          local res = lspconfig.util.path.join('foo', 'bar', 'baz')
-          eq('foo/bar/baz', res)
-        end)
-      end)
-    end)
-
     describe('root_pattern', function()
       it('resolves to a_marker.txt', function()
         local lspconfig = require 'lspconfig'

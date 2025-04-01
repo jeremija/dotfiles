@@ -1,38 +1,29 @@
-local copy_paste
+local Decorator = require("nvim-tree.renderer.decorator")
 
-local HL_POSITION = require("nvim-tree.enum").HL_POSITION
-local ICON_PLACEMENT = require("nvim-tree.enum").ICON_PLACEMENT
+---@class (exact) CopiedDecorator: Decorator
+---@field private explorer Explorer
+local CopiedDecorator = Decorator:extend()
 
-local Decorator = require "nvim-tree.renderer.decorator"
+---@class CopiedDecorator
+---@overload fun(args: DecoratorArgs): CopiedDecorator
 
----@class DecoratorCopied: Decorator
----@field enabled boolean
----@field icon HighlightedString|nil
-local DecoratorCopied = Decorator:new()
+---@protected
+---@param args DecoratorArgs
+function CopiedDecorator:new(args)
+  self.explorer   = args.explorer
 
----@param opts table
----@return DecoratorCopied
-function DecoratorCopied:new(opts)
-  local o = Decorator.new(self, {
-    enabled = true,
-    hl_pos = HL_POSITION[opts.renderer.highlight_clipboard] or HL_POSITION.none,
-    icon_placement = ICON_PLACEMENT.none,
-  })
-  ---@cast o DecoratorCopied
-
-  -- cyclic
-  copy_paste = copy_paste or require "nvim-tree.actions.fs.copy-paste"
-
-  return o
+  self.enabled         = true
+  self.highlight_range = self.explorer.opts.renderer.highlight_clipboard or "none"
+  self.icon_placement  = "none"
 end
 
 ---Copied highlight: renderer.highlight_clipboard and node is copied
 ---@param node Node
----@return string|nil group
-function DecoratorCopied:calculate_highlight(node)
-  if self.hl_pos ~= HL_POSITION.none and copy_paste.is_copied(node) then
+---@return string? highlight_group
+function CopiedDecorator:highlight_group(node)
+  if self.highlight_range ~= "none" and self.explorer.clipboard:is_copied(node) then
     return "NvimTreeCopiedHL"
   end
 end
 
-return DecoratorCopied
+return CopiedDecorator
