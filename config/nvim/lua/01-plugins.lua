@@ -33,7 +33,7 @@ lspconfig.gopls.setup {
   capabilities = completion_item_resolve_capabilities,
 }
 
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
   capabilities = completion_item_resolve_capabilities,
 }
 
@@ -111,8 +111,12 @@ end
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('n', ',i', vim.diagnostic.open_float)
-vim.keymap.set('n', ',j', vim.diagnostic.goto_next)
-vim.keymap.set('n', ',k', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ',j', function()
+  vim.diagnostic.jump({count=1, float=true})
+end)
+vim.keymap.set('n', ',k', function()
+  vim.diagnostic.jump({count=-1, float=true})
+end)
 vim.keymap.set('n', ',q', function()
   vim.diagnostic.setloclist{ title = 'Buffer diagnostics' }
 end)
