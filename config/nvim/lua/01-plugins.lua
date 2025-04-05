@@ -10,7 +10,11 @@ local completion_item_resolve_capabilities = vim.lsp.protocol.make_client_capabi
 completion_item_resolve_capabilities.textDocument.completion.completionItem = {
   resolveSupport = {
     properties = {"additionalTextEdits"}
-  }
+  },
+  -- Fixes an issue in rust-analyzer where insertions always include (…) after the method name.
+  -- Disabling until this is properly supported by nvim.
+  -- https://github.com/neovim/nvim-lspconfig/issues/276#issuecomment-651700649
+  snippetSupport = false,
 }
 
 -- LSP progress loader
