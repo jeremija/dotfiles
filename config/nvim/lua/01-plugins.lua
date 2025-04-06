@@ -1,21 +1,30 @@
-local completion_item_resolve_capabilities = vim.lsp.protocol.make_client_capabilities()
+local cmp = require('cmp')
+local completion_item_resolve_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Add auto import capabilities for rust-analyzer and typescript-language-server.
--- See also the register_completion_item_resolve_callback function below.
---
--- More info:
--- - https://rust-analyzer.github.io/manual.html#completion-with-autoimport
--- - https://www.reddit.com/r/neovim/comments/mn8ipa/lsp_add_missing_imports_on_complete_using_the/
--- - https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/
-completion_item_resolve_capabilities.textDocument.completion.completionItem = {
-  resolveSupport = {
-    properties = {"additionalTextEdits"}
+cmp.setup({
+  completion = {
+    autocomplete = false,
   },
-  -- Fixes an issue in rust-analyzer where insertions always include (…) after the method name.
-  -- Disabling until this is properly supported by nvim.
-  -- https://github.com/neovim/nvim-lspconfig/issues/276#issuecomment-651700649
-  snippetSupport = false,
-}
+  snippet = {
+    expand = function(args)
+      vim.snippet.expand(args.body)
+    end
+  },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+  })
+})
 
 -- LSP progress loader
 require("fidget").setup {}
@@ -88,7 +97,7 @@ lspconfig.lua_ls.setup {
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
+        globals = { 'vim' },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
@@ -116,88 +125,35 @@ end
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('n', ',i', vim.diagnostic.open_float)
 vim.keymap.set('n', ',j', function()
-  vim.diagnostic.jump({count=1, float=true})
+  vim.diagnostic.jump({ count = 1, float = true })
 end)
 vim.keymap.set('n', ',k', function()
-  vim.diagnostic.jump({count=-1, float=true})
+  vim.diagnostic.jump({ count = -1, float = true })
 end)
 vim.keymap.set('n', ',q', function()
-  vim.diagnostic.setloclist{ title = 'Buffer diagnostics' }
+  vim.diagnostic.setloclist { title = 'Buffer diagnostics' }
 end)
 vim.keymap.set('n', ',Q', function()
-  vim.diagnostic.setqflist{ title = 'Workspace diagnostics' }
+  vim.diagnostic.setqflist { title = 'Workspace diagnostics' }
 end)
+vim.keymap.set('n', ',j', function()
+  vim.diagnostic.jump({ count = 1, float = true })
+end)
+vim.keymap.set({ 'i', 's' }, '<Tab>', function()
+   if vim.snippet.active({ direction = 1 }) then
+     return '<Cmd>lua vim.snippet.jump(1)<CR>'
+   else
+     return '<Tab>'
+   end
+ end, { expr = true, silent = true })
+vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
+   if vim.snippet.active({ direction = -1 }) then
+     return '<Cmd>lua vim.snippet.jump(-1)<CR>'
+   else
+     return '<Tab>'
+   end
+ end, { expr = true, silent = true })
 
-local au_group = 'UserLspConfig'
-
--- This function will register an autocmd for CompleteDone even and call
--- completionItem/resolve when the LSP server capabilities include
--- completionProvider.resolveProvider.
---
--- If the server supports it, make sure to register the client's
--- completion_item_resolve_capabilities.
-local function register_completion_item_resolve_callback(buf, client)
-  if vim.b[buf].lsp_resolve_callback_registered then
-    return
-  end
-
-  vim.b[buf].lsp_resolve_callback_registered = true
-
-  local resolve_provider = client.server_capabilities and
-    client.server_capabilities.completionProvider and
-    client.server_capabilities.completionProvider.resolveProvider
-
-  local offset_encoding = client.offset_encoding
-
-  vim.api.nvim_create_autocmd({"CompleteDone"}, {
-    group = vim.api.nvim_create_augroup(au_group, {clear = false}),
-    buffer = buf,
-    callback = function(_)
-      local completed_item = vim.v.completed_item
-      if not (completed_item and completed_item.user_data and
-          completed_item.user_data.nvim and completed_item.user_data.nvim.lsp and
-          completed_item.user_data.nvim.lsp.completion_item) then
-          return
-      end
-
-      local item = completed_item.user_data.nvim.lsp.completion_item
-      local bufnr = vim.api.nvim_get_current_buf()
-
-      -- Check if the item already has completions attached.
-      -- https://github.com/neovim/neovim/issues/12310#issuecomment-628269290
-      if item.additionalTextEdits and #item.additionalTextEdits > 0 then
-        vim.lsp.util.apply_text_edits(item.additionalTextEdits, bufnr, offset_encoding)
-        return
-      end
-
-      -- Check if the server supports resolving completions.
-      if not resolve_provider then
-        return
-      end
-
-      vim.lsp.buf_request(bufnr, "completionItem/resolve", item, function(err, result, _)
-          if err ~= nil then
-            return
-          end
-
-          if not result then
-            return
-          end
-
-          if not result.additionalTextEdits then
-            return
-          end
-
-          if #result.additionalTextEdits == 0 then
-            return
-          end
-
-          vim.lsp.util.apply_text_edits(result.additionalTextEdits, bufnr, offset_encoding)
-        end
-      )
-    end,
-  })
-end
 
 vim.diagnostic.config({ virtual_text = false })
 
@@ -215,8 +171,6 @@ end
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup(au_group, {}),
-
   callback = function(ev)
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
@@ -251,21 +205,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- disable syntax highlighting
     client.server_capabilities.semanticTokensProvider = nil
-
-    register_completion_item_resolve_callback(ev.buf, client)
   end,
 })
 
 -- Update quickfix/loclist in real-time.
 -- Inspiration from https://github.com/onsails/diaglist.nvim/issues/3#issuecomment-931792663
 local function update_diagnostics(global_too)
-    if vim.fn.getloclist(vim.fn.winnr(), { title = 0 }).title == 'Buffer diagnostics' then
-        vim.diagnostic.setloclist{ open = false, title = 'Buffer diagnostics' }
-    end
+  if vim.fn.getloclist(vim.fn.winnr(), { title = 0 }).title == 'Buffer diagnostics' then
+    vim.diagnostic.setloclist { open = false, title = 'Buffer diagnostics' }
+  end
 
-    if global_too and vim.fn.getqflist{ title = 0 }.title == 'Workspace diagnostics' then
-        vim.diagnostic.setqflist{ open = false,  title = 'Workspace diagnostics' }
-    end
+  if global_too and vim.fn.getqflist { title = 0 }.title == 'Workspace diagnostics' then
+    vim.diagnostic.setqflist { open = false, title = 'Workspace diagnostics' }
+  end
 end
 
 
@@ -281,7 +233,7 @@ vim.api.nvim_create_autocmd({ 'DiagnosticChanged' }, {
   end
 })
 
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the listed parsers MUST always be installed)
   ensure_installed = {},
 
@@ -305,7 +257,7 @@ require'nvim-treesitter.configs'.setup {
     -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
     -- the name of the parser)
     -- list of language that will be disabled
-    disable = {'rust'},
+    disable = { 'rust' },
     -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
     -- disable = function(lang, buf)
     --     local max_filesize = 100 * 1024 -- 100 KB
@@ -325,7 +277,7 @@ require'nvim-treesitter.configs'.setup {
   modules = {},
 }
 
-require('render-markdown').setup{
+require('render-markdown').setup {
   heading = {
     enabled = false,
   },
@@ -337,8 +289,8 @@ require('render-markdown').setup{
     -- below = ' ',
   },
   anti_conceal = {
-      -- This enables hiding any added text on the line the cursor is on
-      -- This does have a performance penalty as we must listen to the 'CursorMoved' event
-      enabled = false,
+    -- This enables hiding any added text on the line the cursor is on
+    -- This does have a performance penalty as we must listen to the 'CursorMoved' event
+    enabled = false,
   },
 }

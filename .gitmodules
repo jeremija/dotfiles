@@ -108,3 +108,9 @@
 [submodule "config/nvim/pack/bundle/start/markdown.nvim"]
 	path = config/nvim/pack/bundle/start/markdown.nvim
 	url = https://github.com/jeremija/markdown.nvim
+[submodule "config/nvim/pack/bundle/start/nvim-cmp"]
+	path = config/nvim/pack/bundle/start/nvim-cmp
+	url = https://github.com/hrsh7th/nvim-cmp
+[submodule "config/nvim/pack/bundle/start/cmp-nvim-lsp"]
+	path = config/nvim/pack/bundle/start/cmp-nvim-lsp
+	url = https://github.com/hrsh7th/cmp-nvim-lsp
