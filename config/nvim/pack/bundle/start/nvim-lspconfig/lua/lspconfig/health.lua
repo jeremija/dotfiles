@@ -190,12 +190,12 @@ local function make_client_info(client, fname)
   local client_info, info_lines = make_info(client)
 
   local workspace_folders = client.workspace_folders
-  fname = vim.fs.normalize(vim.loop.fs_realpath(fname) or fn.fnamemodify(fn.resolve(fname), ':p'))
+  fname = vim.fs.normalize(vim.uv.fs_realpath(fname) or fn.fnamemodify(fn.resolve(fname), ':p'))
 
   if workspace_folders then
     for _, schema in ipairs(workspace_folders) do
       local matched = true
-      local root_dir = vim.loop.fs_realpath(schema.name)
+      local root_dir = vim.uv.fs_realpath(schema.name)
       if root_dir == nil or fname:sub(1, root_dir:len()) ~= root_dir then
         matched = false
       end
@@ -235,8 +235,8 @@ local function check_lspconfig(bufnr)
     health.warn('Deprecated servers: ' .. table.concat(deprecated_servers, ', '))
   end
 
-  local buf_clients = not bufnr and {} or util.get_lsp_clients { bufnr = bufnr }
-  local clients = util.get_lsp_clients()
+  local buf_clients = not bufnr and {} or vim.lsp.get_clients { bufnr = bufnr }
+  local clients = vim.lsp.get_clients()
   local buffer_filetype = bufnr and vim.fn.getbufvar(bufnr, '&filetype') or '(invalid buffer)'
   local fname = bufnr and api.nvim_buf_get_name(bufnr) or '(invalid buffer)'
 

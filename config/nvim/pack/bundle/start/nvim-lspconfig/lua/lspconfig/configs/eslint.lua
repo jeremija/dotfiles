@@ -4,7 +4,7 @@ local lsp = vim.lsp
 local function fix_all(opts)
   opts = opts or {}
 
-  local eslint_lsp_client = util.get_active_client_by_name(opts.bufnr, 'eslint')
+  local eslint_lsp_client = vim.lsp.get_clients({ bufnr = opts.bufnr, name = 'eslint' })[1]
   if eslint_lsp_client == nil then
     return
   end
@@ -125,7 +125,7 @@ return {
       -- Support Yarn2 (PnP) projects
       local pnp_cjs = new_root_dir .. '/.pnp.cjs'
       local pnp_js = new_root_dir .. '/.pnp.js'
-      if vim.loop.fs_stat(pnp_cjs) or vim.loop.fs_stat(pnp_js) then
+      if vim.uv.fs_stat(pnp_cjs) or vim.uv.fs_stat(pnp_js) then
         config.cmd = vim.list_extend({ 'yarn', 'exec' }, config.cmd)
       end
     end,

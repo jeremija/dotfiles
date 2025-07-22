@@ -67,6 +67,122 @@ end
 -- script in scriptnames to be executed is lspconfig.
 api.nvim_create_user_command('LspInfo', ':checkhealth vim.lsp', { desc = 'Alias to `:checkhealth vim.lsp`' })
 
+api.nvim_create_user_command('LspLog', function()
+  vim.cmd(string.format('tabnew %s', lsp.get_log_path()))
+end, {
+  desc = 'Opens the Nvim LSP client log.',
+})
+
+if vim.version.ge(vim.version(), { 0, 11, 2 }) then
+  local complete_client = function(arg)
+    return vim
+      .iter(vim.lsp.get_clients())
+      :map(function(client)
+        return client.name
+      end)
+      :filter(function(name)
+        return name:sub(1, #arg) == arg
+      end)
+      :totable()
+  end
+
+  local complete_config = function(arg)
+    return vim
+      .iter(vim.api.nvim_get_runtime_file(('lsp/%s*.lua'):format(arg), true))
+      :map(function(path)
+        local file_name = path:match('[^/]*.lua$')
+        return file_name:sub(0, #file_name - 4)
+      end)
+      :totable()
+  end
+
+  api.nvim_create_user_command('LspStart', function(info)
+    local servers = info.fargs
+
+    -- Default to enabling all servers matching the filetype of the current buffer.
+    -- This assumes that they've been explicitly configured through `vim.lsp.config`,
+    -- otherwise they won't be present in the private `vim.lsp.config._configs` table.
+    if #servers == 0 then
+      local filetype = vim.bo.filetype
+      for name, _ in pairs(vim.lsp.config._configs) do
+        local filetypes = vim.lsp.config[name].filetypes
+        if filetypes and vim.tbl_contains(filetypes, filetype) then
+          table.insert(servers, name)
+        end
+      end
+    end
+
+    vim.lsp.enable(servers)
+  end, {
+    desc = 'Enable and launch a language server',
+    nargs = '?',
+    complete = complete_config,
+  })
+
+  api.nvim_create_user_command('LspRestart', function(info)
+    local clients = info.fargs
+
+    -- Default to restarting all active servers
+    if #clients == 0 then
+      clients = vim
+        .iter(vim.lsp.get_clients())
+        :map(function(client)
+          return client.name
+        end)
+        :totable()
+    end
+
+    for _, name in ipairs(clients) do
+      if vim.lsp.config[name] == nil then
+        vim.notify(("Invalid server name '%s'"):format(name))
+      else
+        vim.lsp.enable(name, false)
+      end
+    end
+
+    local timer = assert(vim.uv.new_timer())
+    timer:start(500, 0, function()
+      for _, name in ipairs(clients) do
+        vim.schedule_wrap(function(x)
+          vim.lsp.enable(x)
+        end)(name)
+      end
+    end)
+  end, {
+    desc = 'Restart the given client',
+    nargs = '?',
+    complete = complete_client,
+  })
+
+  api.nvim_create_user_command('LspStop', function(info)
+    local clients = info.fargs
+
+    -- Default to disabling all servers on current buffer
+    if #clients == 0 then
+      clients = vim
+        .iter(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() }))
+        :map(function(client)
+          return client.name
+        end)
+        :totable()
+    end
+
+    for _, name in ipairs(clients) do
+      if vim.lsp.config[name] == nil then
+        vim.notify(("Invalid server name '%s'"):format(name))
+      else
+        vim.lsp.enable(name, false)
+      end
+    end
+  end, {
+    desc = 'Disable and stop the given client',
+    nargs = '?',
+    complete = complete_client,
+  })
+
+  return
+end
+
 api.nvim_create_user_command('LspStart', function(info)
   local server_name = string.len(info.args) > 0 and info.args or nil
   if server_name then
@@ -97,7 +213,7 @@ api.nvim_create_user_command('LspRestart', function(info)
       detach_clients[client.name] = { client, lsp.get_buffers_by_client_id(client.id) }
     end
   end
-  local timer = assert(vim.loop.new_timer())
+  local timer = assert(vim.uv.new_timer())
   timer:start(
     500,
     100,
@@ -138,7 +254,7 @@ api.nvim_create_user_command('LspStop', function(info)
 
   -- default to stopping all servers on current buffer
   if #args == 0 then
-    clients = util.get_lsp_clients({ bufnr = vim.api.nvim_get_current_buf() })
+    clients = vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })
   else
     clients = get_clients_from_cmd_args(args)
   end
@@ -152,10 +268,4 @@ end, {
   desc = 'Manually stops the given language client(s)',
   nargs = '?',
   complete = lsp_get_active_clients,
-})
-
-api.nvim_create_user_command('LspLog', function()
-  vim.cmd(string.format('tabnew %s', lsp.get_log_path()))
-end, {
-  desc = 'Opens the Nvim LSP client log.',
 })
