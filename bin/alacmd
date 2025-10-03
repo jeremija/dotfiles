@@ -12,6 +12,7 @@ case $cmd in
         theme="$arg"
         echo changing theme to $theme
         sed -i "s/theme-.*\.toml\"/theme-$theme.toml\"/" $cfg_file
+        command -v gsettings && gsettings set org.gnome.desktop.interface color-scheme "prefer-$theme"
         ~/.tmux.sh theme $theme
     ;;
     font)
