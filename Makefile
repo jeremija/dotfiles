@@ -34,7 +34,7 @@ release: FORCE
 	./flatten.sh
 
 full-release: FORCE
-	git submodule deinit --all
+	git submodule deinit --all --force
 	git checkout release
 	git pull origin release
 	git checkout master
