@@ -6,8 +6,12 @@ autoload -Uz compinit && compinit
 
 export ZSH_DOTFILES_DIR="${ZDOTDIR:-$HOME}/.zprofile"
 
-while readlink -sq "$ZSH_DOTFILES_DIR" > /dev/null; do
-  ZSH_DOTFILES_DIR="$(readlink -sq "$ZSH_DOTFILES_DIR")"
+while readlink "$ZSH_DOTFILES_DIR" > /dev/null; do
+  if [[ "$OSTYPE" == darwin* ]]; then
+    ZSH_DOTFILES_DIR="$(readlink "$ZSH_DOTFILES_DIR")"
+  else
+    ZSH_DOTFILES_DIR="$(readlink -sq "$ZSH_DOTFILES_DIR")"
+  fi
 done
 
 export ZSH_DOTFILES_DIR="$(dirname $ZSH_DOTFILES_DIR)"
