@@ -971,6 +971,7 @@ save_to_clipboard = false
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
 [window]
+option_as_alt = "Both"
 opacity = 1
 
 [window.dimensions]
