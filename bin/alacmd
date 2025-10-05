@@ -7,18 +7,38 @@ cfg_file=~/.config/alacritty/alacritty.toml
 cmd=$1
 arg=$2
 
+if [[ "$(uname)" == "Darwin" ]]; then
+    command -v gsed || (echo "gsed is not found" && exit 1)
+    sed="gsed"
+else
+    sed="sed"
+fi
+
 case $cmd in
     theme)
         theme="$arg"
         echo changing theme to $theme
-        sed -i "s/theme-.*\.toml\"/theme-$theme.toml\"/" $cfg_file
-        command -v gsettings && gsettings set org.gnome.desktop.interface color-scheme "prefer-$theme"
+
+        $sed -i "s/theme-.*\.toml\"/theme-$theme.toml\"/" $cfg_file
+
+        if [[ "$(uname)" == "Darwin" ]]; then
+            if [[ "$theme" == "light" ]]; then
+                dark_mode_enabled="false"
+            else
+                dark_mode_enabled="true"
+            fi
+
+            osascript -e "tell application \"System Events\" to tell appearance preferences to set dark mode to $dark_mode_enabled"
+        else
+            gsettings set org.gnome.desktop.interface color-scheme "prefer-$theme"
+        fi
+
         ~/.tmux.sh theme $theme
     ;;
     font)
         font="$arg"
         echo changing font to $font
-        sed -i "s/font-.*\.toml\"/font-$font.toml\"/" $cfg_file
+        $sed -i "s/font-.*\.toml\"/font-$font.toml\"/" $cfg_file
     ;;
     *)
         echo unknown command: $1
