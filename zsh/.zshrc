@@ -137,7 +137,13 @@ alias tmux-id="tmux display-message -p '#S:#I'"
 alias gcmsg='git commit -m'
 alias gco='git checkout'
 alias gpc='git push --set-upstream origin "$(git symbolic-ref HEAD 2>/dev/null)"'
-alias ls='ls --group-directories-first --color=auto'
+
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias ls='ls --color=auto'
+  alias sed='gsed'
+else
+  alias ls='ls --group-directories-first --color=auto'
+fi
 
 #
 # Most of the code below has been borrowed from github.com/sorin-ionescu/prezto
@@ -329,6 +335,11 @@ else
   compinit -i -d "$_comp_path"
 fi
 unset _comp_path
+
+# Without this there's an issue with autocomplete in tmux on MacOS.
+if [[ "$OSTYPE" != darwin* ]]; then
+  compdef -a _pass pass
+fi
 
 # Use caching to make completion for commands such as dpkg and apt usable.
 zstyle ':completion::complete:*' use-cache on
