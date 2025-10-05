@@ -33,4 +33,14 @@ submodules: FORCE
 release: FORCE
 	./flatten.sh
 
+full-release: FORCE
+	git submodule deinit --all
+	git checkout release
+	git pull origin release
+	git checkout master
+	git pull origin master
+	git submodule update --init --recursive
+	$(MAKE) release
+	git push origin release
+
 FORCE:
