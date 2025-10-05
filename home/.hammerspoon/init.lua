@@ -18,3 +18,7 @@ spoon.cmus.bindHotKeys({
   seekBackward = {{"shift", "alt"}, "3"},
   seekForward = {{"shift", "alt"}, "4"}
 })
+
+hs.hotkey.bindSpec({"cmd", "return"}, function ()
+  os.execute("/bin/bash -c '/opt/homebrew/bin/alacritty msg create-window || open -a Alacritty.app'")
+end)

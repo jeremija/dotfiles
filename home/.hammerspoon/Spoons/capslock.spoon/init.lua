@@ -12,8 +12,10 @@ local keyHandler = function(e)
             j = "down",
             k = "up",
             l = "right",
-            u = "delete",
-            i = "forwarddelete"
+            y = "home",
+            u = "pagedown",
+            i = "pageup",
+            o = "end",
         }
     local actualKey = e:getCharacters(true)
     local replacement = watchFor[actualKey:lower()]
