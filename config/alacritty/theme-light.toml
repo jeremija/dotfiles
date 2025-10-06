@@ -1,35 +1,3 @@
-[[colors.indexed_colors]]
-color = "0x333333"
-index = 248
-
-[[colors.indexed_colors]]
-color = "0xebe3ce"
-index = 233
-
-[[colors.indexed_colors]]
-color = "0xe1d9c6"
-index = 234
-
-[[colors.indexed_colors]]
-color = "0x949494"
-index = 240
-
-[[colors.indexed_colors]]
-color = "0xebe3ce"
-index = 236
-
-[[colors.indexed_colors]]
-color = "0x517dc8"
-index = 244
-
-[[colors.indexed_colors]]
-color = "0x000000"
-index = 254
-
-[[colors.indexed_colors]]
-color = "0xdddddd"
-index = 66
-
 [colors.bright]
 black = "0xbcbcbc"
 blue = "0x6666bb"
@@ -49,7 +17,6 @@ black = "0xefe7d2"
 blue = "0x0087af"
 cyan = "0x005f87"
 green = "0x00aa77"
-# limegreen = "0x000000"
 magenta = "0xdd00dd"
 red = "0xee3333"
 white = "0x444444"
