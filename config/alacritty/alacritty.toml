@@ -4,7 +4,11 @@ import = [
   "~/.config/alacritty/font-dina.toml",
 ]
 
+
 live_config_reload = true
+
+[env]
+TERM = "xterm-256color"
 
 [bell]
 animation = "EaseOutExpo"

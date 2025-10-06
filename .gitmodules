@@ -1,6 +1,3 @@
-[submodule "config/nvim/pack/bundle/start/vim-colorschemes"]
-	path = config/nvim/pack/bundle/start/vim-colorschemes
-	url = ../vim-colorschemes
 [submodule "config/nvim/pack/bundle/start/vim-flake8"]
 	path = config/nvim/pack/bundle/start/vim-flake8
 	url = https://github.com/nvie/vim-flake8
