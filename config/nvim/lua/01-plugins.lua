@@ -27,7 +27,13 @@ cmp.setup({
 })
 
 -- LSP progress loader
-require("fidget").setup {}
+require("fidget").setup {
+  notification = {
+    window = {
+      winblend = 0,
+    }
+  }
+}
 
 require('fzf-lua').setup {
   lsp = {
