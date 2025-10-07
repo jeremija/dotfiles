@@ -49,18 +49,28 @@ if has('termguicolors') && &termguicolors
   let s:blue       = "#5f87ff"
   let s:purple     = "#8787ff"
 
-  echo "bg=" . &background
-
   if &background == "light"
-    let s:darkcolumn = "#e1d9c6"
-    let s:line       = "#ebe3ce"
-    let s:foreground = "#333333"
-    let s:selection  = "#949494"
-    let s:visual     = "#dddddd"
-    let s:comment    = "#999999"
-    let s:addfg      = "#5f8700"
-    let s:changefg   = "#5f8700"
-    let s:brown      = "#eeeeee"
+    let s:white      = "#3a3a3a"   " Now a dark gray to contrast the light background
+    let s:background = "#efe7d2"   " Light tan/cream background
+    let s:window     = "#b3ab98"   " Soft taupe gray
+    let s:darkcolumn = "#d7cfba"   " Slightly darker than background, for subtle side columns
+    let s:addbg      = "#a3cfa3"   " Muted pastel green (for additions)
+    let s:addfg      = "#324632"   " Dark olive green text
+    let s:changebg   = "#a3b3cf"   " Muted dusty blue
+    let s:changefg   = "#2a3346"   " Charcoal navy
+    let s:brown      = "#8c7f5a"   " Earthy brown, muted
+    let s:foreground = "#2e2e2e"   " Primary text color, dark gray
+    let s:selection  = "#cfc7b0"   " Slightly darker beige for selections
+    let s:visual     = "#aacfcf"   " Muted cyan for visual mode
+    let s:line       = "#dcd4bd"   " Very subtle line background
+    let s:comment    = "#a89f8a"   " Grayish-brown for comments
+    let s:red        = "#af5f5f"   " Muted brick red
+    let s:orange     = "#af8700"   " Dusty amber
+    let s:yellow     = "#af9f00"   " Muted mustard yellow
+    let s:green      = "#5f9f5f"   " Calm green
+    let s:aqua       = "#5f87af"   " Dusty blue
+    let s:blue       = "#5f7faf"   " Steel blue
+    let s:purple     = "#7f7faf"   " Dusty violet
   endif
 else
   let s:vmode      = "cterm"
@@ -363,28 +373,3 @@ hi! TabLine ctermfg=none ctermbg=none cterm=none
 "}}}
 
 " vim: fdm=marker:sw=2:ts=2:tw=80
-
-" hi tsxTagName ctermfg=11
-" hi tsxAttrib ctermfg=172
-" hi MatchParen cterm=bold ctermbg=none ctermfg=white
-" hi StatusLine  ctermfg=172 ctermbg=none
-" hi StatusLineNC  ctermfg=none ctermbg=none cterm=none
-" hi VertSplit ctermbg=none cterm=none ??
-" hi Normal ctermfg=248
-" hi 12ColorColumn ctermbg=233
-" hi SnippetTabStop ctermfg=none ctermbg=236
-
-" these haven't been applied
-" hi DiffAdd ctermbg=233 ctermfg=172
-" hi DiffDelete ctermbg=none ctermfg=black
-" hi DiffChange ctermbg=233 ctermfg=248
-" hi DiffText ctermbg=236 ctermfg=11
-
-" hi RenderMarkdownCode ctermbg=234
-" hi RenderMarkdownQuote ctermfg=240
-" hi RenderMarkdownInfo ctermfg=110
-
-" floating window for LSP popups
-" hi NormalFloat ctermbg=233
-" search highlight and quickfix selection
-" hi Search ctermbg=172
