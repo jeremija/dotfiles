@@ -29,6 +29,7 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
+  export SSH_AUTH_SOCK=$(ls /private/tmp/com.apple.launchd.*/Listeners | head -n1)
 fi
 
 #
