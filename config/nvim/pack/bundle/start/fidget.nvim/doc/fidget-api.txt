@@ -43,7 +43,7 @@ Key                                                    *fidget.notification.Key*
 
 
 Level                                                *fidget.notification.Level*
-     Second (level) paramter passed to |fidget.notification.notify|.
+     Second (level) parameter passed to |fidget.notification.notify|.
 
      `string` indicates highlight group name; otherwise, `number` indicates
      the |vim.log.levels| value (that will resolve to a highlight group as
@@ -70,11 +70,13 @@ Options                                            *fidget.notification.Options*
 Display                                            *fidget.notification.Display*
      Something that can be displayed in a |fidget.notification.Group|.
 
+     If false, this content is not rendered.
+
      If a callable `function`, it is invoked every render cycle with the items
      list; useful for rendering animations and other dynamic content.
 
     Type: ~
-        string|fun(now:number,items:Item[]):string
+        string|false|fun(now:number,items:Item[]):string|false|nil
 
 
 Config                                              *fidget.notification.Config*
@@ -264,6 +266,9 @@ notification.clear_history({filter})         *fidget.notification.clear_history*
 
 notification.reset()                                 *fidget.notification.reset*
      Reset notification subsystem state.
+
+     Note that this function does not set any Fidget notification window state,
+     in particular, the `x_offset`.
 
 
                                                 *fidget.notification.set_config*

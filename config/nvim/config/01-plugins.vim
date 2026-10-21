@@ -49,12 +49,6 @@ let g:ale_go_golangci_lint_options = ''
 let g:ale_go_golangci_lint_package=1
 let g:ale_completion_autoimport = 1
 
-let g:UltiSnipsSnippetsDir = '~/.config/nvim/pack/bundle/start/vim-snippets/UltiSnips'
-let g:UltiSnipsExpandTrigger = '<c-s>'
-let g:UltiSnipsListSnippets = '<c-l>'
-let g:UltiSnipsJumpForwardTrigger = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<S-tab>'
-
 function! OpenTest() abort
   let l:filename = expand('%:p:r')
   let l:ext = expand('%:e')

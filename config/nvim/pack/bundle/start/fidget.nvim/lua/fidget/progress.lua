@@ -1,19 +1,19 @@
 ---@mod fidget.progress LSP progress subsystem
-local progress     = {}
-progress.display   = require("fidget.progress.display")
-progress.lsp       = require("fidget.progress.lsp")
-progress.handle    = require("fidget.progress.handle")
-local poll         = require("fidget.poll")
-local notification = require("fidget.notification")
-local logger       = require("fidget.logger")
+local progress      = {}
+progress.display    = require("fidget.progress.display")
+progress.lsp        = require("fidget.progress.lsp")
+progress.handle     = require("fidget.progress.handle")
+local poll          = require("fidget.poll")
+local notification  = require("fidget.notification")
+local logger        = require("fidget.logger")
 
 --- Table of progress-related autocmds, used to ensure setup() re-entrancy.
-local autocmds     = {}
+local autocmds      = {}
 
 ---@options progress [[
 ---@protected
 --- Progress options
-progress.options   = {
+progress.options    = {
   --- How and when to poll for progress messages
   ---
   --- Set to `0` to immediately poll on each |LspProgress| event.
@@ -100,20 +100,36 @@ progress.options   = {
     return client and client.name or nil
   end,
 
-  --- List of LSP servers to ignore
+  --- List of filters to ignore LSP progress messages
+  ---
+  --- Each filter is either a string or a function.
+  ---
+  --- If it is a string, then it is treated as the name of a LSP server;
+  --- messages from that server are ignored.
+  ---
+  --- If it is a function, then the progress message object is passed to the
+  --- function. If the function returns a truthy value, then that message is
+  --- ignored.
   ---
   --- Example:
   --->lua
-  ---     ignore = { "rust_analyzer" }
+  ---     ignore = {
+  ---       "rust_analyzer",  -- Ignore all messages from rust-analyzer
+  ---       function(msg)     -- Ignore messages containing "ing"
+  ---         return string.find(msg.title, "ing") ~= nil
+  ---       end,
+  ---     }
   ---<
   ---
-  ---@type Key[]
+  ---@type (string|fun(msg: ProgressMessage): any)[]
   ignore = {},
 
   display = progress.display,
   lsp = progress.lsp,
 }
 ---@options ]]
+
+progress.client_ids = {}
 
 require("fidget.options").declare(progress, "progress", progress.options, function()
   -- Ensure setup() reentrancy
@@ -133,12 +149,7 @@ require("fidget.options").declare(progress, "progress", progress.options, functi
   end
 
   if progress.options.clear_on_detach then
-    autocmds["LspDetach"] = vim.api.nvim_create_autocmd("LspDetach", {
-      desc = "Fidget LSP detach handler",
-      callback = function(args)
-        progress.on_detach(args.data.client_id)
-      end,
-    })
+    autocmds["LspDetach"] = progress.lsp.on_detach(progress.on_detach)
   end
 end)
 
@@ -186,7 +197,7 @@ function progress.format_progress(msg)
     update_only = true
   end
 
-  return message, msg.done and vim.log.levels.INFO or vim.log.levels.WARN, {
+  return message, vim.log.levels.INFO, {
     key = msg.token,
     group = group,
     annote = annote,
@@ -205,7 +216,7 @@ progress.poller = poll.Poller {
       return false
     end
 
-    local messages = progress.lsp.poll_for_messages()
+    local messages = progress.lsp.poll_for_messages(progress.client_ids)
     if #messages == 0 then
       logger.info("No LSP messages (that can be displayed)")
       return false
@@ -214,17 +225,25 @@ progress.poller = poll.Poller {
     for _, msg in ipairs(messages) do
       -- Determine if we should ignore this message
       local ignore = false
-      for _, lsp_name in ipairs(progress.options.ignore) do
-        -- NOTE: hopefully this loop isn't too expensive.
-        -- But if it is, consider indexing by hash.
-        if msg.lsp_client.name == lsp_name then
-          ignore = true
-          logger.info("Ignoring LSP progress message:", msg)
-          break
+      for _, filter in ipairs(progress.options.ignore) do
+        if type(filter) == "string" then
+          if msg.lsp_client.name == filter then
+            ignore = true
+            logger.info("Ignoring LSP progress message by name from", filter, ":", msg)
+            break
+          end
+        elseif type(filter) == "function" then
+          if filter(msg) then
+            ignore = true
+            logger.info("Filtering out LSP progress message", ":", msg)
+            break
+          end
+        else
+          logger.error("Unsupported filter type:", type(filter))
         end
       end
       if not ignore then
-        logger.info("Notifying LSP progress message:", msg)
+        logger.info("Notifying LSP progress message from", msg.lsp_client.name, ":", msg.title, " | ", msg.message)
         progress.load_config(msg)
         notification.notify(progress.format_progress(msg))
       end

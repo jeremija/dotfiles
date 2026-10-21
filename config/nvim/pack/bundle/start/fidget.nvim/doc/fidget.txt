@@ -10,8 +10,9 @@ Table of Contents                                   *fidget-table-of-contents*
 2. Options                                                    |fidget-options|
 3. Lua API                                                    |fidget-lua-api|
 4. Commands                                                  |fidget-commands|
-5. Highlights                                              |fidget-highlights|
-6. Related Work                                          |fidget-related-work|
+5. Telescope                                                |fidget-telescope|
+6. Highlights                                              |fidget-highlights|
+7. Related Work                                          |fidget-related-work|
   - Acknowledgements                    |fidget-related-work-acknowledgements|
 
 ==============================================================================
@@ -20,7 +21,8 @@ Table of Contents                                   *fidget-table-of-contents*
 
 REQUIREMENTS                             *fidget-getting-started-requirements*
 
-Fidget requires Neovim v0.8.0+.
+Fidget requires Neovim v0.11.3. It may work on older versions, but full
+functionality is not guaranteed.
 
 If you would like to see progress notifications, you must have configured
 Neovim with an LSP server that uses the `$/progress`
@@ -83,7 +85,7 @@ For instance, using Lazy <https://github.com/folke/lazy.nvim>
 >lua
     {
       "j-hui/fidget.nvim",
-      tag = "v1.0.0",
+      tag = "*", -- alternatively, pin this to a specific version, e.g., "v1.6.1"
       opts = {
         -- options
       },
@@ -122,7 +124,7 @@ Available options are shown below:
           done_style = "Constant",    -- Highlight group for completed LSP tasks
           progress_ttl = math.huge,   -- How long a message should persist when in progress
           progress_icon =             -- Icon shown when LSP progress tasks are in progress
-            { pattern = "dots", period = 1 },
+            { "dots" },
           progress_style =            -- Highlight group for in-progress LSP tasks
             "WarningMsg",
           group_style = "Title",      -- Highlight group for group name (LSP server name)
@@ -143,6 +145,7 @@ Available options are shown below:
         -- Options related to Neovim's built-in LSP client
         lsp = {
           progress_ringbuf_size = 0,  -- Configure the nvim's LSP progress ring buffer size
+          log_handler = false,        -- Log `$/progress` handler invocations (for debugging)
         },
       },
     
@@ -164,10 +167,13 @@ Available options are shown below:
         -- Options related to how notifications are rendered as text
         view = {
           stack_upwards = true,       -- Display notification items from bottom to top
+          align = "message",          -- Indent messages longer than a single line
+          reflow = false,             -- Reflow (wrap) messages wider than notification window
           icon_separator = " ",       -- Separator between group name and icon
           group_separator = "---",    -- Separator between notification groups
           group_separator_hl =        -- Highlight group used for group separator
             "Comment",
+          line_margin = 1,            -- Spaces to pad both sides of each non-empty line
           render_message =            -- How to render notification messages
             function(msg, cnt)
               return cnt == 1 and msg or string.format("(%dx) %s", cnt, msg)
@@ -186,6 +192,9 @@ Available options are shown below:
           y_padding = 0,              -- Padding from bottom edge of window boundary
           align = "bottom",           -- How to align the notification window
           relative = "editor",        -- What the notification window position is relative to
+          tabstop = 8,                -- Width of each tab character in the notification window
+          avoid = {}                  -- Filetypes the notification window should avoid
+                                      -- e.g., { "aerial", "NvimTree", "neotest-summary" }
         },
       },
     
@@ -193,12 +202,18 @@ Available options are shown below:
       integration = {
         ["nvim-tree"] = {
           enable = true,              -- Integrate with nvim-tree/nvim-tree.lua (if installed)
+                                      -- DEPRECATED; use notification.window.avoid = { "NvimTree" }
+        },
+        ["xcodebuild-nvim"] = {
+          enable = true,              -- Integrate with wojciech-kulik/xcodebuild.nvim (if installed)
+                                      -- DEPRECATED; use notification.window.avoid = { "TestExplorer" }
         },
       },
     
       -- Options related to logging
       logger = {
         level = vim.log.levels.WARN,  -- Minimum logging level
+        max_size = 10000,             -- Maximum log file size, in KB
         float_precision = 0.01,       -- Limit the number of decimals displayed for floats
         path =                        -- Where Fidget writes its logs to
           string.format("%s/fidget.nvim.log", vim.fn.stdpath("cache")),
@@ -280,7 +295,27 @@ These sub-commands are documented below.
 
 
 ==============================================================================
-5. Highlights                                              *fidget-highlights*
+5. Telescope                                                *fidget-telescope*
+
+Fidget includes a Telescope <https://github.com/nvim-telescope/telescope.nvim>
+picker extension, which will show your Fidget notification history in Telescope
+and allow you to filter it. To enable this extension, make sure the Telescope
+plugin is installed, and add the following to your configuration:
+
+>lua
+    require("telescope").load_extension("fidget")
+<
+
+You can open the Fidget picker using the command `:Telescope fidget`, or via
+the Lua API:
+
+>lua
+    require("telescope").extensions.fidget.fidget()
+<
+
+
+==============================================================================
+6. Highlights                                              *fidget-highlights*
 
 Rather than defining its own highlights, Fidget’s default configuration uses
 built-in highlight groups that are typically overridden by custom Vim color
@@ -293,7 +328,7 @@ You can override these highlight groups (e.g., `icon_style`) using the
 
 
 ==============================================================================
-6. Related Work                                          *fidget-related-work*
+7. Related Work                                          *fidget-related-work*
 
 rcarriga/nvim-notify <https://github.com/rcarriga/nvim-notify> is first and
 foremost a `vim.notify()` backend, and it also supports LSP progress

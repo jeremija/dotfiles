@@ -76,7 +76,7 @@ who doesn't love a little bit of terminal eye candy, as a treat?
 
 ### Requirements
 
-Fidget requires Neovim v0.8.0+.
+Fidget requires Neovim v0.11.3. It may work on older versions, but full functionality is not guaranteed.
 
 If you would like to see progress notifications, you must have configured Neovim
 with an LSP server that uses the [`$/progress`][lsp-progress] handler.
@@ -132,7 +132,7 @@ For instance, using [Lazy](https://github.com/folke/lazy.nvim):
 ```lua
 {
   "j-hui/fidget.nvim",
-  tag = "v1.0.0",
+  tag = "*", -- alternatively, pin this to a specific version, e.g., "v1.6.1"
   opts = {
     -- options
   },
@@ -169,7 +169,7 @@ Available options are shown below:
       done_style = "Constant",    -- Highlight group for completed LSP tasks
       progress_ttl = math.huge,   -- How long a message should persist when in progress
       progress_icon =             -- Icon shown when LSP progress tasks are in progress
-        { pattern = "dots", period = 1 },
+        { "dots" },
       progress_style =            -- Highlight group for in-progress LSP tasks
         "WarningMsg",
       group_style = "Title",      -- Highlight group for group name (LSP server name)
@@ -190,6 +190,7 @@ Available options are shown below:
     -- Options related to Neovim's built-in LSP client
     lsp = {
       progress_ringbuf_size = 0,  -- Configure the nvim's LSP progress ring buffer size
+      log_handler = false,        -- Log `$/progress` handler invocations (for debugging)
     },
   },
 
@@ -211,10 +212,13 @@ Available options are shown below:
     -- Options related to how notifications are rendered as text
     view = {
       stack_upwards = true,       -- Display notification items from bottom to top
+      align = "message",          -- Indent messages longer than a single line
+      reflow = false,             -- Reflow (wrap) messages wider than notification window
       icon_separator = " ",       -- Separator between group name and icon
       group_separator = "---",    -- Separator between notification groups
       group_separator_hl =        -- Highlight group used for group separator
         "Comment",
+      line_margin = 1,            -- Spaces to pad both sides of each non-empty line
       render_message =            -- How to render notification messages
         function(msg, cnt)
           return cnt == 1 and msg or string.format("(%dx) %s", cnt, msg)
@@ -233,6 +237,9 @@ Available options are shown below:
       y_padding = 0,              -- Padding from bottom edge of window boundary
       align = "bottom",           -- How to align the notification window
       relative = "editor",        -- What the notification window position is relative to
+      tabstop = 8,                -- Width of each tab character in the notification window
+      avoid = {}                  -- Filetypes the notification window should avoid
+                                  -- e.g., { "aerial", "NvimTree", "neotest-summary" }
     },
   },
 
@@ -240,12 +247,18 @@ Available options are shown below:
   integration = {
     ["nvim-tree"] = {
       enable = true,              -- Integrate with nvim-tree/nvim-tree.lua (if installed)
+                                  -- DEPRECATED; use notification.window.avoid = { "NvimTree" }
+    },
+    ["xcodebuild-nvim"] = {
+      enable = true,              -- Integrate with wojciech-kulik/xcodebuild.nvim (if installed)
+                                  -- DEPRECATED; use notification.window.avoid = { "TestExplorer" }
     },
   },
 
   -- Options related to logging
   logger = {
     level = vim.log.levels.WARN,  -- Minimum logging level
+    max_size = 10000,             -- Maximum log file size, in KB
     float_precision = 0.01,       -- Limit the number of decimals displayed for floats
     path =                        -- Where Fidget writes its logs to
       string.format("%s/fidget.nvim.log", vim.fn.stdpath("cache")),
@@ -276,7 +289,6 @@ source code. You are encouraged to hack around with that.
 :put = execute('lua print(dofile([[lua/fidget/commands.lua]]).make_panvimdocs())')
 -->
 
-
 <!-- {{{ Generated from fidget.commands.lua -->
 
 ## Commands
@@ -306,10 +318,9 @@ Clear active notifications
 
 Positional arguments:
 
--   **`{group_key}`**: _`(any)`_ group to clear
+- **`{group_key}`**: _`(any)`_ group to clear
 
 </details>
-
 
 #### `:Fidget clear_history`
 
@@ -320,18 +331,17 @@ Clear notifications history
 
 Flags:
 
--   **`--before {seconds}`**: _`(number)`_ filter history for items updated at least this long ago
--   **`--group_key {group_key}`**: _`(any)`_ clear history by group key
--   **`--include_active {true|false}`**: _`(boolean)`_ whether to clear items that have not been removed (default: true)
--   **`--include_removed {true|false}`**: _`(boolean)`_ whether to clear items that have have been removed (default: true)
--   **`--since {seconds}`**: _`(number)`_ filter history for items updated at most this long ago
+- **`--before {seconds}`**: _`(number)`_ filter history for items updated at least this long ago
+- **`--group_key {group_key}`**: _`(any)`_ clear history by group key
+- **`--include_active {true|false}`**: _`(boolean)`_ whether to clear items that have not been removed (default: true)
+- **`--include_removed {true|false}`**: _`(boolean)`_ whether to clear items that have have been removed (default: true)
+- **`--since {seconds}`**: _`(number)`_ filter history for items updated at most this long ago
 
 Positional arguments:
 
--   **`{group_key}`**: _`(any)`_ clear history by group key
+- **`{group_key}`**: _`(any)`_ clear history by group key
 
 </details>
-
 
 #### `:Fidget history`
 
@@ -342,18 +352,17 @@ Show notifications history
 
 Flags:
 
--   **`--before {seconds}`**: _`(number)`_ filter history for items updated at least this long ago
--   **`--group_key {group_key}`**: _`(any)`_ filter history by group key
--   **`--include_active {true|false}`**: _`(boolean)`_ whether to clear items that have not been removed (default: `true`)
--   **`--include_removed {true|false}`**: _`(boolean)`_ whether to clear items that have have been removed (default: `true`)
--   **`--since {seconds}`**: _`(number)`_ filter history for items updated at most this long ago
+- **`--before {seconds}`**: _`(number)`_ filter history for items updated at least this long ago
+- **`--group_key {group_key}`**: _`(any)`_ filter history by group key
+- **`--include_active {true|false}`**: _`(boolean)`_ whether to clear items that have not been removed (default: `true`)
+- **`--include_removed {true|false}`**: _`(boolean)`_ whether to clear items that have have been removed (default: `true`)
+- **`--since {seconds}`**: _`(number)`_ filter history for items updated at most this long ago
 
 Positional arguments:
 
--   **`{group_key}`**: _`(any)`_ filter history by group key
+- **`{group_key}`**: _`(any)`_ filter history by group key
 
 </details>
-
 
 #### `:Fidget lsp_suppress`
 
@@ -364,10 +373,9 @@ Suppress LSP progress notifications
 
 Positional arguments:
 
--   **`{suppress}`**: _`(boolean)`_ whether to suppress (omitting this argument toggles suppression)
+- **`{suppress}`**: _`(boolean)`_ whether to suppress (omitting this argument toggles suppression)
 
 </details>
-
 
 #### `:Fidget suppress`
 
@@ -378,10 +386,9 @@ Suppress notification window
 
 Positional arguments:
 
--   **`{suppress}`**: _`(boolean)`_ whether to suppress (omitting this argument toggles suppression)
+- **`{suppress}`**: _`(boolean)`_ whether to suppress (omitting this argument toggles suppression)
 
 </details>
-
 
 <!-- panvimdoc-ignore-end -->
 
@@ -446,6 +453,25 @@ Positional arguments:
 
 <!-- Generated from fidget.commands.lua }}} -->
 
+## Telescope
+
+Fidget includes a [Telescope][telescope.nvim] picker extension, which will show
+your Fidget notification history in Telescope and allow you to filter it.
+To enable this extension, make sure the Telescope plugin is installed, and
+add the following to your configuration:
+
+```lua
+require("telescope").load_extension("fidget")
+```
+
+You can open the Fidget picker using the command `:Telescope fidget`, or
+via the Lua API:
+
+```lua
+require("telescope").extensions.fidget.fidget()
+```
+
+[telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
 
 ## Highlights
 

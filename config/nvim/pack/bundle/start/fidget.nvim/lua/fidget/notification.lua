@@ -9,7 +9,7 @@ local logger                = require("fidget.logger")
 --- Used to determine the identity of notification items and groups.
 ---@alias Key any
 
---- Second (level) paramter passed to |fidget.notification.notify|.
+--- Second (level) parameter passed to |fidget.notification.notify|.
 ---
 --- `string` indicates highlight group name; otherwise, `number` indicates
 --- the |vim.log.levels| value (that will resolve to a highlight group as
@@ -29,9 +29,11 @@ local logger                = require("fidget.logger")
 
 --- Something that can be displayed in a |fidget.notification.Group|.
 ---
+--- If false, this content is not rendered.
+---
 --- If a callable `function`, it is invoked every render cycle with the items
 --- list; useful for rendering animations and other dynamic content.
----@alias Display string|fun(now: number, items: Item[]): string
+---@alias Display string|false|fun(now: number, items: Item[]): (string|false|nil)
 
 --- Used to configure the behavior of notification groups.
 ---
@@ -346,6 +348,9 @@ function notification.clear_history(filter)
 end
 
 --- Reset notification subsystem state.
+---
+--- Note that this function does not set any Fidget notification window state,
+--- in particular, the `x_offset`.
 function notification.reset()
   notification.clear()
   notification.clear_history()
@@ -360,16 +365,15 @@ notification.poller = poll.Poller {
     notification.model.tick(self:now(), state)
 
     -- TODO: if not modified, don't re-render
-    local v = notification.view.render(self:now(), state.groups)
+    local lines, width = notification.view.render(self:now(), state.groups)
 
-    if #v.lines > 0 then
+    if #lines > 0 then
       if state.view_suppressed then
         return true
       end
 
       notification.window.guard(function()
-        notification.window.set_lines(v.lines, v.highlights, v.width)
-        notification.window.show(v.width, #v.lines)
+        notification.window.set_lines(lines, width)
       end)
       return true
     else

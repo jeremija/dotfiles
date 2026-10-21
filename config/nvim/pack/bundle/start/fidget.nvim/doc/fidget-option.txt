@@ -18,7 +18,6 @@ Nvim LSP client options ......................... |fidget.option.progress.lsp|
 Notification options ............................ |fidget.option.notification|
 Notifications rendering options ............ |fidget.option.notification.view|
 Notifications window options ............. |fidget.option.notification.window|
-nvim-tree integration .................. |fidget.option.integration.nvim-tree|
 Logging options ....................................... |fidget.option.logger|
 
 
@@ -152,15 +151,29 @@ progress.clear_on_detach              *fidget.option.progress.clear_on_detach*
 
 progress.ignore                                *fidget.option.progress.ignore*
 
-    List of LSP servers to ignore
+    List of filters to ignore LSP progress messages
+
+    Each filter is either a string or a function.
+
+    If it is a string, then it is treated as the name of a LSP server;
+    messages from that server are ignored.
+
+    If it is a function, then the progress message object is passed to the
+    function. If the function returns a truthy value, then that message is
+    ignored.
 
     Example:
 >lua
-        ignore = { "rust_analyzer" }
+        ignore = {
+          "rust_analyzer",  -- Ignore all messages from rust-analyzer
+          function(msg)     -- Ignore messages containing "ing"
+            return string.find(msg.title, "ing") ~= nil
+          end,
+        }
 <
 
     Type: ~
-        `Key[]`
+        `(string|fun(msg: ProgressMessage): any)[]`
 
     Default: ~
         `{}`
@@ -453,6 +466,24 @@ progress.lsp.progress_ringbuf_size  *fidget.option.progress.lsp.progress_ringbuf
         `0`
 
 
+progress.lsp.log_handler              *fidget.option.progress.lsp.log_handler*
+
+    Log `$/progress` handler invocations (for debugging)
+
+    Works by wrapping `vim.lsp.handlers["$/progress"]` with Fidget's logger.
+    Invocations are logged at the `vim.log.levels.INFO` level.
+
+    This option exists primarily for debugging; setting this to `true` is
+    not recommended.
+
+    Since it works by overriding Neovim's existing `$/progress` handler, you
+    should not use this function if you'd like Neovim to use your overriden
+    `$/progress` handler! It will conflict with the handler that Fidget tries
+    to install for logging purposes.
+    Default: ~
+        `false`
+
+
 ==============================================================================
 Notification options                              *fidget.option.notification*
 
@@ -579,6 +610,60 @@ notification.view.stack_upwards  *fidget.option.notification.view.stack_upwards*
         `true`
 
 
+notification.view.align                *fidget.option.notification.view.align*
+
+    Indent messages longer than a single line
+
+    Example: ~
+>
+      align message style INFO
+          looks like this
+            when reflowed
+
+       align annote style INFO
+          looks like this when
+                      reflowed
+<
+
+    Type: ~
+        `"message"|"annote"`
+
+    Default: ~
+        `"message"`
+
+
+notification.view.reflow              *fidget.option.notification.view.reflow*
+
+    Reflow (wrap) messages wider than notification window
+
+    The various options determine how wrapping is handled mid-word.
+
+    Example: ~
+>
+          "hard" is reflo INFO
+            wed like this
+
+      "hyphenate" is ref- INFO
+          lowed like this
+
+      "ellipsis" is refl… INFO
+          …owed like this
+<
+
+    If this option is set to false, long lines will simply be truncated.
+
+    This option has no effect if |fidget.option.notification.window.max_width|
+    is `0` (i.e., infinite).
+
+    Annotes longer than this width on their own will not be wrapped.
+
+    Type: ~
+        `"hard"|"hyphenate"|"ellipsis"|false`
+
+    Default: ~
+        `false`
+
+
 notification.view.icon_separator  *fidget.option.notification.view.icon_separator*
 
     Separator between group name and icon
@@ -617,6 +702,20 @@ notification.view.group_separator_hl  *fidget.option.notification.view.group_sep
         `"Comment"`
 
 
+notification.view.line_margin    *fidget.option.notification.view.line_margin*
+
+    Spaces to pad both sides of each non-empty line
+
+    Useful for adding a visual gap between notification text and any buffer it
+    may overlap with.
+
+    Type: ~
+        `integer`
+
+    Default: ~
+        `1`
+
+
 notification.view.render_message  *fidget.option.notification.view.render_message*
 
     How to render notification messages
@@ -625,8 +724,7 @@ notification.view.render_message  *fidget.option.notification.view.render_messag
     only be rendered once, with a `cnt` greater than 1. This hook provides an
     opportunity to customize how such messages should appear.
 
-    Note that if this returns an empty string, the notification will not be
-    rendered.
+    If this returns false or nil, the notification will not be rendered.
 
     See also:~
         |fidget.notification.Config|
@@ -634,7 +732,7 @@ notification.view.render_message  *fidget.option.notification.view.render_messag
         |fidget.notification.set_content_key|
 
     Type: ~
-        `fun(msg: string, cnt: number): string`
+        `fun(msg: string, cnt: number): (string|false|nil)`
 
     Default: ~
         `function(msg, cnt) return cnt == 1 and msg or string.format("(%dx) %s", cnt, msg) end`
@@ -736,8 +834,11 @@ notification.window.max_width    *fidget.option.notification.window.max_width*
 
     `0` means no maximum width.
 
+    Non-integral numbers between `0` and `1` mean a fraction of the editor
+    width, e.g., `0.5` for half of the editor.
+
     Type: ~
-        `integer`
+        `number`
 
     Default: ~
         `0`
@@ -802,22 +903,30 @@ notification.window.relative      *fidget.option.notification.window.relative*
         `"editor"`
 
 
-==============================================================================
-nvim-tree integration                    *fidget.option.integration.nvim-tree*
+notification.window.tabstop        *fidget.option.notification.window.tabstop*
 
-
-integration.nvim-tree.enable      *fidget.option.integration.nvim-tree.enable*
-
-    Integrate with nvim-tree/nvim-tree.lua (if installed)
-
-    Dynamically offset Fidget's notifications window when the nvim-tree window
-    is open on the right side + the Fidget window is "editor"-relative.
+    Width of each tab character in the notification window
 
     Type: ~
-        `boolean`
+        `number`
 
     Default: ~
-        `true`
+        `8`
+
+
+notification.window.avoid            *fidget.option.notification.window.avoid*
+
+    Filetypes the notification window should avoid
+
+    Example: ~
+>lua
+      avoid = { "aerial", "NvimTree", "nerdtree", "neotest-summary" }
+<
+    Type: ~
+        `string[]`
+
+    Default: ~
+        `{}`
 
 
 ==============================================================================
@@ -839,6 +948,31 @@ logger.level                                      *fidget.option.logger.level*
 
     Default: ~
         `vim.log.levels.WARN`
+
+
+logger.max_size                                *fidget.option.logger.max_size*
+
+    Maximum log file size, in KB
+
+    If this option is set to `false`, the log file will be let to grow
+    indefinitely.
+
+    When the log file exceeds this size, it is backed up with suffix `.bak`,
+    overwriting any possible previous backup. Thus, the maximum on-disk
+    footprint of Fidget logs is approximately twice `logger.max_size`.
+    If you would like to retain the backup log, copy it manually.
+
+    Note that there is a possible race condition when two concurrent Neovim
+    processes both try to back up the log file. Thus, a fresh backup log file
+    may be clobbered by a concurrent Neovim process, before you have a chance
+    to back move it somewhere safe for later inspection. So, when debugging
+    Fidget, run only one instance of Neovim, or set this option to `false`.
+
+    Type: ~
+        `number | false`
+
+    Default: ~
+        `10000`
 
 
 logger.float_precision                  *fidget.option.logger.float_precision*
