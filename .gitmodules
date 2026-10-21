@@ -43,19 +43,12 @@
 [submodule "config/nvim/pack/bundle/start/vim-graphql"]
 	path = config/nvim/pack/bundle/start/vim-graphql
 	url = https://github.com/jparise/vim-graphql
-[submodule "config/nvim/pack/bundle/start/ultisnips"]
-	path = config/nvim/pack/bundle/start/ultisnips
-	url = https://github.com/SirVer/ultisnips
 [submodule "config/nvim/pack/bundle/start/editorconfig-vim"]
 	path = config/nvim/pack/bundle/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim
 [submodule "config/nvim/pack/bundle/start/vader.vim"]
 	path = config/nvim/pack/bundle/start/vader.vim
 	url = https://github.com/junegunn/vader.vim
-[submodule "config/nvim/pack/bundle/start/vim-snippets"]
-	path = config/nvim/pack/bundle/start/vim-snippets
-	url = ../vim-snippets
-	branch = private
 [submodule "config/nvim/pack/bundle/start/ale"]
 	path = config/nvim/pack/bundle/start/ale
 	; url = https://github.com/w0rp/ale
