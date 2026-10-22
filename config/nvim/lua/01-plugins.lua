@@ -47,16 +47,17 @@ require('fzf-lua').setup {
   }
 }
 
-local lspconfig = require('lspconfig')
-lspconfig.gopls.setup {
+vim.lsp.config('gopls', {
   capabilities = completion_item_resolve_capabilities,
-}
+})
+vim.lsp.enable('gopls')
 
-lspconfig.ts_ls.setup {
+vim.lsp.config('ts_ls', {
   capabilities = completion_item_resolve_capabilities,
-}
+})
+vim.lsp.enable('ts_ls')
 
-lspconfig.rust_analyzer.setup {
+vim.lsp.config('rust_analyzer', {
   cmd = { 'rust-analyzer' },
   capabilities = completion_item_resolve_capabilities,
   -- Server-specific settings. See `:help lspconfig-setup`
@@ -68,23 +69,34 @@ lspconfig.rust_analyzer.setup {
         },
         prefix = "self",
       },
+      procMacro = {
+        enable = true,
+      },
       check = {
         features = "all",
-        -- allTargets = false,
+        allTargets = true,
       },
+      checkOnSave = true,
       cargo = {
+        extraArgs = {
+          "--target-dir",
+          "target/rust-analyzer",
+        },
         buildScripts = {
           enable = true,
         },
         features = "all",
+        allTargets = true,
       },
-      procMacro = {
-        enable = true,
-      },
-      checkOnSave = {
-        extraArgs = {
-          "--target-dir",
-          "target/rust-analyzer",
+      inalyHints = {
+        typeHints = {
+          enable = true,
+        },
+        parameterHints = {
+          enable = true,
+        },
+        chainingHints = {
+          enable = true,
         },
       },
       -- cachePriming = {
@@ -92,9 +104,10 @@ lspconfig.rust_analyzer.setup {
       -- },
     },
   },
-}
+})
+vim.lsp.enable('rust_analyzer')
 
-lspconfig.lua_ls.setup {
+vim.lsp.config('lua_ls', {
   settings = {
     Lua = {
       runtime = {
@@ -115,7 +128,8 @@ lspconfig.lua_ls.setup {
       },
     },
   },
-}
+})
+vim.lsp.enable('lua_ls')
 
 -- Ensure floating preview window has max width.
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
@@ -239,49 +253,18 @@ vim.api.nvim_create_autocmd({ 'DiagnosticChanged' }, {
   end
 })
 
-require 'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-  ensure_installed = {},
+require('nvim-treesitter').setup()
+-- require('nvim-treesitter').install({ 'lua', 'vim', 'bash', 'rust' })
 
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = true,
-
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-  auto_install = false,
-
-  -- List of parsers to ignore installing (or "all")
-  ignore_install = {},
-
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-  highlight = {
-    enable = true,
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    disable = { 'rust' },
-    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-    -- disable = function(lang, buf)
-    --     local max_filesize = 100 * 1024 -- 100 KB
-    --     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-    --     if ok and stats and stats.size > max_filesize then
-    --         return true
-    --     end
-    -- end,
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-
-  modules = {},
-}
+-- vim.api.nvim_create_autocmd('FileType', {
+--   callback = function(ev)
+--     if vim.bo[ev.buf].filetype == 'rust' then
+--       vim.treesitter.stop(ev.buf)
+--     else
+--       pcall(vim.treesitter.start, ev.buf)
+--     end
+--   end,
+-- })
 
 require('render-markdown').setup {
   heading = {
