@@ -25,13 +25,45 @@ local function reload_workspace(bufnr)
   local clients = vim.lsp.get_clients { bufnr = bufnr, name = 'rust_analyzer' }
   for _, client in ipairs(clients) do
     vim.notify 'Reloading Cargo Workspace'
-    client.request('rust-analyzer/reloadWorkspace', nil, function(err)
+    ---@diagnostic disable-next-line:param-type-mismatch
+    client:request('rust-analyzer/reloadWorkspace', nil, function(err)
       if err then
         error(tostring(err))
       end
       vim.notify 'Cargo workspace reloaded'
     end, 0)
   end
+end
+
+---@param command string
+---@return boolean
+local function executable_exists(command)
+  local exists = vim.fn.executable(command) == 1
+
+  if not exists then
+    vim.notify_once(('[rust_analyzer] %s not found.'):format(command), vim.log.levels.WARN)
+  end
+
+  return exists
+end
+
+local function user_sysroot_src()
+  return vim.tbl_get(vim.lsp.config['rust_analyzer'], 'settings', 'rust-analyzer', 'cargo', 'sysrootSrc')
+end
+
+local function default_sysroot_src()
+  local sysroot = vim.tbl_get(vim.lsp.config['rust_analyzer'], 'settings', 'rust-analyzer', 'cargo', 'sysroot')
+  if not sysroot then
+    local result = vim
+      .system({ 'cargo', '-Z', 'unstable-options', 'rustc', '--print', 'sysroot' }, { text = true })
+      :wait()
+
+    if result.code == 0 and result.stdout then
+      sysroot = vim.trim(result.stdout)
+    end
+  end
+
+  return sysroot and vim.fs.joinpath(sysroot, 'lib/rustlib/src/rust/library') or nil
 end
 
 local function is_library(fname)
@@ -43,18 +75,25 @@ local function is_library(fname)
   local rustup_home = os.getenv 'RUSTUP_HOME' or user_home .. '/.rustup'
   local toolchains = rustup_home .. '/toolchains'
 
-  for _, item in ipairs { toolchains, registry, git_registry } do
-    if vim.fs.relpath(item, fname) then
+  local sysroot_src = user_sysroot_src() or default_sysroot_src()
+
+  for _, item in ipairs { toolchains, registry, git_registry, sysroot_src } do
+    if item and vim.fs.relpath(item, fname) then
       local clients = vim.lsp.get_clients { name = 'rust_analyzer' }
       return #clients > 0 and clients[#clients].config.root_dir or nil
     end
   end
 end
 
+---@type vim.lsp.Config
 return {
   cmd = { 'rust-analyzer' },
   filetypes = { 'rust' },
   root_dir = function(bufnr, on_dir)
+    if not executable_exists('cargo') then
+      return
+    end
+
     local fname = vim.api.nvim_buf_get_name(bufnr)
     local reused_dir = is_library(fname)
     if reused_dir then
@@ -103,12 +142,55 @@ return {
   capabilities = {
     experimental = {
       serverStatusNotification = true,
+      commands = {
+        commands = {
+          'rust-analyzer.showReferences',
+          'rust-analyzer.runSingle',
+          'rust-analyzer.debugSingle',
+        },
+      },
+    },
+  },
+  ---@type lspconfig.settings.rust_analyzer
+  settings = {
+    ['rust-analyzer'] = {
+      lens = {
+        debug = { enable = true },
+        enable = true,
+        implementations = { enable = true },
+        references = {
+          adt = { enable = true },
+          enumVariant = { enable = true },
+          method = { enable = true },
+          trait = { enable = true },
+        },
+        run = { enable = true },
+        updateTest = { enable = true },
+      },
     },
   },
   before_init = function(init_params, config)
     -- See https://github.com/rust-lang/rust-analyzer/blob/eb5da56d839ae0a9e9f50774fa3eb78eb0964550/docs/dev/lsp-extensions.md?plain=1#L26
     if config.settings and config.settings['rust-analyzer'] then
       init_params.initializationOptions = config.settings['rust-analyzer']
+    end
+    ---@param command table{ title: string, command: string, arguments: any[] }
+    vim.lsp.commands['rust-analyzer.runSingle'] = function(command)
+      local r = command.arguments[1]
+      local cmd = { 'cargo', unpack(r.args.cargoArgs) }
+      if r.args.executableArgs and #r.args.executableArgs > 0 then
+        vim.list_extend(cmd, { '--', unpack(r.args.executableArgs) })
+      end
+
+      local proc = vim.system(cmd, { cwd = r.args.cwd, env = r.args.environment })
+
+      local result = proc:wait()
+
+      if result.code == 0 then
+        vim.notify(result.stdout, vim.log.levels.INFO)
+      else
+        vim.notify(result.stderr, vim.log.levels.ERROR)
+      end
     end
   end,
   on_attach = function(_, bufnr)

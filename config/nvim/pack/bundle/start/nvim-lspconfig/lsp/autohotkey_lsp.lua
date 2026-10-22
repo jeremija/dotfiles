@@ -11,10 +11,12 @@ local function get_autohotkey_path()
   return #path > 0 and path or ''
 end
 
+---@type vim.lsp.Config
 return {
   cmd = { 'autohotkey_lsp', '--stdio' },
   filetypes = { 'autohotkey' },
   root_markers = { 'package.json' },
+  ---@diagnostic disable-next-line: missing-fields
   flags = { debounce_text_changes = 500 },
   --capabilities = capabilities,
   --on_attach = custom_attach,

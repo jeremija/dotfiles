@@ -17,12 +17,17 @@
 ---     ...
 --- })
 --- ```
+
+---@type vim.lsp.Config
 return {
-  cmd = {
-    'java',
-    '-jar',
-    'groovy-language-server-all.jar',
-  },
+  -- When installed via mason
+  cmd = { 'groovy-language-server' },
+  -- If installed/built locally, please provide the correct filepath to Java.
+  -- cmd = {
+  --   'java',
+  --   '-jar',
+  --   'groovy-language-server-all.jar',
+  -- },
   filetypes = { 'groovy' },
   root_markers = { 'Jenkinsfile', '.git' },
 }

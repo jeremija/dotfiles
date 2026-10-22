@@ -35,6 +35,14 @@ _check_brief_placement() {
   fi
 }
 
+# Returned object should have `---@type vim.lsp.Config` annotation.
+# CI checks luals/emmylua: https://github.com/neovim/nvim-lspconfig/pull/4185
+_check_type() {
+  if git grep --files-without-match '\-\-\-\@type vim\.lsp\.Config' -- 'lsp/*.lua' ; then
+    _fail 'Missing `---@type vim.lsp.Config` annotation.'
+  fi
+}
+
 # Enforce "Lsp" prefix on all user commands.
 _check_lsp_cmd_prefix() {
   local exclude='tinymist'
@@ -45,7 +53,7 @@ _check_lsp_cmd_prefix() {
 
 # Enforce client:exec_cmd().
 _check_exec_cmd() {
-  local exclude='eslint'
+  local exclude='eslint\|stylelint\|pyright\|basedpyright'
   if git grep -P 'workspace.executeCommand' -- 'lsp/*.lua' | grep -v "$exclude"  ; then
     _fail 'Use client:exec_cmd() instead of calling request("workspace/executeCommand") directly. Example: lsp/pyright.lua'
   fi
@@ -92,6 +100,7 @@ _check_legacy_configs() {
 _check_generated_docs
 _check_cmd_buflocal
 _check_brief_placement
+_check_type
 _check_lsp_cmd_prefix
 _check_exec_cmd
 _check_deprecated_in_nvim_0_11

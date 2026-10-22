@@ -16,9 +16,12 @@
 ---   },
 --- })
 --- ```
+
+---@type vim.lsp.Config
 return {
   cmd = { 'harper-ls', '--stdio' },
   filetypes = {
+    'asciidoc',
     'c',
     'cpp',
     'cs',
@@ -34,6 +37,7 @@ return {
     'ruby',
     'rust',
     'swift',
+    'tex',
     'toml',
     'typescript',
     'typescriptreact',
@@ -43,6 +47,7 @@ return {
     'php',
     'dart',
     'clojure',
+    'sh',
   },
-  root_markers = { '.git' },
+  root_markers = { '.harper-dictionary.txt', '.git' },
 }

@@ -14,6 +14,7 @@
 
 local util = require 'lspconfig.util'
 
+---@type vim.lsp.Config
 return {
   cmd = { 'haskell-language-server-wrapper', '--lsp' },
   filetypes = { 'haskell', 'lhaskell' },
@@ -24,7 +25,7 @@ return {
   settings = {
     haskell = {
       formattingProvider = 'ormolu',
-      cabalFormattingProvider = 'cabalfmt',
+      cabalFormattingProvider = 'cabal-fmt',
     },
   },
 }

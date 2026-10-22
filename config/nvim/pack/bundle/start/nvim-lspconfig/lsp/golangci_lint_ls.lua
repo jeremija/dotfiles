@@ -12,11 +12,28 @@
 --- go install github.com/nametake/golangci-lint-langserver@latest
 --- go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 --- ```
+
+---@type vim.lsp.Config
 return {
   cmd = { 'golangci-lint-langserver' },
   filetypes = { 'go', 'gomod' },
   init_options = {
-    command = { 'golangci-lint', 'run', '--output.json.path=stdout', '--show-stats=false' },
+    command = {
+      'golangci-lint',
+      'run',
+      -- disable all output formats that might be enabled by the users .golangci.yml
+      '--output.text.path=',
+      '--output.tab.path=',
+      '--output.html.path=',
+      '--output.checkstyle.path=',
+      '--output.junit-xml.path=',
+      '--output.teamcity.path=',
+      '--output.sarif.path=',
+      -- disable stats output
+      '--show-stats=false',
+      -- enable JSON output to be used by the language server
+      '--output.json.path=stdout',
+    },
   },
   root_markers = {
     '.golangci.yml',
@@ -30,14 +47,21 @@ return {
   before_init = function(_, config)
     -- Add support for golangci-lint V1 (in V2 `--out-format=json` was replaced by
     -- `--output.json.path=stdout`).
-    local v1
+
+    if vim.fn.executable('golangci-lint') ~= 1 then
+      return
+    end
+
+    local v1, v2 = false, false
     -- PERF: `golangci-lint version` is very slow (about 0.1 sec) so let's find
     -- version using `go version -m $(which golangci-lint) | grep '^\smod'`.
     if vim.fn.executable 'go' == 1 then
       local exe = vim.fn.exepath 'golangci-lint'
       local version = vim.system({ 'go', 'version', '-m', exe }):wait()
       v1 = string.match(version.stdout, '\tmod\tgithub.com/golangci/golangci%-lint\t')
-    else
+      v2 = string.match(version.stdout, '\tmod\tgithub.com/golangci/golangci%-lint/v2\t')
+    end
+    if not v1 and not v2 then
       local version = vim.system({ 'golangci-lint', 'version' }):wait()
       v1 = string.match(version.stdout, 'version v?1%.')
     end

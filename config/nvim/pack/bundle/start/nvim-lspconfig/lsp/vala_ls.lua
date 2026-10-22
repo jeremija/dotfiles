@@ -1,6 +1,6 @@
 ---@brief
 ---
---- https://github.com/Prince781/vala-language-server
+--- https://github.com/vala-lang/vala-language-server
 
 local meson_matcher = function(path)
   local pattern = 'meson.build'
@@ -23,6 +23,7 @@ local meson_matcher = function(path)
   end
 end
 
+---@type vim.lsp.Config
 return {
   cmd = { 'vala-language-server' },
   filetypes = { 'vala', 'genie' },

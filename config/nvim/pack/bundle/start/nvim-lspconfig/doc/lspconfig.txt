@@ -1,6 +1,5 @@
-*lspconfig.txt*         For Nvim version 0.10+
-
-nvim-lspconfig provides user-contributed configs for the Nvim |lsp| client.
+*lspconfig.txt*            User-contributed configs for the Nvim |lsp| client
+                                                       For Nvim version 0.10+
 
                                       Type |gO| to see the table of contents.
 
@@ -49,6 +48,9 @@ example to activate the "clangd" config: >lua
     -- Enable filetype-based activation of the config.
     vim.lsp.enable('clangd')
 <
+
+lspconfig provides type annotations for LSP settings, see |lspconfig-settings-types|.
+
                                                           *lspconfig-resolved*
 You can call the "index" form of vim.lsp.config to get the resolved config
 without activating it: >lua
@@ -60,10 +62,28 @@ Note these differences of |vim.lsp.config()| compared to the legacy
 nvim-lspconfig interface:
 
 - `single_file_support` is assumed by default. Can be disabled by specifying
-  `workspace_required=false` (see |vim.lsp.ClientConfig|).
+  `workspace_required=true` (see |vim.lsp.ClientConfig|).
 - `on_new_config` is currently missing, see https://github.com/neovim/neovim/issues/32287
   - However, defining `root_dir` as a function is very flexible and may fit
     your use-case instead. https://github.com/neovim/neovim/issues/32037#issuecomment-2825599872
+- `root_dir` usages akin to >lua
+
+      root_dir  = require'lspconfig.util'.root_pattern(...)
+<
+
+  should be updated:
+  - If the patterns passed to `root_pattern` contain no wildcards, then 
+    `root_markers` (see |lsp-root_markers|) is likely sufficient.
+  - Otherwise, `root_pattern` can still be employed (for the time being,
+    see https://github.com/neovim/nvim-lspconfig/issues/3768), but the usage
+    should be as follows (see |lsp-root_dir|): >lua
+
+        root_dir = function(bufnr, on_dir)
+            local fname = vim.api.nvim_buf_get_name(bufnr)
+            on_dir(require'lspconfig.util'.root_pattern(...)(fname))
+        end
+<
+
 
 ==============================================================================
 COMMANDS                                                    *lspconfig-commands*
@@ -77,24 +97,36 @@ buffer) by typing: >vim
 The following _global_ commands are provided by nvim-lspconfig:
 
 :LspInfo                                                            *:LspInfo*
+
+Note: Use `:checkhealth vim.lsp` with Nvim 0.12+.
+
 Alias to `:checkhealth vim.lsp`. Shows the status of active LSP clients and
 servers.
 
 :LspStart [config_name]                                            *:LspStart*
+
+Note: Use `:lsp enable` with Nvim 0.12+. |:lsp-enable|
+
 Launches the requested (configured) client, but only if it successfully
 resolves a root directory. Note: Defaults to all configured servers matching
 the current buffer filetype.
 
-:LspStop [client_id] or [config_name]                            *:LspStop*
-Stops the server with the given client-id or config name. Defaults to
-stopping all servers active on the current buffer. To force stop language
-servers: >vim
-    :LspStop ++force
+:LspStop [config_name]                                              *:LspStop*
 
-:LspRestart [client_id] or [config_name]                         *:LspRestart*
-Restarts the client with the given client-id or config name, and attempts
-to reattach to all previously attached buffers. Defaults to restarting all
-active servers.
+Note: Use `:lsp disable` with Nvim 0.12+. |:lsp-disable|
+
+Stops the server with the given config name. Defaults to stopping all servers
+active on the current buffer. To force stop language servers: >vim
+    :LspStop!
+
+:LspRestart [config_name]                                        *:LspRestart*
+
+Note: Use `:lsp restart` with Nvim 0.12+. |:lsp-restart|
+
+Restarts the client with the given config name, and attempts to reattach to
+all previously attached buffers. Defaults to restarting all active servers. To
+force stop language servers when restarting: >vim
+    :LspRestart!
 
 ==============================================================================
 SERVER CONFIGS                                        *lspconfig-configurations*
@@ -111,9 +143,72 @@ To create a new config, see |lsp-config| (requires Nvim 0.11+).
 To contribute a config to nvim-lspconfig, see ../CONTRIBUTING.md.
 
 ==============================================================================
+SETTINGS TYPES                                        *lspconfig-settings-types*
+
+`nvim-lspconfig` generates Lua type definitions for each supported LSP server.
+By manually adding annotations (e.g., `---@type lspconfig.settings.server_name`),
+you enable auto-completion and diagnostics for your server settings.
+
+Example: >lua
+  ---@type vim.lsp.Config
+  local config = {
+    ---@type lspconfig.settings.lua_ls
+    settings = {
+      Lua = {
+        runtime = {
+          version = 'LuaJIT',
+        },
+        workspace = {
+          library = {
+            vim.env.VIMRUNTIME,
+          }
+        },
+      },
+    },
+  }
+
+  vim.lsp.config('lua_ls', config)
+<
+
+==============================================================================
 COMPLETION SUPPORT                                        *lspconfig-completion*
 
 See |lsp-completion|.
+
+==============================================================================
+Migrate to vim.lsp.config                                *lspconfig-nvim-0.11*
+
+The "framework" part of nvim-lspconfig is DEPRECATED. The "configs" are NOT
+deprecated, but were moved to the lsp/ directory so that |vim.lsp.config()|
+automatically finds them.
+
+This means:
+- `require'lspconfig'[…]` must NOT be used. Use `vim.lsp.config(…)` instead.
+- The `require'lspconfig'` quasi-framework will be DELETED, and is not
+  supported in Nvim 0.11+.
+- The nvim-lspconfig configs (|lspconfig-all|) now live in "lsp/" instead of
+  "lua/lspconfig/".
+- To use the configs, call `vim.lsp.config(…)` instead of `require'lspconfig'[…]`.
+
+MIGRATION INSTRUCTIONS
+
+To migrate:
+- Upgrade to Nvim 0.11 or later.
+- Change `require'lspconfig'[…]` to `vim.lsp.config(…)`.
+  - Some field names changed, see |lspconfig-vs-vim.lsp.config|.
+  - See |lsp-config| for details.
+
+BACKGROUND
+
+Since Nvim 0.11, nvim-lspconfig provides configs in its "lsp/" directory. The
+old configs still exist in "lua/lspconfig/configs/" but are deprecated and
+will be DELETED.
+
+This means the "configs" role of nvim-lspconfig continues to be relevant, but
+it is now a "data-only" repository instead of a "framework". The only change
+needed from you, and from plugins, is to use the Nvim 0.11 `vim.lsp.config`
+interface to setup LSP configs instead of the old `require'lspconfig'`
+quasi-framework.
 
 ==============================================================================
 DEBUGGING AND TROUBLESHOOTING                              *lspconfig-debugging*

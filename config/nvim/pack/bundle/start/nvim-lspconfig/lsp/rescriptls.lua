@@ -33,10 +33,13 @@
 ---     },
 --- }
 --- ```
+
+---@type vim.lsp.Config
 return {
   cmd = { 'rescript-language-server', '--stdio' },
   filetypes = { 'rescript' },
   root_markers = { 'bsconfig.json', 'rescript.json', '.git' },
+  ---@type lspconfig.settings.rescriptls
   settings = {},
   init_options = {
     extensionConfiguration = {
@@ -45,7 +48,7 @@ return {
 
       allowBuiltInFormatter = true, -- lower latency
       incrementalTypechecking = { -- removes the need for external build process
-        enabled = true,
+        enable = true,
         acrossFiles = true,
       },
       cache = { projectConfig = { enabled = true } }, -- speed up latency dramatically

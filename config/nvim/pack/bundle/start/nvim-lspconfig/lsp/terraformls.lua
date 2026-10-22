@@ -31,8 +31,18 @@
 --- [which is not supported by terraform-ls](https://github.com/hashicorp/terraform-ls/blob/main/docs/features.md).
 --- Instead you should use `init_options` which passes the settings as part of the LSP initialize call
 --- [as is required by terraform-ls](https://github.com/hashicorp/terraform-ls/blob/main/docs/SETTINGS.md#how-to-pass-settings).
+
+---@type vim.lsp.Config
 return {
   cmd = { 'terraform-ls', 'serve' },
   filetypes = { 'terraform', 'terraform-vars' },
   root_markers = { '.terraform', '.git' },
+  capabilities = {
+    experimental = {
+      showReferencesCommandId = 'client.showReferences',
+    },
+  },
+  on_attach = function(_, bufnr)
+    vim.lsp.codelens.enable(true, { bufnr = bufnr })
+  end,
 }

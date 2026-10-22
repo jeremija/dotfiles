@@ -7,6 +7,7 @@
 -- `pyrefly` is still in development, so please report any errors to
 -- our issues page at https://github.com/facebook/pyrefly/issues.
 
+---@type vim.lsp.Config
 return {
   cmd = { 'pyrefly', 'lsp' },
   filetypes = { 'python' },
@@ -20,6 +21,8 @@ return {
     '.git',
   },
   on_exit = function(code, _, _)
-    vim.notify('Closing Pyrefly LSP exited with code: ' .. code, vim.log.levels.INFO)
+    vim.schedule(function()
+      vim.notify('Closing Pyrefly LSP exited with code: ' .. code, vim.log.levels.INFO)
+    end)
   end,
 }

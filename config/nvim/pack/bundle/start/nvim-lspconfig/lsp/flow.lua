@@ -11,8 +11,23 @@
 --- ```sh
 --- npx flow lsp --help
 --- ```
+
+---@type vim.lsp.Config
 return {
-  cmd = { 'npx', '--no-install', 'flow', 'lsp' },
-  filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx' },
+  cmd = function(dispatchers, config)
+    local cmd
+    if vim.fn.executable('flow') == 1 then
+      cmd = { 'flow', 'lsp' }
+    else
+      local flow_bin = (config or {}).root_dir and vim.fs.joinpath(config.root_dir, 'node_modules/.bin/flow')
+      if flow_bin and vim.fn.executable(flow_bin) == 1 then
+        cmd = { flow_bin, 'lsp' }
+      else
+        cmd = { 'npx', '--no-install', 'flow', 'lsp' }
+      end
+    end
+    return vim.lsp.rpc.start(cmd, dispatchers)
+  end,
+  filetypes = { 'javascript', 'javascriptreact' },
   root_markers = { '.flowconfig' },
 }

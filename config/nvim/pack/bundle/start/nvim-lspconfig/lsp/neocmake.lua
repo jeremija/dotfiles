@@ -1,6 +1,6 @@
 ---@brief
 ---
---- https://github.com/Decodetalkers/neocmakelsp
+--- https://github.com/neocmakelsp/neocmakelsp
 ---
 --- CMake LSP Implementation
 ---
@@ -15,8 +15,10 @@
 ---   capabilities = capabilities,
 --- })
 --- ```
+
+---@type vim.lsp.Config
 return {
-  cmd = { 'neocmakelsp', '--stdio' },
+  cmd = { 'neocmakelsp', 'stdio' },
   filetypes = { 'cmake' },
-  root_markers = { '.git', 'build', 'cmake' },
+  root_markers = { '.neocmake.toml', '.git', 'build', 'cmake' },
 }

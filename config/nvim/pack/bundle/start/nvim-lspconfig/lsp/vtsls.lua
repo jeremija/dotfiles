@@ -57,16 +57,51 @@
 --- ```
 ---
 --- See `vue_ls` section and https://github.com/vuejs/language-tools/wiki/Neovim for more information.
+---
+--- ### Monorepo support
+---
+--- `vtsls` supports monorepos by default. It will automatically find the `tsconfig.json` or `jsconfig.json` corresponding to the package you are working on.
+--- This works without the need of spawning multiple instances of `vtsls`, saving memory.
+---
+--- It is recommended to use the same version of TypeScript in all packages, and therefore have it available in your workspace root. The location of the TypeScript binary will be determined automatically, but only once.
+---
+--- This includes the same Deno-excluding logic from `ts_ls`. It is not recommended to enable both `vtsls` and `ts_ls` at the same time!
 
+---@type vim.lsp.Config
 return {
   cmd = { 'vtsls', '--stdio' },
+  init_options = {
+    hostInfo = 'neovim',
+  },
   filetypes = {
     'javascript',
     'javascriptreact',
-    'javascript.jsx',
     'typescript',
     'typescriptreact',
-    'typescript.tsx',
   },
-  root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
+  root_dir = function(bufnr, on_dir)
+    -- The project root is where the LSP can be started from
+    -- As stated in the documentation above, this LSP supports monorepos and simple projects.
+    -- We select then from the project root, which is identified by the presence of a package
+    -- manager lock file.
+    local root_markers = { 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock' }
+    -- Give the root markers equal priority by wrapping them in a table
+    root_markers = vim.fn.has('nvim-0.11.3') == 1 and { root_markers, { '.git' } }
+      or vim.list_extend(root_markers, { '.git' })
+    -- exclude deno
+    local deno_root = vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' })
+    local deno_lock_root = vim.fs.root(bufnr, { 'deno.lock' })
+    local project_root = vim.fs.root(bufnr, root_markers)
+    if deno_lock_root and (not project_root or #deno_lock_root > #project_root) then
+      -- deno lock is closer than package manager lock, abort
+      return
+    end
+    if deno_root and (not project_root or #deno_root >= #project_root) then
+      -- deno config is closer than or equal to package manager lock, abort
+      return
+    end
+    -- project is standard TS, not deno
+    -- We fallback to the current working directory if no project root is found
+    on_dir(project_root or vim.fn.getcwd())
+  end,
 }

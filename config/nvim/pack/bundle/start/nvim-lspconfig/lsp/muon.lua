@@ -1,6 +1,8 @@
 ---@brief
 ---
 --- https://muon.build
+
+---@type vim.lsp.Config
 return {
   cmd = { 'muon', 'analyze', 'lsp' },
   filetypes = { 'meson' },
@@ -16,7 +18,7 @@ return {
 
         on_dir(nil)
       else
-        vim.notify(('[muon] cmd failed with code %d: %s\n%s'):format(output.code, cmd, output.stderr))
+        vim.notify(('[muon] cmd failed with code %d: %s\n%s'):format(output.code, vim.inspect(cmd), output.stderr))
       end
     end)
   end,

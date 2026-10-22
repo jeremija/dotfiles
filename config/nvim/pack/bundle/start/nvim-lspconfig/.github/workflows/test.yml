@@ -17,16 +17,16 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         nvim_version: [nightly, 'v0.10.4']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: rhysd/action-setup-vim@v1
         with:
           neovim: true
           version: ${{ matrix.nvim_version }}
 
-      - uses: leafo/gh-actions-lua@v11
+      - uses: leafo/gh-actions-lua@v13
         with:
           luaVersion: "luajit-openresty"
-      - uses: leafo/gh-actions-luarocks@v5
+      - uses: leafo/gh-actions-luarocks@v6
 
       - name: Install vusted
         run: luarocks install vusted

@@ -3,6 +3,22 @@
 --- https://github.com/golang/tools/tree/master/gopls
 ---
 --- Google's lsp server for golang.
+---
+--- [Settings documentation](https://go.dev/gopls/settings)
+---
+--- NOTE: since v0.22.0 gopls no longer advertises semantic tokens to clients
+--- by default. To maintain previous behavior, semantic tokens are enabled on client side.
+--- To disable this feature, set `semanticTokens` option to `false`.
+---
+--- ```lua
+---   vim.lsp.config('gopls', {
+---     settings = {
+---       gopls = {
+---         semanticTokens = false
+---       }
+---     }
+---   })
+--- ```
 
 --- @class go_dir_custom_args
 ---
@@ -85,6 +101,7 @@ local function get_root_dir(fname)
   return vim.fs.root(fname, 'go.work') or vim.fs.root(fname, 'go.mod') or vim.fs.root(fname, '.git')
 end
 
+---@type vim.lsp.Config
 return {
   cmd = { 'gopls' },
   filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
@@ -95,4 +112,9 @@ return {
     -- see: https://github.com/neovim/nvim-lspconfig/issues/804
     on_dir(get_root_dir(fname))
   end,
+  settings = {
+    gopls = {
+      semanticTokens = true,
+    },
+  },
 }

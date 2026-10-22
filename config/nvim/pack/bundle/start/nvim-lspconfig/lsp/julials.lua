@@ -1,6 +1,6 @@
 ---@brief
 ---
---- https://github.com/julia-vscode/julia-vscode
+--- https://github.com/julia-vscode/LanguageServer.jl/
 ---
 --- LanguageServer.jl can be installed with `julia` and `Pkg`:
 --- ```sh
@@ -20,12 +20,17 @@
 --- julia --project=/path/to/my/project -e 'using Pkg; Pkg.instantiate()'
 --- ```
 ---
+--- To activate a Julia environment, use the `:LspJuliaActivateEnv` command. A prompt will ask you to select a Julia
+--- environment from the list of environments found in the current working directory and the `environments/` folder of
+--- `$JULIA_DEPOT_PATH` entries. You can also provide a path to a Julia environment directly.
+--- Example: `:LspJuliaActivateEnv /path/to/my/project`.
+---
 --- Note: The julia programming language searches for global environments within the `environments/`
 --- folder of `$JULIA_DEPOT_PATH` entries. By default this simply `~/.julia/environments`
 
 local root_files = { 'Project.toml', 'JuliaProject.toml' }
 
-local function activate_env(path)
+local function activate_env(args)
   assert(vim.fn.has 'nvim-0.10' == 1, 'requires Nvim 0.10 or newer')
   local bufnr = vim.api.nvim_get_current_buf()
   local julials_clients = vim.lsp.get_clients { bufnr = bufnr, name = 'julials' }
@@ -36,12 +41,14 @@ local function activate_env(path)
   local function _activate_env(environment)
     if environment then
       for _, julials_client in ipairs(julials_clients) do
+        ---@diagnostic disable-next-line: param-type-mismatch
         julials_client:notify('julia/activateenvironment', { envPath = environment })
       end
       vim.notify('Julia environment activated: \n`' .. environment .. '`', vim.log.levels.INFO)
     end
   end
-  if path then
+  local path = args.args
+  if path ~= nil and #path > 0 then
     path = vim.fs.normalize(vim.fn.fnamemodify(vim.fn.expand(path), ':p'))
     local found_env = false
     for _, project_file in ipairs(root_files) do
@@ -91,31 +98,12 @@ local cmd = {
     pushfirst!(LOAD_PATH, ls_install_path)
     using LanguageServer
     popfirst!(LOAD_PATH)
-    depot_path = get(ENV, "JULIA_DEPOT_PATH", "")
-    project_path = let
-        dirname(something(
-            ## 1. Finds an explicitly set project (JULIA_PROJECT)
-            Base.load_path_expand((
-                p = get(ENV, "JULIA_PROJECT", nothing);
-                p === nothing ? nothing : isempty(p) ? nothing : p
-            )),
-            ## 2. Look for a Project.toml file in the current working directory,
-            ##    or parent directories, with $HOME as an upper boundary
-            Base.current_project(),
-            ## 3. First entry in the load path
-            get(Base.load_path(), 1, nothing),
-            ## 4. Fallback to default global environment,
-            ##    this is more or less unreachable
-            Base.load_path_expand("@v#.#"),
-        ))
-    end
-    @info "Running language server" VERSION pwd() project_path depot_path
-    server = LanguageServer.LanguageServerInstance(stdin, stdout, project_path, depot_path)
-    server.runlinter = true
-    run(server)
+    @info "Running language server" VERSION pwd()
+    LanguageServer.runserver()
   ]],
 }
 
+---@type vim.lsp.Config
 return {
   cmd = cmd,
   filetypes = { 'julia' },

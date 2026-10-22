@@ -6,6 +6,7 @@ Nvim by running `:help lspconfig-all`.
 
 - [ada_ls](#ada_ls)
 - [agda_ls](#agda_ls)
+- [agentscript](#agentscript)
 - [aiken](#aiken)
 - [air](#air)
 - [alloy_ls](#alloy_ls)
@@ -13,11 +14,13 @@ Nvim by running `:help lspconfig-all`.
 - [angularls](#angularls)
 - [ansiblels](#ansiblels)
 - [antlersls](#antlersls)
+- [apex_ls](#apex_ls)
 - [arduino_language_server](#arduino_language_server)
 - [asm_lsp](#asm_lsp)
 - [ast_grep](#ast_grep)
 - [astro](#astro)
 - [atlas](#atlas)
+- [atopile](#atopile)
 - [autohotkey_lsp](#autohotkey_lsp)
 - [autotools_ls](#autotools_ls)
 - [awk_ls](#awk_ls)
@@ -35,32 +38,38 @@ Nvim by running `:help lspconfig-all`.
 - [blueprint_ls](#blueprint_ls)
 - [bqls](#bqls)
 - [bright_script](#bright_script)
+- [brioche](#brioche)
 - [bsl_ls](#bsl_ls)
 - [buck2](#buck2)
 - [buddy_ls](#buddy_ls)
 - [buf_ls](#buf_ls)
-- [bufls](#bufls)
 - [bzl](#bzl)
 - [c3_lsp](#c3_lsp)
 - [cairo_ls](#cairo_ls)
 - [ccls](#ccls)
 - [cds_lsp](#cds_lsp)
+- [cir_lsp_server](#cir_lsp_server)
 - [circom-lsp](#circom-lsp)
 - [clangd](#clangd)
 - [clarinet](#clarinet)
+- [clice](#clice)
 - [clojure_lsp](#clojure_lsp)
 - [cmake](#cmake)
 - [cobol_ls](#cobol_ls)
 - [codebook](#codebook)
 - [coffeesense](#coffeesense)
 - [contextive](#contextive)
+- [copilot](#copilot)
 - [coq_lsp](#coq_lsp)
+- [cqlls](#cqlls)
 - [crystalline](#crystalline)
 - [csharp_ls](#csharp_ls)
 - [cspell_ls](#cspell_ls)
 - [css_variables](#css_variables)
+- [csskit](#csskit)
 - [cssls](#cssls)
 - [cssmodules_ls](#cssmodules_ls)
+- [ctags_lsp](#ctags_lsp)
 - [cucumber_language_server](#cucumber_language_server)
 - [cue](#cue)
 - [custom_elements_ls](#custom_elements_ls)
@@ -72,11 +81,14 @@ Nvim by running `:help lspconfig-all`.
 - [dcmls](#dcmls)
 - [debputy](#debputy)
 - [denols](#denols)
+- [dexter](#dexter)
 - [dhall_lsp_server](#dhall_lsp_server)
 - [diagnosticls](#diagnosticls)
 - [digestif](#digestif)
+- [djls](#djls)
 - [djlsp](#djlsp)
 - [docker_compose_language_service](#docker_compose_language_service)
+- [docker_language_server](#docker_language_server)
 - [dockerls](#dockerls)
 - [dolmenls](#dolmenls)
 - [dotls](#dotls)
@@ -94,16 +106,18 @@ Nvim by running `:help lspconfig-all`.
 - [emmet_ls](#emmet_ls)
 - [emmylua_ls](#emmylua_ls)
 - [erg_language_server](#erg_language_server)
-- [erlangls](#erlangls)
 - [esbonio](#esbonio)
 - [eslint](#eslint)
+- [expert](#expert)
 - [facility_language_server](#facility_language_server)
+- [fallow](#fallow)
 - [fennel_language_server](#fennel_language_server)
 - [fennel_ls](#fennel_ls)
 - [fish_lsp](#fish_lsp)
 - [flow](#flow)
 - [flux_lsp](#flux_lsp)
 - [foam_ls](#foam_ls)
+- [fortitude](#fortitude)
 - [fortls](#fortls)
 - [fsautocomplete](#fsautocomplete)
 - [fsharp_language_server](#fsharp_language_server)
@@ -116,11 +130,13 @@ Nvim by running `:help lspconfig-all`.
 - [ghdl_ls](#ghdl_ls)
 - [ginko_ls](#ginko_ls)
 - [gitlab_ci_ls](#gitlab_ci_ls)
+- [gitlab_duo](#gitlab_duo)
 - [glasgow](#glasgow)
 - [gleam](#gleam)
 - [glint](#glint)
 - [glsl_analyzer](#glsl_analyzer)
 - [glslls](#glslls)
+- [gn_language_server](#gn_language_server)
 - [gnls](#gnls)
 - [golangci_lint_ls](#golangci_lint_ls)
 - [gopls](#gopls)
@@ -129,6 +145,7 @@ Nvim by running `:help lspconfig-all`.
 - [graphql](#graphql)
 - [groovyls](#groovyls)
 - [guile_ls](#guile_ls)
+- [hare_lsp](#hare_lsp)
 - [harper_ls](#harper_ls)
 - [hdl_checker](#hdl_checker)
 - [helm_ls](#helm_ls)
@@ -137,10 +154,12 @@ Nvim by running `:help lspconfig-all`.
 - [hie](#hie)
 - [hlasm](#hlasm)
 - [hls](#hls)
+- [home_assistant](#home_assistant)
 - [hoon_ls](#hoon_ls)
 - [html](#html)
 - [htmx](#htmx)
 - [hydra_lsp](#hydra_lsp)
+- [hylo_ls](#hylo_ls)
 - [hyprls](#hyprls)
 - [idris2_lsp](#idris2_lsp)
 - [intelephense](#intelephense)
@@ -148,18 +167,23 @@ Nvim by running `:help lspconfig-all`.
 - [java_language_server](#java_language_server)
 - [jdtls](#jdtls)
 - [jedi_language_server](#jedi_language_server)
+- [jetls](#jetls)
 - [jinja_lsp](#jinja_lsp)
+- [jls](#jls)
 - [jqls](#jqls)
 - [jsonls](#jsonls)
 - [jsonnet_ls](#jsonnet_ls)
 - [julials](#julials)
 - [just](#just)
+- [kakehashi](#kakehashi)
 - [kcl](#kcl)
+- [kdl_lsp](#kdl_lsp)
 - [koka](#koka)
 - [kotlin_language_server](#kotlin_language_server)
 - [kotlin_lsp](#kotlin_lsp)
 - [kulala_ls](#kulala_ls)
 - [laravel_ls](#laravel_ls)
+- [laravel_lsp](#laravel_lsp)
 - [lean3ls](#lean3ls)
 - [lelwel_ls](#lelwel_ls)
 - [lemminx](#lemminx)
@@ -178,6 +202,7 @@ Nvim by running `:help lspconfig-all`.
 - [mdx_analyzer](#mdx_analyzer)
 - [mesonlsp](#mesonlsp)
 - [metals](#metals)
+- [microcad_lsp](#microcad_lsp)
 - [millet](#millet)
 - [mint](#mint)
 - [mlir_lsp_server](#mlir_lsp_server)
@@ -186,6 +211,8 @@ Nvim by running `:help lspconfig-all`.
 - [mojo](#mojo)
 - [motoko_lsp](#motoko_lsp)
 - [move_analyzer](#move_analyzer)
+- [mpls](#mpls)
+- [ms_terraform_lsp](#ms_terraform_lsp)
 - [msbuild_project_tools_server](#msbuild_project_tools_server)
 - [muon](#muon)
 - [mutt_ls](#mutt_ls)
@@ -203,15 +230,17 @@ Nvim by running `:help lspconfig-all`.
 - [ntt](#ntt)
 - [nushell](#nushell)
 - [nxls](#nxls)
-- [ocamlls](#ocamlls)
 - [ocamllsp](#ocamllsp)
 - [ols](#ols)
 - [omnisharp](#omnisharp)
 - [opencl_ls](#opencl_ls)
 - [openscad_ls](#openscad_ls)
 - [openscad_lsp](#openscad_lsp)
+- [oso](#oso)
+- [oxfmt](#oxfmt)
 - [oxlint](#oxlint)
 - [pact_ls](#pact_ls)
+- [panache](#panache)
 - [pasls](#pasls)
 - [pbls](#pbls)
 - [perlls](#perlls)
@@ -219,10 +248,16 @@ Nvim by running `:help lspconfig-all`.
 - [perlpls](#perlpls)
 - [pest_ls](#pest_ls)
 - [phan](#phan)
+- [php_lsp](#php_lsp)
 - [phpactor](#phpactor)
+- [phpantom_lsp](#phpantom_lsp)
+- [phptools](#phptools)
 - [pico8_ls](#pico8_ls)
+- [pkl](#pkl)
 - [please](#please)
 - [pli](#pli)
+- [pony_language_server](#pony_language_server)
+- [pony_lsp](#pony_lsp)
 - [poryscript_pls](#poryscript_pls)
 - [postgres_lsp](#postgres_lsp)
 - [powershell_es](#powershell_es)
@@ -239,6 +274,7 @@ Nvim by running `:help lspconfig-all`.
 - [pyre](#pyre)
 - [pyrefly](#pyrefly)
 - [pyright](#pyright)
+- [pytest_language_server](#pytest_language_server)
 - [qmlls](#qmlls)
 - [quick_lint_js](#quick_lint_js)
 - [r_language_server](#r_language_server)
@@ -249,7 +285,6 @@ Nvim by running `:help lspconfig-all`.
 - [regols](#regols)
 - [remark_ls](#remark_ls)
 - [rescriptls](#rescriptls)
-- [rls](#rls)
 - [rnix](#rnix)
 - [robotcode](#robotcode)
 - [robotframework_ls](#robotframework_ls)
@@ -261,15 +296,19 @@ Nvim by running `:help lspconfig-all`.
 - [ruby_lsp](#ruby_lsp)
 - [ruff](#ruff)
 - [ruff_lsp](#ruff_lsp)
+- [rumdl](#rumdl)
 - [rune_languageserver](#rune_languageserver)
 - [rust_analyzer](#rust_analyzer)
+- [rust_glancer](#rust_glancer)
 - [salt_ls](#salt_ls)
 - [scheme_langserver](#scheme_langserver)
 - [scry](#scry)
 - [selene3p_ls](#selene3p_ls)
 - [serve_d](#serve_d)
 - [shopify_theme_ls](#shopify_theme_ls)
+- [shuck](#shuck)
 - [sixtyfps](#sixtyfps)
+- [slang_server](#slang_server)
 - [slangd](#slangd)
 - [slint_lsp](#slint_lsp)
 - [smarty_ls](#smarty_ls)
@@ -285,11 +324,13 @@ Nvim by running `:help lspconfig-all`.
 - [somesass_ls](#somesass_ls)
 - [sorbet](#sorbet)
 - [sourcekit](#sourcekit)
+- [spade_ls](#spade_ls)
 - [spectral](#spectral)
 - [spyglassmc_language_server](#spyglassmc_language_server)
 - [sqlls](#sqlls)
 - [sqls](#sqls)
 - [sqruff](#sqruff)
+- [stan_ls](#stan_ls)
 - [standardrb](#standardrb)
 - [starlark_rust](#starlark_rust)
 - [starpls](#starpls)
@@ -297,23 +338,29 @@ Nvim by running `:help lspconfig-all`.
 - [steep](#steep)
 - [stimulus_ls](#stimulus_ls)
 - [stylelint_lsp](#stylelint_lsp)
+- [stylua](#stylua)
 - [stylua3p_ls](#stylua3p_ls)
 - [superhtml](#superhtml)
 - [svelte](#svelte)
 - [svlangserver](#svlangserver)
 - [svls](#svls)
 - [swift_mesonls](#swift_mesonls)
+- [symfony_lsp](#symfony_lsp)
 - [syntax_tree](#syntax_tree)
+- [sysml_lsp](#sysml_lsp)
 - [systemd_ls](#systemd_ls)
+- [systemd_lsp](#systemd_lsp)
 - [tabby_ml](#tabby_ml)
 - [tailwindcss](#tailwindcss)
 - [taplo](#taplo)
 - [tblgen_lsp_server](#tblgen_lsp_server)
+- [tclsp](#tclsp)
 - [teal_ls](#teal_ls)
 - [templ](#templ)
 - [termux_language_server](#termux_language_server)
 - [terraform_lsp](#terraform_lsp)
 - [terraformls](#terraformls)
+- [terragrunt_ls](#terragrunt_ls)
 - [texlab](#texlab)
 - [textlsp](#textlsp)
 - [tflint](#tflint)
@@ -325,6 +372,8 @@ Nvim by running `:help lspconfig-all`.
 - [tombi](#tombi)
 - [ts_ls](#ts_ls)
 - [ts_query_ls](#ts_query_ls)
+- [tsc](#tsc)
+- [tsgo](#tsgo)
 - [tsp_server](#tsp_server)
 - [ttags](#ttags)
 - [turbo_ls](#turbo_ls)
@@ -350,22 +399,28 @@ Nvim by running `:help lspconfig-all`.
 - [veryl_ls](#veryl_ls)
 - [vespa_ls](#vespa_ls)
 - [vhdl_ls](#vhdl_ls)
+- [vimdoc_ls](#vimdoc_ls)
 - [vimls](#vimls)
 - [visualforce_ls](#visualforce_ls)
 - [vls](#vls)
 - [volar](#volar)
 - [vscoqtop](#vscoqtop)
+- [vsrocq](#vsrocq)
 - [vtsls](#vtsls)
 - [vue_ls](#vue_ls)
 - [wasm_language_tools](#wasm_language_tools)
+- [wc_language_server](#wc_language_server)
 - [wgsl_analyzer](#wgsl_analyzer)
+- [wolfram_lsp](#wolfram_lsp)
 - [yamlls](#yamlls)
 - [yang_lsp](#yang_lsp)
 - [yls](#yls)
 - [ziggy](#ziggy)
 - [ziggy_schema](#ziggy_schema)
+- [zizmor](#zizmor)
 - [zk](#zk)
 - [zls](#zls)
+- [zuban](#zuban)
 
 ## ada_ls
 
@@ -401,7 +456,7 @@ Default config:
   ```lua
   { "ada" }
   ```
-- `root_dir`: [../lsp/ada_ls.lua:23](../lsp/ada_ls.lua#L23)
+- `root_dir`: [../lsp/ada_ls.lua:24](../lsp/ada_ls.lua#L24)
 
 ---
 
@@ -425,7 +480,42 @@ Default config:
   ```lua
   { "agda" }
   ```
-- `root_dir`: [../lsp/agda_ls.lua:9](../lsp/agda_ls.lua#L9)
+- `root_dir`: [../lsp/agda_ls.lua:10](../lsp/agda_ls.lua#L10)
+
+---
+
+## agentscript
+
+https://github.com/salesforce/agentscript
+
+Language server for Agent Script, Salesforce's open agent specification
+language for `*.agent` files. Install with
+`npm install -g @sf-agentscript/lsp-server`.
+
+Neovim does not detect the `agentscript` filetype by default:
+
+```lua
+vim.filetype.add({ extension = { agent = 'agentscript' } })
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('agentscript')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "agentscript-lsp", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "agentscript" }
+  ```
+- `root_markers` :
+  ```lua
+  { "package.json", ".git" }
+  ```
 
 ---
 
@@ -575,7 +665,7 @@ Default config:
 
 ## angularls
 
-https://github.com/angular/vscode-ng-language-service
+https://github.com/angular/angular/tree/main/vscode-ng-language-service
 `angular-language-server` can be installed via npm `npm install -g @angular/language-server`.
 
 ```lua
@@ -593,13 +683,10 @@ vim.lsp.enable('angularls')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "ngserver", "--stdio", "--tsProbeLocations", "../..,?/node_modules", "--ngProbeLocations", "../../@angular/language-server/node_modules,?/node_modules/@angular/language-server/node_modules", "--angularCoreVersion", "" }
-  ```
+- `cmd`: [../lsp/angularls.lua:93](../lsp/angularls.lua#L93)
 - `filetypes` :
   ```lua
-  { "typescript", "html", "typescriptreact", "typescript.tsx", "htmlangular" }
+  { "typescript", "html", "typescriptreact", "htmlangular" }
   ```
 - `root_markers` :
   ```lua
@@ -690,6 +777,59 @@ Default config:
 - `root_markers` :
   ```lua
   { "composer.json" }
+  ```
+
+---
+
+## apex_ls
+
+https://github.com/forcedotcom/salesforcedx-vscode
+
+ Language server for Apex.
+
+ For manual installation, download the JAR file from the [VSCode
+ extension](https://github.com/forcedotcom/salesforcedx-vscode/tree/develop/packages/salesforcedx-vscode-apex) and adjust the `apex_jar_path` appropriately.
+
+ ```lua
+ vim.lsp.config('apex_ls', {
+   apex_jar_path = '/path/to/apex-jorje-lsp.jar',
+   apex_enable_semantic_errors = false, -- Whether to allow Apex Language Server to surface semantic errors
+   apex_enable_completion_statistics = false, -- Whether to allow Apex Language Server to collect telemetry on code completion usage
+ }
+```
+
+ Example configuration using Mason:
+
+```lua
+ vim.lsp.config('apex_ls', {
+   apex_jar_path = vim.fn.stdpath('data') .. '/mason/share/apex-language-server/apex-jorje-lsp.jar',
+ }
+```
+
+ For a complete experience, you may need to ensure the treesitter parsers for 'apex' are installed (:TSInstall apex) as well as configure the filetype for apex (*.cls) files:
+
+ ```lua
+ vim.filetype.add({
+   pattern = {
+     ['.*/*.cls'] = 'apex',
+   },
+ })
+ ```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('apex_ls')
+```
+
+Default config:
+- `cmd`: [../lsp/apex_ls.lua:37](../lsp/apex_ls.lua#L37)
+- `filetypes` :
+  ```lua
+  { "apex", "apexcode" }
+  ```
+- `root_markers` :
+  ```lua
+  { "sfdx-project.json" }
   ```
 
 ---
@@ -789,7 +929,7 @@ Default config:
   ```lua
   { "arduino" }
   ```
-- `root_dir`: [../lsp/arduino_language_server.lua:73](../lsp/arduino_language_server.lua#L73)
+- `root_dir`: [../lsp/arduino_language_server.lua:74](../lsp/arduino_language_server.lua#L74)
 
 ---
 
@@ -845,9 +985,9 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "c", "cpp", "rust", "go", "java", "python", "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "html", "css", "kotlin", "dart", "lua" }
+  { "bash", "c", "cpp", "cs", "css", "elixir", "go", "haskell", "html", "java", "javascript", "javascriptreact", "json", "kotlin", "lua", "nix", "php", "python", "ruby", "rust", "scala", "sh", "solidity", "swift", "typescript", "typescriptreact", "yaml" }
   ```
-- `reuse_client`: [../lsp/ast_grep.lua:10](../lsp/ast_grep.lua#L10)
+- `reuse_client`: [../lsp/ast_grep.lua:12](../lsp/ast_grep.lua#L12)
 - `root_markers` :
   ```lua
   { "sgconfig.yaml", "sgconfig.yml" }
@@ -858,12 +998,81 @@ Default config:
 
 ## astro
 
-https://github.com/withastro/language-tools/tree/main/packages/language-server
+https://github.com/withastro/astro/tree/main/packages/language-tools/language-server
 
 `astro-ls` can be installed via `npm`:
 ```sh
 npm install -g @astrojs/language-server
 ```
+
+If typescript is installed globally, you might get the `\`typescript.tsdk\` init option is required` error.
+You will need to manually pass the typescript SDK path. Here is an example of a Nix configuration where typescript is installed via Nix's Home-manager:
+
+```nix
+{ config, pkgs, ... }:
+
+{
+  home.packages = with pkgs; [
+    typescript
+  ];
+
+  programs.neovim = {
+    plugins = with pkgs.vimPlugins; [
+      nvim-lspconfig
+    ];
+    extraPackages = with pkgs; [
+      astro-language-server
+    ];
+    initLua = ''
+      vim.lsp.config['astro'] = {
+        init_options = {
+          typescript = {
+            tsdk = ${pkgs.typescript}/lib/node_modules/typescript/lib,
+          },
+        },
+      }
+
+      vim.lsp.enable('astro')
+
+      -- ...
+    '';
+  };
+}
+```
+The path can also be passed via a variable, like `vim.g.tsdk = "${pkgs.typescript}/lib/node_modules/typescript/lib"` and then used in the Lua Neovim config.
+
+WARNING: TypeScript 7.x dropped `tsserverlibrary.js` from its npm package, so
+`typescript.tsdk` cannot resolve from a local or global TS 7.x install. Pin to
+TS `<= 6.x` (e.g. `npm install -g typescript@~6`) for the LSP to start.
+
+For a globally-installed TS (resolved at runtime, unlike the Nix example where the
+path is known at build time), look up the workspace-local TS first via
+`util.get_typescript_server_path`, then fall back to `npm root -g`:
+
+```lua
+vim.lsp.config('astro', {
+  before_init = function(_, config)
+    local util = require('lspconfig.util')
+    local tsdk = util.get_typescript_server_path(config.root_dir)
+    if tsdk == '' then
+      local npm_root = vim.fn.systemlist('npm root -g')
+      if vim.v.shell_error == 0 and npm_root[1] then
+        tsdk = npm_root[1] .. '/typescript/lib'
+      end
+    end
+    config.init_options = config.init_options or {}
+    config.init_options.typescript = config.init_options.typescript or {}
+    config.init_options.typescript.tsdk = tsdk
+  end,
+})
+vim.lsp.enable('astro')
+```
+
+For other package managers, replace `npm root -g` with:
+
+- pnpm: `pnpm root -g`
+- yarn classic: `yarn global dir` .. `/node_modules`
+- yarn berry (>=2): globals unsupported — use a workspace-local TS instead
 
 Snippet to enable the language server:
 ```lua
@@ -871,11 +1080,8 @@ vim.lsp.enable('astro')
 ```
 
 Default config:
-- `before_init`: [../lsp/astro.lua:12](../lsp/astro.lua#L12)
-- `cmd` :
-  ```lua
-  { "astro-ls", "--stdio" }
-  ```
+- `before_init`: [../lsp/astro.lua:82](../lsp/astro.lua#L82)
+- `cmd`: [../lsp/astro.lua:82](../lsp/astro.lua#L82)
 - `filetypes` :
   ```lua
   { "astro" }
@@ -967,6 +1173,35 @@ Default config:
 - `root_markers` :
   ```lua
   { "atlas.hcl" }
+  ```
+
+---
+
+## atopile
+
+https://atopile.io/
+
+A language server for atopile Programming Language.
+
+It comes with the atopile compiler, for installation see: [Installing atopile](https://docs.atopile.io/atopile/guides/install)
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('atopile')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "ato", "lsp", "start" }
+  ```
+- `filetypes` :
+  ```lua
+  { "ato" }
+  ```
+- `root_markers` :
+  ```lua
+  { "ato.yaml", ".ato", ".git" }
   ```
 
 ---
@@ -1063,7 +1298,7 @@ Default config:
   ```lua
   { "config", "automake", "make" }
   ```
-- `root_dir`: [../lsp/autotools_ls.lua:16](../lsp/autotools_ls.lua#L16)
+- `root_dir`: [../lsp/autotools_ls.lua:17](../lsp/autotools_ls.lua#L17)
 
 ---
 
@@ -1249,6 +1484,9 @@ https://detachhead.github.io/basedpyright
 
 `basedpyright`, a static type checker and language server for python
 
+Tagged hints are disabled by default. See Pyright for more details.
+Set `basedpyright.disableTaggedHints = false` to re-enable.
+
 Snippet to enable the language server:
 ```lua
 vim.lsp.enable('basedpyright')
@@ -1263,10 +1501,10 @@ Default config:
   ```lua
   { "python" }
   ```
-- `on_attach`: [../lsp/basedpyright.lua:22](../lsp/basedpyright.lua#L22)
+- `on_attach`: [../lsp/basedpyright.lua:28](../lsp/basedpyright.lua#L28)
 - `root_markers` :
   ```lua
-  { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json", ".git" }
+  { "pyrightconfig.json", "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" }
   ```
 - `settings` :
   ```lua
@@ -1274,9 +1512,9 @@ Default config:
     basedpyright = {
       analysis = {
         autoSearchPaths = true,
-        diagnosticMode = "openFilesOnly",
-        useLibraryCodeForTypes = true
-      }
+        diagnosticMode = "openFilesOnly"
+      },
+      disableTaggedHints = true
     }
   }
   ```
@@ -1495,25 +1733,36 @@ Toolchain of the web. [Successor of Rome](https://biomejs.dev/blog/annoucing-bio
 npm install [-g] @biomejs/biome
 ```
 
+### Monorepo support
+
+`biome` supports monorepos by default. It will automatically find the `biome.json` corresponding to the package you are working on, as described in the [documentation](https://biomejs.dev/guides/big-projects/#monorepo). This works without the need of spawning multiple instances of `biome`, saving memory.
+
 Snippet to enable the language server:
 ```lua
 vim.lsp.enable('biome')
 ```
 
 Default config:
-- `cmd`: [../lsp/biome.lua:12](../lsp/biome.lua#L12)
+- `cmd`: [../lsp/biome.lua:17](../lsp/biome.lua#L17)
 - `filetypes` :
   ```lua
-  { "astro", "css", "graphql", "html", "javascript", "javascriptreact", "json", "jsonc", "svelte", "typescript", "typescript.tsx", "typescriptreact", "vue" }
+  { "astro", "css", "graphql", "html", "javascript", "javascriptreact", "json", "jsonc", "svelte", "typescript", "typescriptreact", "vue" }
   ```
-- `root_dir`: [../lsp/biome.lua:12](../lsp/biome.lua#L12)
+- `root_dir`: [../lsp/biome.lua:17](../lsp/biome.lua#L17)
 - `workspace_required` : `true`
 
 ---
 
 ## bitbake_language_server
 
-🛠️ bitbake language server
+https://github.com/Freed-Wu/bitbake-language-server
+
+`bitbake-language-server` can be installed via `pip`:
+```sh
+pip install bitbake-language-server
+```
+
+Language server for bitbake.
 
 Snippet to enable the language server:
 ```lua
@@ -1637,6 +1886,33 @@ Default config:
 
 ---
 
+## brioche
+
+https://github.com/brioche-dev/brioche
+
+`Brioche Language Server`.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('brioche')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "brioche", "lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "brioche" }
+  ```
+- `root_markers` :
+  ```lua
+  { "project.bri" }
+  ```
+
+---
+
 ## bsl_ls
 
 https://github.com/1c-syntax/bsl-language-server
@@ -1725,9 +2001,29 @@ Default config:
 
 https://github.com/bufbuild/buf
 
-buf beta lsp included in the cli itself
+buf lsp included in the cli itself
 
-buf beta lsp is a Protobuf language server compatible with Buf modules and workspaces
+buf lsp is a Protobuf language server compatible with Buf modules and workspaces
+
+buf lsp also supports Buf configuration files. The `buf-config` filetype is not
+detected automatically; register it manually (see below) or override the filetypes:
+
+```lua
+vim.filetype.add({
+  filename = {
+    ['buf.yaml'] = 'buf-config',
+    ['buf.gen.yaml'] = 'buf-config',
+    ['buf.policy.yaml'] = 'buf-config',
+    ['buf.lock'] = 'buf-config',
+  },
+})
+```
+
+Optionally, tell treesitter to treat buf config files as YAML for syntax highlighting:
+
+```lua
+vim.treesitter.language.register('yaml', 'buf-config')
+```
 
 Snippet to enable the language server:
 ```lua
@@ -1737,47 +2033,16 @@ vim.lsp.enable('buf_ls')
 Default config:
 - `cmd` :
   ```lua
-  { "buf", "beta", "lsp", "--timeout=0", "--log-format=text" }
+  { "buf", "lsp", "serve", "--log-format=text" }
   ```
 - `filetypes` :
   ```lua
-  { "proto" }
+  { "proto", "buf-config" }
   ```
+- `reuse_client`: [../lsp/buf_ls.lua:29](../lsp/buf_ls.lua#L29)
 - `root_markers` :
   ```lua
   { "buf.yaml", ".git" }
-  ```
-
----
-
-## bufls
-
-https://github.com/bufbuild/buf-language-server
-
-`buf-language-server` can be installed via `go install`:
-```sh
-go install github.com/bufbuild/buf-language-server/cmd/bufls@latest
-```
-
-bufls is a Protobuf language server compatible with Buf modules and workspaces
-
-Snippet to enable the language server:
-```lua
-vim.lsp.enable('bufls')
-```
-
-Default config:
-- `cmd` :
-  ```lua
-  { "bufls", "serve" }
-  ```
-- `filetypes` :
-  ```lua
-  { "proto" }
-  ```
-- `root_markers` :
-  ```lua
-  { "buf.work.yaml", ".git" }
   ```
 
 ---
@@ -1920,7 +2185,7 @@ Default config:
   ```lua
   "utf-32"
   ```
-- `on_attach`: [../lsp/ccls.lua:40](../lsp/ccls.lua#L40)
+- `on_attach`: [../lsp/ccls.lua:41](../lsp/ccls.lua#L41)
 - `root_markers` :
   ```lua
   { "compile_commands.json", ".ccls", ".git" }
@@ -1964,6 +2229,35 @@ Default config:
       validate = true
     }
   }
+  ```
+
+---
+
+## cir_lsp_server
+
+https://llvm.github.io/clangir
+
+The Language Server for the LLVM ClangIR language
+
+`cir-lsp-server` can be installed at the llvm-project repository (https://github.com/llvm/llvm-project)
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('cir_lsp_server')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "cir-lsp-server" }
+  ```
+- `filetypes` :
+  ```lua
+  { "cir" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".git" }
   ```
 
 ---
@@ -2031,10 +2325,11 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "c", "cpp", "objc", "objcpp", "cuda" }
+  { "c", "c.doxygen", "cpp", "cpp.doxygen", "objc", "objcpp", "cuda" }
   ```
-- `on_attach`: [../lsp/clangd.lua:63](../lsp/clangd.lua#L63)
-- `on_init`: [../lsp/clangd.lua:63](../lsp/clangd.lua#L63)
+- `get_language_id`: [../lsp/clangd.lua:65](../lsp/clangd.lua#L65)
+- `on_attach`: [../lsp/clangd.lua:65](../lsp/clangd.lua#L65)
+- `on_init`: [../lsp/clangd.lua:65](../lsp/clangd.lua#L65)
 - `root_markers` :
   ```lua
   { ".clangd", ".clang-tidy", ".clang-format", "compile_commands.json", "compile_flags.txt", "configure.ac", ".git" }
@@ -2065,6 +2360,43 @@ Default config:
 - `root_markers` :
   ```lua
   { "Clarinet.toml" }
+  ```
+
+---
+
+## clice
+
+https://github.com/clice-io/clice
+Clice is a next-generation language server for modern C++, focused on performance and code intelligence
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('clice')
+```
+
+Default config:
+- `capabilities` :
+  ```lua
+  {
+    offsetEncoding = { "utf-8" },
+    textDocument = {
+      completion = {
+        editsNearCursor = true
+      }
+    }
+  }
+  ```
+- `cmd` :
+  ```lua
+  { "clice", "serve" }
+  ```
+- `filetypes` :
+  ```lua
+  { "c", "cpp" }
+  ```
+- `root_markers` :
+  ```lua
+  { "clice.toml", ".clang-tidy", ".clang-format", "compile_commands.json", "compile_flags.txt", "configure.ac", ".git" }
   ```
 
 ---
@@ -2176,7 +2508,7 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "c", "css", "go", "haskell", "html", "javascript", "javascriptreact", "markdown", "python", "php", "ruby", "rust", "toml", "text", "typescript", "typescriptreact" }
+  { "c", "css", "gitcommit", "go", "haskell", "html", "java", "javascript", "javascriptreact", "lua", "markdown", "php", "python", "ruby", "rust", "swift", "toml", "text", "typescript", "typescriptreact", "zig" }
   ```
 - `root_markers` :
   ```lua
@@ -2245,6 +2577,88 @@ Default config:
 
 ---
 
+## copilot
+
+https://www.npmjs.com/package/@github/copilot-language-server
+
+The Copilot Language Server enables any editor or IDE
+to integrate with GitHub Copilot via
+[the language server protocol](https://microsoft.github.io/language-server-protocol/).
+
+**[GitHub Copilot](https://github.com/features/copilot)**
+is an AI pair programmer tool that helps you write code faster and smarter.
+
+**Sign up for [GitHub Copilot Free](https://github.com/settings/copilot)!**
+
+Please see [terms of use for GitHub Copilot](https://docs.github.com/en/site-policy/github-terms/github-terms-for-additional-products-and-features#github-copilot)
+
+You need to enable `:help lsp-inline-completion` to receive suggestions. For example, you can enable it in the LspAttach event:
+
+```lua
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local bufnr = args.buf
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
+      vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
+
+      vim.keymap.set(
+        'i',
+        '<C-F>',
+        vim.lsp.inline_completion.get,
+        { desc = 'LSP: accept inline completion', buffer = bufnr }
+      )
+      vim.keymap.set(
+        'i',
+        '<C-G>',
+        vim.lsp.inline_completion.select,
+        { desc = 'LSP: switch inline completion', buffer = bufnr }
+      )
+    end
+  end
+})
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('copilot')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "copilot-language-server", "--stdio" }
+  ```
+- `init_options` :
+  ```lua
+  {
+    editorInfo = {
+      name = "Neovim",
+      version = "0.13.0"
+    },
+    editorPluginInfo = {
+      name = "Neovim",
+      version = "0.13.0"
+    }
+  }
+  ```
+- `on_attach`: [../lsp/copilot.lua:106](../lsp/copilot.lua#L106)
+- `root_markers` :
+  ```lua
+  { ".git" }
+  ```
+- `settings` :
+  ```lua
+  {
+    telemetry = {
+      telemetryLevel = "all"
+    }
+  }
+  ```
+
+---
+
 ## coq_lsp
 
 https://github.com/ejgallego/coq-lsp/
@@ -2266,6 +2680,40 @@ Default config:
 - `root_markers` :
   ```lua
   { "_CoqProject", ".git" }
+  ```
+
+---
+
+## cqlls
+
+https://github.com/Akzestia/cqlls
+
+Install via cargo:
+```sh
+cargo install cqlls
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('cqlls')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "cqlls" }
+  ```
+- `filetypes` :
+  ```lua
+  { "cql", "cqlang" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".cqlls", ".git" }
+  ```
+- `settings` :
+  ```lua
+  {}
   ```
 
 ---
@@ -2313,21 +2761,19 @@ vim.lsp.enable('csharp_ls')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "csharp-ls" }
-  ```
+- `cmd`: [../lsp/csharp_ls.lua:14](../lsp/csharp_ls.lua#L14)
 - `filetypes` :
   ```lua
   { "cs" }
   ```
+- `get_language_id`: [../lsp/csharp_ls.lua:14](../lsp/csharp_ls.lua#L14)
 - `init_options` :
   ```lua
   {
     AutomaticWorkspaceInit = true
   }
   ```
-- `root_dir`: [../lsp/csharp_ls.lua:13](../lsp/csharp_ls.lua#L13)
+- `root_dir`: [../lsp/csharp_ls.lua:14](../lsp/csharp_ls.lua#L14)
 
 ---
 
@@ -2378,10 +2824,7 @@ Default config:
   ```lua
   { "css", "scss", "less" }
   ```
-- `root_markers` :
-  ```lua
-  { "package.json", ".git" }
-  ```
+- `root_dir`: [../lsp/css_variables.lua:14](../lsp/css_variables.lua#L14)
 - `settings` :
   ```lua
   {
@@ -2390,6 +2833,39 @@ Default config:
       lookupFiles = { "**/*.less", "**/*.scss", "**/*.sass", "**/*.css" }
     }
   }
+  ```
+
+---
+
+## csskit
+
+https://github.com/csskit/csskit
+
+Beautiful, fast, and powerful CSS tooling with zero configuration
+
+`csskit` can be installed via `npm`:
+
+```sh
+npm i -g csskit
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('csskit')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "csskit", "lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "css" }
+  ```
+- `root_markers` :
+  ```lua
+  { "package.json", ".git" }
   ```
 
 ---
@@ -2422,10 +2898,7 @@ vim.lsp.enable('cssls')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "vscode-css-language-server", "--stdio" }
-  ```
+- `cmd`: [../lsp/cssls.lua:24](../lsp/cssls.lua#L24)
 - `filetypes` :
   ```lua
   { "css", "scss", "less" }
@@ -2485,6 +2958,46 @@ Default config:
 - `root_markers` :
   ```lua
   { "package.json" }
+  ```
+
+---
+
+## ctags_lsp
+
+https://github.com/netmute/ctags-lsp
+
+A simple LSP server wrapping universal-ctags. Provides completion,
+go-to-definition, and document/workspace symbols. Useful as a generic
+symbol provider for languages without a dedicated language server, or
+as a fallback alongside other LSPs.
+
+Requires `universal-ctags` to be installed and available in `$PATH`.
+Pre-built binaries are at https://github.com/netmute/ctags-lsp/releases
+(Homebrew: `brew install netmute/tap/ctags-lsp`).
+
+The server is generic and does not declare default `filetypes`. Configure
+the languages you want it to attach to:
+
+```lua
+vim.lsp.config('ctags_lsp', {
+  filetypes = { 'lua', 'ruby', 'go' },
+})
+vim.lsp.enable('ctags_lsp')
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('ctags_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "ctags-lsp" }
+  ```
+- `root_markers` :
+  ```lua
+  { "tags", ".tags", ".git" }
   ```
 
 ---
@@ -2592,7 +3105,10 @@ Default config:
     hostInfo = "neovim"
   }
   ```
-- `root_dir`: [../lsp/custom_elements_ls.lua:26](../lsp/custom_elements_ls.lua#L26)
+- `root_markers` :
+  ```lua
+  { "tsconfig.json", "package.json", "jsconfig.json", ".git" }
+  ```
 
 ---
 
@@ -2835,6 +3351,37 @@ vim.g.markdown_fenced_languages = {
 }
 ```
 
+Some care must be taken here to correctly infer whether a file is part of a Deno program, or a TS program that
+expects to run in Node or Web Browsers. This supports having a Deno module that is a part of a mostly-not-Deno
+monorepo. We do this by finding the nearest package manager lock file, and the nearest deno.json or deno.jsonc.
+Note that this means that without a deno.json, deno.jsonc, or deno.lock file, this LSP client will not attach.
+
+Example:
+
+```
+project-root
++-- node_modules/...
++-- package-lock.json
++-- package.json
++-- packages
+    +-- deno-module
+    |   +-- deno.json
+    |   +-- package.json <-- It's normal for Deno projects to have package.json files!
+    |   +-- src
+    |       +-- index.ts <-- this is a Deno file
+    +-- node-module
+        +-- package.json
+        +-- src
+            +-- index.ts <-- a non-Deno file (ie, should use ts_ls or tsgo)
+```
+
+From the file being edited, we walk up to find the nearest package manager lockfile. This is PROJECT ROOT.
+From the file being edited, find the nearest deno.json or deno.jsonc. This is DENO ROOT.
+From the file being edited, find the nearest deno.lock. This is DENO LOCK ROOT
+If DENO LOCK ROOT is found, and PROJECT ROOT is missing or shorter, then this is a deno file, and we attach.
+If DENO ROOT is found, and it's longer than or equal to PROJECT ROOT, then this is a Deno file, and we attach.
+Otherwise, we abort, because this is a non-Deno TS file.
+
 Snippet to enable the language server:
 ```lua
 vim.lsp.enable('denols')
@@ -2853,7 +3400,7 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" }
+  { "javascript", "javascriptreact", "typescript", "typescriptreact" }
   ```
 - `handlers` :
   ```lua
@@ -2863,11 +3410,8 @@ Default config:
     ["textDocument/typeDefinition"] = <function 1>
   }
   ```
-- `on_attach`: [../lsp/denols.lua:66](../lsp/denols.lua#L66)
-- `root_markers` :
-  ```lua
-  { "deno.json", "deno.jsonc", ".git" }
-  ```
+- `on_attach`: [../lsp/denols.lua:98](../lsp/denols.lua#L98)
+- `root_dir`: [../lsp/denols.lua:98](../lsp/denols.lua#L98)
 - `settings` :
   ```lua
   {
@@ -2882,6 +3426,78 @@ Default config:
       }
     }
   }
+  ```
+
+---
+
+## dexter
+
+https://github.com/remoteoss/dexter
+
+`dexter` is a fast, full-featured Elixir LSP optimized for large codebases.
+
+`dexter` can be installed via Homebrew, mise, or asdf:
+
+Via Homebrew:
+```sh
+brew install remoteoss/tap/dexter
+```
+
+Via mise:
+```sh
+mise plugin add dexter https://github.com/remoteoss/dexter.git
+mise install dexter
+```
+
+Via asdf:
+```sh
+asdf plugin add dexter https://github.com/remoteoss/dexter.git
+asdf install dexter latest
+```
+
+`dexter` works without compilation by parsing source files directly, providing:
+- Fast indexing (cold index in ~11s on 57k-file codebases)
+- Go-to-definition with alias and delegate resolution
+- Find references across the codebase
+- Hover documentation and autocompletion
+- Rename functionality with automatic file renaming
+- Format on save via persistent Elixir process
+
+Configuration example:
+```lua
+vim.lsp.config('dexter', {
+  init_options = {
+    followDelegates = true,  -- jump through defdelegate to the target function
+    -- stdlibPath = "",      -- override Elixir stdlib path (auto-detected)
+    -- debug = false,        -- verbose logging to stderr (view with :LspLog)
+  },
+})
+vim.lsp.enable('dexter')
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('dexter')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "dexter", "lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "elixir", "eelixir", "heex" }
+  ```
+- `init_options` :
+  ```lua
+  {
+    followDelegates = true
+  }
+  ```
+- `root_markers` :
+  ```lua
+  { ".dexter/dexter.db", ".dexter.db", ".git", "mix.exs" }
   ```
 
 ---
@@ -2977,6 +3593,33 @@ Default config:
 
 ---
 
+## djls
+
+https://github.com/joshuadavidthomas/django-language-server
+
+`djls`, a language server for the Django web framework.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('djls')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "djls", "serve" }
+  ```
+- `filetypes` :
+  ```lua
+  { "htmldjango", "html", "python" }
+  ```
+- `root_markers` :
+  ```lua
+  { "manage.py", "pyproject.toml", ".git" }
+  ```
+
+---
+
 ## djlsp
 
 https://github.com/fourdigits/django-template-lsp
@@ -3038,6 +3681,37 @@ Default config:
 - `root_markers` :
   ```lua
   { "docker-compose.yaml", "docker-compose.yml", "compose.yaml", "compose.yml" }
+  ```
+
+---
+
+## docker_language_server
+
+https://github.com/docker/docker-language-server
+
+`docker-language-server` can be installed via `go`:
+```sh
+go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('docker_language_server')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "docker-language-server", "start", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "dockerfile", "yaml.docker-compose", "hcl.docker-bake" }
+  ```
+- `get_language_id`: [../lsp/docker_language_server.lua:11](../lsp/docker_language_server.lua#L11)
+- `root_markers` :
+  ```lua
+  { "Dockerfile", "docker-compose.yaml", "docker-compose.yml", "compose.yaml", "compose.yml", "docker-bake.json", "docker-bake.hcl", "docker-bake.override.json", "docker-bake.override.hcl" }
   ```
 
 ---
@@ -3221,7 +3895,7 @@ Default config:
     show_symbols_only_follow_by_hanzi = false
   }
   ```
-- `on_attach`: [../lsp/ds_pinyin_lsp.lua:45](../lsp/ds_pinyin_lsp.lua#L45)
+- `on_attach`: [../lsp/ds_pinyin_lsp.lua:48](../lsp/ds_pinyin_lsp.lua#L48)
 - `root_markers` :
   ```lua
   { ".git" }
@@ -3380,7 +4054,9 @@ https://github.com/elixir-lsp/elixir-ls
    chmod +x /path/to/elixir-ls/language_server.sh
    ```
 
-**By default, elixir-ls doesn't have a `cmd` set.** This is because nvim-lspconfig does not make assumptions about your path. You must add the following to your init.vim or init.lua to set `cmd` to the absolute path ($HOME and ~ are not expanded) of your unzipped elixir-ls.
+**By default, elixir-ls doesn't have a `cmd` set.** This is because nvim-lspconfig does not make assumptions about
+your path. You must add the following to your init.vim or init.lua to set `cmd` to the absolute path ($HOME and
+~ are not expanded) of your unzipped elixir-ls.
 
 ```lua
 vim.lsp.config('elixirls', {
@@ -3392,7 +4068,9 @@ vim.lsp.config('elixirls', {
 })
 ```
 
-'root_dir' is chosen like this: if two or more directories containing `mix.exs` were found when searching directories upward, the second one (higher up) is chosen, with the assumption that it is the root of an umbrella app. Otherwise the directory containing the single mix.exs that was found is chosen.
+'root_dir' is chosen like this: if two or more directories containing `mix.exs` were found when searching
+directories upward, the second one (higher up) is chosen, with the assumption that it is the root of an umbrella
+app. Otherwise the directory containing the single mix.exs that was found is chosen.
 
 Snippet to enable the language server:
 ```lua
@@ -3400,11 +4078,15 @@ vim.lsp.enable('elixirls')
 ```
 
 Default config:
+- `cmd` :
+  ```lua
+  { "elixir-ls" }
+  ```
 - `filetypes` :
   ```lua
   { "elixir", "eelixir", "heex", "surface" }
   ```
-- `root_dir`: [../lsp/elixirls.lua:28](../lsp/elixirls.lua#L28)
+- `root_dir`: [../lsp/elixirls.lua:34](../lsp/elixirls.lua#L34)
 
 ---
 
@@ -3446,7 +4128,7 @@ Default config:
     skipInstallPackageConfirmation = false
   }
   ```
-- `root_dir`: [../lsp/elmls.lua:12](../lsp/elmls.lua#L12)
+- `root_dir`: [../lsp/elmls.lua:13](../lsp/elmls.lua#L13)
 
 ---
 
@@ -3530,7 +4212,7 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "astro", "css", "eruby", "html", "htmlangular", "htmldjango", "javascriptreact", "less", "pug", "sass", "scss", "svelte", "templ", "typescriptreact", "vue" }
+  { "astro", "css", "eruby", "html", "htmlangular", "htmldjango", "javascriptreact", "less", "sass", "scss", "svelte", "typescriptreact", "vue" }
   ```
 - `root_markers` :
   ```lua
@@ -3573,13 +4255,54 @@ Default config:
 
 https://github.com/EmmyLuaLs/emmylua-analyzer-rust
 
-Emmylua Analyzer Rust. Language Server for Lua.
+EmmyluaLs, a language server for Lua.
 
-`emmylua_ls` can be installed using `cargo` by following the instructions[here]
-(https://github.com/EmmyLuaLs/emmylua-analyzer-rust?tab=readme-ov-file#install).
+`emmylua_ls` can be installed using `cargo` by following the [instructions](https://github.com/EmmyLuaLs/emmylua-analyzer-rust#install).
 
 The default `cmd` assumes that the `emmylua_ls` binary can be found in `$PATH`.
-It might require you to provide cargo binaries installation path in it.
+You may want to symlink to the cargo artifact:
+```
+ln -s $(pwd)/target/release/emmylua_ls ~/bin/emmylua_ls
+```
+
+See the emmylua_ls [configuration guide](https://github.com/EmmyLuaLs/emmylua-analyzer-rust/blob/main/docs/config/emmyrc_json_EN.md)
+for settings documentation.
+
+If you want completions and analysis for Neovim plugins on your runtime path, try this config:
+
+```lua
+vim.lsp.config('emmylua_ls', {
+  on_init = function(client)
+    -- If the workspace has its own emmylua_ls/lua_ls config file, defer to it.
+    if client.workspace_folders then
+      local path = client.workspace_folders[1].name
+      if
+        path ~= vim.fn.stdpath('config')
+        and (vim.uv.fs_stat(path .. '/.emmyrc.json') or vim.uv.fs_stat(path .. '/.luarc.json'))
+      then
+        client.config.settings = {}
+      end
+    end
+  end,
+  settings = {
+    emmylua = {
+      -- Tell the server which Lua you're using (usually LuaJIT, for Neovim).
+      runtime = { version = 'LuaJIT' },
+      diagnostics = { globals = { 'vim' } },
+      -- Make the server aware of Neovim runtime files.
+      workspace = {
+        library = {
+          vim.env.VIMRUNTIME,
+          -- For LSP Settings Type Annotations: https://github.com/neovim/nvim-lspconfig#lsp-settings-type-annotations
+          vim.api.nvim_get_runtime_file('lua/lspconfig', false)[1],
+        },
+        -- Or pull in all of 'runtimepath'. May be slower!
+        -- library = vim.api.nvim_get_runtime_file('', true),
+      },
+    },
+  },
+})
+```
 
 Snippet to enable the language server:
 ```lua
@@ -3597,7 +4320,20 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { ".luarc.json", ".emmyrc.json", ".luacheckrc", ".git" }
+  { { ".emmyrc.json", ".emmyrc.lua", ".luarc.json", ".luarc.jsonc" }, { ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml" }, { ".git" } }
+  ```
+- `settings` :
+  ```lua
+  {
+    emmylua = {
+      codeLens = {
+        enable = true
+      },
+      hint = {
+        enable = true
+      }
+    }
+  }
   ```
 - `workspace_required` : `false`
 
@@ -3637,86 +4373,42 @@ Default config:
 
 ---
 
-## erlangls
-
-https://erlang-ls.github.io
-
-Language Server for Erlang.
-
-Clone [erlang_ls](https://github.com/erlang-ls/erlang_ls)
-Compile the project with `make` and copy resulting binaries somewhere in your $PATH eg. `cp _build/*/bin/* ~/local/bin`
-
-Installation instruction can be found [here](https://github.com/erlang-ls/erlang_ls).
-
-Installation requirements:
-    - [Erlang OTP 21+](https://github.com/erlang/otp)
-    - [rebar3 3.9.1+](https://github.com/erlang/rebar3)
-
-Snippet to enable the language server:
-```lua
-vim.lsp.enable('erlangls')
-```
-
-Default config:
-- `cmd` :
-  ```lua
-  { "erlang_ls" }
-  ```
-- `filetypes` :
-  ```lua
-  { "erlang" }
-  ```
-- `root_markers` :
-  ```lua
-  { "rebar.config", "erlang.mk", ".git" }
-  ```
-
----
-
 ## esbonio
 
 https://github.com/swyddfa/esbonio
 
 Esbonio is a language server for [Sphinx](https://www.sphinx-doc.org/en/master/) documentation projects.
-The language server can be installed via pip
+The language server can be installed as a standalone tool with uv or pipx.
 
 ```
-pip install esbonio
+uv tool install esbonio
 ```
 
-Since Sphinx is highly extensible you will get best results if you install the language server in the same
-Python environment as the one used to build your documentation. To ensure that the correct Python environment
-is picked up, you can either launch `nvim` with the correct environment activated.
+Configure the Python environment and Sphinx build command for each project in `pyproject.toml`.
 
-```
-source env/bin/activate
-nvim
+```toml
+[tool.esbonio.sphinx]
+pythonCommand = ["uv", "run", "python"]
+buildArguments = ["-M", "dirhtml", ".", "${defaultBuildDir}"]
 ```
 
-Or you can modify the default `cmd` to include the full path to the Python interpreter.
+The same options can be supplied through LSP settings if a project does not use `pyproject.toml`.
 
 ```lua
 vim.lsp.config('esbonio', {
-  cmd = { '/path/to/virtualenv/bin/python', '-m', 'esbonio' }
-})
-```
-
-Esbonio supports a number of config values passed as `init_options` on startup, for example.
-
-```lua
-vim.lsp.config('esbonio', {
-  init_options = {
-    server = {
-      logLevel = "debug"
+  settings = {
+    esbonio = {
+      sphinx = {
+        pythonCommand = { 'uv', 'run', 'python' },
+        buildCommand = { 'sphinx-build', '-M', 'dirhtml', '.', '${defaultBuildDir}' },
+      },
     },
-    sphinx = {
-      confDir = "/path/to/docs",
-      srcDir = "${confDir}/../docs-src"
-    }
+  },
 })
 ```
 
-A full list and explanation of the available options can be found [here](https://docs.esbon.io/en/esbonio-language-server-v0.16.4/lsp/getting-started.html?editor=neovim-lspconfig#configuration)
+See the [Esbonio documentation](https://docs.esbon.io/en/release/integrating/howto/nvim.html)
+for the full configuration reference and additional Neovim integration examples.
 
 Snippet to enable the language server:
 ```lua
@@ -3726,7 +4418,7 @@ vim.lsp.enable('esbonio')
 Default config:
 - `cmd` :
   ```lua
-  { "python3", "-m", "esbonio" }
+  { "esbonio", "server" }
   ```
 - `filetypes` :
   ```lua
@@ -3734,7 +4426,7 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { ".git" }
+  { "conf.py", ".git" }
   ```
 
 ---
@@ -3772,20 +4464,43 @@ Messages handled in lspconfig: `eslint/openDoc`, `eslint/confirmESLintExecution`
 
 Additional messages you can handle: `eslint/noConfig`
 
+### Monorepo support
+
+`vscode-eslint-language-server` supports monorepos by default. It will automatically find the config file corresponding to the package you are working on. You can use different configs in different packages.
+This works without the need of spawning multiple instances of `vscode-eslint-language-server`.
+You can use a different version of ESLint in each package, but it is recommended to use the same version of ESLint in all packages. The location of the ESLint binary will be determined automatically.
+
+/!\ When using flat config files, you need to use them across all your packages in your monorepo, as it's a global setting for the server.
+
+### Flat config in ESLint versions prior to 10.0
+
+If you're using a ESLint version that supports both flat config and eslintrc (>= 8.21, < 10.0) and want to change
+the [default behavior](https://eslint.org/blog/2023/10/flat-config-rollout-plans/), you'll need to set
+`experimental.useFlatConfig` accordingly:
+```lua
+vim.lsp.config("eslint", {
+  settings = {
+    experimental = {
+      -- If you want to use flat config on >= 8.21, < 9.0
+      useFlatConfig = true,
+      -- Or if you want to use eslintrc on 9.*
+      -- useFlatConfig = false,
+    }
+  }
+})
+```
+
 Snippet to enable the language server:
 ```lua
 vim.lsp.enable('eslint')
 ```
 
 Default config:
-- `before_init`: [../lsp/eslint.lua:37](../lsp/eslint.lua#L37)
-- `cmd` :
-  ```lua
-  { "vscode-eslint-language-server", "--stdio" }
-  ```
+- `before_init`: [../lsp/eslint.lua:79](../lsp/eslint.lua#L79)
+- `cmd`: [../lsp/eslint.lua:79](../lsp/eslint.lua#L79)
 - `filetypes` :
   ```lua
-  { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue", "svelte", "astro", "htmlangular" }
+  { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "astro", "htmlangular" }
   ```
 - `handlers` :
   ```lua
@@ -3796,8 +4511,8 @@ Default config:
     ["eslint/probeFailed"] = <function 4>
   }
   ```
-- `on_attach`: [../lsp/eslint.lua:37](../lsp/eslint.lua#L37)
-- `root_dir`: [../lsp/eslint.lua:37](../lsp/eslint.lua#L37)
+- `on_attach`: [../lsp/eslint.lua:79](../lsp/eslint.lua#L79)
+- `root_dir`: [../lsp/eslint.lua:79](../lsp/eslint.lua#L79)
 - `settings` :
   ```lua
   {
@@ -3814,9 +4529,7 @@ Default config:
       enable = false,
       mode = "all"
     },
-    experimental = {
-      useFlatConfig = false
-    },
+    experimental = {},
     format = true,
     nodePath = "",
     onIgnoredFiles = "off",
@@ -3829,11 +4542,40 @@ Default config:
     useESLintClass = false,
     validate = "on",
     workingDirectory = {
-      mode = "location"
+      mode = "auto"
     }
   }
   ```
 - `workspace_required` : `true`
+
+---
+
+## expert
+
+https://github.com/expert-lsp/expert
+
+Expert is the official language server implementation for the Elixir programming language.
+
+'root_dir' is chosen like this: if two or more directories containing `mix.exs` were found when
+searching directories upward, the second one (higher up) is chosen, with the assumption that it
+is the root of an umbrella app. Otherwise the directory containing the single mix.exs that was
+found is chosen.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('expert')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "expert", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "elixir", "eelixir", "heex", "surface" }
+  ```
+- `root_dir`: [../lsp/expert.lua:13](../lsp/expert.lua#L13)
 
 ---
 
@@ -3860,6 +4602,34 @@ Default config:
 - `root_markers` :
   ```lua
   { ".git" }
+  ```
+
+---
+
+## fallow
+
+https://github.com/fallow-rs/fallow
+
+Codebase intelligence for TypeScript and JavaScript.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('fallow')
+```
+
+Default config:
+- `cmd`: [../lsp/fallow.lua:8](../lsp/fallow.lua#L8)
+- `filetypes` :
+  ```lua
+  { "javascript", "typescript", "javascriptreact", "typescriptreact" }
+  ```
+- `init_options` :
+  ```lua
+  {}
+  ```
+- `root_markers` :
+  ```lua
+  { ".fallowrc.json", ".git" }
   ```
 
 ---
@@ -3924,7 +4694,7 @@ Default config:
   ```lua
   { "fennel" }
   ```
-- `root_dir`: [../lsp/fennel_ls.lua:10](../lsp/fennel_ls.lua#L10)
+- `root_dir`: [../lsp/fennel_ls.lua:11](../lsp/fennel_ls.lua#L11)
 - `settings` :
   ```lua
   {}
@@ -3984,13 +4754,10 @@ vim.lsp.enable('flow')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "npx", "--no-install", "flow", "lsp" }
-  ```
+- `cmd`: [../lsp/flow.lua:16](../lsp/flow.lua#L16)
 - `filetypes` :
   ```lua
-  { "javascript", "javascriptreact", "javascript.jsx" }
+  { "javascript", "javascriptreact" }
   ```
 - `root_markers` :
   ```lua
@@ -4051,7 +4818,50 @@ Default config:
   ```lua
   { "foam", "OpenFOAM" }
   ```
-- `root_dir`: [../lsp/foam_ls.lua:10](../lsp/foam_ls.lua#L10)
+- `root_dir`: [../lsp/foam_ls.lua:11](../lsp/foam_ls.lua#L11)
+
+---
+
+## fortitude
+
+https://fortitude.readthedocs.io/en/stable/
+
+Fortitude is a Fortran linter built in Rust and inspired by (and build upon) Ruff
+
+```sh
+# Install With uv:
+uv tool install fortitude-lint@latest
+
+# Install with pip:
+pip install fortitude-lint
+```
+
+**LSP is available in Fortitude `v0.8.0`.**
+
+Refer to the [documentation](https://fortitude.readthedocs.io/en/stable/editors/) for more details.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('fortitude')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "fortitude", "server" }
+  ```
+- `filetypes` :
+  ```lua
+  { "fortran" }
+  ```
+- `root_markers` :
+  ```lua
+  { "fpm.toml", "fortitude.toml", ".fortitude.toml", ".git" }
+  ```
+- `settings` :
+  ```lua
+  {}
+  ```
 
 ---
 
@@ -4085,7 +4895,7 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { ".fortls", ".git" }
+  { ".fortls", ".fortlsrc", ".fortls.json", ".git" }
   ```
 - `settings` :
   ```lua
@@ -4132,7 +4942,7 @@ Default config:
     AutomaticWorkspaceInit = true
   }
   ```
-- `root_dir`: [../lsp/fsautocomplete.lua:22](../lsp/fsautocomplete.lua#L22)
+- `root_dir`: [../lsp/fsautocomplete.lua:23](../lsp/fsautocomplete.lua#L23)
 - `settings` :
   ```lua
   {
@@ -4194,7 +5004,7 @@ Default config:
     AutomaticWorkspaceInit = true
   }
   ```
-- `root_dir`: [../lsp/fsharp_language_server.lua:18](../lsp/fsharp_language_server.lua#L18)
+- `root_dir`: [../lsp/fsharp_language_server.lua:19](../lsp/fsharp_language_server.lua#L19)
 - `settings` :
   ```lua
   {}
@@ -4273,10 +5083,10 @@ vim.lsp.enable('gdscript')
 ```
 
 Default config:
-- `cmd`: [../lsp/gdscript.lua:10](../lsp/gdscript.lua#L10)
+- `cmd`: [../lsp/gdscript.lua:11](../lsp/gdscript.lua#L11)
 - `filetypes` :
   ```lua
-  { "gd", "gdscript", "gdscript3" }
+  { "gdscript" }
   ```
 - `root_markers` :
   ```lua
@@ -4353,11 +5163,17 @@ Default config:
   ```lua
   { "yaml" }
   ```
+- `handlers` :
+  ```lua
+  {
+    ["actions/readFile"] = <function 1>
+  }
+  ```
 - `init_options` :
   ```lua
   {}
   ```
-- `root_dir`: [../lsp/gh_actions_ls.lua:16](../lsp/gh_actions_ls.lua#L16)
+- `root_dir`: [../lsp/gh_actions_ls.lua:18](../lsp/gh_actions_ls.lua#L18)
 
 ---
 
@@ -4484,7 +5300,117 @@ Default config:
     log_path = "/home/runner/.cache/gitlab-ci-ls//log/gitlab-ci-ls.log"
   }
   ```
-- `root_dir`: [../lsp/gitlab_ci_ls.lua:14](../lsp/gitlab_ci_ls.lua#L14)
+- `root_dir`: [../lsp/gitlab_ci_ls.lua:15](../lsp/gitlab_ci_ls.lua#L15)
+
+---
+
+## gitlab_duo
+
+GitLab Duo Language Server Configuration for Neovim
+
+https://gitlab.com/gitlab-org/editor-extensions/gitlab-lsp
+
+The GitLab LSP enables any editor or IDE to integrate with GitLab Duo
+for AI-powered code suggestions via the Language Server Protocol.
+
+Prerequisites:
+- Node.js and npm installed
+- GitLab account with Duo Pro license
+- Internet connection for OAuth device flow
+
+Setup:
+1. Run :LspGitLabDuoSignIn to start OAuth authentication
+2. Follow the browser prompts to authorize
+3. Enable inline completion in LspAttach event (see example below)
+
+Inline Completion Example:
+```lua
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local bufnr = args.buf
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+
+    if vim.lsp.inline_completion and
+       client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
+      vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
+
+      -- Tab to accept suggestion
+      vim.keymap.set('i', '<Tab>', function()
+        if not vim.lsp.inline_completion.get() then
+          return '<Tab>'
+        end
+      end, { expr = true, buffer = bufnr, desc = 'GitLab Duo: Accept suggestion' })
+
+      -- Alt/Option+[ for previous suggestion
+      vim.keymap.set('i', '<M-[>', function() vim.lsp.inline_completion.select({ count = -1 }) end,
+        { buffer = bufnr, desc = 'GitLab Duo: Previous suggestion' })
+
+      -- Alt/Option+] for next suggestion
+      vim.keymap.set('i', '<M-]>', function() vim.lsp.inline_completion.select({ count = 1 }) end,
+        { buffer = bufnr, desc = 'GitLab Duo: Next suggestion' })
+    end
+  end
+})
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('gitlab_duo')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "npx", "--@gitlab-org:registry=https://gitlab.com/api/v4/packages/npm/", "@gitlab-org/gitlab-lsp", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "ruby", "go", "javascript", "typescript", "typescriptreact", "javascriptreact", "rust", "lua", "python", "java", "cpp", "c", "php", "cs", "kotlin", "swift", "scala", "vue", "svelte", "html", "css", "scss", "json", "yaml" }
+  ```
+- `init_options` :
+  ```lua
+  {
+    editorInfo = {
+      name = "Neovim",
+      version = "0.13.0"
+    },
+    editorPluginInfo = {
+      name = "Neovim LSP",
+      version = "0.13.0"
+    },
+    extension = {
+      name = "Neovim LSP Client",
+      version = "0.13.0"
+    },
+    ide = {
+      name = "Neovim",
+      vendor = "Neovim",
+      version = "0.13.0"
+    }
+  }
+  ```
+- `on_attach`: [../lsp/gitlab_duo.lua:315](../lsp/gitlab_duo.lua#L315)
+- `on_init`: [../lsp/gitlab_duo.lua:315](../lsp/gitlab_duo.lua#L315)
+- `root_markers` :
+  ```lua
+  { ".git" }
+  ```
+- `settings` :
+  ```lua
+  {
+    baseUrl = "https://gitlab.com",
+    codeCompletion = {
+      enableSecretRedaction = true
+    },
+    featureFlags = {
+      streamCodeGenerations = false
+    },
+    logLevel = "info",
+    telemetry = {
+      enabled = false
+    }
+  }
+  ```
 
 ---
 
@@ -4595,7 +5521,7 @@ vim.lsp.enable('glint')
 ```
 
 Default config:
-- `cmd`: [../lsp/glint.lua:25](../lsp/glint.lua#L25)
+- `cmd`: [../lsp/glint.lua:26](../lsp/glint.lua#L26)
 - `filetypes` :
   ```lua
   { "html.handlebars", "handlebars", "typescript", "typescript.glimmer", "javascript", "javascript.glimmer" }
@@ -4688,6 +5614,34 @@ Default config:
 
 ---
 
+## gn_language_server
+
+https://github.com/google/gn-language-server
+
+A language server for GN, the build configuration language used in Chromium,
+Fuchsia, and other projects.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('gn_language_server')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "gn-language-server", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "gn" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".gn", ".git" }
+  ```
+
+---
+
 ## gnls
 
 https://github.com/microsoft/gnls
@@ -4745,7 +5699,7 @@ vim.lsp.enable('golangci_lint_ls')
 ```
 
 Default config:
-- `before_init`: [../lsp/golangci_lint_ls.lua:15](../lsp/golangci_lint_ls.lua#L15)
+- `before_init`: [../lsp/golangci_lint_ls.lua:17](../lsp/golangci_lint_ls.lua#L17)
 - `cmd` :
   ```lua
   { "golangci-lint-langserver" }
@@ -4757,7 +5711,7 @@ Default config:
 - `init_options` :
   ```lua
   {
-    command = { "golangci-lint", "run", "--output.json.path=stdout", "--show-stats=false" }
+    command = { "golangci-lint", "run", "--output.text.path=", "--output.tab.path=", "--output.html.path=", "--output.checkstyle.path=", "--output.junit-xml.path=", "--output.teamcity.path=", "--output.sarif.path=", "--show-stats=false", "--output.json.path=stdout" }
   }
   ```
 - `root_markers` :
@@ -4773,6 +5727,22 @@ https://github.com/golang/tools/tree/master/gopls
 
 Google's lsp server for golang.
 
+[Settings documentation](https://go.dev/gopls/settings)
+
+NOTE: since v0.22.0 gopls no longer advertises semantic tokens to clients
+by default. To maintain previous behavior, semantic tokens are enabled on client side.
+To disable this feature, set `semanticTokens` option to `false`.
+
+```lua
+  vim.lsp.config('gopls', {
+    settings = {
+      gopls = {
+        semanticTokens = false
+      }
+    }
+  })
+```
+
 Snippet to enable the language server:
 ```lua
 vim.lsp.enable('gopls')
@@ -4787,7 +5757,15 @@ Default config:
   ```lua
   { "go", "gomod", "gowork", "gotmpl" }
   ```
-- `root_dir`: [../lsp/gopls.lua:88](../lsp/gopls.lua#L88)
+- `root_dir`: [../lsp/gopls.lua:105](../lsp/gopls.lua#L105)
+- `settings` :
+  ```lua
+  {
+    gopls = {
+      semanticTokens = true
+    }
+  }
+  ```
 
 ---
 
@@ -4899,7 +5877,7 @@ Default config:
   ```lua
   { "graphql", "typescriptreact", "javascriptreact" }
   ```
-- `root_dir`: [../lsp/graphql.lua:15](../lsp/graphql.lua#L15)
+- `root_dir`: [../lsp/graphql.lua:16](../lsp/graphql.lua#L16)
 
 ---
 
@@ -4931,7 +5909,7 @@ vim.lsp.enable('groovyls')
 Default config:
 - `cmd` :
   ```lua
-  { "java", "-jar", "groovy-language-server-all.jar" }
+  { "groovy-language-server" }
   ```
 - `filetypes` :
   ```lua
@@ -4978,6 +5956,34 @@ Default config:
 
 ---
 
+## hare_lsp
+
+https://sr.ht/~whynothugo/hare-lsp/
+
+Language server for hare.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('hare_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "hare-lsp", "-S" }
+  ```
+- `filetypes` :
+  ```lua
+  { "hare" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".git" }
+  ```
+- `workspace_required` : `false`
+
+---
+
 ## harper_ls
 
 https://github.com/automattic/harper
@@ -5009,11 +6015,11 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "c", "cpp", "cs", "gitcommit", "go", "html", "java", "javascript", "lua", "markdown", "nix", "python", "ruby", "rust", "swift", "toml", "typescript", "typescriptreact", "haskell", "cmake", "typst", "php", "dart", "clojure" }
+  { "asciidoc", "c", "cpp", "cs", "gitcommit", "go", "html", "java", "javascript", "lua", "markdown", "nix", "python", "ruby", "rust", "swift", "tex", "toml", "typescript", "typescriptreact", "haskell", "cmake", "typst", "php", "dart", "clojure", "sh" }
   ```
 - `root_markers` :
   ```lua
-  { ".git" }
+  { ".harper-dictionary.txt", ".git" }
   ```
 
 ---
@@ -5123,7 +6129,7 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "html", "ruby", "eruby" }
+  { "html", "eruby" }
   ```
 - `root_markers` :
   ```lua
@@ -5146,10 +6152,7 @@ vim.lsp.enable('hhvm')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "hh_client", "lsp" }
-  ```
+- `cmd`: [../lsp/hhvm.lua:10](../lsp/hhvm.lua#L10)
 - `filetypes` :
   ```lua
   { "php", "hack" }
@@ -5256,15 +6259,45 @@ Default config:
   ```lua
   { "haskell", "lhaskell" }
   ```
-- `root_dir`: [../lsp/hls.lua:17](../lsp/hls.lua#L17)
+- `root_dir`: [../lsp/hls.lua:18](../lsp/hls.lua#L18)
 - `settings` :
   ```lua
   {
     haskell = {
-      cabalFormattingProvider = "cabalfmt",
+      cabalFormattingProvider = "cabal-fmt",
       formattingProvider = "ormolu"
     }
   }
+  ```
+
+---
+
+## home_assistant
+
+https://github.com/keesschollaart81/vscode-home-assistant
+
+`vscode-home-assistant` can be installed via from source or by downloading
+and extracting the VSCode "Home Assistant Config Helper" extension
+
+`vscode-home-assistant` is a language server for Home Assistant ported from the VSCode "Home Assistant Config Helper" extension.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('home_assistant')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "vscode-home-assistant", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "yaml" }
+  ```
+- `root_markers` :
+  ```lua
+  { "configuration.yaml", "configuration.yml" }
   ```
 
 ---
@@ -5331,13 +6364,10 @@ vim.lsp.enable('html')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "vscode-html-language-server", "--stdio" }
-  ```
+- `cmd`: [../lsp/html.lua:26](../lsp/html.lua#L26)
 - `filetypes` :
   ```lua
-  { "html", "templ" }
+  { "html" }
   ```
 - `init_options` :
   ```lua
@@ -5420,13 +6450,44 @@ Default config:
 
 ---
 
+## hylo_ls
+
+https://github.com/hylo-lang/hylo-language-server
+
+A language server for the Hylo programming language.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('hylo_ls')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "hylo-language-server", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "hylo" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".git" }
+  ```
+- `settings` :
+  ```lua
+  {}
+  ```
+
+---
+
 ## hyprls
 
 https://github.com/hyprland-community/hyprls
 
 `hyprls` can be installed via `go`:
 ```sh
-go install github.com/ewen-lbh/hyprls/cmd/hyprls@latest
+go install github.com/hyprland-community/hyprls/cmd/hyprls@latest
 ```
 
 Snippet to enable the language server:
@@ -5495,7 +6556,7 @@ Default config:
   ```lua
   { "idris2" }
   ```
-- `root_dir`: [../lsp/idris2_lsp.lua:34](../lsp/idris2_lsp.lua#L34)
+- `root_dir`: [../lsp/idris2_lsp.lua:35](../lsp/idris2_lsp.lua#L35)
 
 ---
 
@@ -5544,6 +6605,16 @@ Default config:
   ```lua
   { ".git", "composer.json" }
   ```
+- `settings` :
+  ```lua
+  {
+    intelephense = {
+      telemetry = {
+        enabled = false
+      }
+    }
+  }
+  ```
 
 ---
 
@@ -5588,6 +6659,10 @@ vim.lsp.enable('java_language_server')
 ```
 
 Default config:
+- `cmd` :
+  ```lua
+  { "java-language-server" }
+  ```
 - `filetypes` :
   ```lua
   { "java" }
@@ -5643,33 +6718,18 @@ vim.lsp.enable('jdtls')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "jdtls", "-configuration", "/home/runner/.cache/jdtls/config", "-data", "/home/runner/.cache/jdtls/workspace" }
-  ```
+- `cmd`: [../lsp/jdtls.lua:74](../lsp/jdtls.lua#L74)
 - `filetypes` :
   ```lua
   { "java" }
   ```
-- `handlers` :
-  ```lua
-  {
-    ["language/status"] = <function 1>,
-    ["textDocument/codeAction"] = <function 2>,
-    ["textDocument/rename"] = <function 3>,
-    ["workspace/applyEdit"] = <function 4>
-  }
-  ```
 - `init_options` :
   ```lua
-  {
-    jvm_args = {},
-    workspace = "/home/runner/.cache/jdtls/workspace"
-  }
+  {}
   ```
 - `root_markers` :
   ```lua
-  { ".git", "build.gradle", "build.gradle.kts", "build.xml", "pom.xml", "settings.gradle", "settings.gradle.kts" }
+  { { "mvnw", "gradlew", "settings.gradle", "settings.gradle.kts", ".git" }, { "build.xml", "pom.xml", "build.gradle", "build.gradle.kts" } }
   ```
 
 ---
@@ -5697,6 +6757,37 @@ Default config:
 - `root_markers` :
   ```lua
   { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" }
+  ```
+
+---
+
+## jetls
+
+https://github.com/aviatesk/JETLS.jl
+
+For JETLS installation: Use the Julia Apps helper:
+```sh
+julia -e 'using Pkg; Pkg.Apps.add(; url="https://github.com/aviatesk/JETLS.jl", rev="release")'
+```
+To update it, run the same command again
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('jetls')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "jetls", "serve" }
+  ```
+- `filetypes` :
+  ```lua
+  { "julia" }
+  ```
+- `root_markers` :
+  ```lua
+  { "Project.toml" }
   ```
 
 ---
@@ -5738,6 +6829,45 @@ Default config:
 - `root_markers` :
   ```lua
   { ".git" }
+  ```
+
+---
+
+## jls
+
+https://github.com/idelice/jls
+
+A Java language server built on the Java compiler API, optimized for Neovim.
+Supports diagnostics, completion, go-to-definition, hover, find references,
+document highlights, inlay hints, code actions, rename, and Lombok.
+
+Install via mason.nvim (recommended):
+  :MasonInstall jls
+
+Or using the nvim-jls plugin which provides a managed installer:
+  https://github.com/idelice/nvim-jls
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('jls')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "jls" }
+  ```
+- `filetypes` :
+  ```lua
+  { "java" }
+  ```
+- `root_markers` :
+  ```lua
+  { "pom.xml", "build.gradle", "build.gradle.kts", "settings.gradle", "settings.gradle.kts", "WORKSPACE", "WORKSPACE.bazel", ".java-version" }
+  ```
+- `settings` :
+  ```lua
+  {}
   ```
 
 ---
@@ -5810,10 +6940,7 @@ vim.lsp.enable('jsonls')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "vscode-json-language-server", "--stdio" }
-  ```
+- `cmd`: [../lsp/jsonls.lua:25](../lsp/jsonls.lua#L25)
 - `filetypes` :
   ```lua
   { "json", "jsonc" }
@@ -5865,7 +6992,7 @@ Default config:
 
 ## julials
 
-https://github.com/julia-vscode/julia-vscode
+https://github.com/julia-vscode/LanguageServer.jl/
 
 LanguageServer.jl can be installed with `julia` and `Pkg`:
 ```sh
@@ -5885,6 +7012,11 @@ Julia project, you must make sure that the project is instantiated:
 julia --project=/path/to/my/project -e 'using Pkg; Pkg.instantiate()'
 ```
 
+To activate a Julia environment, use the `:LspJuliaActivateEnv` command. A prompt will ask you to select a Julia
+environment from the list of environments found in the current working directory and the `environments/` folder of
+`$JULIA_DEPOT_PATH` entries. You can also provide a path to a Julia environment directly.
+Example: `:LspJuliaActivateEnv /path/to/my/project`.
+
 Note: The julia programming language searches for global environments within the `environments/`
 folder of `$JULIA_DEPOT_PATH` entries. By default this simply `~/.julia/environments`
 
@@ -5896,13 +7028,13 @@ vim.lsp.enable('julials')
 Default config:
 - `cmd` :
   ```lua
-  { "julia", "--startup-file=no", "--history-file=no", "-e", '    # Load LanguageServer.jl: attempt to load from ~/.julia/environments/nvim-lspconfig\n    # with the regular load path as a fallback\n    ls_install_path = joinpath(\n        get(DEPOT_PATH, 1, joinpath(homedir(), ".julia")),\n        "environments", "nvim-lspconfig"\n    )\n    pushfirst!(LOAD_PATH, ls_install_path)\n    using LanguageServer\n    popfirst!(LOAD_PATH)\n    depot_path = get(ENV, "JULIA_DEPOT_PATH", "")\n    project_path = let\n        dirname(something(\n            ## 1. Finds an explicitly set project (JULIA_PROJECT)\n            Base.load_path_expand((\n                p = get(ENV, "JULIA_PROJECT", nothing);\n                p === nothing ? nothing : isempty(p) ? nothing : p\n            )),\n            ## 2. Look for a Project.toml file in the current working directory,\n            ##    or parent directories, with $HOME as an upper boundary\n            Base.current_project(),\n            ## 3. First entry in the load path\n            get(Base.load_path(), 1, nothing),\n            ## 4. Fallback to default global environment,\n            ##    this is more or less unreachable\n            Base.load_path_expand("@v#.#"),\n        ))\n    end\n    @info "Running language server" VERSION pwd() project_path depot_path\n    server = LanguageServer.LanguageServerInstance(stdin, stdout, project_path, depot_path)\n    server.runlinter = true\n    run(server)\n  ' }
+  { "julia", "--startup-file=no", "--history-file=no", "-e", '    # Load LanguageServer.jl: attempt to load from ~/.julia/environments/nvim-lspconfig\n    # with the regular load path as a fallback\n    ls_install_path = joinpath(\n        get(DEPOT_PATH, 1, joinpath(homedir(), ".julia")),\n        "environments", "nvim-lspconfig"\n    )\n    pushfirst!(LOAD_PATH, ls_install_path)\n    using LanguageServer\n    popfirst!(LOAD_PATH)\n    @info "Running language server" VERSION pwd()\n    LanguageServer.runserver()\n  ' }
   ```
 - `filetypes` :
   ```lua
   { "julia" }
   ```
-- `on_attach`: [../lsp/julials.lua:119](../lsp/julials.lua#L119)
+- `on_attach`: [../lsp/julials.lua:107](../lsp/julials.lua#L107)
 - `root_markers` :
   ```lua
   { "Project.toml", "JuliaProject.toml" }
@@ -5937,6 +7069,59 @@ Default config:
 
 ---
 
+## kakehashi
+
+https://github.com/atusy/kakehashi
+
+Tree-sitter-based language server that provides semantic tokens, selection ranges,
+and LSP bridging for embedded languages (e.g., code blocks in Markdown).
+
+kakehashi works with any language that has a Tree-sitter grammar.
+Parsers and queries are automatically installed on first use
+when `autoInstall` is enabled (the default). This requires the
+`tree-sitter` CLI, a C compiler, and Git.
+
+**You must specify `filetypes` in your call to `vim.lsp.config`** to
+restrict which files activate the server:
+
+```lua
+vim.lsp.config('kakehashi', {
+  filetypes = { 'markdown', 'lua', 'rust', 'python' },
+  init_options = {
+    autoInstall = true,
+    -- Optional: bridge LSP requests in injection regions
+    languageServers = {
+      ['lua_ls'] = {
+        cmd = { 'lua-language-server' },
+        languages = { 'lua' },
+      },
+    },
+    languages = {
+      markdown = {
+        bridge = { lua_ls = { enabled = true } },
+      },
+    },
+  },
+})
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('kakehashi')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "kakehashi" }
+  ```
+- `root_markers` :
+  ```lua
+  { "kakehashi.toml", ".git" }
+  ```
+
+---
+
 ## kcl
 
 https://github.com/kcl-lang/kcl.nvim
@@ -5956,6 +7141,33 @@ Default config:
 - `filetypes` :
   ```lua
   { "kcl" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".git" }
+  ```
+
+---
+
+## kdl_lsp
+
+https://github.com/kdl-org/kdl-rs/tree/main/tools/kdl-lsp
+
+Language server for the KDL document language.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('kdl_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "kdl-lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "kdl" }
   ```
 - `root_markers` :
   ```lua
@@ -6047,7 +7259,7 @@ vim.lsp.enable('kotlin_lsp')
 Default config:
 - `cmd` :
   ```lua
-  { "kotlin-lsp", "--stdio" }
+  { "intellij-server", "--stdio" }
   ```
 - `filetypes` :
   ```lua
@@ -6116,6 +7328,38 @@ Default config:
 
 ---
 
+## laravel_lsp
+
+https://github.com/laravel/lsp
+
+Laravel LSP provides framework-aware editor features for Laravel applications.
+
+Install Laravel LSP globally with Composer:
+
+```sh
+composer global require laravel/lsp
+```
+
+Ensure Composer's global bin directory is on `$PATH`.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('laravel_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "laravel-lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "php", "blade" }
+  ```
+- `root_dir`: [../lsp/laravel_lsp.lua:16](../lsp/laravel_lsp.lua#L16)
+
+---
+
 ## lean3ls
 
 https://github.com/leanprover/lean-client-js/tree/master/lean-language-server
@@ -6150,7 +7394,7 @@ Default config:
   ```lua
   "utf-32"
   ```
-- `root_dir`: [../lsp/lean3ls.lua:17](../lsp/lean3ls.lua#L17)
+- `root_dir`: [../lsp/lean3ls.lua:18](../lsp/lean3ls.lua#L18)
 
 ---
 
@@ -6221,10 +7465,8 @@ https://github.com/lexical-lsp/lexical
 
 Lexical is a next-generation language server for the Elixir programming language.
 
-Follow the [Detailed Installation Instructions](https://github.com/lexical-lsp/lexical/blob/main/pages/installation.md)
-
-**By default, `lexical` doesn't have a `cmd` set.**
-This is because nvim-lspconfig does not make assumptions about your path.
+To install from source, follow the [Detailed Installation Instructions](https://github.com/lexical-lsp/lexical/blob/main/pages/installation.md).
+Ensure to point `cmd` to the generated `_build/dev/package/lexical/start_lexical.sh` executable.
 
 Snippet to enable the language server:
 ```lua
@@ -6232,6 +7474,10 @@ vim.lsp.enable('lexical')
 ```
 
 Default config:
+- `cmd` :
+  ```lua
+  { "lexical" }
+  ```
 - `filetypes` :
   ```lua
   { "elixir", "eelixir", "heex", "surface" }
@@ -6319,7 +7565,7 @@ Default config:
   ```lua
   { "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd", "context", "html", "xhtml", "mail", "text" }
   ```
-- `get_language_id`: [../lsp/ltex.lua:74](../lsp/ltex.lua#L74)
+- `get_language_id`: [../lsp/ltex.lua:75](../lsp/ltex.lua#L75)
 - `root_markers` :
   ```lua
   { ".git" }
@@ -6371,9 +7617,9 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "bib", "context", "gitcommit", "html", "markdown", "org", "pandoc", "plaintex", "quarto", "mail", "mdx", "rmd", "rnoweb", "rst", "tex", "text", "typst", "xhtml" }
+  { "asciidoc", "bib", "context", "gitcommit", "html", "markdown", "org", "pandoc", "plaintex", "quarto", "mail", "mdx", "rmd", "rnoweb", "rst", "tex", "text", "typst", "xhtml" }
   ```
-- `get_language_id`: [../lsp/ltex_plus.lua:39](../lsp/ltex_plus.lua#L39)
+- `get_language_id`: [../lsp/ltex_plus.lua:36](../lsp/ltex_plus.lua#L36)
 - `root_markers` :
   ```lua
   { ".git" }
@@ -6382,7 +7628,7 @@ Default config:
   ```lua
   {
     ltex = {
-      enabled = { "bib", "context", "gitcommit", "html", "markdown", "org", "pandoc", "plaintex", "quarto", "mail", "mdx", "rmd", "rnoweb", "rst", "tex", "latex", "text", "typst", "xhtml" }
+      enabled = { "asciidoc", "bib", "context", "gitcommit", "html", "markdown", "org", "pandoc", "plaintex", "quarto", "mail", "mdx", "rmd", "rnoweb", "rst", "tex", "latex", "text", "typst", "xhtml" }
     }
   }
   ```
@@ -6432,25 +7678,21 @@ vim.lsp.config('lua_ls', {
       workspace = {
         checkThirdParty = false,
         library = {
-          vim.env.VIMRUNTIME
-          -- Depending on the usage, you might want to add additional paths
-          -- here.
-          -- '${3rd}/luv/library'
-          -- '${3rd}/busted/library'
-        }
+          vim.env.VIMRUNTIME,
+          -- For LSP Settings Type Annotations: https://github.com/neovim/nvim-lspconfig#lsp-settings-type-annotations
+          vim.api.nvim_get_runtime_file("lua/lspconfig", false)[1],
+        },
         -- Or pull in all of 'runtimepath'.
         -- NOTE: this is a lot slower and will cause issues when working on
         -- your own configuration.
         -- See https://github.com/neovim/nvim-lspconfig/issues/3189
-        -- library = {
-        --   vim.api.nvim_get_runtime_file('', true),
-        -- }
-      }
+        -- library = vim.api.nvim_get_runtime_file('', true),
+      },
     })
   end,
   settings = {
-    Lua = {}
-  }
+    Lua = {},
+  },
 })
 ```
 
@@ -6474,7 +7716,21 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml", ".git" }
+  { { ".emmyrc.json", ".luarc.json", ".luarc.jsonc" }, { ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml" }, { ".git" } }
+  ```
+- `settings` :
+  ```lua
+  {
+    Lua = {
+      codeLens = {
+        enable = true
+      },
+      hint = {
+        enable = true,
+        semicolon = "Disable"
+      }
+    }
+  }
   ```
 
 ---
@@ -6626,7 +7882,7 @@ Default config:
   ```lua
   { "markdown" }
   ```
-- `on_attach`: [../lsp/markdown_oxide.lua:11](../lsp/markdown_oxide.lua#L11)
+- `on_attach`: [../lsp/markdown_oxide.lua:24](../lsp/markdown_oxide.lua#L24)
 - `root_markers` :
   ```lua
   { ".git", ".obsidian", ".moxide.toml" }
@@ -6703,6 +7959,17 @@ https://github.com/mathworks/MATLAB-language-server
 
 MATLAB® language server implements the Microsoft® Language Server Protocol for the MATLAB language.
 
+Make sure to set `MATLAB.installPath` to your MATLAB path, e.g.:
+```lua
+settings = {
+  MATLAB = {
+    ...
+    installPath = '/usr/local/MATLAB/R2023a',
+    ...
+  },
+},
+```
+
 Snippet to enable the language server:
 ```lua
 vim.lsp.enable('matlab_ls')
@@ -6717,7 +7984,7 @@ Default config:
   ```lua
   { "matlab" }
   ```
-- `root_dir`: [../lsp/matlab_ls.lua:6](../lsp/matlab_ls.lua#L6)
+- `root_dir`: [../lsp/matlab_ls.lua:19](../lsp/matlab_ls.lua#L19)
 - `settings` :
   ```lua
   {
@@ -6744,7 +8011,7 @@ vim.lsp.enable('mdx_analyzer')
 ```
 
 Default config:
-- `before_init`: [../lsp/mdx_analyzer.lua:8](../lsp/mdx_analyzer.lua#L8)
+- `before_init`: [../lsp/mdx_analyzer.lua:9](../lsp/mdx_analyzer.lua#L9)
 - `cmd` :
   ```lua
   { "mdx-language-server", "--stdio" }
@@ -6790,7 +8057,7 @@ Default config:
   ```lua
   { "meson" }
   ```
-- `root_dir`: [../lsp/mesonlsp.lua:31](../lsp/mesonlsp.lua#L31)
+- `root_dir`: [../lsp/mesonlsp.lua:32](../lsp/mesonlsp.lua#L32)
 
 ---
 
@@ -6842,7 +8109,52 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { "build.sbt", "build.sc", "build.gradle", "pom.xml" }
+  { "build.sbt", "build.sc", { "build.gradle", "build.gradle.kts" }, "pom.xml" }
+  ```
+
+---
+
+## microcad_lsp
+
+https://codeberg.org/microcad/microcad/src/branch/main/crates/lsp
+
+An LSP for the µcad model description language
+
+Install with
+```sh
+cargo install microcad-lsp
+```
+Neovim does not detect µcad filetype automatically, so you will need to add the following to your
+
+```lua
+vim.filetype.add {
+  extension = {
+    µcad = 'microcad',
+  },
+}
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('microcad_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "microcad-lsp", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "microcad" }
+  ```
+- `name` :
+  ```lua
+  "microcad_lsp"
+  ```
+- `root_markers` :
+  ```lua
+  { ".git" }
   ```
 
 ---
@@ -7021,7 +8333,7 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { ".git" }
+  { { "pixi.toml", "pixi.lock" }, { ".git" } }
   ```
 
 ---
@@ -7094,6 +8406,69 @@ Default config:
 
 ---
 
+## mpls
+
+https://github.com/mhersson/mpls
+
+Markdown Preview Language Server
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('mpls')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "mpls", "--theme", "dark", "--enable-emoji", "--enable-footnotes", "--no-auto" }
+  ```
+- `filetypes` :
+  ```lua
+  { "markdown" }
+  ```
+- `on_attach`: [../lsp/mpls.lua:8](../lsp/mpls.lua#L8)
+- `root_markers` :
+  ```lua
+  { ".marksman.toml", ".git" }
+  ```
+
+---
+
+## ms_terraform_lsp
+
+https://github.com/Azure/ms-terraform-lsp
+
+Microsoft Terraform Providers Language Server. Provides completion, hover
+documentation and schema validation for the `azapi`, `azurerm` and `msgraph`
+providers, and for Azure Verified Modules.
+
+Only covers Microsoft providers, so it is intended to run alongside
+[terraformls](#terraformls).
+
+Download a released binary from
+https://github.com/Azure/ms-terraform-lsp/releases.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('ms_terraform_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "ms-terraform-lsp", "serve" }
+  ```
+- `filetypes` :
+  ```lua
+  { "terraform" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".terraform", ".git" }
+  ```
+
+---
+
 ## msbuild_project_tools_server
 
 https://github.com/tintoy/msbuild-project-tools-server/
@@ -7146,7 +8521,7 @@ Default config:
   ```lua
   {}
   ```
-- `root_dir`: [../lsp/msbuild_project_tools_server.lua:38](../lsp/msbuild_project_tools_server.lua#L38)
+- `root_dir`: [../lsp/msbuild_project_tools_server.lua:39](../lsp/msbuild_project_tools_server.lua#L39)
 
 ---
 
@@ -7168,7 +8543,7 @@ Default config:
   ```lua
   { "meson" }
   ```
-- `root_dir`: [../lsp/muon.lua:4](../lsp/muon.lua#L4)
+- `root_dir`: [../lsp/muon.lua:6](../lsp/muon.lua#L6)
 
 ---
 
@@ -7252,7 +8627,7 @@ Default config:
 
 ## neocmake
 
-https://github.com/Decodetalkers/neocmakelsp
+https://github.com/neocmakelsp/neocmakelsp
 
 CMake LSP Implementation
 
@@ -7276,7 +8651,7 @@ vim.lsp.enable('neocmake')
 Default config:
 - `cmd` :
   ```lua
-  { "neocmakelsp", "--stdio" }
+  { "neocmakelsp", "stdio" }
   ```
 - `filetypes` :
   ```lua
@@ -7284,7 +8659,7 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { ".git", "build", "cmake" }
+  { ".neocmake.toml", ".git", "build", "cmake" }
   ```
 
 ---
@@ -7302,7 +8677,7 @@ If you have installed nextflow language server, you can set the `cmd` custom pat
 
 ```lua
 vim.lsp.config('nextflow_ls', {
-    cmd = { 'java', '-jar', 'nextflow-language-server-all.jar' },
+    cmd = { 'nextflow-language-server' },
     filetypes = { 'nextflow' },
     settings = {
       nextflow = {
@@ -7322,7 +8697,7 @@ vim.lsp.enable('nextflow_ls')
 Default config:
 - `cmd` :
   ```lua
-  { "java", "-jar", "nextflow-language-server-all.jar" }
+  { "nextflow-language-server" }
   ```
 - `filetypes` :
   ```lua
@@ -7349,7 +8724,7 @@ Default config:
 
 https://github.com/elixir-tools/next-ls
 
-**By default, next-ls does not set its `cmd`. Please see the following [detailed instructions](https://www.elixir-tools.dev/docs/next-ls/installation/) for possible installation methods.**
+**Please see the following [detailed instructions](https://www.elixir-tools.dev/docs/next-ls/installation/) for possible installation methods.**
 
 Snippet to enable the language server:
 ```lua
@@ -7357,6 +8732,10 @@ vim.lsp.enable('nextls')
 ```
 
 Default config:
+- `cmd` :
+  ```lua
+  { "nextls", "--stdio" }
+  ```
 - `filetypes` :
   ```lua
   { "elixir", "eelixir", "heex", "surface" }
@@ -7502,7 +8881,7 @@ Default config:
   ```lua
   { "nim" }
   ```
-- `root_dir`: [../lsp/nim_langserver.lua:13](../lsp/nim_langserver.lua#L13)
+- `root_dir`: [../lsp/nim_langserver.lua:14](../lsp/nim_langserver.lua#L14)
 
 ---
 
@@ -7530,7 +8909,7 @@ Default config:
   ```lua
   { "nim" }
   ```
-- `root_dir`: [../lsp/nimls.lua:13](../lsp/nimls.lua#L13)
+- `root_dir`: [../lsp/nimls.lua:14](../lsp/nimls.lua#L14)
 
 ---
 
@@ -7559,7 +8938,7 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { "flake.nix", "git" }
+  { "flake.nix", ".git" }
   ```
 
 ---
@@ -7596,7 +8975,7 @@ Default config:
   ```lua
   { "hcl.nomad", "nomad" }
   ```
-- `root_dir`: [../lsp/nomad_lsp.lua:26](../lsp/nomad_lsp.lua#L26)
+- `root_dir`: [../lsp/nomad_lsp.lua:27](../lsp/nomad_lsp.lua#L27)
 
 ---
 
@@ -7655,7 +9034,7 @@ Default config:
   ```lua
   { "nu" }
   ```
-- `root_dir`: [../lsp/nushell.lua:6](../lsp/nushell.lua#L6)
+- `root_dir`: [../lsp/nushell.lua:8](../lsp/nushell.lua#L8)
 
 ---
 
@@ -7691,33 +9070,6 @@ Default config:
 
 ---
 
-## ocamlls
-
-https://github.com/ocaml-lsp/ocaml-language-server
-
-`ocaml-language-server` can be installed via `npm`
-```sh
-npm install -g ocaml-language-server
-```
-
-Snippet to enable the language server:
-```lua
-vim.lsp.enable('ocamlls')
-```
-
-Default config:
-- `cmd` :
-  ```lua
-  { "ocaml-language-server", "--stdio" }
-  ```
-- `filetypes` :
-  ```lua
-  { "ocaml", "reason" }
-  ```
-- `root_dir`: [../lsp/ocamlls.lua:12](../lsp/ocamlls.lua#L12)
-
----
-
 ## ocamllsp
 
 https://github.com/ocaml/ocaml-lsp
@@ -7743,8 +9095,12 @@ Default config:
   ```lua
   { "ocaml", "menhir", "ocamlinterface", "ocamllex", "reason", "dune" }
   ```
-- `get_language_id`: [../lsp/ocamllsp.lua:27](../lsp/ocamllsp.lua#L27)
-- `root_dir`: [../lsp/ocamllsp.lua:27](../lsp/ocamllsp.lua#L27)
+- `get_language_id`: [../lsp/ocamllsp.lua:77](../lsp/ocamllsp.lua#L77)
+- `on_attach`: [../lsp/ocamllsp.lua:77](../lsp/ocamllsp.lua#L77)
+- `root_markers` :
+  ```lua
+  { { "dune-project", "dune-workspace" }, { "*.opam", "opam", "esy.json", "package.json" }, { ".git" } }
+  ```
 
 ---
 
@@ -7768,7 +9124,7 @@ Default config:
   ```lua
   { "odin" }
   ```
-- `root_dir`: [../lsp/ols.lua:9](../lsp/ols.lua#L9)
+- `root_dir`: [../lsp/ols.lua:46](../lsp/ols.lua#L46)
 
 ---
 
@@ -7781,8 +9137,6 @@ OmniSharp server based on Roslyn workspaces
 OmniSharp can also be built from source by following the instructions [here](https://github.com/omnisharp/omnisharp-roslyn#downloading-omnisharp).
 
 OmniSharp requires the [dotnet-sdk](https://dotnet.microsoft.com/download) to be installed.
-
-**By default, omnisharp-roslyn doesn't have a `cmd` set.** This is because nvim-lspconfig does not make assumptions about your path. You must add the following to your init.vim or init.lua to set `cmd` to the absolute path ($HOME and ~ are not expanded) of the unzipped run script or binary.
 
 For `go_to_definition` to work fully, extended `textDocument/definition` handler is needed, for example see [omnisharp-extended-lsp.nvim](https://github.com/Hoffs/omnisharp-extended-lsp.nvim)
 
@@ -7812,7 +9166,7 @@ Default config:
   ```lua
   {}
   ```
-- `root_dir`: [../lsp/omnisharp.lua:19](../lsp/omnisharp.lua#L19)
+- `root_dir`: [../lsp/omnisharp.lua:18](../lsp/omnisharp.lua#L18)
 - `settings` :
   ```lua
   {
@@ -7834,7 +9188,7 @@ Default config:
 
 https://github.com/Galarius/opencl-language-server
 
-Build instructions can be found [here](https://github.com/Galarius/opencl-language-server/blob/main/_dev/build.md).
+Build instructions can be found [here](https://github.com/Galarius/opencl-language-server/blob/main/DEV.md).
 
 Prebuilt binaries are available for Linux, macOS and Windows [here](https://github.com/Galarius/opencl-language-server/releases).
 
@@ -7933,16 +9287,102 @@ Default config:
 
 ---
 
+## oso
+
+https://www.osohq.com/docs/develop/local-dev/env-setup
+
+Oso Polar language server.
+
+`oso-cloud` can be installed by following the instructions
+[here](https://www.osohq.com/docs/develop/local-dev/env-setup).
+
+The default `cmd` assumes that the `oso-cloud` binary can be found in the `$PATH`.
+
+You may need to configure the filetype for Polar (*.polar) files:
+
+```
+autocmd BufNewFile,BufRead *.polar set filetype=polar
+```
+
+or
+
+```lua
+vim.filetype.add({
+  pattern = {
+    ['.*/*.polar'] = 'polar',
+  },
+})
+
+Alternatively, you may use a syntax plugin like https://github.com/osohq/polar.vim
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('oso')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "oso-cloud", "lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "polar" }
+  ```
+
+---
+
+## oxfmt
+
+https://github.com/oxc-project/oxc
+https://oxc.rs/docs/guide/usage/formatter.html
+
+`oxfmt` is a Prettier-compatible code formatter that supports multiple languages
+including JavaScript, TypeScript, JSON, YAML, HTML, CSS, Markdown, and more.
+It can be installed via `npm`:
+
+```sh
+npm i -g oxfmt
+```
+
+or used as a part of Vite+ through `fmt` field in `vite.config.ts`: https://github.com/oxc-project/oxc/pull/20197
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('oxfmt')
+```
+
+Default config:
+- `cmd`: [../lsp/oxfmt.lua:19](../lsp/oxfmt.lua#L19)
+- `filetypes` :
+  ```lua
+  { "javascript", "javascriptreact", "typescript", "typescriptreact", "toml", "json", "jsonc", "json5", "yaml", "html", "vue", "handlebars", "css", "scss", "less", "graphql", "markdown", "svelte" }
+  ```
+- `root_dir`: [../lsp/oxfmt.lua:19](../lsp/oxfmt.lua#L19)
+
+---
+
 ## oxlint
 
 https://github.com/oxc-project/oxc
+https://oxc.rs/docs/guide/usage/linter.html
 
-`oxc` is a linter / formatter for JavaScript / Typescript supporting over 500 rules from ESLint and its popular plugins
+`oxlint` is a linter for JavaScript / TypeScript supporting over 500 rules from ESLint and its popular plugins.
+It also supports linting framework files (Vue, Svelte, Astro) by analyzing their <script> blocks.
 It can be installed via `npm`:
 
 ```sh
 npm i -g oxlint
 ```
+
+or used as a part of Vite+ through `lint` field in vite.config.ts: https://github.com/oxc-project/oxc/pull/20214
+
+Type-aware linting will automatically be enabled if `tsgolint` exists in your
+path and your `.oxlintrc.json` contains the string "typescript".
+
+The default `on_attach` function provides an `:LspOxlintFixAll` command which
+can be used to fix all fixable diagnostics. See the `eslint` config entry for
+an example of how to use this to automatically fix all errors on write.
 
 Snippet to enable the language server:
 ```lua
@@ -7950,16 +9390,18 @@ vim.lsp.enable('oxlint')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "oxc_language_server" }
-  ```
+- `before_init`: [../lsp/oxlint.lua:35](../lsp/oxlint.lua#L35)
+- `cmd`: [../lsp/oxlint.lua:35](../lsp/oxlint.lua#L35)
 - `filetypes` :
   ```lua
-  { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" }
+  { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "astro" }
   ```
-- `root_dir`: [../lsp/oxlint.lua:14](../lsp/oxlint.lua#L14)
-- `workspace_required` : `true`
+- `on_attach`: [../lsp/oxlint.lua:35](../lsp/oxlint.lua#L35)
+- `root_dir`: [../lsp/oxlint.lua:35](../lsp/oxlint.lua#L35)
+- `settings` :
+  ```lua
+  {}
+  ```
 
 ---
 
@@ -7986,6 +9428,39 @@ Default config:
 - `root_markers` :
   ```lua
   { ".git" }
+  ```
+
+---
+
+## panache
+
+https://github.com/jolars/panache
+
+A language server, formatter, and linter for Markdown, Quarto, and R Markdown,
+built in Rust with a lossless CST parser and support for external formatters
+and linters on code blocks.
+
+Install via `cargo install panache`, from the [releases page](https://github.com/jolars/panache/releases),
+or via your system package manager (`nixpkgs`, AUR, `pipx install panache-cli`,
+`npm install -g @panache-cli/panache`).
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('panache')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "panache", "lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "markdown", "quarto", "rmd" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".panache.toml", "panache.toml", "_quarto.yml", "_bookdown.yml", ".git" }
   ```
 
 ---
@@ -8021,7 +9496,7 @@ Default config:
   ```lua
   { "pascal" }
   ```
-- `root_dir`: [../lsp/pasls.lua:20](../lsp/pasls.lua#L20)
+- `root_dir`: [../lsp/pasls.lua:21](../lsp/pasls.lua#L21)
 
 ---
 
@@ -8232,7 +9707,38 @@ Default config:
   ```lua
   { "php" }
   ```
-- `root_dir`: [../lsp/phan.lua:20](../lsp/phan.lua#L20)
+- `root_dir`: [../lsp/phan.lua:21](../lsp/phan.lua#L21)
+
+---
+
+## php_lsp
+
+https://github.com/jorgsowa/php-lsp
+
+A high-performance PHP language server written in Rust.
+
+Installation: `cargo install php-lsp`, or download a pre-built binary from
+https://github.com/jorgsowa/php-lsp/releases
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('php_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "php-lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "php" }
+  ```
+- `root_markers` :
+  ```lua
+  { "composer.json", ".git" }
+  ```
+- `workspace_required` : `true`
 
 ---
 
@@ -8264,6 +9770,77 @@ Default config:
 
 ---
 
+## phpantom_lsp
+
+https://github.com/AJenbo/phpantom_lsp
+
+Installation: https://github.com/AJenbo/phpantom_lsp/blob/main/docs/SETUP.md
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('phpantom_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "phpantom_lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "php", "blade" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".phpantom.toml", ".git", "composer.json" }
+  ```
+
+---
+
+## phptools
+
+https://www.devsense.com/
+
+`devsense-php-ls` can be installed via `npm`:
+```sh
+npm install -g devsense-php-ls
+```
+
+```lua
+-- See https://www.npmjs.com/package/devsense-php-ls
+init_options = {
+}
+-- See https://docs.devsense.com/vscode/configuration/
+settings = {
+  php = {
+  };
+}
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('phptools')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "devsense-php-ls", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "php" }
+  ```
+- `init_options` :
+  ```lua
+  {
+    ["0"] = "{}"
+  }
+  ```
+- `root_dir`: [../lsp/phptools.lua:22](../lsp/phptools.lua#L22)
+
+---
+
 ## pico8_ls
 
 https://github.com/japhib/pico8-ls
@@ -8284,10 +9861,44 @@ Default config:
   ```lua
   { "p8" }
   ```
-- `root_dir`: [../lsp/pico8_ls.lua:9](../lsp/pico8_ls.lua#L9)
+- `root_dir`: [../lsp/pico8_ls.lua:10](../lsp/pico8_ls.lua#L10)
 - `settings` :
   ```lua
   {}
+  ```
+
+---
+
+## pkl
+
+https://github.com/apple/pkl-lsp
+
+Language server for [Pkl](https://pkl-lang.org/), a configuration language by Apple.
+
+`pkl-lsp` can be installed via Homebrew:
+```sh
+brew install pkl
+```
+
+Or downloaded from the [GitHub releases page](https://github.com/apple/pkl/releases).
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('pkl')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "pkl-lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "pkl", "pcf" }
+  ```
+- `root_markers` :
+  ```lua
+  { "PklProject", ".git" }
   ```
 
 ---
@@ -8348,6 +9959,81 @@ Default config:
 
 ---
 
+## pony_language_server
+
+Renamed to [pony_lsp](#pony_lsp)
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('pony_language_server')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "pony-lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "pony" }
+  ```
+- `name` :
+  ```lua
+  "pony_lsp"
+  ```
+- `on_init`: [../lsp/pony_language_server.lua:6](../lsp/pony_language_server.lua#L6)
+- `root_markers` :
+  ```lua
+  { "corral.json", ".git" }
+  ```
+- `settings` :
+  ```lua
+  {
+    ["pony-lsp"] = {
+      defines = {},
+      ponypath = {}
+    }
+  }
+  ```
+
+---
+
+## pony_lsp
+
+https://github.com/ponylang/ponyc/tree/main/tools/pony-lsp
+
+Language server for the Pony programming language
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('pony_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "pony-lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "pony" }
+  ```
+- `root_markers` :
+  ```lua
+  { "corral.json", ".git" }
+  ```
+- `settings` :
+  ```lua
+  {
+    ["pony-lsp"] = {
+      defines = {},
+      ponypath = {}
+    }
+  }
+  ```
+
+---
+
 ## poryscript_pls
 
 https://github.com/huderlem/poryscript-pls
@@ -8377,7 +10063,7 @@ Default config:
 
 ## postgres_lsp
 
-https://pgtools.dev
+https://pg-language-server.com
 
 A collection of language tools and a Language Server Protocol (LSP) implementation for Postgres, focusing on developer experience and reliable SQL tooling.
 
@@ -8389,7 +10075,7 @@ vim.lsp.enable('postgres_lsp')
 Default config:
 - `cmd` :
   ```lua
-  { "postgrestools", "lsp-proxy" }
+  { "postgres-language-server", "lsp-proxy" }
   ```
 - `filetypes` :
   ```lua
@@ -8397,8 +10083,9 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { "postgrestools.jsonc" }
+  { "postgres-language-server.jsonc" }
   ```
+- `workspace_required` : `true`
 
 ---
 
@@ -8411,11 +10098,11 @@ Language server for PowerShell.
 To install, download and extract PowerShellEditorServices.zip
 from the [releases](https://github.com/PowerShell/PowerShellEditorServices/releases).
 To configure the language server, set the property `bundle_path` to the root
-of the extracted PowerShellEditorServices.zip.
+of the extracted PowerShellEditorServices.zip, e.g. `c:/w/modules`
 
 ```lua
 vim.lsp.config('powershell_es', {
-  bundle_path = 'c:/w/PowerShellEditorServices',
+  bundle_path = 'c:/w/modules',
 })
 ```
 
@@ -8423,12 +10110,22 @@ By default the language server is started in `pwsh` (PowerShell Core). This can 
 
 ```lua
 vim.lsp.config('powershell_es', {
-  bundle_path = 'c:/w/PowerShellEditorServices',
+  bundle_path = 'c:/w/modules',
   shell = 'powershell.exe',
 })
 ```
 
 Note that the execution policy needs to be set to `Unrestricted` for the languageserver run under PowerShell
+
+By default, profile loading is disabled (`enableProfileLoading = false`) since the
+language server runs as a background process, not an interactive session, and a
+profile that writes to stdout can corrupt the LSP handshake. Override if needed:
+
+```lua
+vim.lsp.config('powershell_es', {
+  init_options = { enableProfileLoading = true },
+})
+```
 
 If necessary, specific `cmd` can be defined instead of `bundle_path`.
 See [PowerShellEditorServices](https://github.com/PowerShell/PowerShellEditorServices#standard-input-and-output)
@@ -8446,10 +10143,16 @@ vim.lsp.enable('powershell_es')
 ```
 
 Default config:
-- `cmd`: [../lsp/powershell_es.lua:39](../lsp/powershell_es.lua#L39)
+- `cmd`: [../lsp/powershell_es.lua:95](../lsp/powershell_es.lua#L95)
 - `filetypes` :
   ```lua
   { "ps1" }
+  ```
+- `init_options` :
+  ```lua
+  {
+    enableProfileLoading = false
+  }
   ```
 - `root_markers` :
   ```lua
@@ -8864,7 +10567,7 @@ Default config:
   ```lua
   { "python" }
   ```
-- `on_exit`: [../lsp/pyrefly.lua:10](../lsp/pyrefly.lua#L10)
+- `on_exit`: [../lsp/pyrefly.lua:11](../lsp/pyrefly.lua#L11)
 - `root_markers` :
   ```lua
   { "pyrefly.toml", "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" }
@@ -8877,6 +10580,17 @@ Default config:
 https://github.com/microsoft/pyright
 
 `pyright`, a static type checker and language server for python
+
+Pyright marks unreachable, unreferenced and deprecated code with hint
+diagnostics. Nvim correctly reports them as regular diagnostics, but they
+are usually too noisy (https://github.com/neovim/neovim/issues/30444), so
+they are disabled by default. To re-enable:
+
+```lua
+vim.lsp.config('pyright', {
+  settings = { pyright = { disableTaggedHints = false } },
+})
+```
 
 Snippet to enable the language server:
 ```lua
@@ -8892,14 +10606,17 @@ Default config:
   ```lua
   { "python" }
   ```
-- `on_attach`: [../lsp/pyright.lua:22](../lsp/pyright.lua#L22)
+- `on_attach`: [../lsp/pyright.lua:36](../lsp/pyright.lua#L36)
 - `root_markers` :
   ```lua
-  { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json", ".git" }
+  { "pyrightconfig.json", "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" }
   ```
 - `settings` :
   ```lua
   {
+    pyright = {
+      disableTaggedHints = true
+    },
     python = {
       analysis = {
         autoSearchPaths = true,
@@ -8912,6 +10629,44 @@ Default config:
 
 ---
 
+## pytest_language_server
+
+https://github.com/bellini666/pytest-language-server
+
+ `pytest-language-server`, a Language Server Protocol implementation for pytest.
+
+ Features:
+ - Go to definition for fixtures (local, conftest.py, and third-party plugins)
+ - Find references for fixtures across the test suite
+ - Hover documentation with fixture signatures, return types, and docstrings
+ - Code completion for available fixtures with hierarchy-aware suggestions
+ - Diagnostics for undeclared fixtures used in test bodies
+ - Code actions (quick fixes) to add missing fixture parameters
+ - Supports fixture overriding and pytest's fixture priority rules
+ - Character-position aware for self-referencing fixtures
+@type vim.lsp.Config
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('pytest_language_server')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "pytest-language-server" }
+  ```
+- `filetypes` :
+  ```lua
+  { "python" }
+  ```
+- `root_markers` :
+  ```lua
+  { "pytest.ini", "pyproject.toml", "setup.py", "setup.cfg", ".git" }
+  ```
+
+---
+
 ## qmlls
 
 https://doc.qt.io/qt-6/qtqml-tooling-qmlls.html
@@ -8919,6 +10674,11 @@ https://doc.qt.io/qt-6/qtqml-tooling-qmlls.html
 > QML Language Server is a tool shipped with Qt that helps you write code in your favorite (LSP-supporting) editor.
 
 Source in the [QtDeclarative repository](https://code.qt.io/cgit/qt/qtdeclarative.git/)
+
+Note: On some distros, the cmd of qmlls is `qmlls6`. You can override `cmd`:
+```lua
+vim.lsp.config('qmlls', { cmd = { 'qmlls6' } })
+```
 
 Snippet to enable the language server:
 ```lua
@@ -8996,7 +10756,7 @@ Default config:
   ```lua
   { "r", "rmd", "quarto" }
   ```
-- `root_dir`: [../lsp/r_language_server.lua:12](../lsp/r_language_server.lua#L12)
+- `root_dir`: [../lsp/r_language_server.lua:14](../lsp/r_language_server.lua#L14)
 
 ---
 
@@ -9126,7 +10886,7 @@ Default config:
   ```lua
   { "rego" }
   ```
-- `root_dir`: [../lsp/regal.lua:14](../lsp/regal.lua#L14)
+- `root_dir`: [../lsp/regal.lua:15](../lsp/regal.lua#L15)
 
 ---
 
@@ -9155,7 +10915,7 @@ Default config:
   ```lua
   { "rego" }
   ```
-- `root_dir`: [../lsp/regols.lua:14](../lsp/regols.lua#L14)
+- `root_dir`: [../lsp/regols.lua:15](../lsp/regols.lua#L15)
 
 ---
 
@@ -9275,7 +11035,7 @@ Default config:
       codeLens = true,
       incrementalTypechecking = {
         acrossFiles = true,
-        enabled = true
+        enable = true
       },
       inlayHints = {
         enable = true
@@ -9290,56 +11050,6 @@ Default config:
 - `settings` :
   ```lua
   {}
-  ```
-
----
-
-## rls
-
-https://github.com/rust-lang/rls
-
-rls, a language server for Rust
-
-See https://github.com/rust-lang/rls#setup to setup rls itself.
-See https://github.com/rust-lang/rls#configuration for rls-specific settings.
-All settings listed on the rls configuration section of the readme
-must be set under settings.rust as follows:
-
-```lua
-vim.lsp.config('rls', {
-  settings = {
-    rust = {
-      unstable_features = true,
-      build_on_save = false,
-      all_features = true,
-    },
-  },
-})
-```
-
-If you want to use rls for a particular build, eg nightly, set cmd as follows:
-
-```lua
-cmd = {"rustup", "run", "nightly", "rls"}
-```
-
-Snippet to enable the language server:
-```lua
-vim.lsp.enable('rls')
-```
-
-Default config:
-- `cmd` :
-  ```lua
-  { "rls" }
-  ```
-- `filetypes` :
-  ```lua
-  { "rust" }
-  ```
-- `root_markers` :
-  ```lua
-  { "Cargo.toml" }
   ```
 
 ---
@@ -9372,7 +11082,7 @@ Default config:
   ```lua
   {}
   ```
-- `root_dir`: [../lsp/rnix.lua:10](../lsp/rnix.lua#L10)
+- `root_dir`: [../lsp/rnix.lua:12](../lsp/rnix.lua#L12)
 - `settings` :
   ```lua
   {}
@@ -9398,9 +11108,9 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "robot", "resource" }
+  { "robot" }
   ```
-- `get_language_id`: [../lsp/robotcode.lua:6](../lsp/robotcode.lua#L6)
+- `get_language_id`: [../lsp/robotcode.lua:10](../lsp/robotcode.lua#L10)
 - `root_markers` :
   ```lua
   { "robot.toml", "pyproject.toml", "Pipfile", ".git" }
@@ -9481,13 +11191,10 @@ vim.lsp.enable('rome')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "rome", "lsp-proxy" }
-  ```
+- `cmd`: [../lsp/rome.lua:14](../lsp/rome.lua#L14)
 - `filetypes` :
   ```lua
-  { "javascript", "javascriptreact", "json", "typescript", "typescript.tsx", "typescriptreact" }
+  { "javascript", "javascriptreact", "json", "typescript", "typescriptreact" }
   ```
 - `root_markers` :
   ```lua
@@ -9500,20 +11207,23 @@ Default config:
 
 https://github.com/dotnet/roslyn
 
-To install the server, compile from source or download as nuget package.
+The server can be installed as a dotnet tool (see https://github.com/dotnet/roslyn/blob/main/src/LanguageServer/Microsoft.CodeAnalysis.LanguageServer/README.md).
+This command will install the server in ~/.dotnet/tools:
+```bash
+dotnet tool install --global roslyn-language-server --prerelease
+```
+Alternatively, compile from source or download as nuget package.
 Go to `https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.<platform>/overview`
 replace `<platform>` with one of the following `linux-x64`, `osx-x64`, `win-x64`, `neutral` (for more info on the download location see https://github.com/dotnet/roslyn/issues/71474#issuecomment-2177303207).
 Download and extract it (nuget's are zip files).
 - if you chose `neutral` nuget version, then you have to change the `cmd` like so:
+  ```lua
   cmd = {
     'dotnet',
     '<my_folder>/Microsoft.CodeAnalysis.LanguageServer.dll',
-    '--logLevel', -- this property is required by the server
-    'Information',
-    '--extensionLogDirectory', -- this property is required by the server
-    fs.joinpath(uv.os_tmpdir(), 'roslyn_ls/logs'),
     '--stdio',
   },
+  ```
   where `<my_folder>` has to be the folder you extracted the nuget package to.
 - for all other platforms put the extracted folder to neovim's PATH (`vim.env.PATH`)
 
@@ -9521,6 +11231,11 @@ Snippet to enable the language server:
 ```lua
 vim.lsp.enable('roslyn_ls')
 ```
+
+Commands:
+- roslyn.client.completionComplexEdit
+- roslyn.client.fixAllCodeAction
+- roslyn.client.nestedCodeAction
 
 Default config:
 - `capabilities` :
@@ -9535,7 +11250,19 @@ Default config:
   ```
 - `cmd` :
   ```lua
-  { "Microsoft.CodeAnalysis.LanguageServer", "--logLevel", "Information", "--extensionLogDirectory", "/tmp/roslyn_ls/logs", "--stdio" }
+  { "roslyn-language-server", "--stdio" }
+  ```
+- `cmd_env` :
+  ```lua
+  {}
+  ```
+- `commands` :
+  ```lua
+  {
+    ["roslyn.client.completionComplexEdit"] = <function 1>,
+    ["roslyn.client.fixAllCodeAction"] = <function 2>,
+    ["roslyn.client.nestedCodeAction"] = <function 3>
+  }
   ```
 - `filetypes` :
   ```lua
@@ -9545,24 +11272,19 @@ Default config:
   ```lua
   {
     ["razor/provideDynamicFileInfo"] = <function 1>,
-    ["workspace/_roslyn_projectHasUnresolvedDependencies"] = <function 2>,
-    ["workspace/_roslyn_projectNeedsRestore"] = <function 3>,
-    ["workspace/projectInitializationComplete"] = <function 4>
+    ["workspace/projectInitializationComplete"] = <function 2>
   }
   ```
 - `name` :
   ```lua
   "roslyn_ls"
   ```
-- `offset_encoding` :
-  ```lua
-  "utf-8"
-  ```
+- `on_attach`: [../lsp/roslyn_ls.lua:156](../lsp/roslyn_ls.lua#L156)
 - `on_init` :
   ```lua
   { <function 1> }
   ```
-- `root_dir`: [../lsp/roslyn_ls.lua:95](../lsp/roslyn_ls.lua#L95)
+- `root_dir`: [../lsp/roslyn_ls.lua:156](../lsp/roslyn_ls.lua#L156)
 - `settings` :
   ```lua
   {
@@ -9682,10 +11404,7 @@ vim.lsp.enable('ruby_lsp')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "ruby-lsp" }
-  ```
+- `cmd`: [../lsp/ruby_lsp.lua:16](../lsp/ruby_lsp.lua#L16)
 - `filetypes` :
   ```lua
   { "ruby", "eruby" }
@@ -9696,6 +11415,7 @@ Default config:
     formatter = "auto"
   }
   ```
+- `reuse_client`: [../lsp/ruby_lsp.lua:16](../lsp/ruby_lsp.lua#L16)
 - `root_markers` :
   ```lua
   { "Gemfile", ".git" }
@@ -9715,7 +11435,7 @@ pip install ruff
 
 **Available in Ruff `v0.4.5` in beta and stabilized in Ruff `v0.5.3`.**
 
-This is the new built-in language server written in Rust. It supports the same feature set as `ruff-lsp`, but with superior performance and no installation required. Note that the `ruff-lsp` server will continue to be maintained until further notice.
+This is the new built-in language server written in Rust. It supports the same feature set as `ruff-lsp`, but with superior performance and no separate installation required.
 
 Server settings can be provided via:
 
@@ -9760,6 +11480,8 @@ Default config:
 
 https://github.com/astral-sh/ruff-lsp
 
+WARNING: `ruff-lsp` is now deprecated, LSP functionality is now built into `ruff` itself, consider setting up `ruff` instead.
+
 A Language Server Protocol implementation for Ruff, an extremely fast Python linter and code transformation tool, written in Rust. It can be installed via pip.
 
 ```sh
@@ -9793,6 +11515,7 @@ Default config:
   ```lua
   { "python" }
   ```
+- `on_init`: [../lsp/ruff_lsp.lua:27](../lsp/ruff_lsp.lua#L27)
 - `root_markers` :
   ```lua
   { "pyproject.toml", "ruff.toml", ".git" }
@@ -9800,6 +11523,33 @@ Default config:
 - `settings` :
   ```lua
   {}
+  ```
+
+---
+
+## rumdl
+
+https://github.com/rvben/rumdl
+
+Markdown Linter and Formatter written in Rust.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('rumdl')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "rumdl", "server" }
+  ```
+- `filetypes` :
+  ```lua
+  { "markdown" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".git" }
   ```
 
 ---
@@ -9861,11 +11611,14 @@ vim.lsp.enable('rust_analyzer')
 ```
 
 Default config:
-- `before_init`: [../lsp/rust_analyzer.lua:54](../lsp/rust_analyzer.lua#L54)
+- `before_init`: [../lsp/rust_analyzer.lua:89](../lsp/rust_analyzer.lua#L89)
 - `capabilities` :
   ```lua
   {
     experimental = {
+      commands = {
+        commands = { "rust-analyzer.showReferences", "rust-analyzer.runSingle", "rust-analyzer.debugSingle" }
+      },
       serverStatusNotification = true
     }
   }
@@ -9878,8 +11631,101 @@ Default config:
   ```lua
   { "rust" }
   ```
-- `on_attach`: [../lsp/rust_analyzer.lua:54](../lsp/rust_analyzer.lua#L54)
-- `root_dir`: [../lsp/rust_analyzer.lua:54](../lsp/rust_analyzer.lua#L54)
+- `on_attach`: [../lsp/rust_analyzer.lua:89](../lsp/rust_analyzer.lua#L89)
+- `root_dir`: [../lsp/rust_analyzer.lua:89](../lsp/rust_analyzer.lua#L89)
+- `settings` :
+  ```lua
+  {
+    ["rust-analyzer"] = {
+      lens = {
+        debug = {
+          enable = true
+        },
+        enable = true,
+        implementations = {
+          enable = true
+        },
+        references = {
+          adt = {
+            enable = true
+          },
+          enumVariant = {
+            enable = true
+          },
+          method = {
+            enable = true
+          },
+          trait = {
+            enable = true
+          }
+        },
+        run = {
+          enable = true
+        },
+        updateTest = {
+          enable = true
+        }
+      }
+    }
+  }
+  ```
+
+---
+
+## rust_glancer
+
+https://github.com/rust-glancer/rust-glancer
+
+`rust-glancer`, an incomplete-by-design Rust language server optimized for
+low memory usage and near-instant editor restarts.
+
+VS Code is currently the only officially supported editor; the project only
+publishes `.vsix` packages, so the `rust-glancer` binary must be built from
+source for use with Nvim:
+```sh
+git clone https://github.com/rust-glancer/rust-glancer
+cd rust-glancer
+cargo build --release -p rust-glancer
+# add target/release/ to $PATH, or point `cmd` at the built binary
+```
+`rust-src` is required regardless of editor:
+```sh
+rustup component add rust-src
+```
+
+Diagnostics (`cargo check`) are disabled by default; enable them via
+`diagnostics.onStartup` / `diagnostics.onSave` below.
+
+The server reads its configuration only from the LSP `initializationOptions`
+sent on startup (there is no `workspace/configuration` support), so options
+must be set via `init_options`, not `settings`:
+```lua
+vim.lsp.config('rust_glancer', {
+  init_options = {
+    diagnostics = {
+      onSave = true,
+    },
+  },
+})
+```
+See [configuration docs](https://rust-glancer.github.io/docs/usage/CONFIGURE.html) for the full
+set of options (`cfg`, `indexing`, `cargo`, `cache`, `diagnostics`).
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('rust_glancer')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "rust-glancer", "lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "rust" }
+  ```
+- `root_dir`: [../lsp/rust_glancer.lua:41](../lsp/rust_glancer.lua#L41)
 
 ---
 
@@ -10058,6 +11904,38 @@ Default config:
 
 ---
 
+## shuck
+
+https://github.com/ewhauser/shuck
+
+`shuck` can be installed via `cargo`:
+```sh
+cargo install shuck-cli
+```
+
+A lightning fast shell linter with LSP support for bash, zsh, posix, and mksh dialects.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('shuck')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "shuck", "server" }
+  ```
+- `filetypes` :
+  ```lua
+  { "bash", "sh", "zsh" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".shuck.toml", ".git" }
+  ```
+
+---
+
 ## sixtyfps
 
 https://github.com/sixtyfpsui/sixtyfps
@@ -10091,6 +11969,38 @@ Default config:
 - `filetypes` :
   ```lua
   { "sixtyfps" }
+  ```
+
+---
+
+## slang_server
+
+https://github.com/hudson-trading/slang-server
+
+A SystemVerilog language server based on the Slang library.
+
+Release binaries can be downloaded from [here](https://github.com/hudson-trading/slang-server/releases)
+and placed in a directory on PATH.
+
+See [the docs](https://hudson-trading.github.io/slang-server/start/config/) for options.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('slang_server')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "slang-server" }
+  ```
+- `filetypes` :
+  ```lua
+  { "systemverilog", "verilog" }
+  ```
+- `root_markers` :
+  ```lua
+  { { ".git", ".slang" } }
   ```
 
 ---
@@ -10136,7 +12046,7 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { ".git" }
+  { "slangdconfig.json", ".clang-format", ".git" }
   ```
 
 ---
@@ -10208,9 +12118,11 @@ Default config:
   ```
 - `init_options` :
   ```lua
-  {}
+  {
+    storageDir = vim.NIL
+  }
   ```
-- `root_dir`: [../lsp/smarty_ls.lua:13](../lsp/smarty_ls.lua#L13)
+- `root_dir`: [../lsp/smarty_ls.lua:14](../lsp/smarty_ls.lua#L14)
 - `settings` :
   ```lua
   {
@@ -10231,10 +12143,11 @@ https://github.com/awslabs/smithy-language-server
 
 "Smithy Language Server", a Language server for the Smithy IDL.
 
-smithy-language-server has no docs that say how to actually install it(?), so look at:
-https://github.com/smithy-lang/smithy-vscode/blob/600cfcf0db65edce85f02e6d50f5fa2b0862bc8d/src/extension.ts#L78
+Based off the official maven artifacts setup
+https://github.com/smithy-lang/smithy-language-server?tab=readme-ov-file#maven-artifacts
 
 Maven package: https://central.sonatype.com/artifact/software.amazon.smithy/smithy-language-server
+Adjusting jvm opts: https://get-coursier.io/docs/cli-launch#java-options
 
 Installation:
 1. Install coursier, or any tool that can install maven packages.
@@ -10243,7 +12156,7 @@ Installation:
    ```
 2. The LS is auto-installed and launched by:
    ```
-   coursier launch software.amazon.smithy:smithy-language-server:0.7.0
+   cs launch --contrib smithy-language-server:0.8.0
    ```
 
 Snippet to enable the language server:
@@ -10254,7 +12167,7 @@ vim.lsp.enable('smithy_ls')
 Default config:
 - `cmd` :
   ```lua
-  { "coursier", "launch", "software.amazon.smithy:smithy-language-server:0.7.0", "-M", "software.amazon.smithy.lsp.Main", "--", "0" }
+  { "cs", "launch", "--contrib", "smithy-language-server:0.8.0" }
   ```
 - `filetypes` :
   ```lua
@@ -10315,7 +12228,53 @@ Default config:
 
 https://github.com/snyk/snyk-ls
 
-LSP for Snyk Open Source, Snyk Infrastructure as Code, and Snyk Code.
+**[Snyk](https://snyk.io)** is a developer security platform that helps you find and fix
+vulnerabilities in your code, open source dependencies, containers, and infrastructure as code.
+
+The Snyk Language Server provides real-time security scanning for:
+- **Snyk Open Source**: Find and fix vulnerabilities in open source dependencies
+- **Snyk Code**: Find and fix security vulnerabilities in your code
+- **Snyk Infrastructure as Code**: Find and fix security issues in Kubernetes, Terraform, and other IaC files
+
+## Authentication
+
+**Note**: Currently, only token-based authentication is supported in Neovim.
+
+1. Get your API token from https://app.snyk.io/account
+2. Set the `SNYK_TOKEN` environment variable:
+   ```sh
+   export SNYK_TOKEN="your-token-here"
+   ```
+
+## Trusted Folders
+
+Snyk requires you to trust directories before scanning them. To avoid being prompted every time:
+
+```lua
+vim.lsp.config('snyk_ls', {
+  init_options = {
+    trustedFolders = {
+      '/Users/yourname/projects',  -- Trust your projects directory
+      '/path/to/another/trusted/dir',
+    },
+  },
+})
+```
+
+**Important**: Trust the top-level directory where you store your repositories, not individual repos.
+For example, if you work on `/Users/yourname/projects/my-app`, trust `/Users/yourname/projects`.
+Only trust directories containing code you trust to scan.
+
+## Configuration
+
+Full configuration options available at https://github.com/snyk/snyk-ls#configuration-1
+
+### Advanced Configuration
+
+For **non-default multi-tenant or single-tenant setups**, you may need to specify:
+
+- `endpoint`: Custom Snyk API endpoint (e.g., `https://api.eu.snyk.io` for EU, or your single-tenant URL)
+```
 
 Snippet to enable the language server:
 ```lua
@@ -10325,16 +12284,22 @@ vim.lsp.enable('snyk_ls')
 Default config:
 - `cmd` :
   ```lua
-  { "snyk-ls" }
+  { "snyk", "language-server", "-l", "info" }
   ```
 - `filetypes` :
   ```lua
-  { "go", "gomod", "javascript", "typescript", "json", "python", "requirements", "helm", "yaml", "terraform", "terraform-vars" }
+  { "apex", "apexcode", "c", "cpp", "cs", "dart", "dockerfile", "elixir", "eelixir", "go", "gomod", "groovy", "helm", "java", "javascript", "json", "kotlin", "objc", "objcpp", "php", "python", "requirements", "ruby", "rust", "scala", "swift", "terraform", "terraform-vars", "typescript", "yaml" }
   ```
 - `init_options` :
   ```lua
   {
-    activateSnykCode = "true"
+    activateSnykCode = "false",
+    activateSnykIac = "true",
+    activateSnykOpenSource = "true",
+    integrationName = "Neovim",
+    integrationVersion = "0.13.0",
+    token = vim.NIL,
+    trustedFolders = {}
   }
   ```
 - `root_markers` :
@@ -10449,7 +12414,7 @@ Default config:
   ```lua
   { "solidity" }
   ```
-- `root_dir`: [../lsp/solc.lua:9](../lsp/solc.lua#L9)
+- `root_dir`: [../lsp/solc.lua:10](../lsp/solc.lua#L10)
 
 ---
 
@@ -10705,8 +12670,41 @@ Default config:
   ```lua
   { "swift", "objc", "objcpp", "c", "cpp" }
   ```
-- `get_language_id`: [../lsp/sourcekit.lua:9](../lsp/sourcekit.lua#L9)
-- `root_dir`: [../lsp/sourcekit.lua:9](../lsp/sourcekit.lua#L9)
+- `get_language_id`: [../lsp/sourcekit.lua:10](../lsp/sourcekit.lua#L10)
+- `root_dir`: [../lsp/sourcekit.lua:10](../lsp/sourcekit.lua#L10)
+
+---
+
+## spade_ls
+
+https://gitlab.com/spade-lang/spade/-/tree/main/spade-language-server
+
+Spade language server.
+
+`spade-language-server` can be installed by following the instructions
+[here](https://docs.spade-lang.org/typst/editor_setup.html)
+
+The default `cmd` assumes that `spade-language-server` binary can be
+found in `$PATH`.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('spade_ls')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "spade-language-server" }
+  ```
+- `filetypes` :
+  ```lua
+  { "spade" }
+  ```
+- `root_markers` :
+  ```lua
+  { "swim.toml" }
+  ```
 
 ---
 
@@ -10880,6 +12878,39 @@ Default config:
 - `root_markers` :
   ```lua
   { ".sqruff", ".git" }
+  ```
+
+---
+
+## stan_ls
+
+https://github.com/tomatitito/stan-language-server
+
+ Language server for the Stan probabilistic programming language.
+
+@type vim.lsp.Config
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('stan_ls')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "stan-language-server", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "stan" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".git" }
+  ```
+- `settings` :
+  ```lua
+  {}
   ```
 
 ---
@@ -11064,24 +13095,9 @@ Default config:
 
 ## stylelint_lsp
 
-https://github.com/bmatcuk/stylelint-lsp
+https://github.com/stylelint/vscode-stylelint/tree/main/packages/language-server
 
-`stylelint-lsp` can be installed via `npm`:
-
-```sh
-npm i -g stylelint-lsp
-```
-
-Can be configured by passing a `settings.stylelintplus` object to vim.lsp.config('stylelint_lsp'):
-
-```lua
-vim.lsp.config('stylelint_lsp', {
-  settings = {
-    stylelintplus = {
-      -- see available options in stylelint-lsp documentation
-    }
-  }
-})
+`stylelint-language-server` can be installed via npm `npm install -g @stylelint/language-server`.
 ```
 
 Snippet to enable the language server:
@@ -11092,19 +13108,49 @@ vim.lsp.enable('stylelint_lsp')
 Default config:
 - `cmd` :
   ```lua
-  { "stylelint-lsp", "--stdio" }
+  { "stylelint-language-server", "--stdio" }
   ```
 - `filetypes` :
   ```lua
-  { "astro", "css", "html", "less", "scss", "sugarss", "vue", "wxss" }
+  { "astro", "css", "html", "less", "scss", "vue" }
+  ```
+- `on_attach`: [../lsp/stylelint_lsp.lua:25](../lsp/stylelint_lsp.lua#L25)
+- `root_dir`: [../lsp/stylelint_lsp.lua:25](../lsp/stylelint_lsp.lua#L25)
+- `settings` :
+  ```lua
+  {
+    stylelint = {
+      snippet = { "css", "postcss" },
+      validate = { "css", "postcss" }
+    }
+  }
+  ```
+
+---
+
+## stylua
+
+https://github.com/JohnnyMorganz/StyLua
+
+A deterministic code formatter for Lua 5.1, 5.2, 5.3, 5.4, LuaJIT, Luau and CfxLua/FiveM Lua
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('stylua')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "stylua", "--lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "lua" }
   ```
 - `root_markers` :
   ```lua
-  { ".stylelintrc", ".stylelintrc.mjs", ".stylelintrc.cjs", ".stylelintrc.js", ".stylelintrc.json", ".stylelintrc.yaml", ".stylelintrc.yml", "stylelint.config.mjs", "stylelint.config.cjs", "stylelint.config.js" }
-  ```
-- `settings` :
-  ```lua
-  {}
+  { ".stylua.toml", "stylua.toml", ".editorconfig" }
   ```
 
 ---
@@ -11183,7 +13229,7 @@ Note: assuming that [ts_ls](#ts_ls) is setup, full JavaScript/TypeScript support
 
 `svelte-language-server` can be installed via `npm`:
 ```sh
-npm install -g svelte-language-server
+npm install [-g] svelte-language-server
 ```
 
 Snippet to enable the language server:
@@ -11192,16 +13238,41 @@ vim.lsp.enable('svelte')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "svelteserver", "--stdio" }
-  ```
+- `cmd`: [../lsp/svelte.lua:13](../lsp/svelte.lua#L13)
 - `filetypes` :
   ```lua
   { "svelte" }
   ```
-- `on_attach`: [../lsp/svelte.lua:12](../lsp/svelte.lua#L12)
-- `root_dir`: [../lsp/svelte.lua:12](../lsp/svelte.lua#L12)
+- `on_attach`: [../lsp/svelte.lua:13](../lsp/svelte.lua#L13)
+- `root_dir`: [../lsp/svelte.lua:13](../lsp/svelte.lua#L13)
+- `settings` :
+  ```lua
+  {
+    typescript = {
+      inlayHints = {
+        enumMemberValues = {
+          enabled = true
+        },
+        functionLikeReturnTypes = {
+          enabled = true
+        },
+        parameterNames = {
+          enabled = "literals",
+          suppressWhenArgumentMatchesName = true
+        },
+        parameterTypes = {
+          enabled = true
+        },
+        propertyDeclarationTypes = {
+          enabled = true
+        },
+        variableTypes = {
+          enabled = true
+        }
+      }
+    }
+  }
+  ```
 
 ---
 
@@ -11231,7 +13302,7 @@ Default config:
   ```lua
   { "verilog", "systemverilog" }
   ```
-- `on_attach`: [../lsp/svlangserver.lua:28](../lsp/svlangserver.lua#L28)
+- `on_attach`: [../lsp/svlangserver.lua:14](../lsp/svlangserver.lua#L14)
 - `root_markers` :
   ```lua
   { ".svlangserver", ".git" }
@@ -11306,6 +13377,88 @@ Default config:
 
 ---
 
+## symfony_lsp
+
+https://github.com/symfony/language-tools
+
+Symfony-aware completion, navigation, references, diagnostics, code actions,
+rename support and code lenses alongside a general PHP language server.
+
+Install the `symfony-lsp` executable from a release, then make it
+available on `PATH`.
+
+The server asks before executing application code for runtime indexing. Set
+`init_options.workspaceTrust` explicitly only for trusted workspaces.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('symfony_lsp')
+```
+
+Commands:
+- editor.action.showReferences
+
+Default config:
+- `capabilities` :
+  ```lua
+  {
+    workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true
+      }
+    }
+  }
+  ```
+- `cmd` :
+  ```lua
+  { "symfony-lsp" }
+  ```
+- `commands` :
+  ```lua
+  {
+    ["editor.action.showReferences"] = <function 1>
+  }
+  ```
+- `filetypes` :
+  ```lua
+  { "php", "twig", "yaml", "json", "xml", "javascript", "typescript", "env" }
+  ```
+- `init_options` :
+  ```lua
+  {
+    consolePath = "bin/console",
+    containerProjectRoot = "",
+    debug = true,
+    environment = "dev",
+    phpCommand = { "php" },
+    projectRoots = {},
+    runtimeIndexing = true,
+    trace = "off"
+  }
+  ```
+- `root_markers` :
+  ```lua
+  { "composer.json", ".git" }
+  ```
+- `settings` :
+  ```lua
+  {
+    symfonyLsp = {
+      consolePath = "bin/console",
+      containerProjectRoot = "",
+      debug = true,
+      environment = "dev",
+      phpCommand = { "php" },
+      projectRoots = {},
+      runtimeIndexing = true,
+      translationDiagnostics = false
+    }
+  }
+  ```
+- `workspace_required` : `true`
+
+---
+
 ## syntax_tree
 
 https://ruby-syntax-tree.github.io/syntax_tree/
@@ -11342,16 +13495,43 @@ Default config:
 
 ---
 
-## systemd_ls
+## sysml_lsp
 
-https://github.com/psacawa/systemd-language-server
+https://github.com/Open-MBEE/OpenSysML
 
-`systemd-language-server` can be installed via `pip`:
+SysML v2 and KerML language server from OpenSysML.
+
+Install from the release archives, or with Go:
+
 ```sh
-pip install systemd-language-server
+go install github.com/Open-MBEE/OpenSysML/cmd/sysml-lsp@latest
 ```
 
-Language Server for Systemd unit files
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('sysml_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "sysml-lsp", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "sysml", "kerml" }
+  ```
+- `root_markers` :
+  ```lua
+  { ".git" }
+  ```
+- `workspace_required` : `false`
+
+---
+
+## systemd_ls
+
+Renamed to [systemd_lsp](#systemd_lsp)
 
 Snippet to enable the language server:
 ```lua
@@ -11361,15 +13541,48 @@ vim.lsp.enable('systemd_ls')
 Default config:
 - `cmd` :
   ```lua
-  { "systemd-language-server" }
+  { "systemd-lsp" }
   ```
 - `filetypes` :
   ```lua
   { "systemd" }
   ```
-- `root_markers` :
+- `name` :
   ```lua
-  { ".git" }
+  "systemd_lsp"
+  ```
+- `on_init`: [../lsp/systemd_ls.lua:6](../lsp/systemd_ls.lua#L6)
+
+---
+
+## systemd_lsp
+
+https://github.com/JFryy/systemd-lsp
+
+A Language Server Protocol (LSP) implementation for Systemd unit files,
+providing editing support with syntax highlighting,
+diagnostics, autocompletion, and documentation.
+
+`systemd-lsp` can be installed via `cargo`:
+```sh
+cargo install systemd-lsp
+```
+
+A language server implementation for Systemd unit files made in Rust.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('systemd_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "systemd-lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "systemd" }
   ```
 
 ---
@@ -11415,22 +13628,32 @@ Tailwind CSS Language Server can be installed via npm:
 
 npm install -g @tailwindcss/language-server
 
+To manually set the config file or CSS entry-point, see:
+https://github.com/tailwindlabs/tailwindcss-intellisense#tailwindcssexperimentalconfigfile
+
 Snippet to enable the language server:
 ```lua
 vim.lsp.enable('tailwindcss')
 ```
 
 Default config:
-- `before_init`: [../lsp/tailwindcss.lua:9](../lsp/tailwindcss.lua#L9)
-- `cmd` :
+- `before_init`: [../lsp/tailwindcss.lua:14](../lsp/tailwindcss.lua#L14)
+- `capabilities` :
   ```lua
-  { "tailwindcss-language-server", "--stdio" }
+  {
+    workspace = {
+      didChangeWatchedFiles = {
+        dynamicRegistration = true
+      }
+    }
+  }
   ```
+- `cmd`: [../lsp/tailwindcss.lua:14](../lsp/tailwindcss.lua#L14)
 - `filetypes` :
   ```lua
   { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge", "eelixir", "elixir", "ejs", "erb", "eruby", "gohtml", "gohtmltmpl", "haml", "handlebars", "hbs", "html", "htmlangular", "html-eex", "heex", "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css", "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript", "typescript", "typescriptreact", "vue", "svelte", "templ" }
   ```
-- `root_dir`: [../lsp/tailwindcss.lua:9](../lsp/tailwindcss.lua#L9)
+- `root_dir`: [../lsp/tailwindcss.lua:14](../lsp/tailwindcss.lua#L14)
 - `settings` :
   ```lua
   {
@@ -11522,6 +13745,43 @@ Default config:
 
 ---
 
+## tclsp
+
+https://github.com/nmoroze/tclint
+
+`tclsp`, a language server for Tcl
+
+`tclsp` can be installed via `pipx`:
+```sh
+pipx install tclint
+```
+
+Or via `pip`:
+```sh
+pip install tclint
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('tclsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "tclsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "tcl", "sdc", "xdc", "upf" }
+  ```
+- `root_markers` :
+  ```lua
+  { "tclint.toml", ".tclint", "pyproject.toml", ".git" }
+  ```
+
+---
+
 ## teal_ls
 
 https://github.com/teal-language/teal-language-server
@@ -11600,14 +13860,7 @@ Default config:
   ```lua
   { "termux-language-server" }
   ```
-- `filetypes` :
-  ```lua
-  { "PKGBUILD" }
-  ```
-- `root_markers` :
-  ```lua
-  { ".git" }
-  ```
+- `root_dir`: [../lsp/termux_language_server.lua:10](../lsp/termux_language_server.lua#L10)
 
 ---
 
@@ -11702,6 +13955,14 @@ vim.lsp.enable('terraformls')
 ```
 
 Default config:
+- `capabilities` :
+  ```lua
+  {
+    experimental = {
+      showReferencesCommandId = "client.showReferences"
+    }
+  }
+  ```
 - `cmd` :
   ```lua
   { "terraform-ls", "serve" }
@@ -11710,9 +13971,37 @@ Default config:
   ```lua
   { "terraform", "terraform-vars" }
   ```
+- `on_attach`: [../lsp/terraformls.lua:36](../lsp/terraformls.lua#L36)
 - `root_markers` :
   ```lua
   { ".terraform", ".git" }
+  ```
+
+---
+
+## terragrunt_ls
+
+https://github.com/gruntwork-io/terragrunt-ls
+
+`terragrunt-ls`, a language server for Terragrunt configuration files.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('terragrunt_ls')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "terragrunt-ls" }
+  ```
+- `filetypes` :
+  ```lua
+  { "hcl" }
+  ```
+- `root_markers` :
+  ```lua
+  { "terragrunt.hcl", ".git" }
   ```
 
 ---
@@ -11724,6 +14013,12 @@ https://github.com/latex-lsp/texlab
 A completion engine built from scratch for (La)TeX.
 
 See https://github.com/latex-lsp/texlab/wiki/Configuration for configuration options.
+
+There are some non standard commands supported, namely:
+`LspTexlabBuild`, `LspTexlabForward`, `LspTexlabCancelBuild`,
+`LspTexlabDependencyGraph`, `LspTexlabCleanArtifacts`,
+`LspTexlabCleanAuxiliary`, `LspTexlabFindEnvironments`,
+and `LspTexlabChangeEnvironment`.
 
 Snippet to enable the language server:
 ```lua
@@ -11739,7 +14034,7 @@ Default config:
   ```lua
   { "tex", "plaintex", "bib" }
   ```
-- `on_attach`: [../lsp/texlab.lua:164](../lsp/texlab.lua#L164)
+- `on_attach`: [../lsp/texlab.lua:134](../lsp/texlab.lua#L134)
 - `root_markers` :
   ```lua
   { ".git", ".latexmkrc", "latexmkrc", ".texlabroot", "texlabroot", "Tectonic.toml" }
@@ -11966,11 +14261,11 @@ https://github.com/Myriad-Dreamin/tinymist
 An integrated language service for Typst [taɪpst]. You can also call it "微霭" [wēi ǎi] in Chinese.
 
 Currently some of Tinymist's workspace commands are supported, namely:
-`LspTinymistExportSvg`, `LspTinymistExportPng`, `LspTinymistExportPdf
+`LspTinymistExportSvg`, `LspTinymistExportPng`, `LspTinymistExportPdf`,
 `LspTinymistExportMarkdown`, `LspTinymistExportText`, `LspTinymistExportQuery`,
 `LspTinymistExportAnsiHighlight`, `LspTinymistGetServerInfo`,
-`LspTinymistGetDocumentTrace`, `LspTinymistGetWorkspaceLabels`, and
-`LspTinymistGetDocumentMetrics`.
+`LspTinymistGetDocumentTrace`, `LspTinymistGetWorkspaceLabels`,
+`LspTinymistGetDocumentMetrics`, and `LspTinymistPinMain`.
 
 Snippet to enable the language server:
 ```lua
@@ -11986,7 +14281,7 @@ Default config:
   ```lua
   { "typst" }
   ```
-- `on_attach`: [../lsp/tinymist.lua:52](../lsp/tinymist.lua#L52)
+- `on_attach`: [../lsp/tinymist.lua:45](../lsp/tinymist.lua#L45)
 - `root_markers` :
   ```lua
   { ".git" }
@@ -12010,7 +14305,7 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "opentofu", "opentofu-vars" }
+  { "opentofu", "opentofu-vars", "terraform" }
   ```
 - `root_markers` :
   ```lua
@@ -12052,9 +14347,13 @@ https://github.com/typescript-language-server/typescript-language-server
 
 `ts_ls`, aka `typescript-language-server`, is a Language Server Protocol implementation for TypeScript wrapping `tsserver`. Note that `ts_ls` is not `tsserver`.
 
+While `typescript-language-server` will likely eventually be replaced by [tsc](#tsc), the official language server
+for TypeScript, `typescript-language-server` may still be useful for features such as es5 support.
+
 `typescript-language-server` depends on `typescript`. Both packages can be installed via `npm`:
 ```sh
-npm install -g typescript typescript-language-server
+# if you are using `ts_ls` you will need to install a `typescript` version < 7 for now
+npm install -g typescript@<version> typescript-language-server
 ```
 
 To configure typescript language server, add a
@@ -12077,9 +14376,18 @@ Here's an example that disables type checking in JavaScript files.
 }
 ```
 
+If you also have a `deno.json` or a `deno.jsonc` in your project, the `ts_ls` may not start (depending where the
+deno.json is)
+
 Use the `:LspTypescriptSourceAction` command to see "whole file" ("source") code-actions such as:
 - organize imports
 - remove unused code
+
+Use the `:LspTypescriptGoToSourceDefinition` command to navigate to the source definition of a symbol (e.g., jump to the original implementation instead of type definitions).
+
+### Monorepo support
+
+See the monorepo support documentation for [tsc](#tsc)
 
 Snippet to enable the language server:
 ```lua
@@ -12090,10 +14398,7 @@ Commands:
 - editor.action.showReferences
 
 Default config:
-- `cmd` :
-  ```lua
-  { "typescript-language-server", "--stdio" }
-  ```
+- `cmd`: [../lsp/ts_ls.lua:50](../lsp/ts_ls.lua#L50)
 - `commands` :
   ```lua
   {
@@ -12102,7 +14407,7 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" }
+  { "javascript", "javascriptreact", "typescript", "typescriptreact" }
   ```
 - `handlers` :
   ```lua
@@ -12116,11 +14421,8 @@ Default config:
     hostInfo = "neovim"
   }
   ```
-- `on_attach`: [../lsp/ts_ls.lua:36](../lsp/ts_ls.lua#L36)
-- `root_markers` :
-  ```lua
-  { "tsconfig.json", "jsconfig.json", "package.json", ".git" }
-  ```
+- `on_attach`: [../lsp/ts_ls.lua:50](../lsp/ts_ls.lua#L50)
+- `root_dir`: [../lsp/ts_ls.lua:50](../lsp/ts_ls.lua#L50)
 
 ---
 
@@ -12130,25 +14432,17 @@ https://github.com/ribru17/ts_query_ls
 Can be configured by passing a "settings" object to `vim.lsp.config('ts_query_ls', {})`:
 ```lua
 vim.lsp.config('ts_query_ls', {
-    settings = {
-      parser_install_directories = {
-        -- If using nvim-treesitter with lazy.nvim
-        vim.fs.joinpath(
-          vim.fn.stdpath('data'),
-          '/lazy/nvim-treesitter/parser/'
-        ),
-      },
-      -- This setting is provided by default
-      parser_aliases = {
-        ecma = 'javascript',
-        jsx = 'javascript',
-        php_only = 'php',
-      },
-      -- E.g. zed support
-      language_retrieval_patterns = {
-        'languages/src/([^/]+)/[^/]+\\.scm$',
-      },
+  init_options = {
+    parser_install_directories = {
+      '/my/parser/install/dir',
     },
+    -- This setting is provided by default
+    parser_aliases = {
+      ecma = 'javascript',
+      jsx = 'javascript',
+      php_only = 'php',
+    },
+  },
 })
 ```
 
@@ -12166,17 +14460,184 @@ Default config:
   ```lua
   { "query" }
   ```
-- `root_markers` :
-  ```lua
-  { "queries", ".git" }
-  ```
-- `settings` :
+- `init_options` :
   ```lua
   {
     parser_aliases = {
       ecma = "javascript",
       jsx = "javascript",
       php_only = "php"
+    },
+    parser_install_directories = { "/home/runner/.local/share/nvim/site/parser" }
+  }
+  ```
+- `on_attach`: [../lsp/ts_query_ls.lua:26](../lsp/ts_query_ls.lua#L26)
+- `root_markers` :
+  ```lua
+  { ".tsqueryrc.json", ".git" }
+  ```
+
+---
+
+## tsc
+
+https://github.com/microsoft/typescript
+
+TypeScript is a language for application-scale JavaScript.
+TypeScript adds optional types to JavaScript that support tools for large-scale JavaScript applications for any browser, for any host, on any OS.
+TypeScript compiles to readable, standards-based JavaScript.
+
+`tsc` can be installed via npm `npm install typescript`.
+
+The language server (`--lsp`) is only available in the native compiler, TypeScript 7.0
+and newer. An older binary in `node_modules/.bin` is skipped in favour of one on `$PATH`
+that does support it; if no candidate qualifies, the server does not attach.
+
+### Monorepo support
+
+`tsc` supports monorepos by default. It will automatically find the `tsconfig.json` or `jsconfig.json` corresponding to the package you are working on.
+This works without the need of spawning multiple instances of `tsc`, saving memory.
+
+It is recommended to use the same version of TypeScript in all packages, and therefore have it available in your workspace root. The location of the TypeScript binary will be determined automatically, but only once.
+
+Some care must be taken here to correctly infer whether a file is part of a Deno program, or a TS program that
+expects to run in Node or Web Browsers. This supports having a Deno module using the denols LSP as a part of a
+mostly-not-Deno monorepo. We do this by finding the nearest package manager lock file, and the nearest deno.json
+or deno.jsonc.
+
+Example:
+
+```
+project-root
++-- node_modules/...
++-- package-lock.json
++-- package.json
++-- packages
+    +-- deno-module
+    |   +-- deno.json
+    |   +-- package.json <-- It's normal for Deno projects to have package.json files!
+    |   +-- src
+    |       +-- index.ts <-- this is a Deno file
+    +-- node-module
+        +-- package.json
+        +-- src
+            +-- index.ts <-- a non-Deno file (ie, should use ts_ls or tsc)
+```
+
+From the file being edited, we walk up to find the nearest package manager lockfile. This is PROJECT ROOT.
+From the file being edited, find the nearest deno.json or deno.jsonc. This is DENO ROOT.
+From the file being edited, find the nearest deno.lock. This is DENO LOCK ROOT
+If DENO LOCK ROOT is found, and PROJECT ROOT is missing or shorter, then this is a deno file, and we abort.
+If DENO ROOT is found, and it's longer than or equal to PROJECT ROOT, then this is a Deno file, and we abort.
+Otherwise, attach at PROJECT ROOT, or the cwd if not found.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('tsc')
+```
+
+Default config:
+- `cmd`: [../lsp/tsc.lua:70](../lsp/tsc.lua#L70)
+- `filetypes` :
+  ```lua
+  { "javascript", "javascriptreact", "typescript", "typescriptreact" }
+  ```
+- `root_dir`: [../lsp/tsc.lua:70](../lsp/tsc.lua#L70)
+- `settings` :
+  ```lua
+  {
+    ["js/ts"] = {
+      implementationsCodeLens = {
+        enabled = true,
+        showOnAllClassMethods = true,
+        showOnInterfaceMethods = true
+      },
+      inlayHints = {
+        enumMemberValues = {
+          enabled = true
+        },
+        functionLikeReturnTypes = {
+          enabled = true
+        },
+        parameterNames = {
+          enabled = "literals",
+          suppressWhenArgumentMatchesName = true
+        },
+        parameterTypes = {
+          enabled = true
+        },
+        propertyDeclarationTypes = {
+          enabled = true
+        },
+        variableTypes = {
+          enabled = true
+        }
+      },
+      referencesCodeLens = {
+        enabled = true,
+        showOnAllFunctions = true
+      }
+    }
+  }
+  ```
+
+---
+
+## tsgo
+
+Deprecated in favor of [tsc](#tsc)
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('tsgo')
+```
+
+Default config:
+- `cmd`: [../lsp/tsgo.lua:6](../lsp/tsgo.lua#L6)
+- `filetypes` :
+  ```lua
+  { "javascript", "javascriptreact", "typescript", "typescriptreact" }
+  ```
+- `name` :
+  ```lua
+  "tsc"
+  ```
+- `on_init`: [../lsp/tsgo.lua:6](../lsp/tsgo.lua#L6)
+- `root_dir`: [../lsp/tsgo.lua:6](../lsp/tsgo.lua#L6)
+- `settings` :
+  ```lua
+  {
+    ["js/ts"] = {
+      implementationsCodeLens = {
+        enabled = true,
+        showOnAllClassMethods = true,
+        showOnInterfaceMethods = true
+      },
+      inlayHints = {
+        enumMemberValues = {
+          enabled = true
+        },
+        functionLikeReturnTypes = {
+          enabled = true
+        },
+        parameterNames = {
+          enabled = "literals",
+          suppressWhenArgumentMatchesName = true
+        },
+        parameterTypes = {
+          enabled = true
+        },
+        propertyDeclarationTypes = {
+          enabled = true
+        },
+        variableTypes = {
+          enabled = true
+        }
+      },
+      referencesCodeLens = {
+        enabled = true,
+        showOnAllFunctions = true
+      }
     }
   }
   ```
@@ -12391,7 +14852,7 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { "ty.toml", "pyproject.toml", ".git" }
+  { "ty.toml", "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" }
   ```
 
 ---
@@ -12571,7 +15032,7 @@ Default config:
   ```lua
   { "unison" }
   ```
-- `root_dir`: [../lsp/unison.lua:7](../lsp/unison.lua#L7)
+- `root_dir`: [../lsp/unison.lua:8](../lsp/unison.lua#L8)
 - `settings` :
   ```lua
   {}
@@ -12717,7 +15178,7 @@ Default config:
 
 ## vala_ls
 
-https://github.com/Prince781/vala-language-server
+https://github.com/vala-lang/vala-language-server
 
 Snippet to enable the language server:
 ```lua
@@ -12733,7 +15194,7 @@ Default config:
   ```lua
   { "vala", "genie" }
   ```
-- `root_dir`: [../lsp/vala_ls.lua:26](../lsp/vala_ls.lua#L26)
+- `root_dir`: [../lsp/vala_ls.lua:27](../lsp/vala_ls.lua#L27)
 
 ---
 
@@ -12755,7 +15216,7 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "markdown", "text", "tex", "rst" }
+  { "asciidoc", "markdown", "text", "tex", "rst", "html", "xml" }
   ```
 - `root_markers` :
   ```lua
@@ -12780,7 +15241,7 @@ Default config:
   ```lua
   { "vectorcode-server" }
   ```
-- `root_dir`: [../lsp/vectorcode_server.lua:5](../lsp/vectorcode_server.lua#L5)
+- `root_dir`: [../lsp/vectorcode_server.lua:7](../lsp/vectorcode_server.lua#L7)
 - `settings` :
   ```lua
   {}
@@ -12815,7 +15276,7 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { ".git" }
+  { "verible.filelist", ".git" }
   ```
 
 ---
@@ -12987,8 +15448,42 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { "vhdl_ls.toml", ".vhdl_ls.toml" }
+  { "vhdl_ls.toml" }
   ```
+- `workspace_required` : `true`
+
+---
+
+## vimdoc_ls
+
+https://github.com/barrettruth/vimdoc-language-server
+
+Language server for vim help files (vimdoc).
+
+`vimdoc-language-server` can be installed via `cargo`:
+```sh
+cargo install vimdoc-language-server
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('vimdoc_ls')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "vimdoc-language-server" }
+  ```
+- `filetypes` :
+  ```lua
+  { "help" }
+  ```
+- `root_markers` :
+  ```lua
+  { "doc", ".git" }
+  ```
+- `workspace_required` : `false`
 
 ---
 
@@ -13141,7 +15636,7 @@ Default config:
   ```lua
   "vue_ls"
   ```
-- `on_init`: [../lsp/volar.lua:8](../lsp/volar.lua#L8)
+- `on_init`: [../lsp/volar.lua:6](../lsp/volar.lua#L6)
 - `root_markers` :
   ```lua
   { "package.json" }
@@ -13151,7 +15646,7 @@ Default config:
 
 ## vscoqtop
 
-https://github.com/coq-community/vscoq
+Renamed to [vsrocq](#vsrocq)
 
 Snippet to enable the language server:
 ```lua
@@ -13161,7 +15656,37 @@ vim.lsp.enable('vscoqtop')
 Default config:
 - `cmd` :
   ```lua
-  { "vscoqtop" }
+  { "vsrocqtop" }
+  ```
+- `filetypes` :
+  ```lua
+  { "coq" }
+  ```
+- `name` :
+  ```lua
+  "vsrocq"
+  ```
+- `on_init`: [../lsp/vscoqtop.lua:6](../lsp/vscoqtop.lua#L6)
+- `root_markers` :
+  ```lua
+  { "_RocqProject", "_CoqProject", ".git" }
+  ```
+
+---
+
+## vsrocq
+
+https://github.com/rocq-prover/vsrocq
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('vsrocq')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "vsrocqtop" }
   ```
 - `filetypes` :
   ```lua
@@ -13169,7 +15694,7 @@ Default config:
   ```
 - `root_markers` :
   ```lua
-  { "_CoqProject", ".git" }
+  { "_RocqProject", "_CoqProject", ".git" }
   ```
 
 ---
@@ -13234,6 +15759,15 @@ vim.lsp.enable('vue_ls')
 
 See `vue_ls` section and https://github.com/vuejs/language-tools/wiki/Neovim for more information.
 
+### Monorepo support
+
+`vtsls` supports monorepos by default. It will automatically find the `tsconfig.json` or `jsconfig.json` corresponding to the package you are working on.
+This works without the need of spawning multiple instances of `vtsls`, saving memory.
+
+It is recommended to use the same version of TypeScript in all packages, and therefore have it available in your workspace root. The location of the TypeScript binary will be determined automatically, but only once.
+
+This includes the same Deno-excluding logic from `ts_ls`. It is not recommended to enable both `vtsls` and `ts_ls` at the same time!
+
 Snippet to enable the language server:
 ```lua
 vim.lsp.enable('vtsls')
@@ -13246,12 +15780,15 @@ Default config:
   ```
 - `filetypes` :
   ```lua
-  { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" }
+  { "javascript", "javascriptreact", "typescript", "typescriptreact" }
   ```
-- `root_markers` :
+- `init_options` :
   ```lua
-  { "tsconfig.json", "package.json", "jsconfig.json", ".git" }
+  {
+    hostInfo = "neovim"
+  }
   ```
+- `root_dir`: [../lsp/vtsls.lua:71](../lsp/vtsls.lua#L71)
 
 ---
 
@@ -13289,7 +15826,7 @@ Default config:
   ```lua
   { "vue" }
   ```
-- `on_init`: [../lsp/vue_ls.lua:21](../lsp/vue_ls.lua#L21)
+- `on_init`: [../lsp/vue_ls.lua:22](../lsp/vue_ls.lua#L22)
 - `root_markers` :
   ```lua
   { "package.json" }
@@ -13317,6 +15854,88 @@ Default config:
 - `filetypes` :
   ```lua
   { "wat" }
+  ```
+
+---
+
+## wc_language_server
+
+https://github.com/wc-toolkit/wc-language-server
+
+Web Components Language Server provides intelligent editor support for Web Components and custom elements.
+It offers advanced HTML diagnostics, completion, and validation for custom elements, including support for
+attribute types, deprecation, and duplicate attribute detection.
+
+The language server uses the [Custom Elements Manifest](https://github.com/webcomponents/custom-elements-manifest)
+to generate component integration and validation information
+
+`wc-language-server` can be installed by following the instructions at the [GitHub repository](https://github.com/wc-toolkit/wc-language-server/blob/main/packages/neovim/README.md).
+
+The default `cmd` assumes that the `wc-language-server` binary can be found in `$PATH`.
+
+Alternatively, you can install it via [mason.nvim](https://github.com/williamboman/mason.nvim):
+```vim
+:MasonInstall wc-language-server
+```
+
+## Configuration
+
+The language server reads settings from `wc.config.js` (or `.ts/.mjs/.cjs`) at the project root.
+Use it to customize manifest sources, file scoping, and diagnostic behavior.
+
+Example `wc.config.js`:
+```js
+export default {
+  // Fetch manifest from a custom path or URL
+  manifestSrc: './dist/custom-elements.json',
+
+  // Narrow which files opt into the language server
+  include: ['src/**/*.ts', 'src/**/*.html'],
+
+  // Skip specific globs
+  exclude: ['**/*.stories.ts'],
+
+  // Per-library overrides
+  libraries: {
+    '@your/pkg': {
+      manifestSrc: 'https://cdn.example.com/custom-elements.json',
+      tagFormatter: (tag) => tag.replace(/^x-/, 'my-'),
+    },
+  },
+
+  // Customize diagnostic severity levels
+  diagnosticSeverity: {
+    duplicateAttribute: 'warning',
+    unknownElement: 'info',
+  },
+};
+```
+
+See the [configuration documentation](https://github.com/wc-toolkit/wc-language-server#configuration) for more details.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('wc_language_server')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "wc-language-server", "--stdio" }
+  ```
+- `filetypes` :
+  ```lua
+  { "html", "javascriptreact", "typescriptreact", "astro", "svelte", "vue", "markdown", "mdx", "javascript", "typescript", "css", "scss", "less" }
+  ```
+- `init_options` :
+  ```lua
+  {
+    hostInfo = "neovim"
+  }
+  ```
+- `root_markers` :
+  ```lua
+  { "wc.config.js", "wc.config.ts", "wc.config.mjs", "wc.config.cjs", "custom-elements.json", "package.json", ".git" }
   ```
 
 ---
@@ -13351,6 +15970,52 @@ Default config:
 - `settings` :
   ```lua
   {}
+  ```
+
+---
+
+## wolfram_lsp
+
+https://github.com/WolframResearch/LSPServer
+
+LSPServer is an official lsp server for Mathematica.
+
+Installation:
+The LSPServer paclet and its dependencies are included in Mathematica or
+Wolfram Engine installation in recent versions (13.0 and later).
+
+If your Mathematica or Wolfram Engine installation is old and LSPServer is
+not included, you can install it manually in a Mathematica environment:
+```mma
+PacletInstall["CodeParser"]
+PacletInstall["CodeInspector"]
+PacletInstall["CodeFormatter"]
+PacletInstall["LSPServer"]
+```
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('wolfram_lsp')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "WolframKernel", "-noinit", "-noprompt", "-nopaclet", "-noicon", "-nostartuppaclets", "-run", 'Needs["LSPServer`"];LSPServer`StartServer[]' }
+  ```
+- `filetypes` :
+  ```lua
+  { "mma" }
+  ```
+- `init_options` :
+  ```lua
+  {
+    semanticTokens = true
+  }
+  ```
+- `root_markers` :
+  ```lua
+  { ".git" }
   ```
 
 ---
@@ -13422,14 +16087,12 @@ vim.lsp.enable('yamlls')
 ```
 
 Default config:
-- `cmd` :
-  ```lua
-  { "yaml-language-server", "--stdio" }
-  ```
+- `cmd`: [../lsp/yamlls.lua:63](../lsp/yamlls.lua#L63)
 - `filetypes` :
   ```lua
   { "yaml", "yaml.docker-compose", "yaml.gitlab", "yaml.helm-values" }
   ```
+- `on_init`: [../lsp/yamlls.lua:63](../lsp/yamlls.lua#L63)
 - `root_markers` :
   ```lua
   { ".git" }
@@ -13440,6 +16103,11 @@ Default config:
     redhat = {
       telemetry = {
         enabled = false
+      }
+    },
+    yaml = {
+      format = {
+        enable = true
       }
     }
   }
@@ -13559,9 +16227,53 @@ Default config:
 
 ---
 
+## zizmor
+
+https://github.com/zizmorcore/zizmor
+
+Zizmor language server.
+
+`zizmor` can be installed by following the instructions [here](https://docs.zizmor.sh/installation/).
+
+The default `cmd` assumes that the `zizmor` binary can be found in `$PATH`.
+
+See `zizmor`'s [documentation](https://docs.zizmor.sh/) for additional documentation.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('zizmor')
+```
+
+Default config:
+- `capabilities` :
+  ```lua
+  {
+    workspace = {
+      didChangeWorkspaceFolders = {
+        dynamicRegistration = true
+      }
+    }
+  }
+  ```
+- `cmd` :
+  ```lua
+  { "zizmor", "--lsp" }
+  ```
+- `filetypes` :
+  ```lua
+  { "yaml" }
+  ```
+- `init_options` :
+  ```lua
+  {}
+  ```
+- `root_dir`: [../lsp/zizmor.lua:14](../lsp/zizmor.lua#L14)
+
+---
+
 ## zk
 
-https://github.com/mickael-menu/zk
+https://github.com/zk-org/zk
 
 A plain text note-taking assistant
 
@@ -13579,11 +16291,12 @@ Default config:
   ```lua
   { "markdown" }
   ```
-- `on_attach`: [../lsp/zk.lua:15](../lsp/zk.lua#L15)
+- `on_attach`: [../lsp/zk.lua:40](../lsp/zk.lua#L40)
 - `root_markers` :
   ```lua
   { ".zk" }
   ```
+- `workspace_required` : `true`
 
 ---
 
@@ -13612,6 +16325,33 @@ Default config:
   { "zls.json", "build.zig", ".git" }
   ```
 - `workspace_required` : `false`
+
+---
+
+## zuban
+
+https://zubanls.com/
+
+A high-performance Python Language Server and type checker implemented in Rust, by the author of Jedi.
+
+Snippet to enable the language server:
+```lua
+vim.lsp.enable('zuban')
+```
+
+Default config:
+- `cmd` :
+  ```lua
+  { "zuban", "server" }
+  ```
+- `filetypes` :
+  ```lua
+  { "python" }
+  ```
+- `root_markers` :
+  ```lua
+  { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" }
+  ```
 
 ---
 

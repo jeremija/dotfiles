@@ -70,6 +70,7 @@
 
 local util = require 'lspconfig.util'
 
+---@type vim.lsp.Config
 return {
   filetypes = { 'arduino' },
   root_dir = function(bufnr, on_dir)
@@ -81,9 +82,11 @@ return {
   },
   capabilities = {
     textDocument = {
+      ---@diagnostic disable-next-line: assign-type-mismatch
       semanticTokens = vim.NIL,
     },
     workspace = {
+      ---@diagnostic disable-next-line: assign-type-mismatch
       semanticTokens = vim.NIL,
     },
   },

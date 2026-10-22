@@ -1,5 +1,25 @@
 <?php
 
+namespace Foo\Bar;
+//^^^^^^^ @keyword.type
+
+use Foo\Baz as Baaz;
+//^ @keyword.import
+//          ^^ @keyword.operator
+
+use function Foo\foo as fooo;
+//  ^^^^^^^^ @keyword.function
+
+use const Foo\FOO as FOOO;
+//  ^^^^^ @keyword.modifier
+
+use Foo\Baz\{
+  function foo,
+//^^^^^^^^ @keyword.function
+  const FOO,
+//^^^^^ @keyword.modifier
+};
+
 abstract class A
 {
   protected readonly static $a;

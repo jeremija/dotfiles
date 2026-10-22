@@ -30,12 +30,13 @@ local root_files = {
   'build.gradle.kts', -- Gradle
 }
 
+---@type vim.lsp.Config
 return {
   filetypes = { 'kotlin' },
   root_markers = root_files,
   cmd = { 'kotlin-language-server' },
   init_options = {
     -- Enables caching and use project root to store cache data.
-    storagePath = vim.fs.root(vim.fn.expand '%:p:h', root_files),
+    storagePath = vim.fs.root(vim.fn.expand '%:p:h', root_files) --[[@as string]],
   },
 }

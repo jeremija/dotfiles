@@ -1,51 +1,50 @@
-name: Linting and style checking
+name: Lint
 
 on:
+  push:
+    branches:
+      - "main"
   pull_request:
     branches:
-      - "master"
+      - "main"
+  workflow_dispatch:
 
 jobs:
-  luacheck:
-    name: Luacheck
-    runs-on: ubuntu-latest
+  lua:
+    name: Lint Lua files
+    runs-on: ubuntu-slim
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - name: Prepare
+      - name: Format
         run: |
-          sudo apt-get update
-          sudo apt-get install luarocks -y
-          sudo luarocks install luacheck
-
-      - name: Run Luacheck
-        run: luacheck .
-
-  stylua:
-    name: StyLua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Lint with stylua
-        uses: JohnnyMorganz/stylua-action@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          version: latest
-          args: --check .
-
-  format-queries:
-    name: Lint queries
-    runs-on: ubuntu-latest
-    env:
-      NVIM_TAG: stable
-    steps:
-      - uses: actions/checkout@v4
-      - name: Prepare
-        run: |
-          bash ./scripts/ci-install.sh
+          make formatlua
+          git diff --exit-code
 
       - name: Lint
+        run: make checklua
+
+  queries:
+    name: Lint query files
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Format
         run: |
-          nvim --headless -c "TSInstallSync query" -c "q"
-          nvim -l scripts/format-queries.lua
+          make formatquery
+          git diff --exit-code
+
+      - name: Lint
+        run: make lintquery
+
+  readme:
+    name: Lint docs
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check SUPPORTED_LANGUAGES
+        run: |
+          make docs
           git diff --exit-code

@@ -1,25 +1,21 @@
-vim.opt.runtimepath:append "."
-vim.cmd.runtime { "plugin/plenary.vim", bang = true }
-vim.cmd.runtime { "plugin/nvim-treesitter.lua", bang = true }
+vim.o.rtp = os.getenv('PLENTEST') .. ',.,' .. vim.o.rtp
+vim.o.rtp = vim.fn.stdpath('data') .. '/site,' .. vim.o.rtp
+vim.cmd.runtime({ 'plugin/query_predicates.lua', bang = true })
+vim.cmd.runtime({ 'plugin/filetypes.lua', bang = true })
 
-vim.filetype.add {
+vim.filetype.add({
   extension = {
-    conf = "hocon",
-    cmm = "t32",
-    hurl = "hurl",
-    ncl = "nickel",
-    tig = "tiger",
-    usd = "usd",
-    usda = "usd",
-    wgsl = "wgsl",
-    w = "wing",
+    conf = 'hocon',
+    w = 'wing',
   },
-}
+})
 
 vim.o.swapfile = false
 vim.bo.swapfile = false
 
-require("nvim-treesitter.configs").setup {
-  indent = { enable = true },
-  highlight = { enable = true },
-}
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function(args)
+    pcall(vim.treesitter.start)
+    vim.bo[args.buf].indentexpr = 'v:lua.require"nvim-treesitter".indentexpr()'
+  end,
+})
