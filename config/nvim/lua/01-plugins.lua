@@ -47,6 +47,7 @@ require('fzf-lua').setup {
   }
 }
 
+local cwd = vim.fn.getcwd()
 vim.lsp.config('gopls', {
   capabilities = completion_item_resolve_capabilities,
 })
@@ -60,6 +61,10 @@ vim.lsp.enable('ts_ls')
 vim.lsp.config('rust_analyzer', {
   cmd = { 'rust-analyzer' },
   capabilities = completion_item_resolve_capabilities,
+  -- nvim 0.11+: root_dir is async; must call on_dir, not return a path.
+  root_dir = function(_, on_dir)
+    on_dir(cwd)
+  end,
   -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
     ['rust-analyzer'] = {
@@ -71,6 +76,9 @@ vim.lsp.config('rust_analyzer', {
       },
       procMacro = {
         enable = true,
+      },
+      references = {
+        excludeTests = true,
       },
       check = {
         features = "all",
@@ -88,7 +96,7 @@ vim.lsp.config('rust_analyzer', {
         features = "all",
         allTargets = true,
       },
-      inalyHints = {
+      inlayHints = {
         typeHints = {
           enable = true,
         },
@@ -179,14 +187,7 @@ vim.diagnostic.config({ virtual_text = false })
 
 -- vim.lsp.set_log_level('trace')
 
-local function find_references()
-  vim.lsp.buf.references(nil, {
-    on_list = function(opts)
-      vim.fn.setloclist(0, {}, ' ', opts)
-      vim.api.nvim_command('lopen')
-    end,
-  })
-end
+local rust_test_refs = require('rust-test-refs')
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
@@ -211,7 +212,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', ',gT', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', ',r', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, ',lC', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', ',R', find_references, opts)
+    vim.keymap.set('n', ',R', rust_test_refs.find_references, opts)
+    vim.keymap.set('n', ',tR', rust_test_refs.toggle_exclude_tests, opts)
+    vim.keymap.set('n', ',ci', function() require('call_tree').open('incoming') end, opts)
+    vim.keymap.set('n', ',co', function() require('call_tree').open('outgoing') end, opts)
     vim.keymap.set('n', ',x', function()
       vim.lsp.buf.format { async = true }
     end, opts)
@@ -267,6 +271,7 @@ require('nvim-treesitter').setup()
 -- })
 
 require('render-markdown').setup {
+  enabled = false,
   heading = {
     enabled = false,
   },
