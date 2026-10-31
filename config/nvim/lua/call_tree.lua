@@ -168,6 +168,18 @@ local function find_container(symbols, pos, container)
   return container
 end
 
+local function find_symbol_at(symbols, pos)
+  for _, sym in ipairs(symbols or {}) do
+    if sym.range and range_contains(sym.range, pos) then
+      local start = sym.selectionRange and sym.selectionRange.start
+      if start and start.line == pos.line and start.character == pos.character then
+        return sym
+      end
+      return find_symbol_at(sym.children, pos)
+    end
+  end
+end
+
 local function qualified_name(item, symbols)
   local name = item.name
   if not symbols or #symbols == 0 then
@@ -186,6 +198,12 @@ local function qualified_name(item, symbols)
       end
     end
     return name
+  end
+
+  -- Some servers (e.g. gopls) name the definition's own symbol with its receiver.
+  local self_sym = find_symbol_at(symbols, pos)
+  if self_sym and self_sym.name ~= name and vim.endswith(self_sym.name, name) then
+    return self_sym.name
   end
 
   local container = find_container(symbols, pos)
@@ -500,11 +518,25 @@ function M.open(direction)
   end
 
   local params = vim.lsp.util.make_position_params(src_win, client.offset_encoding)
+  local cword = vim.fn.expand('<cword>')
   client:request('textDocument/prepareCallHierarchy', params, function(err, result)
     vim.schedule(function()
       if err then
         vim.notify('call_tree: prepareCallHierarchy failed: ' .. err.message, vim.log.levels.ERROR)
         return
+      end
+      -- Inside macro expansions (e.g. #[tokio::main] puts the generated runtime
+      -- builder calls on the last statement's span) the server also returns items
+      -- for generated code, so prefer the ones named like the word under the cursor.
+      if result and #result > 1 then
+        local matching = vim.tbl_filter(function(item)
+          return item.name == cword
+        end, result)
+        if #matching == 0 then
+          vim.notify('call_tree: no call hierarchy item under cursor', vim.log.levels.INFO)
+          return
+        end
+        result = matching
       end
       if not result or #result == 0 then
         vim.notify('call_tree: no call hierarchy item under cursor', vim.log.levels.INFO)
@@ -519,7 +551,8 @@ function M.open(direction)
         vim.ui.select(result, {
           prompt = 'Call hierarchy item',
           format_item = function(item)
-            return item.name .. (item.detail and ('  ' .. item.detail) or '')
+            local fname = vim.fn.fnamemodify(vim.uri_to_fname(item.uri), ':~:.')
+            return item.name .. '  ' .. fname .. ':' .. (item.selectionRange.start.line + 1)
           end,
         }, function(choice)
           if choice then
